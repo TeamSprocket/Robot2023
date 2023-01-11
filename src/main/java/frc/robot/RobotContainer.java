@@ -10,8 +10,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.util.commands.InstantCommand;
 import frc.util.commands.MacroCommand;
-import frc.robot.commands.auton.OneBall;
-
 
 //auton imports
 
@@ -31,7 +29,7 @@ import frc.robot.commands.auton.OneBall;
  */
 public final class RobotContainer {
     //instantiate subsystems
-    private final Drivetrain drivetrain = new Drivetrain();
+    //private final Drivetrain drivetrain = new Drivetrain();
 	
 
     //instantiate auton commands
@@ -62,23 +60,15 @@ public final class RobotContainer {
 	 * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
 	 */
 	private void configureButtonBindings() {
-        
+        /*drivetrain
 		drivetrain.setDefaultCommand(new Drive(drivetrain, leftJoystick, rightJoystick));
-		new JoystickButton(gamepad, 4).whenPressed(new ToggleCompressor(pch, gamepad));
-		new JoystickButton(gamepad, 6).whenPressed(new ActuateClimb(climber, true));
-		new JoystickButton(gamepad, 5).whenPressed(new ActuateClimb(climber, false));
-		new JoystickButton(gamepad, 3).whenPressed(new ToggleIntake(intake));
-		new JoystickButton(gamepad, 2).whenHeld(new ShootAuto(shooter, feeder, 0));
-		new JoystickButton(gamepad, 7).whenHeld(new FeedManualTop(feeder, gamepad));
-		new JoystickButton(gamepad, 8).whenHeld(new FeedManualBot(feeder, gamepad));
-    	new JoystickButton(gamepad, 1).whenHeld(new ShootAutoCompressed(shooter, feeder, 0));
-		// new JoystickButton(gamepad, 10).whenHeld(new SENIT(shooter, feeder, intake, 0));
-		// shooter.setDefaultCommand(new RollShooterManual(shooter, gamepad));
-		feeder.setDefaultCommand(new FeedManual(feeder, gamepad));
-		intake.setDefaultCommand(new RollIntakeManual(intake, gamepad));
-		ledStrip.setDefaultCommand(new BlingBling(ledStrip, shooter));
-		climber.setDefaultCommand(new ClimbArmManual(climber, gamepad));
+		*/
+
+		//gamepad commands
+		//new JoystickButton(gamepad, BUTTONNUMBER).whenPressed(NEW COMMAND(SUBSYSTEMS));
+		//subsystem.setDefaultCommand(NEW COMMAND(SUBSYSTEMS, GAMEPAD));
 	}
+
 	public Command getAutonomousCommand() {
 			return chooser.getSelected();
 	}
