@@ -73,6 +73,11 @@ public class SwerveModule extends SubsystemBase {
       // return turnEncoder.getVelocity();
       return driveMotor.getSelectedSensorVelocity();
     } 
+
+    public double getDistance() {
+      return driveMotor.getSelectedSensorPosition();
+    }
+    
     
     public double getAbsEncoderRad() {
       double angle = absEncoder.getAbsolutePosition();
@@ -90,10 +95,6 @@ public class SwerveModule extends SubsystemBase {
 
     public SwerveModuleState getState() {
       return new SwerveModuleState(getDriveVelocity(), new Rotation2d(getTurnPosition()));
-    }
-
-    public SwerveModulePosition getPos() {
-      return new SwerveModulePosition(, getTurnPosition());
     }
 
     public void setDesiredState(SwerveModuleState state) {
