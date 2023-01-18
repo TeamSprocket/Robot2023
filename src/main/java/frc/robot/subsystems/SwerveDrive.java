@@ -58,10 +58,10 @@ public class SwerveDrive extends SubsystemBase {
     }
 
     // Odometer
-    private final SwerveDriveOdometry odometer = new SwerveDriveOdometry( 
-        Constants.Drivetrain.driveKinematics, 
-        gyro.getRotation2d(), 
-        null); 
+    // private final SwerveDriveOdometry odometer = new SwerveDriveOdometry( 
+    //     Constants.Drivetrain.driveKinematics, 
+    //     gyro.getRotation2d(), 
+    //     null); 
 
     public SwerveDrive() {
         // Init gyro with delay
@@ -91,17 +91,17 @@ public class SwerveDrive extends SubsystemBase {
     // Update Odometer
     @Override
     public void periodic() {
-        odometer.update(getRotation2d(), SwerveModulePosition(0, gyro.getRotation2d()));
+        // odometer.update(getRotation2d(), SwerveModulePosition(0, gyro.getRotation2d()));
     }
 
     // Get odometer position (pose2d contains x, y, theta in translation/rotation 2d)
-    public Pose2d getPose() {
-        return odometer.getPoseMeters();
-    }
+    // public Pose2d getPose() {
+    //     return odometer.getPoseMeters();
+    // }
 
     // Reset odometer
     public void resetOdometer(Pose2d pose) {
-        odometer.resetPosition(gyro.getRotation2d(), getPose(), pose);
+        // odometer.resetPosition(gyro.getRotation2d(), getPose(), pose);
     }
 
     // Stop modules

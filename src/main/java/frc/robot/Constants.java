@@ -102,21 +102,21 @@ public class Constants {
         public static final int GYRO_DELAY_MS = 1000;
 
         // ----------TUNED----------
-        public static final boolean IS_FIELD_ORIENTED = false;
-        public static final double kPTurn = 0.5;
-        public static final double kPDrive = 0.5;
-        public static final double PID_CONTROLLER_X_P = 1.5;
-        public static final double PID_CONTROLLER_Y_P = 1.5;
-        public static final double PID_CONTROLLER_T_P = 3.0;
+        public static final boolean IS_FIELD_ORIENTED = true;
+        public static final double kPTurn = 0.5; // module
+        public static final double kPDrive = 0.5; // module
+        public static final double PID_CONTROLLER_X_P = 1.5; // not module idk
+        public static final double PID_CONTROLLER_Y_P = 1.5; // not module idk
+        public static final double PID_CONTROLLER_T_P = 3.0; // not module idk
         
-        public static final double kMaxSpeedMetersPerSecond = 5;
-        public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 3;
-        public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 3;
+        public static final double kMaxSpeedMetersPerSecond = 1;
+        public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 0.2;
+        public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 0.5;
 
-        public static final double kPhysicalMaxSpeedMetersPerSecond = 5;
-            public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
-        public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond / 4;
-            public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = kPhysicalMaxAngularSpeedRadiansPerSecond / 4;
+        public static final double kPhysicalMaxSpeedMetersPerSecond = 1;
+            public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 0.5;
+        public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond;
+            public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = kPhysicalMaxAngularSpeedRadiansPerSecond;
 
         
         
