@@ -109,11 +109,11 @@ public class Constants {
         public static final double PID_CONTROLLER_Y_P = 1.5; // not module idk
         public static final double PID_CONTROLLER_T_P = 3.0; // not module idk
         
-        public static final double kMaxSpeedMetersPerSecond = 1;
-        public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 0.2;
+        public static final double kMaxSpeedMetersPerSecond = 0.5;
+        public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 0.1;
         public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 0.5;
 
-        public static final double kPhysicalMaxSpeedMetersPerSecond = 1;
+        public static final double kPhysicalMaxSpeedMetersPerSecond = 0.5;
             public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 0.5;
         public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond;
             public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = kPhysicalMaxAngularSpeedRadiansPerSecond;
