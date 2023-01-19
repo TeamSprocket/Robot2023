@@ -7,6 +7,8 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.SwerveDrive;
@@ -17,7 +19,7 @@ public class SwerveDriveCmd extends CommandBase {
   private final SwerveDrive swerveDrive;
   private final Supplier<Double> xSPDFunct, ySPDFunct, tSPDFunct;
   private final Supplier<Boolean> fieldOrientedFunct;
-  private final SlewRateLimiter xSlewLimit, ySlewLimit, tSlewLimit;
+  // private final SlewRateLimiter xSlewLimit, ySlewLimit, tSlewLimit;
 
     public SwerveDriveCmd(SwerveDrive swerveDrive,
             Supplier<Double> xSPDFunct, Supplier<Double> ySPDFunct, Supplier<Double> tSPDFunct,
@@ -28,16 +30,16 @@ public class SwerveDriveCmd extends CommandBase {
         this.ySPDFunct = ySPDFunct;
         this.tSPDFunct = tSPDFunct;
         this.fieldOrientedFunct = fieldOrientedFunct;
-        this.xSlewLimit = new SlewRateLimiter(Constants.Drivetrain.kTeleDriveMaxAccelerationUnitsPerSecond);
-        this.ySlewLimit = new SlewRateLimiter(Constants.Drivetrain.kTeleDriveMaxAccelerationUnitsPerSecond);
-        this.tSlewLimit = new SlewRateLimiter(Constants.Drivetrain.kTeleDriveMaxAngularAccelerationUnitsPerSecond);
+        // this.xSlewLimit = new SlewRateLimiter(Constants.Drivetrain.kTeleDriveMaxAccelerationUnitsPerSecond);
+        // this.ySlewLimit = new SlewRateLimiter(Constants.Drivetrain.kTeleDriveMaxAccelerationUnitsPerSecond);
+        // this.tSlewLimit = new SlewRateLimiter(Constants.Drivetrain.kTeleDriveMaxAngularAccelerationUnitsPerSecond);
         
         addRequirements(swerveDrive);
 
     }
 
   public static double runDeadband(double speedDB) {
-    if (Math.abs(speedDB) < 0.03) {
+    if (Math.abs(speedDB) < 0.01) {
       return 0.0;
     }
     return speedDB;
@@ -55,15 +57,23 @@ public class SwerveDriveCmd extends CommandBase {
     double ySpeed = runDeadband(ySPDFunct.get());
     double tSpeed = runDeadband(tSPDFunct.get());
 
+    SmartDashboard.putNumber("xSpeed", xSpeed);
+    SmartDashboard.putNumber("ySpeed", ySpeed);
+    SmartDashboard.putNumber("tSpeed", tSpeed);
+
     // Slew limit (accel)
-    xSpeed = xSlewLimit.calculate(xSpeed) * Constants.Drivetrain.kMaxSpeedMetersPerSecond;
-    ySpeed = ySlewLimit.calculate(ySpeed) * Constants.Drivetrain.kMaxSpeedMetersPerSecond;
-    tSpeed = tSlewLimit.calculate(tSpeed)
-            * Constants.Drivetrain.kTeleDriveMaxAngularSpeedRadiansPerSecond;
+    // xSpeed = xSlewLimit.calculate(xSpeed) * Constants.Drivetrain.kMaxSpeedMetersPerSecond;
+    // ySpeed = ySlewLimit.calculate(ySpeed) * Constants.Drivetrain.kMaxSpeedMetersPerSecond;
+    // tSpeed = tSlewLimit.calculate(tSpeed)
+    //         * Constants.Drivetrain.kTeleDriveMaxAngularSpeedRadiansPerSecond;
     
+    // SmartDashboard.putNumber("SLEW xSpeed", xSpeed);
+    // SmartDashboard.putNumber("SLEW ySpeed", ySpeed);
+    // SmartDashboard.putNumber("SLEW tSpeed", tSpeed)
+
     ChassisSpeeds chassisSpeeds;
     // Field Oriented
-    if (fieldOrientedFunct.get()) {
+    if (Constants.Drivetrain.IS_FIELD_ORIENTED) {
       chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, tSpeed, swerveDrive.getRotation2d());
     }
 

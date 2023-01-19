@@ -2,6 +2,8 @@ package frc.robot;
 
 import java.util.List;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -22,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.RunMotor;
 import frc.robot.commands.SwerveDriveCmd;
 // import frc.robot.commands.auton.OneBall;
 // import frc.robot.commands.auton.ZeroBall;
@@ -55,6 +58,8 @@ import frc.robot.Constants;
  * commands, and button mappings) should be declared here.
  */
 public final class RobotContainer {
+	
+
 	// private final Drivetrain drivetrain = new Drivetrain();
 	// private final PCH pch = new PCH();
 	// private final Climber climber = new Climber();
@@ -68,6 +73,7 @@ public final class RobotContainer {
 
 	private final XboxController driveController = new XboxController(0);
 	private final XboxController gamepad = new XboxController(1);
+	private final RunMotor runMotor = new RunMotor(driveController, 23);
 
 	// private final Command oneBall = new OneBall(drivetrain, feeder, intake, shooter, pch);
 	// private final Command twoBallRight = new TwoBallRight(drivetrain, intake, feeder, shooter);
@@ -82,15 +88,10 @@ public final class RobotContainer {
 
 	public RobotContainer() {
 		// Swerve Drive
-		swerveDrive.setDefaultCommand(new SwerveDriveCmd(
-			swerveDrive, 
-			// X
-			() -> -driveController.getLeftX(), 
-			// Y
-			() -> driveController.getLeftY(), 
-			// T
-			() -> driveController.getRightX(), 
-			() -> Constants.Drivetrain.IS_FIELD_ORIENTED));
+		
+		// WPI_TalonFX talonTest = new WPI_TalonFX(23);
+		
+		
 
 		
 		configureButtonBindings();
@@ -111,6 +112,17 @@ public final class RobotContainer {
 	 * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
 	 */
 	private void configureButtonBindings() {
+		swerveDrive.setDefaultCommand(new SwerveDriveCmd(
+			swerveDrive, 
+			// X
+			() -> -driveController.getLeftX(), 
+			// Y
+			() -> driveController.getLeftY(), 
+			// T
+			() -> driveController.getRightX(), 
+			() -> Constants.Drivetrain.IS_FIELD_ORIENTED));
+		// new JoystickButton(driveController, 1).whenPressed(swerveDrive.resetGyro());
+
 		// drivetrain.setDefaultCommand(new Drive(drivetrain, leftJoystick, rightJoystick));
 		// new JoystickButton(gamepad, 4).whenPressed(new ToggleCompressor(pch, gamepad));
 		// new JoystickButton(gamepad, 6).whenPressed(new ActuateClimb(climber, true));
@@ -179,5 +191,5 @@ public final class RobotContainer {
 // 		// 	new InstantCommand(() -> swerveDrive.stopModules())
 // 		// );
 
-// 	}
+// 	}	@Override
 }

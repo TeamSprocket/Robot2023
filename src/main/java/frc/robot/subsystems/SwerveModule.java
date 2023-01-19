@@ -6,6 +6,7 @@ import com.ctre.phoenix.sensors.CANCoder;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -18,7 +19,7 @@ public class SwerveModule extends SubsystemBase {
   // private final CANEncoder driveEncoder;
   // private final CANEncoder turnEncoder;
 
-  private final PIDController drivePIDController;
+  // private final PIDController drivePIDController;
   private final PIDController turnPIDController; 
 
   // private final AnalogInput absEncoder;
@@ -47,8 +48,8 @@ public class SwerveModule extends SubsystemBase {
     driveMotor.setInverted(driveMotorIsReversed);
     turnMotor.setInverted(turnMotorIsReversed);
 
-    turnPIDController = new PIDController(Constants.Drivetrain.kPTurn, 0, 0);
-    drivePIDController = new PIDController(Constants.Drivetrain.kPDrive, 0, 0);
+    turnPIDController = new PIDController(Constants.Drivetrain.kPTurn, Constants.Drivetrain.kITurn, Constants.Drivetrain.kDTurn);
+    // drivePIDController = new PIDController(Constants.Drivetrain.kPDrive, 0, 0);
 
     turnPIDController.enableContinuousInput(-Math.PI, Math.PI);
 
@@ -59,24 +60,21 @@ public class SwerveModule extends SubsystemBase {
 
     public double getDrivePosition() {
       // return driveEncoder.getPosition();
-      return driveMotor.getSelectedSensorPosition();
+      // SmartDashboard.putNumber("module " + Math.random(), Constants.Drivetrain.kTicks2Radians(driveMotor.getSelectedSensorPosition()));
+      return Constants.Drivetrain.kTicks2Radians(driveMotor.getSelectedSensorPosition());
     }
     public double getTurnPosition() {
       // return turnEncoder.getPosition();
-      return driveMotor.getSelectedSensorPosition();
+      return Constants.Drivetrain.kTicks2Radians(turnMotor.getSelectedSensorPosition());
     }
     public double getDriveVelocity() {
       // return driveEncoder.getVelocity();
-      return driveMotor.getSelectedSensorVelocity();
+      return Constants.Drivetrain.kTicks2Radians(driveMotor.getSelectedSensorVelocity());
     }
     public double getTurnVelocity() {
       // return turnEncoder.getVelocity();
-      return driveMotor.getSelectedSensorVelocity();
+      return Constants.Drivetrain.kTicks2Radians(turnMotor.getSelectedSensorVelocity());
     } 
-
-    public double getDistance() {
-      return driveMotor.getSelectedSensorPosition();
-    }
     
     
     public double getAbsEncoderRad() {
@@ -108,9 +106,11 @@ public class SwerveModule extends SubsystemBase {
       // driveMotor.set(state.speedMetersPerSecond / Constants.Drivetrain.kMaxSpeedMetersPerSecond);
 
       // PID Drive
-      driveMotor.set(drivePIDController.calculate(getDriveVelocity(), state.speedMetersPerSecond));
+      // driveMotor.set(drivePIDController.calculate(getDriveVelocity(), state.speedMetersPerSecond));
+      driveMotor.set(state.speedMetersPerSecond);
 
-      turnMotor.set(turnPIDController.calculate(getTurnPosition(), state.angle.getRadians()));
+      // turnMotor.set(turnPIDController.calculate(getTurnPosition(), state.angle.getRadians()));
+      turnMotor.set(state.angle.getRadians());
     }
 
     public void stop() {

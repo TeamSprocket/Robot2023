@@ -11,7 +11,9 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SwerveDrive extends SubsystemBase {
     // Init Swerve Modules 
@@ -52,7 +54,7 @@ public class SwerveDrive extends SubsystemBase {
         Constants.Drivetrain.BACK_RIGHT_ABS_ENCODER_IS_REVERSED);
 
     // Init gyro
-    private final ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+    private final ADIS16470_IMU gyro = new ADIS16470_IMU();
     public void zeroHeading() {
         gyro.reset();
     }
@@ -81,6 +83,10 @@ public class SwerveDrive extends SubsystemBase {
     // Get gyro angle from -360 to 360
     public double getHeading() {
         return gyro.getAngle() % 360.0;
+    }
+
+    public void resetGyro() {
+        gyro.reset();
     }
 
     // Get rotation as rotation2d
@@ -119,6 +125,20 @@ public class SwerveDrive extends SubsystemBase {
         frontRight.setDesiredState(desiredStates[1]);
         backLeft.setDesiredState(desiredStates[2]);
         backRight.setDesiredState(desiredStates[3]);
+
+        SmartDashboard.putString("DesiredFrontLeft", desiredStates[0].toString());
+
+        SmartDashboard.putNumber("FrontLeftAngle", Math.toDegrees(frontLeft.getAbsEncoderRad()));
+        SmartDashboard.putNumber("FrontRightAngle", Math.toDegrees(frontRight.getAbsEncoderRad()));
+        SmartDashboard.putNumber("BackLeftAngle", Math.toDegrees(backLeft.getAbsEncoderRad()));
+        SmartDashboard.putNumber("BackRightAngle", Math.toDegrees(backRight.getAbsEncoderRad()));
+
+        SmartDashboard.putNumber("Turn Pos", frontLeft.getTurnPosition());
+
+        SmartDashboard.putNumber("Gyro", getHeading());
+
+        SmartDashboard.putNumber("Front Left Pos", frontLeft.getDrivePosition());
+
     }
 
 
