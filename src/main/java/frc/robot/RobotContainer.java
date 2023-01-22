@@ -73,7 +73,7 @@ public final class RobotContainer {
 
 	private final XboxController driveController = new XboxController(0);
 	private final XboxController gamepad = new XboxController(1);
-	private final RunMotor runMotor = new RunMotor(driveController, 23);
+	// private final RunMotor runMotor = new RunMotor(driveController, 23);
 
 	// private final Command oneBall = new OneBall(drivetrain, feeder, intake, shooter, pch);
 	// private final Command twoBallRight = new TwoBallRight(drivetrain, intake, feeder, shooter);
@@ -136,7 +136,8 @@ public final class RobotContainer {
 		// 	climber.setDefaultCommand(new ClimbArmManual(climber, gamepad));
 
 		// Swerve Drive (instant command reset heading)
-		new JoystickButton(driveController, RobotMap.Controller.RESET_GYRO_HEADING_BUTTON_ID).whenPressed(() -> swerveDrive.zeroHeading());
+		new JoystickButton(driveController,
+		 RobotMap.Controller.RESET_GYRO_HEADING_BUTTON_ID).whenPressed(() -> swerveDrive.zeroHeading());
 	}
 
 	// AUTON
