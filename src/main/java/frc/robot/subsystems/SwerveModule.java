@@ -113,7 +113,8 @@ public class SwerveModule extends SubsystemBase {
         return;
       }
 
-      state = SwerveModuleState.optimize(state, getAngle());
+      state = SwerveModuleState.optimize(state, new Rotation2d(getAbsEncoderRad()));
+      SmartDashboard.putNumber("ANGLE THINGY", state.angle.getDegrees());
       // Standard Drive
       // double speedMetersPerSec = (2048 * state.speedMetersPerSecond) 
       //   / (10 * 2 * Math.PI * 0.05 * Constants.Drivetrain.kDriveMotorGearRatio);
@@ -124,24 +125,22 @@ public class SwerveModule extends SubsystemBase {
       // driveMotor.set(drivePIDController.calculate(getDriveVelocity(), state.speedMetersPerSecond));
       // driveMotor.set(state.speedMetersPerSecond);
 
-      double turnOutput = turnPIDController.calculate(
-        Math.toDegrees(getAbsEncoderRad()), state.angle.getDegrees());
-      turnMotor.set(ControlMode.PercentOutput, turnOutput);
+      double turnOutput = turnPIDController.calculate(getAbsEncoderRad() - (Math.PI / 2.0), state.angle.getRadians());
       // turnMotor.set(TalonFXControlMode.PercentOutput, turnOutput);
       // turnMotor.set(ControlMode.MotionMagic, 
       //   (getTurnPosition() + (state.angle.getDegrees() - Math.toDegrees(getAbsEncoderRad()))
       //      * 2048.0 / Constants.Drivetrain.kTurningMotorGearRatio / 360));
       // SmartDashboard.putNumber("Turn Output PID", turnOutput);
-      SmartDashboard.putNumber("ABS Radians PID", getAbsEncoderRad());
-      SmartDashboard.putNumber("State radians", state.angle.getRadians());
-      
 
-      double nearestDeg = Math.round(state.angle.getDegrees());
       // target angle in deg
       // double targetAngle = ((2048.0 / 360.0) * nearestDeg) / 
       //   (Constants.Drivetrain.kTurningMotorGearRatio)  % 360 / 2048.0;
       // double targetAngle = (nearestDeg - Math.toDegrees(getAbsEncoderRad())) % 360 / (5 * 360);
-      SmartDashboard.putNumber("State Angle", nearestDeg);
+      SmartDashboard.putNumber("CURRENT PID OUTPUT", turnOutput);
+      SmartDashboard.putNumber("CURRENT ANGLE", Math.toDegrees(getAbsEncoderRad()));
+      SmartDashboard.putNumber("TARGET ANGLE", Math.toDegrees(state.angle.getRadians()));
+
+      turnMotor.set(ControlMode.PercentOutput, turnOutput);
       // SmartDashboard.putNumber("Target Angle", targetAngle);
       // turnMotor.set(TalonFXControlMode.PercentOutput, targetAngle);
 

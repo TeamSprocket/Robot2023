@@ -77,17 +77,17 @@ public class Constants {
         public static final boolean BACK_LEFT_T_IS_REVERSED = false;
         public static final boolean BACK_RIGHT_T_IS_REVERSED = false; 
 
-        public static final double FRONT_LEFT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(313-180);
-        public static final double FRONT_RIGHT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(35);
+        public static final double FRONT_LEFT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(312);
+        public static final double FRONT_RIGHT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(39);
         public static final double BACK_LEFT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(325);
-        public static final double BACK_RIGHT_ABS_ENCODER_OFFSET_RAD =  Math.toRadians(27);
+        public static final double BACK_RIGHT_ABS_ENCODER_OFFSET_RAD =  Math.toRadians(209);
 
         // ----------CONST----------
         public static final SwerveDriveKinematics driveKinematics = new SwerveDriveKinematics (
+            new Translation2d(-DIST_MODULE_OFFSET / 2, DIST_MODULE_OFFSET / 2), 
             new Translation2d(DIST_MODULE_OFFSET / 2, DIST_MODULE_OFFSET / 2), 
-            new Translation2d(DIST_MODULE_OFFSET / 2, -DIST_MODULE_OFFSET / 2), 
-            new Translation2d(-DIST_MODULE_OFFSET / 2, DIST_MODULE_OFFSET / 2),
-            new Translation2d(-DIST_MODULE_OFFSET / 2, -DIST_MODULE_OFFSET / 2)
+            new Translation2d(-DIST_MODULE_OFFSET / 2, -DIST_MODULE_OFFSET / 2),
+            new Translation2d(DIST_MODULE_OFFSET / 2, -DIST_MODULE_OFFSET / 2)
         );
         
         public static final double kDriveEncoderRot2Meter = kDriveMotorGearRatio * Math.PI * kWheelDiameterMeters;
@@ -105,9 +105,9 @@ public class Constants {
         // public static final double PID_CONST_TEST = 0.04;
 
 
-        public static final double kPTurn = 0.001; // module
+        public static final double kPTurn = 1; // module
         public static final double kITurn = 0.000;
-        public static final double kDTurn = 0.00015;
+        public static final double kDTurn = 0.000;
         // public static final double kPDrive = PID_CONST_TEST; // module
         // public static final double PID_CONTROLLER_X_P = PID_CONST_TEST; // not module idk
         // public static final double PID_CONTROLLER_Y_P = PID_CONST_TEST; // not module idk
