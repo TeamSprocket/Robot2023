@@ -118,10 +118,10 @@ public class SwerveDrive extends SubsystemBase {
         backRight.setDesiredState(desiredStates[3]);
 
         // Debug
-        SmartDashboard.putNumber("FrontLeftAngleABS", Math.toDegrees(frontLeft.getAbsEncoderRad()));
-        SmartDashboard.putNumber("FrontRightAngleABS", Math.toDegrees(frontRight.getAbsEncoderRad()));
-        SmartDashboard.putNumber("BackLeftAngleABS", Math.toDegrees(backLeft.getAbsEncoderRad()));
-        SmartDashboard.putNumber("BackRightAngleABS", Math.toDegrees(backRight.getAbsEncoderRad()));
+        SmartDashboard.putNumber("FrontLeftAngle", desiredStates[0].angle.getDegrees());
+        SmartDashboard.putNumber("FrontRightAngle", desiredStates[1].angle.getDegrees());
+        SmartDashboard.putNumber("BackLeftAngle", desiredStates[2].angle.getDegrees());
+        SmartDashboard.putNumber("BackRightAngle", desiredStates[3].angle.getDegrees());
 
         
         // SmartDashboard.putString("FrontRightAngle", desiredStates[1].angle.toString());

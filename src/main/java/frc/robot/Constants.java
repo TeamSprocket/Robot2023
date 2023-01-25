@@ -59,7 +59,7 @@ public class Constants {
 
         // Dist between right and left wheels
         // Dist between front and back wheels
-        public static final double DIST_MODULE_OFFSET = Units.inchesToMeters(22.5);
+        public static final double DIST_MODULE_OFFSET = 0.572;
 
         public static final double kDriveMotorGearRatio = 1 / 6.75;
         public static final double kTurningMotorGearRatio = 1 / 21.4;
@@ -70,17 +70,17 @@ public class Constants {
         public static final boolean FRONT_LEFT_D_IS_REVERSED = false;
         public static final boolean FRONT_RIGHT_D_IS_REVERSED = false;
         public static final boolean BACK_LEFT_D_IS_REVERSED = false;
-        public static final boolean BACK_RIGHT_D_IS_REVERSED = false;
+        public static final boolean BACK_RIGHT_D_IS_REVERSED = true;
 
         public static final boolean FRONT_LEFT_T_IS_REVERSED = false;
         public static final boolean FRONT_RIGHT_T_IS_REVERSED = false;
         public static final boolean BACK_LEFT_T_IS_REVERSED = false;
         public static final boolean BACK_RIGHT_T_IS_REVERSED = false; 
 
-        public static final double FRONT_LEFT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(312);
-        public static final double FRONT_RIGHT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(39);
-        public static final double BACK_LEFT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(325);
-        public static final double BACK_RIGHT_ABS_ENCODER_OFFSET_RAD =  Math.toRadians(209);
+        public static final double FRONT_LEFT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(129);
+        public static final double FRONT_RIGHT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(37);
+        public static final double BACK_LEFT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(150);
+        public static final double BACK_RIGHT_ABS_ENCODER_OFFSET_RAD =  Math.toRadians(30);
 
         // ----------CONST----------
         public static final SwerveDriveKinematics driveKinematics = new SwerveDriveKinematics (
@@ -105,9 +105,11 @@ public class Constants {
         // public static final double PID_CONST_TEST = 0.04;
 
 
-        public static final double kPTurn = 1; // module
+        public static final double kPTurn = 0.075; // WORKING (kinda) 
+        // public static final double kPTurn = 0.55;
         public static final double kITurn = 0.000;
-        public static final double kDTurn = 0.000;
+        // public static final double kDTurn = 0.035;
+        public static final double kDTurn = 0.003; //WORKING (kinda)
         // public static final double kPDrive = PID_CONST_TEST; // module
         // public static final double PID_CONTROLLER_X_P = PID_CONST_TEST; // not module idk
         // public static final double PID_CONTROLLER_Y_P = PID_CONST_TEST; // not module idk
@@ -117,7 +119,7 @@ public class Constants {
         public static final double kPhysicalMaxSpeedMetersPerSecond = 0.5;
         public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 0.5;
         
-        public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 0.5;
+        public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2.0;
         public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 1.0;
 
         public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond;

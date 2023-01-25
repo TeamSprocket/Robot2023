@@ -40,7 +40,7 @@ public class SwerveDriveCmd extends CommandBase {
     }
 
   public static double runDeadband(double speedDB) {
-    if (Math.abs(speedDB) < 0.01) {
+    if (Math.abs(speedDB) < 0.05) {
       return 0.0;
     }
     return speedDB;
@@ -77,17 +77,20 @@ public class SwerveDriveCmd extends CommandBase {
       chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, tSpeed, swerveDrive.getRotation2d());
     } else { // Robot oriented
       chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, tSpeed);
+      SmartDashboard.putString("JASON IS SHORT", chassisSpeeds.toString());
+
     }
 
     // Calculate module states per module
     SwerveModuleState[] moduleStates = Constants.Drivetrain.driveKinematics.toSwerveModuleStates(chassisSpeeds);
+    SmartDashboard.putString("JASON IS BALD", moduleStates[2].toString());
 
     // Normalize speeds
     SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.Drivetrain.kMaxSpeedMetersPerSecond);
 
     // Apply to modules
     swerveDrive.setModuleStates(moduleStates);
-    SmartDashboard.putString("Module State 0", moduleStates[0].toString());
+    SmartDashboard.putString("Module State 2", moduleStates[2].toString());
 
   }
 

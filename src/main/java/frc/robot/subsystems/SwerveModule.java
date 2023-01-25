@@ -85,7 +85,7 @@ public class SwerveModule extends SubsystemBase {
       double angle = absEncoder.getAbsolutePosition();
       angle = Math.toRadians(angle);
       angle -= absEncoderOffsetRad;
-      return angle % 180;
+      return angle % (Math.PI);
     }
 
     public void resetEncoderPos() {
@@ -108,7 +108,7 @@ public class SwerveModule extends SubsystemBase {
 
 
     public void setDesiredState(SwerveModuleState state) {
-      if (Math.abs(state.speedMetersPerSecond) < 0.005) {
+      if (Math.abs(state.speedMetersPerSecond /  Constants.Drivetrain.kMaxSpeedMetersPerSecond) < 0.01) {
         stop();
         return;
       }
@@ -118,14 +118,26 @@ public class SwerveModule extends SubsystemBase {
       // Standard Drive
       // double speedMetersPerSec = (2048 * state.speedMetersPerSecond) 
       //   / (10 * 2 * Math.PI * 0.05 * Constants.Drivetrain.kDriveMotorGearRatio);
-      driveMotor.set(state.speedMetersPerSecond / Constants.Drivetrain.kMaxSpeedMetersPerSecond);
+        driveMotor.set(state.speedMetersPerSecond / Constants.Drivetrain.kMaxSpeedMetersPerSecond);
       // state.speedMetersPerSecond / Constants.Drivetrain.kMaxSpeedMetersPerSecond);
 
       // PID Drive
       // driveMotor.set(drivePIDController.calculate(getDriveVelocity(), state.speedMetersPerSecond));
+      SmartDashboard.putNumber("DRIVE SPEED", state.speedMetersPerSecond / Constants.Drivetrain.kMaxSpeedMetersPerSecond);
       // driveMotor.set(state.speedMetersPerSecond);
 
-      double turnOutput = turnPIDController.calculate(getAbsEncoderRad() - (Math.PI / 2.0), state.angle.getRadians());
+
+
+            double turnOutput = turnPIDController.calculate(
+              getAbsEncoderRad(),
+              ((state.angle.getRadians()// + (Math.PI / 2.0)) % Math.PI));
+              )));
+
+            turnMotor.set(ControlMode.PercentOutput, turnOutput);
+
+            // SmartDashboard.putNumber("CURRENT PID OUTPUT", turnOutput);
+            SmartDashboard.putNumber("CURRENT ANGLE", Math.toDegrees(getAbsEncoderRad()));
+            SmartDashboard.putNumber("TARGET ANGLE", Math.toDegrees((state.angle.getRadians() + (Math.PI / 2.0)) % Math.PI));
       // turnMotor.set(TalonFXControlMode.PercentOutput, turnOutput);
       // turnMotor.set(ControlMode.MotionMagic, 
       //   (getTurnPosition() + (state.angle.getDegrees() - Math.toDegrees(getAbsEncoderRad()))
@@ -136,16 +148,12 @@ public class SwerveModule extends SubsystemBase {
       // double targetAngle = ((2048.0 / 360.0) * nearestDeg) / 
       //   (Constants.Drivetrain.kTurningMotorGearRatio)  % 360 / 2048.0;
       // double targetAngle = (nearestDeg - Math.toDegrees(getAbsEncoderRad())) % 360 / (5 * 360);
-      SmartDashboard.putNumber("CURRENT PID OUTPUT", turnOutput);
-      SmartDashboard.putNumber("CURRENT ANGLE", Math.toDegrees(getAbsEncoderRad()));
-      SmartDashboard.putNumber("TARGET ANGLE", Math.toDegrees(state.angle.getRadians()));
-
-      turnMotor.set(ControlMode.PercentOutput, turnOutput);
+            
       // SmartDashboard.putNumber("Target Angle", targetAngle);
       // turnMotor.set(TalonFXControlMode.PercentOutput, targetAngle);
 
       
-      // if (Math.toDegrees(getAbsEncoderRad()) > state.angle.getDegrees() && 
+      // if (getAbsEncoderRad() > state.angle.getDegrees() && 
       // Math.toDegrees(getAbsEncoderRad()) - state.angle.getDegrees() < 10) {
       //   turnMotor.set(
       //     0.1);
