@@ -128,12 +128,16 @@ public class SwerveModule extends SubsystemBase {
 
 
 
-            double turnOutput = turnPIDController.calculate(
-              getAbsEncoderRad(),
-              ((state.angle.getRadians()// + (Math.PI / 2.0)) % Math.PI));
-              )));
+                          // double turnOutput = turnPIDController.calculate(
+                          //   getAbsEncoderRad(),
+                          //   ((state.angle.getRadians()// + (Math.PI / 2.0)) % Math.PI));
+                          //   )));
 
-            turnMotor.set(ControlMode.PercentOutput, turnOutput);
+                          // turnMotor.set(ControlMode.PercentOutput, turnOutput);
+      double offsetAngle = state.angle.getDegrees() - Math.toDegrees(getAbsEncoderRad());
+      if (offsetAngle >= 3) {
+        turnMotor.set(ControlMode.PercentOutput, offsetAngle / 180.0);
+      }
 
             // SmartDashboard.putNumber("CURRENT PID OUTPUT", turnOutput);
             SmartDashboard.putNumber("CURRENT ANGLE", Math.toDegrees(getAbsEncoderRad()));
