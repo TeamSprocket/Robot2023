@@ -115,9 +115,9 @@ public final class RobotContainer {
 		swerveDrive.setDefaultCommand(new SwerveDriveCmd(
 			swerveDrive, 
 			// X
-			() -> driveController.getLeftY(), 
-			// Y
 			() -> driveController.getLeftX(), 
+			// Y
+			() -> driveController.getLeftY(), 
 			// T
 			() -> driveController.getRightX(), 
 			() -> Constants.Drivetrain.IS_FIELD_ORIENTED));

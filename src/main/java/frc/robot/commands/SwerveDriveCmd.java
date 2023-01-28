@@ -7,8 +7,11 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -21,6 +24,7 @@ public class SwerveDriveCmd extends CommandBase {
   private final Supplier<Double> xSPDFunct, ySPDFunct, tSPDFunct;
   private final Supplier<Boolean> fieldOrientedFunct;
   private final SlewRateLimiter xSlewLimit, ySlewLimit, tSlewLimit;
+  private GenericEntry kPEntry, kIEntry, kDEntry;
 
     public SwerveDriveCmd(SwerveDrive swerveDrive,
             Supplier<Double> xSPDFunct, Supplier<Double> ySPDFunct, Supplier<Double> tSPDFunct,
@@ -36,6 +40,11 @@ public class SwerveDriveCmd extends CommandBase {
         this.tSlewLimit = new SlewRateLimiter(Constants.Drivetrain.kTeleDriveMaxAngularAccelerationUnitsPerSecond);
         
         addRequirements(swerveDrive);
+
+        ShuffleboardTab tab = Shuffleboard.getTab("PID");
+        GenericEntry kPEntry = tab.add("kP", Constants.Drivetrain.kPTurn).getEntry();
+        GenericEntry kIEntry = tab.add("kI", Constants.Drivetrain.kITurn).getEntry();
+        GenericEntry kDEntry = tab.add("kD", Constants.Drivetrain.kDTurn).getEntry();
 
     }
 
@@ -53,6 +62,7 @@ public class SwerveDriveCmd extends CommandBase {
 
   @Override
   public void execute() {
+  
     // Speed with deadband
     double xSpeed = runDeadband(xSPDFunct.get());
     double ySpeed = runDeadband(ySPDFunct.get());
@@ -89,9 +99,10 @@ public class SwerveDriveCmd extends CommandBase {
     SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.Drivetrain.kMaxSpeedMetersPerSecond);
 
     // Apply to modules
-    swerveDrive.setModuleStates(moduleStates);
-    SmartDashboard.putString("Module State 2", moduleStates[2].toString());
-
+    swerveDrive.setModuleStates(moduleStates, 
+      kPEntry.getDouble(Constants.Drivetrain.kPTurn),
+      kIEntry.getDouble(Constants.Drivetrain.kITurn),
+      kDEntry.getDouble(Constants.Drivetrain.kDTurn));
   }
 
   @Override

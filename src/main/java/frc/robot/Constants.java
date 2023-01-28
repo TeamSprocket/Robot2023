@@ -104,9 +104,9 @@ public class Constants {
         public static final boolean IS_FIELD_ORIENTED = false;
         // public static final double PID_CONST_TEST = 0.04;
 
-        public static final double kPTurn = 0.08625; 
-        public static final double kITurn = 0.075;
-        public static final double kDTurn = 0.0000000125;
+        public static double kPTurn = 1;  //0.08625
+        public static double kITurn = 0.0000000   ; // 0.075
+        public static double kDTurn = 0.015; //0.0000000125
     
         //values that worked best from jason - 0.085, 0.17, 0.0000005    
     
@@ -125,8 +125,8 @@ public class Constants {
         public static final double kPhysicalMaxSpeedMetersPerSecond = 0.25;
         public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 0.5;
         
-        public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 1.0;
-        public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 1.0;
+        public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 0.5;
+        public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 0.25;
 
         public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond;
             public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = kPhysicalMaxAngularSpeedRadiansPerSecond;
