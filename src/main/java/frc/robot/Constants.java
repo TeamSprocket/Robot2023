@@ -67,20 +67,20 @@ public class Constants {
         // public static final double turnDefaultOffset = 0;
         // public static final double driveDefaultOffset = 0;
 
-        public static final boolean FRONT_LEFT_D_IS_REVERSED = false;
+        public static final boolean BACK_RIGHT_D_IS_REVERSED = false;
         public static final boolean FRONT_RIGHT_D_IS_REVERSED = false;
         public static final boolean BACK_LEFT_D_IS_REVERSED = false;
-        public static final boolean BACK_RIGHT_D_IS_REVERSED = false;
+        public static final boolean FRONT_LEFT_D_IS_REVERSED = false;
 
-        public static final boolean FRONT_LEFT_T_IS_REVERSED = false;
+        public static final boolean BACK_RIGHT_T_IS_REVERSED = false;
         public static final boolean FRONT_RIGHT_T_IS_REVERSED = false;
         public static final boolean BACK_LEFT_T_IS_REVERSED = false;
-        public static final boolean BACK_RIGHT_T_IS_REVERSED = false; 
+        public static final boolean FRONT_LEFT_T_IS_REVERSED = false; 
 
-        public static final double FRONT_LEFT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(313);
+        public static final double BACK_RIGHT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(313);
         public static final double FRONT_RIGHT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(40);
         public static final double BACK_LEFT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(325);
-        public static final double BACK_RIGHT_ABS_ENCODER_OFFSET_RAD =  Math.toRadians(31);
+        public static final double FRONT_LEFT_ABS_ENCODER_OFFSET_RAD =  Math.toRadians(31);
 
         // ----------CONST----------
         public static final SwerveDriveKinematics driveKinematics = new SwerveDriveKinematics (
@@ -101,10 +101,10 @@ public class Constants {
         }
 
         // ----------TUNED----------
-        public static final boolean IS_FIELD_ORIENTED = true;
+        public static final boolean IS_FIELD_ORIENTED = false;
         // public static final double PID_CONST_TEST = 0.04;
 
-        public static final double kPTurn = 0.9; // 0.33
+        public static final double kPTurn = 0.2; // 0.33
         public static final double kITurn = 0.0;
         public static final double kDTurn = 0.0015;
     
@@ -123,7 +123,7 @@ public class Constants {
         
         public static final double kMaxSpeedMetersPerSecond = 0.1;
         public static final double kPhysicalMaxSpeedMetersPerSecond = 0.1;
-        public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 0.1;
+        public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 0.5;
         
         public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 0.1;
         public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 0.2;

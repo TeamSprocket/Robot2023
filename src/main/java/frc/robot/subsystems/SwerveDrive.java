@@ -23,7 +23,8 @@ public class SwerveDrive extends SubsystemBase {
         Constants.Drivetrain.FRONT_LEFT_D_IS_REVERSED,
         Constants.Drivetrain.FRONT_LEFT_T_IS_REVERSED,
         RobotMap.Drivetrain.FRONT_LEFT_ABS_ENCODER_ID,
-        Constants.Drivetrain.FRONT_LEFT_ABS_ENCODER_OFFSET_RAD);
+        Constants.Drivetrain.FRONT_LEFT_ABS_ENCODER_OFFSET_RAD,
+        true);
 
     private final SwerveModule frontRight = new SwerveModule(
         RobotMap.Drivetrain.FRONT_RIGHT_TALON_D,
@@ -31,7 +32,8 @@ public class SwerveDrive extends SubsystemBase {
         Constants.Drivetrain.FRONT_RIGHT_D_IS_REVERSED,
         Constants.Drivetrain.FRONT_RIGHT_T_IS_REVERSED,
         RobotMap.Drivetrain.FRONT_RIGHT_ABS_ENCODER_ID,
-        Constants.Drivetrain.FRONT_RIGHT_ABS_ENCODER_OFFSET_RAD);
+        Constants.Drivetrain.FRONT_RIGHT_ABS_ENCODER_OFFSET_RAD,
+        false);
 
     private final SwerveModule backLeft = new SwerveModule(
         RobotMap.Drivetrain.BACK_LEFT_TALON_D,
@@ -39,7 +41,8 @@ public class SwerveDrive extends SubsystemBase {
         Constants.Drivetrain.BACK_LEFT_D_IS_REVERSED,
         Constants.Drivetrain.BACK_LEFT_T_IS_REVERSED,
         RobotMap.Drivetrain.BACK_LEFT_ABS_ENCODER_ID,
-        Constants.Drivetrain.BACK_LEFT_ABS_ENCODER_OFFSET_RAD);
+        Constants.Drivetrain.BACK_LEFT_ABS_ENCODER_OFFSET_RAD,
+        false);
 
     private final SwerveModule backRight = new SwerveModule(
         RobotMap.Drivetrain.BACK_RIGHT_TALON_D,
@@ -47,12 +50,25 @@ public class SwerveDrive extends SubsystemBase {
         Constants.Drivetrain.BACK_RIGHT_D_IS_REVERSED,
         Constants.Drivetrain.BACK_RIGHT_T_IS_REVERSED,
         RobotMap.Drivetrain.BACK_RIGHT_ABS_ENCODER_ID,
-        Constants.Drivetrain.BACK_RIGHT_ABS_ENCODER_OFFSET_RAD);
+        Constants.Drivetrain.BACK_RIGHT_ABS_ENCODER_OFFSET_RAD,
+        true);
 
     // Init gyro
     private final ADIS16470_IMU gyro = new ADIS16470_IMU();
     public void zeroHeading() {
         gyro.reset();
+    }
+    public void zeroTalons() {
+        frontLeft.zeroTalon();
+        frontRight.zeroTalon();
+        backLeft.zeroTalon();
+        backRight.zeroTalon();
+    }
+    public void zeroTalonsABS() {
+        frontLeft.resetEncoderPos();
+        frontRight.resetEncoderPos();
+        backLeft.resetEncoderPos();
+        backRight.resetEncoderPos();
     }
 
     // Odometer
@@ -111,11 +127,11 @@ public class SwerveDrive extends SubsystemBase {
     }
 
     // Set module speeds/angles
-    public void setModuleStates(SwerveModuleState[] desiredStates) {
-        frontLeft.setDesiredState(desiredStates[0]);
-        frontRight.setDesiredState(desiredStates[1]);
-        backLeft.setDesiredState(desiredStates[2]);
-        backRight.setDesiredState(desiredStates[3]);
+    public void setModuleStates(SwerveModuleState[] desiredStates, double xSpeed, double ySpeed) {
+        frontLeft.setDesiredState(desiredStates[0], xSpeed, ySpeed);
+        frontRight.setDesiredState(desiredStates[1], xSpeed, ySpeed);
+        backLeft.setDesiredState(desiredStates[2], xSpeed, ySpeed);
+        backRight.setDesiredState(desiredStates[3], xSpeed, ySpeed);
 
         // Debug
         SmartDashboard.putNumber("FrontLeftAngle", desiredStates[0].angle.getDegrees());
@@ -127,6 +143,11 @@ public class SwerveDrive extends SubsystemBase {
         SmartDashboard.putNumber("FrontRightAngleABS", Math.toDegrees(frontRight.getAbsEncoderRad()));
         SmartDashboard.putNumber("BackLeftAngleABS", Math.toDegrees(backLeft.getAbsEncoderRad()));
         SmartDashboard.putNumber("BackRightAngleABS", Math.toDegrees(backRight.getAbsEncoderRad()));
+
+        SmartDashboard.putNumber("FrontLeftAngleTalonEncoder", Math.toDegrees(frontLeft.getTurnPosition()));
+        SmartDashboard.putNumber("FrontRightAngleTalonEncoder", Math.toDegrees(frontRight.getTurnPosition()));
+        SmartDashboard.putNumber("BackLeftAngleTalonEncoder", Math.toDegrees(backLeft.getTurnPosition()));
+        SmartDashboard.putNumber("BackRightAngleTalonEncoder", Math.toDegrees(backRight.getTurnPosition()));
 
         // SmartDashboard.putNumber("FL CURRENT ENCODER POS DEG", Math.toDegrees(frontLeft.getTurnPosition()));
 
