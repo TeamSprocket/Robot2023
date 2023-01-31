@@ -56,6 +56,16 @@ public class Limelight extends SubsystemBase {
       return rotation;
   }
 
+  public double getTx() {
+    return tx;
+  }
+  public double getTy() {
+    return ty;
+  }
+  public double getTa() {
+    return ta;
+  }
+
   @Override
   public void periodic() {
     tv = limelightTable.getEntry("tv").getDouble(0);
