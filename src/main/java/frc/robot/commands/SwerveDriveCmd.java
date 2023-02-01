@@ -4,6 +4,7 @@ package frc.robot.commands;
 import java.util.function.Supplier;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -74,7 +75,9 @@ public class SwerveDriveCmd extends CommandBase {
     ChassisSpeeds chassisSpeeds;
     // Field Oriented
     if (Constants.Drivetrain.IS_FIELD_ORIENTED) {
-      chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, tSpeed, swerveDrive.getRotation2d());
+      double headingRad = Math.toRadians(swerveDrive.getHeading());
+      chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+          xSpeed, ySpeed, tSpeed, new Rotation2d(headingRad));
     } else { // Robot oriented
       chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, tSpeed);
       SmartDashboard.putString("Chassis Speed", chassisSpeeds.toString());

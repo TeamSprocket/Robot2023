@@ -55,6 +55,7 @@ public class SwerveDrive extends SubsystemBase {
 
     // Init gyro
     private final ADIS16470_IMU gyro = new ADIS16470_IMU();
+    
     public void zeroHeading() {
         gyro.reset();
     }
@@ -94,7 +95,11 @@ public class SwerveDrive extends SubsystemBase {
 
     // Get gyro angle from -360 to 360
     public double getHeading() {
-        return gyro.getAngle() % 360.0;
+        double angle = gyro.getAngle() % 360.0;
+        if (angle > 180) {
+            angle = -1.0 * (360 - angle);
+        }
+        return -angle;
     }
 
     // Get rotation as rotation2d
@@ -128,10 +133,10 @@ public class SwerveDrive extends SubsystemBase {
 
     // Set module speeds/angles
     public void setModuleStates(SwerveModuleState[] desiredStates, double xSpeed, double ySpeed) {
-        frontLeft.setDesiredState(desiredStates[0], xSpeed, ySpeed);
-        frontRight.setDesiredState(desiredStates[1], xSpeed, ySpeed);
-        backLeft.setDesiredState(desiredStates[2], xSpeed, ySpeed);
-        backRight.setDesiredState(desiredStates[3], xSpeed, ySpeed);
+        frontLeft.setDesiredState(desiredStates[0], xSpeed, ySpeed, getHeading());
+        frontRight.setDesiredState(desiredStates[1], xSpeed, ySpeed, getHeading());
+        backLeft.setDesiredState(desiredStates[2], xSpeed, ySpeed, getHeading());
+        backRight.setDesiredState(desiredStates[3], xSpeed, ySpeed, getHeading());
 
         // Debug
         SmartDashboard.putNumber("FrontLeftAngle", desiredStates[0].angle.getDegrees());
