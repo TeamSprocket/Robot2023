@@ -101,4 +101,6 @@ public final class RobotMap {
     
     public static final int RESET_GYRO_HEADING_BUTTON_ID = 1;
   }
+
+  public static final int SHOOTER_SPARK_MAX = 0;
 }

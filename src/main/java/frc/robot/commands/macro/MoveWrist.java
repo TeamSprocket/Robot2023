@@ -2,15 +2,15 @@ package frc.robot.commands.macro;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.util.Util;
 import frc.util.commands.MacroCommand;
-import frc.robot.subsystems.WristMovement;
+import frc.robot.subsystems.Wrist;
 
 
 public class MoveWrist extends MacroCommand {
-    private final WristMovement wristMovement;
+    private final Wrist wristMovement;
     
     private final XboxController gamepad;
 
-    public MoveWrist(WristMovement wristMovement, XboxController gamepad) {
+    public MoveWrist(Wrist wristMovement, XboxController gamepad) {
         this.wristMovement = wristMovement;
         this.gamepad = gamepad;
     }
