@@ -104,9 +104,11 @@ public class Constants {
         public static final boolean IS_FIELD_ORIENTED = true;
         // public static final double PID_CONST_TEST = 0.04;
 
-        public static final double kPTurn = 0.28; // 0.33
-        public static final double kITurn = 0.0;
-        public static final double kDTurn = 0.0015;
+        public static final double kPTurn = 0.9; // 0.28
+        public static final double kITurn = 0.0000;
+        public static final double kDTurn = 0.0015; //0.0005?
+        
+
     
         //values that worked best from jason - 0.085, 0.17, 0.0000005    
     

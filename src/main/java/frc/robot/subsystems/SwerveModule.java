@@ -116,11 +116,10 @@ public class SwerveModule extends SubsystemBase {
     }
 
 
-    public void setDesiredState(SwerveModuleState state, double xSpeed, double ySpeed, double currentHeading) {
-      // SwerveModuleState state = SwerveModuleState.optimize(swerveState, new Rotation2d(getTurnPosition() % Math.PI));
+    public void setDesiredState(SwerveModuleState swerveState, double xSpeed, double ySpeed, double currentHeading) {
+      SwerveModuleState state = SwerveModuleState.optimize(swerveState, new Rotation2d(getTurnPosition() % Math.PI));
       // SwerveModuleState state = SwerveModuleState.optimize(swerveState, new Rotation2d(getTurnPosition()));
       
-      double currentDeg = Math.toDegrees(getTurnPosition());
       double targetDeg = state.angle.getDegrees();
       double driveSpd = state.speedMetersPerSecond / Constants.Drivetrain.kMaxSpeedMetersPerSecond;
 
@@ -129,10 +128,10 @@ public class SwerveModule extends SubsystemBase {
         // targetDeg = 
       // }
 
-      if (Math.abs(currentDeg % 360 - targetDeg) > 90) {
-        targetDeg = targetDeg - 180.0;
-        driveSpd *= -1.0;
-      }
+      // if (Math.abs(currentDeg % 360 - targetDeg) > 90) {
+      //   targetDeg = targetDeg - 180.0;
+      //   driveSpd *= -1.0;
+      // }
 
 
       if (Math.abs(state.speedMetersPerSecond /  Constants.Drivetrain.kMaxSpeedMetersPerSecond) < 0.01) {
@@ -141,12 +140,12 @@ public class SwerveModule extends SubsystemBase {
       }
 
         
-      // driveMotor.set(driveSpd);
+      driveMotor.set(driveSpd);
 
 
       double turnOutput = turnPIDController.calculate(getTurnPosition() % Math.PI, Math.toRadians(targetDeg));
         // double turnOutput = turnPIDController.calculate(getTurnPosition() % Math.PI, sate.angle.getRadians());
-      // turnMotor.set(ControlMode.PercentOutput, turnOutput); 
+      turnMotor.set(ControlMode.PercentOutput, turnOutput); 
 
       SmartDashboard.putNumber("CurrentPID", Math.toDegrees(getTurnPosition()));
       SmartDashboard.putNumber("TargetPID", Math.toDegrees(state.angle.getRadians()));

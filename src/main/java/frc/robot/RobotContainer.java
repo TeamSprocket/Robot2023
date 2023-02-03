@@ -143,56 +143,58 @@ public final class RobotContainer {
 	}
 
 	// AUTON
-// 	public Command getAutonomousCommand() {
-// 		// return chooser.getSelected();
+	// public Command getAutonomousCommand() {
+	// 	// return chooser.getSelected();
 
-// 		// Create Trajectory Speed/Settings
-// 		TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
-// 			Constants.Drivetrain.kMaxSpeedMetersPerSecond,
-// 				Constants.Drivetrain.kTeleDriveMaxAccelerationUnitsPerSecond)
-// 				.setKinematics(Constants.Drivetrain.driveKinematics);
+	// 	// Create Trajectory Speed/Settings
+	// 	TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
+	// 		Constants.Drivetrain.kMaxSpeedMetersPerSecond,
+	// 			Constants.Drivetrain.kTeleDriveMaxAccelerationUnitsPerSecond)
+	// 			.setKinematics(Constants.Drivetrain.driveKinematics);
 
-// 		// Create auton trajectory
-// 		Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-// 			// Initial point/rotation
-// 			new Pose2d(0, 0, new Rotation2d(0)),
-// 			// Points to traverse to
-// 			List.of(
-// 				new Translation2d(1, 0),
-// 				new Translation2d(1, -1)
-// 			),
-// 			// Final point + rotation
-// 			new Pose2d(2, -1, Rotation2d.fromDegrees(180)),
-// 			trajectoryConfig
-// 		);
+	// 	// Create auton trajectory
+	// 	Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+	// 		// Initial point/rotation
+	// 		new Pose2d(0, 0, new Rotation2d(0)),
+	// 		// Points to traverse to
+	// 		List.of(
+	// 			new Translation2d(1, 0),
+	// 			new Translation2d(1, -1)
+	// 		),
+	// 		// Final point + rotation
+	// 		new Pose2d(2, -1, Rotation2d.fromDegrees(180)),
+	// 		trajectoryConfig
+	// 	);
+	// 	// return trajectory;
+	// // }
 
-// 		// PID Controller for tracking trajectory (profiled = limits max speed/rot)
-// 		PIDController xController = new PIDController(Constants.Drivetrain.PID_CONTROLLER_X_P, 0, 0);
-// 		PIDController yController = new PIDController(Constants.Drivetrain.PID_CONTROLLER_Y_P, 0, 0);
-// 		ProfiledPIDController tController = new ProfiledPIDController(Constants.Drivetrain.PID_CONTROLLER_T_P, 0, 0,
-// 			new TrapezoidProfile.Constraints(
-// 				Constants.Drivetrain.kPhysicalMaxAngularSpeedRadiansPerSecond,
-// 				Constants.Drivetrain.kTeleDriveMaxAngularAccelerationUnitsPerSecond));
-// 		tController.enableContinuousInput(-Math.PI, Math.PI);
+	// 	// PID Controller for tracking trajectory (profiled = limits max speed/rot)
+	// 	// PIDController xController = new PIDController(Constants.Drivetrain.PID_CONTROLLER_X_P, 0, 0);
+	// 	// PIDController yController = new PIDController(Constants.Drivetrain.PID_CONTROLLER_Y_P, 0, 0);
+	// 	// ProfiledPIDController tController = new ProfiledPIDController(Constants.Drivetrain.PID_CONTROLLER_T_P, 0, 0,
+	// 	// 	new TrapezoidProfile.Constraints(
+	// 	// 		Constants.Drivetrain.kPhysicalMaxAngularSpeedRadiansPerSecond,
+	// 	// 		Constants.Drivetrain.kTeleDriveMaxAngularAccelerationUnitsPerSecond));
+	// 	// tController.enableContinuousInput(-Math.PI, Math.PI);
 
-// 		// Follow trajectory command
-// 		// SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
-// 		// 	trajectory,
-// 		// 	swerveDrive::getPose,
-// 		// 	Constants.Drivetrain.driveKinematics,
-// 		// 	xController,
-// 		// 	yController,
-// 		// 	tController,
-// 		// 	swerveDrive::setModuleStates,
-// 		// 	swerveDrive
-// 		// );
+		// Follow trajectory command
+		// SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
+		// 	trajectory,
+		// 	swerveDrive::getPose,
+		// 	Constants.Drivetrain.driveKinematics,
+		// 	xController,
+		// 	yController,
+		// 	tController,
+		// 	swerveDrive::setModuleStates,
+		// 	swerveDrive
+		// );
 
-// 		// Inits, wrapup, returns
-// 		// return new SequentialCommandGroup(
-// 		// 	new InstantCommand(() -> swerveDrive.resetOdometer(trajectory.getInitialPose())), 
-// 		// 	swerveControllerCommand, 
-// 		// 	new InstantCommand(() -> swerveDrive.stopModules())
-// 		// );
+		// Inits, wrapup, returns
+		// return new SequentialCommandGroup(
+		// 	new InstantCommand(() -> swerveDrive.resetOdometer(trajectory.getInitialPose())), 
+		// 	swerveControllerCommand, 
+		// 	new InstantCommand(() -> swerveDrive.stopModules())
+		// );
 
-// 	}	@Override
+	// }	@Override
 }
