@@ -2,14 +2,16 @@ package frc.robot;
 
 //general imports
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.util.commands.InstantCommand;
-import frc.util.commands.MacroCommand;
+import frc.robot.subsystems.PCH;
+import frc.robot.subsystems.Claw;
+import frc.robot.commands.instant.ToggleClaw;
+
+
 
 //auton imports
 
@@ -28,6 +30,10 @@ import frc.util.commands.MacroCommand;
  * commands, and button mappings) should be declared here.
  */
 public final class RobotContainer {
+	private final XboxController gamepad = new XboxController(2);
+	private final PCH pch = new PCH();
+	private final Claw claw = new Claw();
+
     //instantiate subsystems
     //private final Drivetrain drivetrain = new Drivetrain();
 	
@@ -40,6 +46,7 @@ public final class RobotContainer {
 
 
 	public RobotContainer() {
+		
 		
         configureButtonBindings();
 
@@ -60,6 +67,10 @@ public final class RobotContainer {
 	 * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
 	 */
 	private void configureButtonBindings() {
+		new JoystickButton(gamepad, 4).whenPressed(new ToggleClaw(claw));
+
+
+
         /*drivetrain
 		drivetrain.setDefaultCommand(new Drive(drivetrain, leftJoystick, rightJoystick));
 		*/
