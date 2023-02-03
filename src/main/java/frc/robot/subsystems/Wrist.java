@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
 public class Wrist extends SubsystemBase {
-    private final CANSparkMax wristMotor = new CANSparkMax(RobotMap.Shooter.SHOOTER_SPARK_MAX, MotorType.kBrushless);
+    private final CANSparkMax wristMotor = new CANSparkMax(RobotMap.Wrist.WRIST_MOTOR, MotorType.kBrushless);
     
 
     public Wrist() {

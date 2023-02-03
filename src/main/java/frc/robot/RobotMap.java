@@ -64,9 +64,9 @@ public final class RobotMap {
     public static final int PISTON_REVERSE = 3;
   }
 
-  public static final class Shooter {
-    public static final int SHOOTER_SPARK_MAX = 42;
-    public static final int FEEDER_SPARK_MAX = 41;
+  public static final class ARM {
+    public static final int ARM_MOTOR1 = 32;
+    public static final int ARM_MOTOR2 = 33;
   }
 
   public static final class LEDStrip {
@@ -83,18 +83,14 @@ public final class RobotMap {
     public static final I2C.Port I2C_PORT = I2C.Port.kOnboard;
   }
 
-  public static final class Climb {
-    public static final int LEFT_WINCH_TALON = 25;
-    public static final int RIGHT_WINCH_TALON = 26;
-
-    public static final int PISTON_FORWARD = 1;
-    public static final int PISTON_REVERSE = 2;
-
-    public static final int LEFT_SWITCH_PISTON_FORWARD = 11;
-    public static final int LEFT_SWITCH_PISTON_REVERSE = 11;
+  public static final class ELECATOR {
+    public static final int ELEVATOR_MOTOR1 = 30;
+    public static final int ELEVATOR_MOTOR2 = 31;
 
   }
-
+  public static final class Wrist {
+    public static final int WRIST_MOTOR = 34;
+  }
   public static final class Controller {
     public static final int RAW_AXIS_X = 0;
     public static final int RAW_AXIS_Y = 1;
@@ -102,5 +98,5 @@ public final class RobotMap {
     public static final int RESET_GYRO_HEADING_BUTTON_ID = 1;
   }
 
-  public static final int SHOOTER_SPARK_MAX = 0;
+
 }
