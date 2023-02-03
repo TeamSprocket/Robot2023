@@ -2,7 +2,7 @@ package frc.robot;
 
 import java.util.List;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+// import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -24,8 +24,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.RunMotor;
-import frc.robot.commands.SwerveDriveCmd;
 // import frc.robot.commands.auton.OneBall;
 // import frc.robot.commands.auton.ZeroBall;
 // import frc.robot.commands.auton.ThreeBall;
@@ -47,7 +45,6 @@ import frc.robot.commands.SwerveDriveCmd;
 // import frc.robot.subsystems.LEDStrip;
 // import frc.robot.subsystems.PCH;
 // import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.SwerveDrive;
 import frc.robot.Constants;
 
 /**
@@ -83,8 +80,6 @@ public final class RobotContainer {
 	SendableChooser<Command> chooser = new SendableChooser<>(); 
 
 	// Swerve Drive
-	private final SwerveDrive swerveDrive = new SwerveDrive();
-
 
 	public RobotContainer() {
 		// Swerve Drive
@@ -112,15 +107,7 @@ public final class RobotContainer {
 	 * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
 	 */
 	private void configureButtonBindings() {
-		swerveDrive.setDefaultCommand(new SwerveDriveCmd(
-			swerveDrive, 
-			// X
-			() -> -driveController.getLeftY(), 
-			// Y
-			() -> driveController.getLeftX(), 
-			// T
-			() -> driveController.getRightX(), 
-			() -> Constants.Drivetrain.IS_FIELD_ORIENTED));
+		
 		// new JoystickButton(driveController, 1).whenPressed(swerveDrive.resetGyro());
 
 		// drivetrain.setDefaultCommand(new Drive(drivetrain, leftJoystick, rightJoystick));
@@ -136,10 +123,6 @@ public final class RobotContainer {
 		// 	climber.setDefaultCommand(new ClimbArmManual(climber, gamepad));
 
 		// Swerve Drive (instant command reset heading)
-		new JoystickButton(driveController,
-		 	RobotMap.Controller.RESET_GYRO_HEADING_BUTTON_ID).whenPressed(() -> swerveDrive.zeroHeading());
-		new JoystickButton(driveController, 2).whenPressed(() -> swerveDrive.zeroTalons());
-		new JoystickButton(driveController, 3).whenPressed(() -> swerveDrive.zeroTalonsABS());
 	}
 
 	// AUTON
