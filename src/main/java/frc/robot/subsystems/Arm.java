@@ -11,7 +11,7 @@ public class Arm extends SubsystemBase {
     private final CANSparkMax armMotor_top = new CANSparkMax(0,MotorType.kBrushless);
     private final CANSparkMax armMotor_bottom = new CANSparkMax(0, MotorType.kBrushless);
     
-    public arm(){
+    public Arm(){
         armMotor_top.setInverted(false);
         armMotor_bottom.setInverted(false);
     }
