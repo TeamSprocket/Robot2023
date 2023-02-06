@@ -27,7 +27,7 @@ public class RunMotor extends PersistentCommand {
       speed = 0.0;
     
     talon.set(speed);
-    SmartDashboard.putNumber("TalonSpeed", speed);
+    
 
     
 

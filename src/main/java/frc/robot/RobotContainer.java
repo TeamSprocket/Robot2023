@@ -119,8 +119,7 @@ public final class RobotContainer {
 			// Y
 			() -> driveController.getLeftX(), 
 			// T
-			() -> driveController.getRightX(), 
-			() -> Constants.Drivetrain.IS_FIELD_ORIENTED));
+			() -> driveController.getRightX()));
 		// new JoystickButton(driveController, 1).whenPressed(swerveDrive.resetGyro());
 
 		// drivetrain.setDefaultCommand(new Drive(drivetrain, leftJoystick, rightJoystick));

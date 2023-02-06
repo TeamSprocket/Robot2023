@@ -24,14 +24,13 @@ public class SwerveDriveCmd extends CommandBase {
   private final SlewRateLimiter xSlewLimit, ySlewLimit, tSlewLimit;
 
     public SwerveDriveCmd(SwerveDrive swerveDrive,
-            Supplier<Double> xSPDFunct, Supplier<Double> ySPDFunct, Supplier<Double> tSPDFunct,
-            Supplier<Boolean> fieldOrientedFunct) {
+            Supplier<Double> xSPDFunct, Supplier<Double> ySPDFunct, Supplier<Double> tSPDFunct) {
 
         this.swerveDrive = swerveDrive;
         this.xSPDFunct = xSPDFunct;
         this.ySPDFunct = ySPDFunct;
         this.tSPDFunct = tSPDFunct;
-        this.fieldOrientedFunct = fieldOrientedFunct;
+        this.fieldOrientedFunct = () -> Constants.Drivetrain.IS_FIELD_ORIENTED;
         this.xSlewLimit = new SlewRateLimiter(Constants.Drivetrain.kTeleDriveMaxAccelerationUnitsPerSecond);
         this.ySlewLimit = new SlewRateLimiter(Constants.Drivetrain.kTeleDriveMaxAccelerationUnitsPerSecond);
         this.tSlewLimit = new SlewRateLimiter(Constants.Drivetrain.kTeleDriveMaxAngularAccelerationUnitsPerSecond);
@@ -93,7 +92,7 @@ public class SwerveDriveCmd extends CommandBase {
 
     // Apply to modules
     swerveDrive.setModuleStates(moduleStates, xSpeed, ySpeed);
-    SmartDashboard.putString("Module State 2", moduleStates[2].toString());
+    SmartDashboard.putString("Module States Desaturated", moduleStates[2].toString());
 
   }
 

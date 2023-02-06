@@ -74,7 +74,9 @@ public class SwerveModule extends SubsystemBase {
 
 
     public double getDrivePosition() {
-      return Constants.Drivetrain.kTicks2Radians(driveMotor.getSelectedSensorPosition());
+      double circum = (Math.PI) * Constants.Drivetrain.kWheelDiameterMeters;
+      double currentRots = driveMotor.getSelectedSensorPosition() / 2048.0;
+      return currentRots * circum;
     }
 
     public double getTurnPosition() {
@@ -143,13 +145,20 @@ public class SwerveModule extends SubsystemBase {
       driveMotor.set(driveSpd);
 
 
-      double turnOutput = turnPIDController.calculate(getTurnPosition() % Math.PI, Math.toRadians(targetDeg));
-        // double turnOutput = turnPIDController.calculate(getTurnPosition() % Math.PI, sate.angle.getRadians());
-      turnMotor.set(ControlMode.PercentOutput, turnOutput); 
+      // double turnOutput = turnPIDController.calculate(getTurnPosition() % Math.PI, Math.toRadians(targetDeg));
+      // turnMotor.set(ControlMode.PercentOutput, turnOutput); 
 
-      SmartDashboard.putNumber("CurrentPID", Math.toDegrees(getTurnPosition()));
-      SmartDashboard.putNumber("TargetPID", Math.toDegrees(state.angle.getRadians()));
-      SmartDashboard.putNumber("DrivespdPID", state.speedMetersPerSecond);
+      // Manual
+      if (targetDeg < 0) {
+        targetDeg = 360.0 + targetDeg;
+      }
+      double turnOutput = targetDeg * 2048.0 * Constants.Drivetrain.kTurningMotorGearRatio / 360;
+      turnMotor.set(ControlMode.MotionMagic, turnOutput);
+
+
+      // SmartDashboard.putNumber("CurrentPID", Math.toDegrees(getTurnPosition()));
+      // SmartDashboard.putNumber("TargetPID", Math.toDegrees(state.angle.getRadians()));
+      // SmartDashboard.putNumber("DrivespdPID", state.speedMetersPerSecond);
 
     }
 
