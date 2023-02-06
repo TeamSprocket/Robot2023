@@ -66,8 +66,8 @@ public class Elevator extends SubsystemBase{
 
 
     //TODO: Use encoder values for height measurement
-    public int getElevtorHeight(){
-        return 1;
+    public double getElevtorHeight(){
+        return elevatorLeftEncoder.getPosition();
     }
 
     public void stop(){
