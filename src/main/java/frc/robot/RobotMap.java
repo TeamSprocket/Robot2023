@@ -7,7 +7,7 @@
 
 package frc.robot;
 
-// import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.I2C;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -25,36 +25,56 @@ public final class RobotMap {
    * 40..49 - Spark Max
    */
   public static final class Drivetrain {
+    public static final int FRONT_LEFT_TALON_D = 21;
+    public static final int FRONT_RIGHT_TALON_D = 23;
+    public static final int BACK_LEFT_TALON_D = 25;
+    public static final int BACK_RIGHT_TALON_D = 27;
 
-    public static final int FRONT_LEFT_MOVE = 20;
-    public static final int FRONT_LEFT_TURN = 21;
+    public static final int FRONT_LEFT_TALON_T = 22;
+    public static final int FRONT_RIGHT_TALON_T = 24;
+    public static final int BACK_LEFT_TALON_T = 26;
+    public static final int BACK_RIGHT_TALON_T = 28;
 
-    public static final int FRONT_RIGHT_MOVE = 22;
-    public static final int FRONT_RIGHT_TURN = 23;
+    public static final int FRONT_LEFT_ABS_ENCODER_ID = 0;
+    public static final int FRONT_RIGHT_ABS_ENCODER_ID = 1;
+    public static final int BACK_LEFT_ABS_ENCODER_ID = 2;
+    public static final int BACK_RIGHT_ABS_ENCODER_ID = 3;
 
-    public static final int BACK_LEFT_MOVE = 24;
-    public static final int BACK_LEFT_TURN = 25;
+    // public static final int kTurnP = 0;
+    // public static final int kTurnI = 0;
+    // public static final int kTurnD = 0;
     
-    public static final int BACK_RIGHT_MOVE = 26;
-    public static final int BACK_RIGHT_TURN = 27;
 
-    public static final int kTurnP = 0;
-    public static final int kTurnI = 0;
-    public static final int kTurnD = 0;
+    // public static final int FRONT_LEFT_TALON_E = 9;
+    // public static final int FRONT_RIGHT_TALON_E = 10;
+    // public static final int BACK_LEFT_TALON_E = 11;
+    // public static final int BACK_RIGHT_TALON_E = 12;
+
   }
 
-  public static final class Intake {
-
-    public static final int INTAKE = 00; //change this to a victor
-    
-
-    public static final int PISTON_FORWARD = 0;
-    public static final int PISTON_REVERSE = 1;
-    
+  public static final class Elevator{
+    public static final int ELEVATOR_LEFT = 40;
+    public static final int ELEVATOR_RIGHT = 41;
   }
 
-  public static final class LEDStrip {
-    public static final int LED = 9;
+  public static final class Arm{
+    public static final int ARM_LEFT = 42;
+    public static final int ARM_RIGHT = 43;
+  }
+
+  public static final class Wrist{
+    public static final int WRIST = 44;
+  }
+
+  public static final class Intake{
+    public static final int INTAKE = 45;
+
+    //TODO: check piston ports from electrical
+    public static final int PISTON_LEFT_FORWARD = 0;
+    public static final int PISTON_RIGHT_FORWARD = 1;
+    public static final int PISTON_RIGHT_BACKWARD = 2;
+    public static final int PISTON_LEFT_BACKWARD = 3;
+    
   }
 
   public static final class PCH {
@@ -62,6 +82,12 @@ public final class RobotMap {
     public static final int COMPRESSOR = 1;
     public static final int PRESSURE_SENSOR_CHANNEL = 0;
   }
+  
 
-
+  public static final class Controller {
+    public static final int DRIVER = 0;
+    public static final int OPERATOR = 1;
+    
+    public static final int RESET_GYRO_HEADING_BUTTON_ID = 1;
+  }
 }
