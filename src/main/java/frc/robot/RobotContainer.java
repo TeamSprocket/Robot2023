@@ -137,9 +137,7 @@ public final class RobotContainer {
 
 		// Swerve Drive (instant command reset heading)
 		new JoystickButton(driveController,
-		 	RobotMap.Controller.RESET_GYRO_HEADING_BUTTON_ID).whenPressed(() -> swerveDrive.zeroHeading());
-		new JoystickButton(driveController, 2).whenPressed(() -> swerveDrive.zeroTalons());
-		new JoystickButton(driveController, 3).whenPressed(() -> swerveDrive.zeroTalonsABS());
+		 RobotMap.Controller.RESET_GYRO_HEADING_BUTTON_ID).whenPressed(() -> swerveDrive.zeroHeading());
 	}
 
 	// AUTON
