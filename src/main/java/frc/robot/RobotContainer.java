@@ -7,6 +7,9 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.subsystems.Wrist;
+import frc.robot.commands.macro.MoveWrist;
 //import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 //import frc.util.commands.InstantCommand;
 //import frc.util.commands.MacroCommand;
@@ -28,6 +31,8 @@ import edu.wpi.first.wpilibj2.command.Command;
  * commands, and button mappings) should be declared here.
  */
 public final class RobotContainer {
+	private final Wrist wrist = new Wrist();
+
     //instantiate subsystems
     //private final Drivetrain drivetrain = new Drivetrain();
 	
@@ -60,6 +65,10 @@ public final class RobotContainer {
 	 * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
 	 */
 	private void configureButtonBindings() {
+
+		
+
+
         /*drivetrain
 		drivetrain.setDefaultCommand(new Drive(drivetrain, leftJoystick, rightJoystick));
 		*/
