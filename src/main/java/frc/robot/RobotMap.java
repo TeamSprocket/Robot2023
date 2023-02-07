@@ -52,21 +52,9 @@ public final class RobotMap {
 
   }
 
-  public static final class Intake {
-    public static final int INTAKE_VICTOR = 30; //change this to a victor
-    // public static final int LEFT_INTAKE_PISTON_FORWARD = 0;
-    // public static final int LEFT_INTAKE_PISTON_REVERSE = 1;
-
-    // public static final int RIGHT_INTAKE_PISTON_FORWARD = 0;
-    // public static final int RIGHT_INTAKE_PISTON_REVERSE = 1;
-
-    public static final int PISTON_FORWARD = 0;
-    public static final int PISTON_REVERSE = 3;
-  }
-
-  public static final class Shooter {
-    public static final int SHOOTER_SPARK_MAX = 42;
-    public static final int FEEDER_SPARK_MAX = 41;
+  public static final class Elevator{
+    public static final int ELEVATOR_LEFT = 40;
+    public static final int ELEVATOR_RIGHT = 41;
   }
 
   public static final class Arm{
@@ -96,25 +84,9 @@ public final class RobotMap {
   }
   
 
-  public static final class Aligner {
-    public static final I2C.Port I2C_PORT = I2C.Port.kOnboard;
-  }
-
-  public static final class Climb {
-    public static final int LEFT_WINCH_TALON = 25;
-    public static final int RIGHT_WINCH_TALON = 26;
-
-    public static final int PISTON_FORWARD = 1;
-    public static final int PISTON_REVERSE = 2;
-
-    public static final int LEFT_SWITCH_PISTON_FORWARD = 11;
-    public static final int LEFT_SWITCH_PISTON_REVERSE = 11;
-
-  }
-
   public static final class Controller {
-    public static final int RAW_AXIS_X = 0;
-    public static final int RAW_AXIS_Y = 1;
+    public static final int DRIVER = 0;
+    public static final int OPERATOR = 1;
     
     public static final int RESET_GYRO_HEADING_BUTTON_ID = 1;
   }
