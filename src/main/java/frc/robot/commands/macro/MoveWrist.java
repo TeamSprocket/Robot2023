@@ -19,15 +19,6 @@ public class MoveWrist extends MacroCommand {
     public void execute() {
         
         double input = gamepad.getRightY();
-        //boolean input = gamepad.getXButtonPressed();
-        //boolean input2 = gamepad.getYButtonPressed();
-        //if (input) {
-            // wristMovement.setOutput(0.45*RobotMap.Wrist.WRIST_MOTOR);
-    
-       // }
-    //    else {
-    //         wristMovement.setOutput(0.45*-(RobotMap.Wrist.WRIST_MOTOR));
-    //    }
         double deadbandedInput = Util.deadband(0.1, input);
         
         wristMovement.setOutput(0.10*deadbandedInput);
