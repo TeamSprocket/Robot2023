@@ -107,10 +107,10 @@ public class SwerveDrive extends SubsystemBase {
 
     public SwerveModulePosition[] getModulePositions() {
         return new SwerveModulePosition[] {
-            new SwerveModulePosition(frontLeft.getDrivePosition(), new Rotation2d(frontLeft.getTurnPosition())),
-            new SwerveModulePosition(frontRight.getDrivePosition(), new Rotation2d(frontRight.getTurnPosition())),
-            new SwerveModulePosition(backLeft.getDrivePosition(), new Rotation2d(backLeft.getTurnPosition())),
-            new SwerveModulePosition(backRight.getDrivePosition(), new Rotation2d(backRight.getTurnPosition())),
+            // new SwerveModulePosition(frontLeft.getDrivePosition(), new Rotation2d(frontLeft.getTurnPosition())),
+            // new SwerveModulePosition(frontRight.getDrivePosition(), new Rotation2d(frontRight.getTurnPosition())),
+            // new SwerveModulePosition(backLeft.getDrivePosition(), new Rotation2d(backLeft.getTurnPosition())),
+            // new SwerveModulePosition(backRight.getDrivePosition(), new Rotation2d(backRight.getTurnPosition())),
         };
     }
 
@@ -136,6 +136,8 @@ public class SwerveDrive extends SubsystemBase {
         SmartDashboard.putNumber("FrontRightAngleTalonEncoder", Math.toDegrees(frontRight.getTurnPosition()));
         SmartDashboard.putNumber("BackLeftAngleTalonEncoder", Math.toDegrees(backLeft.getTurnPosition()));
         SmartDashboard.putNumber("BackRightAngleTalonEncoder", Math.toDegrees(backRight.getTurnPosition()));
+
+        SmartDashboard.putNumber("FrontLeftAngleRawSensorTicks", frontLeft.getTurnPositionTicks());
 
         // SmartDashboard.putNumber("FL CURRENT ENCODER POS DEG", Math.toDegrees(frontLeft.getTurnPosition()));
 

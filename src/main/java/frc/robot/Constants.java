@@ -62,7 +62,7 @@ public class Constants {
         public static final double DIST_MODULE_OFFSET = 0.572;
 
         public static final double kDriveMotorGearRatio = 6.75;
-        public static final double kTurningMotorGearRatio = 21.42857143;
+        public static final double kTurningMotorGearRatio = 21.35   ;
         
         // public static final double turnDefaultOffset = 0;
         // public static final double driveDefaultOffset = 0;
@@ -84,10 +84,10 @@ public class Constants {
 
         // ----------CONST----------
         public static final SwerveDriveKinematics driveKinematics = new SwerveDriveKinematics (
+            new Translation2d(-DIST_MODULE_OFFSET / 2, -DIST_MODULE_OFFSET / 2), 
             new Translation2d(DIST_MODULE_OFFSET / 2, -DIST_MODULE_OFFSET / 2), 
-            new Translation2d(DIST_MODULE_OFFSET / 2, DIST_MODULE_OFFSET / 2), 
-            new Translation2d(-DIST_MODULE_OFFSET / 2, -DIST_MODULE_OFFSET / 2),
-            new Translation2d(-DIST_MODULE_OFFSET / 2, DIST_MODULE_OFFSET / 2)
+            new Translation2d(-DIST_MODULE_OFFSET / 2, DIST_MODULE_OFFSET / 2),
+            new Translation2d(DIST_MODULE_OFFSET / 2, DIST_MODULE_OFFSET / 2)
         );
         
         public static final double kDriveEncoderRot2Meter = kDriveMotorGearRatio * Math.PI * kWheelDiameterMeters;
@@ -101,8 +101,13 @@ public class Constants {
         }
 
         // ----------TUNED----------
-        public static final boolean IS_FIELD_ORIENTED = true;
+        public static final boolean IS_FIELD_ORIENTED = false;
+        public static final boolean TURN_MANUAL = false;
         // public static final double PID_CONST_TEST = 0.04;
+        
+        // public static final double kPTurn = 0.9; // 0.28
+        // public static final double kITurn = 0.0000;
+        // public static final double kDTurn = 0.0015; //0.0005?
 
         public static final double kPTurn = 0.9; // 0.28
         public static final double kITurn = 0.0000;

@@ -4,6 +4,7 @@ package frc.robot.subsystems;
 import javax.sound.sampled.TargetDataLine;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -55,6 +56,7 @@ public class SwerveModule extends SubsystemBase {
     driveMotor = new WPI_TalonFX(driveMotorID);
     turnMotor = new WPI_TalonFX(turnMotorID);
 
+    turnMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
 
     driveMotor.setInverted(driveMotorIsReversed);
     turnMotor.setInverted(turnMotorIsReversed);
@@ -66,7 +68,7 @@ public class SwerveModule extends SubsystemBase {
     turnPIDController = new PIDController(Constants.Drivetrain.kPTurn, Constants.Drivetrain.kITurn, Constants.Drivetrain.kDTurn);
     // drivePIDController = new PIDController(Constants.Drivetrain.kPDrive, Constants.Drivetrain.kITurn, 0);
 
-    turnPIDController.enableContinuousInput(-Math.PI, Math.PI);
+    turnPIDController.enableContinuousInput(0, (2.0 * Math.PI));
 
     resetEncoderPos();
 
@@ -80,13 +82,37 @@ public class SwerveModule extends SubsystemBase {
     }
 
     public double getTurnPosition() {
-      double currentPosDeg = turnMotor.getSelectedSensorPosition() / (2048.0 * Constants.Drivetrain.kTurningMotorGearRatio) * 360.0;
-      double currentPosRad = Math.toRadians(currentPosDeg) % (2 * Math.PI);
-      if (currentPosRad > Math.PI) {
-        currentPosRad = -1.0 * ((2.0 * Math.PI) - currentPosRad);
-      }
-      return currentPosRad;
+      // double currentPosDeg = turnMotor.getSelectedSensorPosition() / (2048.0 * Constants.Drivetrain.kTurningMotorGearRatio) * 360.0;
+      // double currentPosRad = Math.toRadians(currentPosDeg) % (2 * Math.PI);
+      // if (currentPosRad > Math.PI) {
+      //   currentPosRad -= Math.PI * 2.0;
+      // }
 
+      // currentPosRad %= Math.PI;
+
+      // // if (currentPosRad > Math.PI) {
+      //   // currentPosRad = -1.0 * ((2.0 * Math.PI) - currentPosRad);
+      // // }
+      // return currentPosRad;
+      // double currentPosRad = turnMotor.getSelectedSensorPosition() % (2048.0) / 2048.0 / Constants.Drivetrain.kTurningMotorGearRatio * (Math.PI * 2);
+      // if (currentPosRad < 0) {
+      //   currentPosRad += (Math.PI * 2.0);
+      // }
+      // return currentPosRad;
+      double pos =  turnMotor.getSelectedSensorPosition() / Constants.Drivetrain.kTurningMotorGearRatio % 2048 / 2048 * Math.PI * 2;
+      if (pos < 0) {
+        pos += Math.PI * 2;
+      }
+      return pos;
+
+    }
+
+    public double getTurnPositionTicks() {
+      double pos =  turnMotor.getSelectedSensorPosition() / Constants.Drivetrain.kTurningMotorGearRatio % 2048 / 2048 * Math.PI * 2;
+      if (pos < 0) {
+        pos += Math.PI * 2;
+      }
+      return pos;
     }
     
     public double getAbsEncoderRad() {
@@ -118,8 +144,13 @@ public class SwerveModule extends SubsystemBase {
     }
 
 
-    public void setDesiredState(SwerveModuleState swerveState, double xSpeed, double ySpeed, double currentHeading) {
-      SwerveModuleState state = SwerveModuleState.optimize(swerveState, new Rotation2d(getTurnPosition() % Math.PI));
+    public void setDesiredState(SwerveModuleState state, double xSpeed, double ySpeed, double currentHeading) {
+      double fullTargetAngle = state.angle.getRadians();
+        if (fullTargetAngle < 0) {
+          fullTargetAngle += (Math.PI * 2.0);
+        }
+      
+      // SwerveModuleState state = SwerveModuleState.optimize(swerveState, new Rotation2d(turnMotor.getSelectedSensorPosition() % (Math.PI * 2)));
       // SwerveModuleState state = SwerveModuleState.optimize(swerveState, new Rotation2d(getTurnPosition()));
       
       double targetDeg = state.angle.getDegrees();
@@ -145,16 +176,35 @@ public class SwerveModule extends SubsystemBase {
       driveMotor.set(driveSpd);
 
 
-      // double turnOutput = turnPIDController.calculate(getTurnPosition() % Math.PI, Math.toRadians(targetDeg));
-      // turnMotor.set(ControlMode.PercentOutput, turnOutput); 
+      // if (!Constants.Drivetrain.TURN_MANUAL) {
+        // double turnOutput = turnPIDController.calculate(getTurnPosition() % Math.PI, Math.toRadians(targetDeg));
+        
 
-      // Manual
-      if (targetDeg < 0) {
-        targetDeg = 360.0 + targetDeg;
-      }
-      double turnOutput = targetDeg * 2048.0 * Constants.Drivetrain.kTurningMotorGearRatio / 360;
-      turnMotor.set(ControlMode.MotionMagic, turnOutput);
+              double turnOutput = turnPIDController.calculate(
+                getTurnPosition(),
+                fullTargetAngle
+                );
+              SmartDashboard.putNumber("Target Full Angle AWOIDJFQLWFIAJLWKJF", fullTargetAngle);
+              turnMotor.set(ControlMode.PercentOutput, turnOutput); 
+              
+      // } else {
+        // Manual
 
+          // if (targetDeg < 0) {
+          //   targetDeg += 360.0;
+          // }
+          // targetDeg %= 360;
+
+          // double turnOutput = targetDeg / 360 * 2048.0 * Constants.Drivetrain.kTurningMotorGearRatio;
+          // SmartDashboard.putNumber("Target Turn Output Deg", turnOutput);
+          // turnMotor.set(ControlMode.PercentOutput, turnOutput);
+
+        // turnMotor.set(ControlMode.MotionMagic, ((position * Constants.FALCON_ENCODER_TICKS_PER_ROTATIONS) /
+        // Constants.SWERVE_MOTOR_POSITION_CONVERSION_FACTOR) / 360);
+
+      // }
+
+      
 
       // SmartDashboard.putNumber("CurrentPID", Math.toDegrees(getTurnPosition()));
       // SmartDashboard.putNumber("TargetPID", Math.toDegrees(state.angle.getRadians()));
