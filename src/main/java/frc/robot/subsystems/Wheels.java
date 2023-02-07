@@ -1,15 +1,15 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
 public class Wheels extends SubsystemBase {
 
-    private final CANSparkMax wheelMotorLeft = new CANSparkMax(RobotMap.Intake.INTAKE, MotorType.kBrushless);
-    private final CANSparkMax wheelMotorRight = new CANSparkMax(RobotMap.Intake.INTAKE, MotorType.kBrushless);
+    private final WPI_TalonFX wheelMotorLeft = new WPI_TalonFX(RobotMap.Intake.INTAKE);
+    private final WPI_TalonFX wheelMotorRight = new WPI_TalonFX(RobotMap.Intake.INTAKE);
 
     public Wheels() {
         wheelMotorLeft.setInverted(false);
