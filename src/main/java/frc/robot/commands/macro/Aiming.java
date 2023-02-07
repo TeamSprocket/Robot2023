@@ -38,5 +38,7 @@ public class Aiming extends MacroCommand{
     public void end(boolean interrupted){
        //drivetrain.setSpeed(0,0);
     }
+    //TODO commands that offset robot after it finds the tape
+
     
 }
