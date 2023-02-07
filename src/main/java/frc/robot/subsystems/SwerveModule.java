@@ -99,11 +99,11 @@ public class SwerveModule extends SubsystemBase {
       //   currentPosRad += (Math.PI * 2.0);
       // }
       // return currentPosRad;
-      double pos =  turnMotor.getSelectedSensorPosition() / Constants.Drivetrain.kTurningMotorGearRatio % 2048 / 2048 * Math.PI * 2;
-      if (pos < 0) {
-        pos += Math.PI * 2;
+      double posRad =  turnMotor.getSelectedSensorPosition() / Constants.Drivetrain.kTurningMotorGearRatio % 2048 / 2048 * Math.PI * 2;
+      if (posRad < 0) {
+        posRad += Math.PI * 2;
       }
-      return pos;
+      return (Math.PI * 2) - posRad;
 
     }
 
