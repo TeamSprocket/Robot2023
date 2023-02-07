@@ -6,6 +6,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxRelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -21,7 +22,6 @@ public class Elevator extends SubsystemBase{
 
     private RelativeEncoder elevatorLeftEncoder = elevatorLeft.getEncoder(SparkMaxRelativeEncoder.Type.kQuadrature, 4096);
     private RelativeEncoder elevatorRightEncoder = elevatorRight.getEncoder(SparkMaxRelativeEncoder.Type.kQuadrature, 4096);
-
 
     public Elevator(){
         elevatorLeft.setInverted(false);
@@ -49,9 +49,6 @@ public class Elevator extends SubsystemBase{
     }
 
 
-
-
-
 /////////////////////////////////////////////////////////////////
 
 
@@ -66,8 +63,16 @@ public class Elevator extends SubsystemBase{
 
 
     //TODO: Use encoder values for height measurement
+    /**
+     * @return Returns elevator position in meters
+     */
     public double getElevtorHeight(){
-        return elevatorLeftEncoder.getPosition();
+        double motorPos = elevatorLeftEncoder.getPosition();
+        double sprocketPos = motorPos / Constants.Elevator.kElevatorGearRatio;
+
+        double circum = 2 * Math.PI * (Units.inchesToMeters(1.43) / 2);
+
+        return sprocketPos * circum;
     }
 
     public void stop(){
@@ -75,11 +80,7 @@ public class Elevator extends SubsystemBase{
         elevatorRight.stopMotor();
     }
 
-
-
 //////////////////////////////////////////////////
-
-
 
 
     @Override

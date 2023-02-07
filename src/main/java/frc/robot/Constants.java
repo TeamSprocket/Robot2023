@@ -146,9 +146,12 @@ public class Constants {
         public static int kMaxOutput = 1;
         public static int kMinOutput = -1;
 
-        public static double MAX_HEIGHT = 23;
-        public static double MIN_HEIGHT = 0;
-        public static double INCHES_TO_TICKS = 64/55/Math.PI*4096*8.5;
+        public static boolean ELEVATOR_LEFT_IS_INVERTED = false;
+        public static boolean ELEVATOR_RIGHT_IS_INVERTED = false;
+
+        public static double MAX_HEIGHT_METERS = 0.33;
+        public static double MIN_HEIGHT_METERS = 0;
+        public static double kElevatorGearRatio = 9;
 
         public static int CURRENT_STALL_LIMIT = 30;
         public static int CURRENT_FREE_LIMIT = 30;
