@@ -103,7 +103,7 @@ public class SwerveModule extends SubsystemBase {
       if (posRad < 0) {
         posRad += Math.PI * 2;
       }
-      return (Math.PI * 2) - posRad;
+      return posRad;  
 
     }
 
@@ -145,6 +145,9 @@ public class SwerveModule extends SubsystemBase {
 
 
     public void setDesiredState(SwerveModuleState state, double xSpeed, double ySpeed, double currentHeading) {
+      
+      // SwerveModuleState state = SwerveModuleState.optimize(swerveState, null);
+      
       double fullTargetAngle = state.angle.getRadians();
         if (fullTargetAngle < 0) {
           fullTargetAngle += (Math.PI * 2.0);
@@ -152,8 +155,6 @@ public class SwerveModule extends SubsystemBase {
       
       // SwerveModuleState state = SwerveModuleState.optimize(swerveState, new Rotation2d(turnMotor.getSelectedSensorPosition() % (Math.PI * 2)));
       // SwerveModuleState state = SwerveModuleState.optimize(swerveState, new Rotation2d(getTurnPosition()));
-      
-      double targetDeg = state.angle.getDegrees();
       double driveSpd = state.speedMetersPerSecond / Constants.Drivetrain.kMaxSpeedMetersPerSecond;
 
       // if (Constants.Drivetrain.IS_FIELD_ORIENTED) {
@@ -178,7 +179,6 @@ public class SwerveModule extends SubsystemBase {
 
       // if (!Constants.Drivetrain.TURN_MANUAL) {
         // double turnOutput = turnPIDController.calculate(getTurnPosition() % Math.PI, Math.toRadians(targetDeg));
-        
 
               double turnOutput = turnPIDController.calculate(
                 getTurnPosition(),
