@@ -107,21 +107,13 @@ public class SwerveDrive extends SubsystemBase {
         backRight.stop();
     }
 
-    public SwerveModulePosition[] getModulePositions() {
-        return new SwerveModulePosition[] {
-            // new SwerveModulePosition(frontLeft.getDrivePosition(), new Rotation2d(frontLeft.getTurnPosition())),
-            // new SwerveModulePosition(frontRight.getDrivePosition(), new Rotation2d(frontRight.getTurnPosition())),
-            // new SwerveModulePosition(backLeft.getDrivePosition(), new Rotation2d(backLeft.getTurnPosition())),
-            // new SwerveModulePosition(backRight.getDrivePosition(), new Rotation2d(backRight.getTurnPosition())),
-        };
-    }
-
     // Set module speeds/angles
-    public void setModuleStates(SwerveModuleState[] desiredStates, double xSpeed, double ySpeed) {
-        frontLeft.setDesiredState(desiredStates[0], xSpeed, ySpeed, getHeading());
-        frontRight.setDesiredState(desiredStates[1], xSpeed, ySpeed, getHeading());
-        backLeft.setDesiredState(desiredStates[2], xSpeed, ySpeed, getHeading());
-        backRight.setDesiredState(desiredStates[3], xSpeed, ySpeed, getHeading());
+    public void setModuleStates(SwerveModuleState[] desiredStates) {
+        frontLeft.setDesiredState(desiredStates[0]);
+        frontRight.setDesiredState(desiredStates[1]);
+        backLeft.setDesiredState(desiredStates[2]);
+        backRight.setDesiredState(desiredStates[3]);
+
 
         // Debug
         SmartDashboard.putNumber("FrontLeftAngleTarget", desiredStates[0].angle.getDegrees());
@@ -139,21 +131,21 @@ public class SwerveDrive extends SubsystemBase {
         SmartDashboard.putNumber("BackLeftAngleTalonEncoder", Math.toDegrees(backLeft.getTurnPosition()));
         SmartDashboard.putNumber("BackRightAngleTalonEncoder", Math.toDegrees(backRight.getTurnPosition()));
 
-        SmartDashboard.putNumber("FrontLeftAngleRawSensorTicks", frontLeft.getTurnPositionTicks());
-
-        // SmartDashboard.putNumber("FL CURRENT ENCODER POS DEG", Math.toDegrees(frontLeft.getTurnPosition()));
-
-        
-        // SmartDashboard.putString("FrontRightAngle", desiredStates[1].angle.toString());
-        // SmartDashboard.putString("BackLeftAngle", desiredStates[2].angle.toString());
-        // SmartDashboard.putString("BackRightAngle", desiredStates[3].angle.toString());
-
         SmartDashboard.putNumber("Gyro", getHeading());
 
     }
 
     
     // // Odometer
+
+    // public SwerveModulePosition[] getModulePositions() {
+        // return new SwerveModulePosition[] {
+            // new SwerveModulePosition(frontLeft.getDrivePosition(), new Rotation2d(frontLeft.getTurnPosition())),
+            // new SwerveModulePosition(frontRight.getDrivePosition(), new Rotation2d(frontRight.getTurnPosition())),
+            // new SwerveModulePosition(backLeft.getDrivePosition(), new Rotation2d(backLeft.getTurnPosition())),
+            // new SwerveModulePosition(backRight.getDrivePosition(), new Rotation2d(backRight.getTurnPosition())),
+        // };
+    // }
     // private SwerveModulePosition[] swerveModulePositions = {
     //     new SwerveModulePosition(frontLeft.getDrivePosition(), new Rotation2d(frontLeft.getTurnPosition())),
     //     new SwerveModulePosition(frontRight.getDrivePosition(), new Rotation2d(frontRight.getTurnPosition())),

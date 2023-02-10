@@ -91,7 +91,7 @@ public class SwerveDriveCmd extends CommandBase {
     SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.Drivetrain.kMaxSpeedMetersPerSecond);
 
     // Apply to modules
-    swerveDrive.setModuleStates(moduleStates, xSpeed, ySpeed);
+    swerveDrive.setModuleStates(moduleStates);
     SmartDashboard.putString("Module States Desaturated", moduleStates[2].toString());
 
   }
