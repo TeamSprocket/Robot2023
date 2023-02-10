@@ -78,6 +78,8 @@ public class SwerveDrive extends SubsystemBase {
             try {
                 Thread.sleep(Constants.Drivetrain.GYRO_DELAY_MS);
                 zeroHeading();
+                // zeroTalonsABS();
+                zeroTalons();
             }
             catch (Exception e) {
 

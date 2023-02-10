@@ -119,7 +119,7 @@ public final class RobotContainer {
 			// Y
 			() -> driveController.getLeftX(), 
 			// T
-			() -> driveController.getRightX()));
+			() -> -driveController.getRightX()));
 		// new JoystickButton(driveController, 1).whenPressed(swerveDrive.resetGyro());
 
 		// drivetrain.setDefaultCommand(new Drive(drivetrain, leftJoystick, rightJoystick));
@@ -138,7 +138,7 @@ public final class RobotContainer {
 		new JoystickButton(driveController,
 		 	RobotMap.Controller.RESET_GYRO_HEADING_BUTTON_ID).whenPressed(() -> swerveDrive.zeroHeading());
 		new JoystickButton(driveController, 2).whenPressed(() -> swerveDrive.zeroTalons());
-		new JoystickButton(driveController, 3).whenPressed(() -> swerveDrive.zeroTalonsABS());
+		// new JoystickButton(driveController, 3).whenPressed(() -> swerveDrive.zeroTalonsABS());
 	}
 
 	// AUTON

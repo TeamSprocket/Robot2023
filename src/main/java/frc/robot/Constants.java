@@ -77,10 +77,11 @@ public class Constants {
         public static final boolean BACK_LEFT_T_IS_REVERSED = false;
         public static final boolean FRONT_LEFT_T_IS_REVERSED = false; 
 
-        public static final double BACK_RIGHT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(-152);
-        public static final double FRONT_RIGHT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(41);
-        public static final double BACK_LEFT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(-33);
-        public static final double FRONT_LEFT_ABS_ENCODER_OFFSET_RAD =  Math.toRadians(130);
+        public static final double BACK_RIGHT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(115.5);
+        public static final double FRONT_RIGHT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(-52);
+        public static final double BACK_LEFT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(58.5);
+        public static final double FRONT_LEFT_ABS_ENCODER_OFFSET_RAD =  Math.toRadians(47);
+
 
         // ----------CONST----------
         // public static final SwerveDriveKinematics driveKinematics = new SwerveDriveKinematics (
@@ -136,13 +137,12 @@ public class Constants {
         // public static final double PID_CONTROLLER_T_P = PID_CONST_TEST; // not module id
         
         public static final double kMaxSpeedMetersPerSecond = 0.1;
-        public static final double kPhysicalMaxSpeedMetersPerSecond = 0.1;
-        public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 0.5;
+        public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 1;
         
-        public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 0.2
-        ;
-        public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 0.3;
+        public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 0.3;
+        public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 0.75;
 
+        public static final double kPhysicalMaxSpeedMetersPerSecond = kMaxSpeedMetersPerSecond;
         public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond;
             public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = kPhysicalMaxAngularSpeedRadiansPerSecond;
 

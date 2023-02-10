@@ -143,11 +143,20 @@ public class SwerveModule extends SubsystemBase {
       turnMotor.setSelectedSensorPosition(0);
     }
 
+    public SwerveModuleState optimizeState(SwerveModuleState swerveState) {
+      double currentRad = getTurnPosition();
+      if (currentRad > Math.PI) {
+        currentRad -= (Math.PI * 2); 
+      }
+      
+      return SwerveModuleState.optimize(swerveState, new Rotation2d(currentRad));
+    }
 
-    public void setDesiredState(SwerveModuleState state, double xSpeed, double ySpeed, double currentHeading) {
-      
-      // SwerveModuleState state = SwerveModuleState.optimize(swerveState, null);
-      
+
+    public void setDesiredState(SwerveModuleState swerveState, double xSpeed, double ySpeed, double currentHeading) {
+      SwerveModuleState state = optimizeState(swerveState);
+    
+
       double fullTargetAngle = state.angle.getRadians();
         if (fullTargetAngle < 0) {
           fullTargetAngle += (Math.PI * 2.0);
