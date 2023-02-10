@@ -99,6 +99,6 @@ public final class RobotMap {
     public static final int RAW_AXIS_X = 0;
     public static final int RAW_AXIS_Y = 1;
     
-    public static final int RESET_GYRO_HEADING_BUTTON_ID = 1;
+    public static final int RESET_GYRO_HEADING_BUTTON_ID = 5;
   }
 }

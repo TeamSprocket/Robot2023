@@ -4,14 +4,12 @@ package frc.robot.commands;
 import java.util.function.Supplier;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.networktables.GenericEntry;
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -24,27 +22,20 @@ public class SwerveDriveCmd extends CommandBase {
   private final Supplier<Double> xSPDFunct, ySPDFunct, tSPDFunct;
   private final Supplier<Boolean> fieldOrientedFunct;
   private final SlewRateLimiter xSlewLimit, ySlewLimit, tSlewLimit;
-  private GenericEntry kPEntry, kIEntry, kDEntry;
 
     public SwerveDriveCmd(SwerveDrive swerveDrive,
-            Supplier<Double> xSPDFunct, Supplier<Double> ySPDFunct, Supplier<Double> tSPDFunct,
-            Supplier<Boolean> fieldOrientedFunct) {
+            Supplier<Double> xSPDFunct, Supplier<Double> ySPDFunct, Supplier<Double> tSPDFunct) {
 
         this.swerveDrive = swerveDrive;
         this.xSPDFunct = xSPDFunct;
         this.ySPDFunct = ySPDFunct;
         this.tSPDFunct = tSPDFunct;
-        this.fieldOrientedFunct = fieldOrientedFunct;
+        this.fieldOrientedFunct = () -> Constants.Drivetrain.IS_FIELD_ORIENTED;
         this.xSlewLimit = new SlewRateLimiter(Constants.Drivetrain.kTeleDriveMaxAccelerationUnitsPerSecond);
         this.ySlewLimit = new SlewRateLimiter(Constants.Drivetrain.kTeleDriveMaxAccelerationUnitsPerSecond);
         this.tSlewLimit = new SlewRateLimiter(Constants.Drivetrain.kTeleDriveMaxAngularAccelerationUnitsPerSecond);
         
         addRequirements(swerveDrive);
-
-        ShuffleboardTab tab = Shuffleboard.getTab("PID");
-        GenericEntry kPEntry = tab.add("kP", Constants.Drivetrain.kPTurn).getEntry();
-        GenericEntry kIEntry = tab.add("kI", Constants.Drivetrain.kITurn).getEntry();
-        GenericEntry kDEntry = tab.add("kD", Constants.Drivetrain.kDTurn).getEntry();
 
     }
 
@@ -62,7 +53,6 @@ public class SwerveDriveCmd extends CommandBase {
 
   @Override
   public void execute() {
-  
     // Speed with deadband
     double xSpeed = runDeadband(xSPDFunct.get());
     double ySpeed = runDeadband(ySPDFunct.get());
@@ -84,7 +74,9 @@ public class SwerveDriveCmd extends CommandBase {
     ChassisSpeeds chassisSpeeds;
     // Field Oriented
     if (Constants.Drivetrain.IS_FIELD_ORIENTED) {
-      chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, tSpeed, swerveDrive.getRotation2d());
+      double headingRad = Math.toRadians(swerveDrive.getHeading());
+      chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+          xSpeed, ySpeed, tSpeed, new Rotation2d(headingRad));
     } else { // Robot oriented
       chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, tSpeed);
       SmartDashboard.putString("Chassis Speed", chassisSpeeds.toString());
@@ -99,10 +91,9 @@ public class SwerveDriveCmd extends CommandBase {
     SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.Drivetrain.kMaxSpeedMetersPerSecond);
 
     // Apply to modules
-    swerveDrive.setModuleStates(moduleStates, 
-      kPEntry.getDouble(Constants.Drivetrain.kPTurn),
-      kIEntry.getDouble(Constants.Drivetrain.kITurn),
-      kDEntry.getDouble(Constants.Drivetrain.kDTurn));
+    swerveDrive.setModuleStates(moduleStates);
+    SmartDashboard.putString("Module States Desaturated", moduleStates[2].toString());
+
   }
 
   @Override
