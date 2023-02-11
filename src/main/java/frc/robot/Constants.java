@@ -62,7 +62,7 @@ public class Constants {
         public static final double DIST_MODULE_OFFSET = 0.572;
 
         public static final double kDriveMotorGearRatio = 6.75;
-        public static final double kTurningMotorGearRatio = 21.42857143;
+        public static final double kTurningMotorGearRatio = 21.35   ;
         
         // public static final double turnDefaultOffset = 0;
         // public static final double driveDefaultOffset = 0;
@@ -77,17 +77,25 @@ public class Constants {
         public static final boolean BACK_LEFT_T_IS_REVERSED = false;
         public static final boolean FRONT_LEFT_T_IS_REVERSED = false; 
 
-        public static final double BACK_RIGHT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(313);
-        public static final double FRONT_RIGHT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(40);
-        public static final double BACK_LEFT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(325);
-        public static final double FRONT_LEFT_ABS_ENCODER_OFFSET_RAD =  Math.toRadians(31);
+        public static final double BACK_RIGHT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(115.5);
+        public static final double FRONT_RIGHT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(-52);
+        public static final double BACK_LEFT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(58.5);
+        public static final double FRONT_LEFT_ABS_ENCODER_OFFSET_RAD =  Math.toRadians(47);
+
 
         // ----------CONST----------
+        // public static final SwerveDriveKinematics driveKinematics = new SwerveDriveKinematics (
+        //     new Translation2d(-DIST_MODULE_OFFSET / 2, DIST_MODULE_OFFSET / 2),  //FL 
+        //     new Translation2d(DIST_MODULE_OFFSET / 2, DIST_MODULE_OFFSET / 2), //FR 
+        //     new Translation2d(-DIST_MODULE_OFFSET / 2, -DIST_MODULE_OFFSET / 2), //BL 
+        //     new Translation2d(DIST_MODULE_OFFSET / 2, -DIST_MODULE_OFFSET / 2) //BR 
+        // );
+
         public static final SwerveDriveKinematics driveKinematics = new SwerveDriveKinematics (
+            new Translation2d(DIST_MODULE_OFFSET / 2, DIST_MODULE_OFFSET / 2),
             new Translation2d(-DIST_MODULE_OFFSET / 2, DIST_MODULE_OFFSET / 2), 
-            new Translation2d(DIST_MODULE_OFFSET / 2, DIST_MODULE_OFFSET / 2), 
-            new Translation2d(-DIST_MODULE_OFFSET / 2, -DIST_MODULE_OFFSET / 2),
-            new Translation2d(DIST_MODULE_OFFSET / 2, -DIST_MODULE_OFFSET / 2)
+            new Translation2d(DIST_MODULE_OFFSET / 2, -DIST_MODULE_OFFSET / 2),
+            new Translation2d(-DIST_MODULE_OFFSET / 2, -DIST_MODULE_OFFSET / 2)
         );
         
         public static final double kDriveEncoderRot2Meter = kDriveMotorGearRatio * Math.PI * kWheelDiameterMeters;
@@ -101,12 +109,19 @@ public class Constants {
         }
 
         // ----------TUNED----------
-        public static final boolean IS_FIELD_ORIENTED = false;
+        public static final boolean IS_FIELD_ORIENTED = true;
+        public static final boolean TURN_MANUAL = false;
         // public static final double PID_CONST_TEST = 0.04;
+        
+        // public static final double kPTurn = 0.9; // 0.28
+        // public static final double kITurn = 0.0000;
+        // public static final double kDTurn = 0.0015; //0.0005?
 
-        public static final double kPTurn = 0.2; // 0.33
-        public static final double kITurn = 0.0;
-        public static final double kDTurn = 0.0015;
+        public static final double kPTurn = 0.5; // 0.28
+        public static final double kITurn = 0.0000;
+        public static final double kDTurn = 0.0015; //0.0005?
+        
+
     
         //values that worked best from jason - 0.085, 0.17, 0.0000005    
     
@@ -122,12 +137,12 @@ public class Constants {
         // public static final double PID_CONTROLLER_T_P = PID_CONST_TEST; // not module id
         
         public static final double kMaxSpeedMetersPerSecond = 0.1;
-        public static final double kPhysicalMaxSpeedMetersPerSecond = 0.1;
-        public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 0.5;
+        public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 1;
         
-        public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 0.1;
-        public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 0.2;
+        public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 0.3;
+        public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 0.75;
 
+        public static final double kPhysicalMaxSpeedMetersPerSecond = kMaxSpeedMetersPerSecond;
         public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond;
             public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = kPhysicalMaxAngularSpeedRadiansPerSecond;
 
@@ -136,23 +151,24 @@ public class Constants {
     }
 
 
-    public static final class Shooter {
-        public static double MAX_RPM = 4500;
-        public static double TARGET_RPM = 3900;
-
-        public static double P = 0;
+    public static final class Elevator {
+        public static double P = 0.1;
         public static double I = 0;
         public static double D = 0;
-        // public static double FF = 0.000205;
-        public static double FF = 0.000205;
+        public static double Iz = 0;
+        public static double FF = 0;
+
+        public static int kMaxOutput = 1;
+        public static int kMinOutput = -1;
+
+        public static boolean ELEVATOR_LEFT_IS_INVERTED = false;
+        public static boolean ELEVATOR_RIGHT_IS_INVERTED = false;
+
+        public static double MAX_HEIGHT_METERS = 0.33;
+        public static double MIN_HEIGHT_METERS = 0;
+        public static double kElevatorGearRatio = 9;
 
         public static int CURRENT_STALL_LIMIT = 30;
         public static int CURRENT_FREE_LIMIT = 30;
-    }
-
-    public static final class Climber {//min: -1.696402 max:
-        public static double MAX_HEIGHT = 23;
-        public static double MIN_HEIGHT = 0;
-        public static double INCHES_TO_TICKS = 64/55/Math.PI*2048*8.5;
     }
 }

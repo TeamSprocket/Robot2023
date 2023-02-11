@@ -5,6 +5,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.subsystems.*;
 import frc.robot.Constants;
 
 public class Limelight extends SubsystemBase {
@@ -64,6 +65,13 @@ public class Limelight extends SubsystemBase {
   }
   public double getTa() {
     return ta;
+  }
+
+   public void setVisionMode(boolean vision){    
+    if(vision)
+      limelightTable.getEntry("pipeline").setNumber(1);
+    else
+      limelightTable.getEntry("pipeline").setNumber(0);
   }
 
   @Override
