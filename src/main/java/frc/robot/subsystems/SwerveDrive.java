@@ -4,18 +4,40 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
+
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SwerveDrive extends SubsystemBase {
+
+    public enum DriveState{
+        TELE,
+        VISION,
+        LOCKED,
+        ODOM_ALIGN,
+        AUTO,
+        DONE
+    }
+
+    private static DriveState driveState = DriveState.TELE;
+
+    final Lock currentAutoTrajectoryLock = new ReentrantLock();
+    Trajectory currTrajectory;
+    private double autoStartTime;
+
     // Init Swerve Modules 
     private final SwerveModule frontLeft = new SwerveModule(
         RobotMap.Drivetrain.FRONT_LEFT_TALON_D,
@@ -70,6 +92,22 @@ public class SwerveDrive extends SubsystemBase {
         frontRight.resetEncoderPos();
         backLeft.resetEncoderPos();
         backRight.resetEncoderPos();
+    }
+
+    public synchronized void setAutoPath(Trajectory trajectory){
+        currentAutoTrajectoryLock.lock();
+        try{
+            // rotController.reset(Odometry.getInstance().getOdometry().getRotation().getRadians());
+            // setDriveState(DriveState.AUTO);
+            this.currTrajectory = trajectory;
+            autoStartTime = Timer.getFPGATimestamp();
+        }
+
+
+        
+        finally{
+            currentAutoTrajectoryLock.unlock();
+        }
     }
 
     public SwerveDrive() {

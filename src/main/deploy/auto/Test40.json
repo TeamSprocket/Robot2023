@@ -1,0 +1,184 @@
+{
+  "autonomousSteps" : [ {
+    "type" : "trajectory",
+    "states" : [ {
+      "time" : 0.0,
+      "velocity" : 0.0,
+      "acceleration" : 3.809999999999999,
+      "pose" : {
+        "translation" : {
+          "x" : 2.0,
+          "y" : -0.5
+        },
+        "rotation" : {
+          "radians" : 0.0
+        }
+      },
+      "curvature" : 0.0
+    }, {
+      "time" : 0.2538747015025575,
+      "velocity" : 0.9672626127247437,
+      "acceleration" : 0.2896705728943269,
+      "pose" : {
+        "translation" : {
+          "x" : 2.122781753540039,
+          "y" : -0.5
+        },
+        "rotation" : {
+          "radians" : 0.0
+        }
+      },
+      "curvature" : 0.0
+    }, {
+      "time" : 0.36689062489495217,
+      "velocity" : 1.0,
+      "acceleration" : 0.0,
+      "pose" : {
+        "translation" : {
+          "x" : 2.23394775390625,
+          "y" : -0.5
+        },
+        "rotation" : {
+          "radians" : 0.0
+        }
+      },
+      "curvature" : 0.0
+    }, {
+      "time" : 0.45917387379631935,
+      "velocity" : 1.0,
+      "acceleration" : 0.0,
+      "pose" : {
+        "translation" : {
+          "x" : 2.326231002807617,
+          "y" : -0.5
+        },
+        "rotation" : {
+          "radians" : 0.0
+        }
+      },
+      "curvature" : 0.0
+    }, {
+      "time" : 0.5294272459887022,
+      "velocity" : 1.0,
+      "acceleration" : 0.0,
+      "pose" : {
+        "translation" : {
+          "x" : 2.396484375,
+          "y" : -0.5
+        },
+        "rotation" : {
+          "radians" : 0.0
+        }
+      },
+      "curvature" : 0.0
+    }, {
+      "time" : 0.6329428709887022,
+      "velocity" : 1.0,
+      "acceleration" : 0.0,
+      "pose" : {
+        "translation" : {
+          "x" : 2.5,
+          "y" : -0.5
+        },
+        "rotation" : {
+          "radians" : 0.0
+        }
+      },
+      "curvature" : 0.0
+    }, {
+      "time" : 0.7364584959887022,
+      "velocity" : 1.0,
+      "acceleration" : 0.0,
+      "pose" : {
+        "translation" : {
+          "x" : 2.603515625,
+          "y" : -0.5
+        },
+        "rotation" : {
+          "radians" : 0.0
+        }
+      },
+      "curvature" : 0.0
+    }, {
+      "time" : 0.806711868181085,
+      "velocity" : 1.0,
+      "acceleration" : 0.0,
+      "pose" : {
+        "translation" : {
+          "x" : 2.673768997192383,
+          "y" : -0.5
+        },
+        "rotation" : {
+          "radians" : 0.0
+        }
+      },
+      "curvature" : 0.0
+    }, {
+      "time" : 0.8989951170824522,
+      "velocity" : 1.0,
+      "acceleration" : -0.2896705728943259,
+      "pose" : {
+        "translation" : {
+          "x" : 2.76605224609375,
+          "y" : -0.5
+        },
+        "rotation" : {
+          "radians" : 0.0
+        }
+      },
+      "curvature" : 0.0
+    }, {
+      "time" : 1.0120110404748468,
+      "velocity" : 0.9672626127247438,
+      "acceleration" : -3.81,
+      "pose" : {
+        "translation" : {
+          "x" : 2.877218246459961,
+          "y" : -0.5
+        },
+        "rotation" : {
+          "radians" : 0.0
+        }
+      },
+      "curvature" : 0.0
+    }, {
+      "time" : 1.2658857419774043,
+      "velocity" : 0.0,
+      "acceleration" : -3.81,
+      "pose" : {
+        "translation" : {
+          "x" : 3.0,
+          "y" : -0.5
+        },
+        "rotation" : {
+          "radians" : 0.0
+        }
+      },
+      "curvature" : 0.0
+    } ],
+    "pointList" : [ {
+      "x" : [ 2.0, 2.0, 0.0 ],
+      "y" : [ -0.5, 0.0, 0.0 ]
+    }, {
+      "x" : [ 3.0, 2.0, 0.0 ],
+      "y" : [ -0.5, 0.0, 0.0 ]
+    } ],
+    "rotations" : [ {
+      "time" : 0.0,
+      "rotation" : {
+        "radians" : 0.0
+      }
+    }, {
+      "time" : 1.169999973848462,
+      "rotation" : {
+        "radians" : 0.0
+      }
+    } ],
+    "reversed" : false,
+    "color" : 322.35294,
+    "closed" : false,
+    "velocityStart" : 0.0,
+    "velocityEnd" : 0.0,
+    "constraints" : [ ]
+  } ]
+}
