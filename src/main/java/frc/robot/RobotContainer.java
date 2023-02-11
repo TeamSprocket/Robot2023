@@ -26,6 +26,8 @@ import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.RunMotor;
 import frc.robot.commands.SwerveDriveCmd;
+import frc.robot.commands.macro.MoveWrist;
+import frc.robot.subsystems.Wrist;
 // import frc.robot.commands.auton.OneBall;
 // import frc.robot.commands.auton.ZeroBall;
 // import frc.robot.commands.auton.ThreeBall;
@@ -58,7 +60,7 @@ import frc.robot.Constants;
  * commands, and button mappings) should be declared here.
  */
 public final class RobotContainer {
-	
+	private final Wrist Wrist = new Wrist();
 
 	// private final Drivetrain drivetrain = new Drivetrain();
 	// private final PCH pch = new PCH();
@@ -74,6 +76,8 @@ public final class RobotContainer {
 	private final XboxController driveController = new XboxController(0);
 	private final XboxController gamepad = new XboxController(1);
 	// private final RunMotor runMotor = new RunMotor(driveController, 23);
+
+	
 
 	// private final Command oneBall = new OneBall(drivetrain, feeder, intake, shooter, pch);
 	// private final Command twoBallRight = new TwoBallRight(drivetrain, intake, feeder, shooter);
@@ -122,6 +126,8 @@ public final class RobotContainer {
 			() -> driveController.getRightX(), 
 			() -> Constants.Drivetrain.IS_FIELD_ORIENTED));
 		// new JoystickButton(driveController, 1).whenPressed(swerveDrive.resetGyro());
+
+		new JoystickButton(gamepad, 4).whenPressed(new MoveWrist(Wrist, gamepad));
 
 		// drivetrain.setDefaultCommand(new Drive(drivetrain, leftJoystick, rightJoystick));
 		// new JoystickButton(gamepad, 4).whenPressed(new ToggleCompressor(pch, gamepad));
