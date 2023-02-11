@@ -23,6 +23,8 @@ public class Elevator extends SubsystemBase{
     private RelativeEncoder elevatorLeftEncoder = elevatorLeft.getEncoder(SparkMaxRelativeEncoder.Type.kQuadrature, 4096);
     private RelativeEncoder elevatorRightEncoder = elevatorRight.getEncoder(SparkMaxRelativeEncoder.Type.kQuadrature, 4096);
 
+    private double elevatorEncoderBase;
+
     public Elevator(){
         elevatorLeft.setInverted(false);
         elevatorRight.setInverted(false);
@@ -62,12 +64,21 @@ public class Elevator extends SubsystemBase{
     }
 
 
+    public double getElevatorEncoderBase(){
+        return elevatorEncoderBase;
+    }
+
+    public void setElevatorEncoderBase(double elevatorHeight){
+        elevatorEncoderBase = elevatorHeight;
+    }
+
+
     //TODO: Use encoder values for height measurement
     /**
      * @return Returns elevator position in meters
      */
-    public double getElevtorHeight(){
-        double motorPos = elevatorLeftEncoder.getPosition();
+    public double getElevtorHeightInMeters(){
+        double motorPos = elevatorLeftEncoder.getPositionConversionFactor();
         double sprocketPos = motorPos / Constants.Elevator.kElevatorGearRatio;
 
         double circum = 2 * Math.PI * (Units.inchesToMeters(1.43) / 2);
@@ -85,8 +96,11 @@ public class Elevator extends SubsystemBase{
 
     @Override
     public void periodic(){
-        SmartDashboard.putNumber("Encoder Position", elevatorLeftEncoder.getPosition());
-        SmartDashboard.putNumber("Encoder Position", elevatorRightEncoder.getPosition());
-    }
+        SmartDashboard.putNumber("Encoder Left Position", elevatorLeftEncoder.getPosition());
+        SmartDashboard.putNumber("Encoder Right Position", elevatorRightEncoder.getPosition());
 
+        SmartDashboard.putNumber("Voltage", elevatorLeft.getBusVoltage());
+        SmartDashboard.putNumber("Output", elevatorLeft.getAppliedOutput());
+
+    }
 }

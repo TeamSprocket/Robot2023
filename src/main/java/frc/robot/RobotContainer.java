@@ -26,27 +26,8 @@ import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.RunMotor;
 import frc.robot.commands.SwerveDriveCmd;
-// import frc.robot.commands.auton.OneBall;
-// import frc.robot.commands.auton.ZeroBall;
-// import frc.robot.commands.auton.ThreeBall;
-// import frc.robot.commands.auton.TwoBallLeft;
-// import frc.robot.commands.auton.TwoBallRight;
-// import frc.robot.commands.instant.ActuateClimb;
-// import frc.robot.commands.instant.ToggleCompressor;
-// import frc.robot.commands.instant.ToggleIntake;
-// import frc.robot.commands.macro.Shoot;
-// import frc.robot.commands.persistent.BlingBling;
-// import frc.robot.commands.persistent.ClimbArmManual;
-// import frc.robot.commands.persistent.Drive;
-// import frc.robot.commands.persistent.FeedManual;
-// import frc.robot.commands.persistent.RollIntakeManual;
-// import frc.robot.subsystems.Climber;
-// import frc.robot.subsystems.Drivetrain;
-// import frc.robot.subsystems.Feeder;
-// import frc.robot.subsystems.Intake;
-// import frc.robot.subsystems.LEDStrip;
-// import frc.robot.subsystems.PCH;
-// import frc.robot.subsystems.Shooter;
+import frc.robot.commands.peresistent.ElevateManual;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.SwerveDrive;
 import frc.robot.Constants;
 
@@ -60,48 +41,19 @@ import frc.robot.Constants;
 public final class RobotContainer {
 	
 
-	// private final Drivetrain drivetrain = new Drivetrain();
-	// private final PCH pch = new PCH();
-	// private final Climber climber = new Climber();
-	// private final Intake intake = new Intake();
-	// private final Shooter shooter = new Shooter();
-	// private final Feeder feeder = new Feeder();
-	// private final LEDStrip ledStrip = new LEDStrip();
-
-	// private final Joystick leftJoystick = new Joystick(0);
-	// private final Joystick rightJoystick = new Joystick(1);
-
 	private final XboxController driveController = new XboxController(0);
 	private final XboxController gamepad = new XboxController(1);
-	// private final RunMotor runMotor = new RunMotor(driveController, 23);
 
-	// private final Command oneBall = new OneBall(drivetrain, feeder, intake, shooter, pch);
-	// private final Command twoBallRight = new TwoBallRight(drivetrain, intake, feeder, shooter);
-	// private final Command twoBallLeft = new TwoBallLeft(drivetrain, intake, feeder, shooter);
-	// private final Command zeroBall = new ZeroBall(drivetrain);
-	// private final Command threeBall = new ThreeBall(drivetrain, intake, feeder, shooter);
 	SendableChooser<Command> chooser = new SendableChooser<>(); 
 
-	// Swerve Drive
 	private final SwerveDrive swerveDrive = new SwerveDrive();
+	private final Elevator elevator = new Elevator();
 
 
 	public RobotContainer() {
-		// Swerve Drive
-		
-		// WPI_TalonFX talonTest = new WPI_TalonFX(23);
-		
-		
-
 		
 		configureButtonBindings();
 
-		// chooser.addOption("1-ball", oneBall);
-		// chooser.addOption("0-ball", zeroBall);
-		// chooser.addOption("2-ball, human player", twoBallRight);
-		// chooser.setDefaultOption("2-ball, NOT human player", twoBallLeft);
-		// chooser.addOption("BIG BALLS", threeBall);
-		SmartDashboard.putData(chooser);
 	}
 
 	/**
@@ -122,6 +74,8 @@ public final class RobotContainer {
 			() -> driveController.getRightX(), 
 			() -> Constants.Drivetrain.IS_FIELD_ORIENTED));
 		// new JoystickButton(driveController, 1).whenPressed(swerveDrive.resetGyro());
+
+		elevator.setDefaultCommand(new ElevateManual(elevator, gamepad));
 
 		// drivetrain.setDefaultCommand(new Drive(drivetrain, leftJoystick, rightJoystick));
 		// new JoystickButton(gamepad, 4).whenPressed(new ToggleCompressor(pch, gamepad));
