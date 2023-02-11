@@ -52,25 +52,29 @@ public final class RobotMap {
 
   }
 
-  public static final class Intake {
-    public static final int INTAKE_VICTOR = 30; //change this to a victor
-    // public static final int LEFT_INTAKE_PISTON_FORWARD = 0;
-    // public static final int LEFT_INTAKE_PISTON_REVERSE = 1;
-
-    // public static final int RIGHT_INTAKE_PISTON_FORWARD = 0;
-    // public static final int RIGHT_INTAKE_PISTON_REVERSE = 1;
-
-    public static final int PISTON_FORWARD = 0;
-    public static final int PISTON_REVERSE = 3;
+  public static final class Elevator{
+    public static final int ELEVATOR_LEFT = 40;
+    public static final int ELEVATOR_RIGHT = 41;
   }
 
-  public static final class Shooter {
-    public static final int SHOOTER_SPARK_MAX = 42;
-    public static final int FEEDER_SPARK_MAX = 41;
+  public static final class Arm{
+    public static final int ARM_LEFT = 42;
+    public static final int ARM_RIGHT = 43;
   }
 
-  public static final class LEDStrip {
-    public static final int LED = 9;
+  public static final class Wrist{
+    public static final int WRIST = 44;
+  }
+
+  public static final class Intake{
+    public static final int INTAKE = 45;
+
+    //TODO: check piston ports from electrical
+    public static final int PISTON_LEFT_FORWARD = 0;
+    public static final int PISTON_RIGHT_FORWARD = 1;
+    public static final int PISTON_RIGHT_BACKWARD = 2;
+    public static final int PISTON_LEFT_BACKWARD = 3;
+    
   }
 
   public static final class PCH {
@@ -78,27 +82,12 @@ public final class RobotMap {
     public static final int COMPRESSOR = 1;
     public static final int PRESSURE_SENSOR_CHANNEL = 0;
   }
-
-  public static final class Aligner {
-    public static final I2C.Port I2C_PORT = I2C.Port.kOnboard;
-  }
-
-  public static final class Climb {
-    public static final int LEFT_WINCH_TALON = 25;
-    public static final int RIGHT_WINCH_TALON = 26;
-
-    public static final int PISTON_FORWARD = 1;
-    public static final int PISTON_REVERSE = 2;
-
-    public static final int LEFT_SWITCH_PISTON_FORWARD = 11;
-    public static final int LEFT_SWITCH_PISTON_REVERSE = 11;
-
-  }
+  
 
   public static final class Controller {
-    public static final int RAW_AXIS_X = 0;
-    public static final int RAW_AXIS_Y = 1;
+    public static final int DRIVER = 0;
+    public static final int OPERATOR = 1;
     
-    public static final int RESET_GYRO_HEADING_BUTTON_ID = 5;
+    public static final int RESET_GYRO_HEADING_BUTTON_ID = 1;
   }
 }
