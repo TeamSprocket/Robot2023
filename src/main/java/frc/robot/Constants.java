@@ -155,4 +155,15 @@ public class Constants {
         public static double MIN_HEIGHT = 0;
         public static double INCHES_TO_TICKS = 64/55/Math.PI*2048*8.5;
     }
+
+    public static final class Wrist {
+        public static double P = 0.1;
+        public static double I = 0;
+        public static double D = 0;
+        public static double Iz = 0;
+        public static double FF = 0;
+
+        public static int kMaxOutput = 1;
+        public static int kMinOutput = -1;
+    }
 }
