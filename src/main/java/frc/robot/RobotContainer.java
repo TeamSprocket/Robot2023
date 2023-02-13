@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
 //general imports
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -9,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.PCH;
 import frc.robot.subsystems.Claw;
+import frc.robot.commands.instant.ToggleCompressor;
 import frc.robot.commands.instant.ToggleClaw;
 
 
@@ -30,7 +32,8 @@ import frc.robot.commands.instant.ToggleClaw;
  * commands, and button mappings) should be declared here.
  */
 public final class RobotContainer {
-	private final XboxController gamepad = new XboxController(2);
+	private final XboxController gamepad = new XboxController(0);
+	private final XboxController operator = new XboxController(1);
 	private final PCH pch = new PCH();
 	private final Claw claw = new Claw();
 
@@ -67,16 +70,14 @@ public final class RobotContainer {
 	 * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
 	 */
 	private void configureButtonBindings() {
-		new JoystickButton(gamepad, 4).whenPressed(new ToggleClaw(claw));
-
-
-
+		new JoystickButton(operator, 5).whenPressed(new ToggleClaw(claw));
+		new JoystickButton(operator, 4).whenPressed(new ToggleCompressor(pch, gamepad));
         /*drivetrain
 		drivetrain.setDefaultCommand(new Drive(drivetrain, leftJoystick, rightJoystick));
 		*/
 
 		//gamepad commands
-		//new JoystickButton(gamepad, BUTTONNUMBER).whenPressed(NEW COMMAND(SUBSYSTEMS));
+		//new JoystickButton(gamepad, BUTTONNUMBER)Z.whenPressed(NEW COMMAND(SUBSYSTEMS));
 		//subsystem.setDefaultCommand(NEW COMMAND(SUBSYSTEMS, GAMEPAD));
 	}
 

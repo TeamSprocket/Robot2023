@@ -6,7 +6,7 @@ public class Constants {
     public static final class PCH {
         public static final double NORMALIZED_SUPPLY_VOLTAGE = 0; //TODO: Figure out the value
         public static final int MAX_PSI = 120;
-        public static final int MIN_PSI = 70;
+        public static final int MIN_PSI = 80;
     }
 
     public static final class Drivetrain {
