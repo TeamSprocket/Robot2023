@@ -104,7 +104,8 @@ public class SwerveModule extends SubsystemBase {
                * 2048.0 * Constants.Drivetrain.kTurningMotorGearRatio);
     }
 
-    public void zeroTalon() {
+    public void zeroTalon() { 
+      driveMotor.setSelectedSensorPosition(0);
       turnMotor.setSelectedSensorPosition(0);
     }
 
