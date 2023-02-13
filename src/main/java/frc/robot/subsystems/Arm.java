@@ -41,16 +41,16 @@ public class Arm extends SubsystemBase {
         armRight.follow(armLeft, true);
 
 
-        armPIDController.setFeedbackDevice(null);
+        armPIDController.setFeedbackDevice(armLeftEncoder);
     }
 
-    public void setOutput(double output) {
+    public void setOutputArm(double output) {
         armLeft.set(output);
         armRight.set(output);
     }
 
     public void setOutputPID(double setpoint){
-        armPIDControllersetReference(setpoint, CANSparkMax.ControlType.kPosition);
+        armPIDController.setReference(setpoint, CANSparkMax.ControlType.kPosition);
     }
 
 
