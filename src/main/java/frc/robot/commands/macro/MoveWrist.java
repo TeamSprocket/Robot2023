@@ -21,12 +21,12 @@ public class MoveWrist extends MacroCommand {
         double input = gamepad.getRightY();
         double deadbandedInput = Util.deadband(0.1, input);
         
-        wristMovement.setOutput(0.10*deadbandedInput);
+        wristMovement.setOutputManual(0.10*deadbandedInput);
     }
 
     @Override
     public void end(boolean interrupted){
-        wristMovement.setOutput(0);
+        wristMovement.setOutputManual(0);
 
 }
 
