@@ -150,26 +150,6 @@ public class Constants {
         
     }
 
-    public static final class Arm{
-        public static double P = 0.1;
-        public static double I = 0;
-        public static double D = 0;
-
-
-        //TODO UPDATE THIS
-        public static double MAX_HEIGHT_METERS_ELEVATOR = 0.15;
-        public static double MIN_HEIGHT_METERS_ELEVATOR = 0.1;
-        public static double HEIGHT_METERS_ELEVATOR = MAX_HEIGHT_METERS_ELEVATOR - MIN_HEIGHT_METERS_ELEVATOR; 
-
-
-        //TODO UPDATE THIS
-        public static double MAX_HEIGHT_METERS_NO_ELEVATOR = 0;
-        public static double MIN_HEIGHT_METERS_NO_ELEVATOR = 0;
-        public static double HEIGHT_METERS_NO_ELEVATOR = MAX_HEIGHT_METERS_NO_ELEVATOR - MIN_HEIGHT_METERS_NO_ELEVATOR;
-
-        public static double MAX_SPEED = 0.01;
-    }
-
 
     public static final class Elevator {
         public static double P = 0.1;
@@ -185,16 +165,10 @@ public class Constants {
         public static boolean ELEVATOR_RIGHT_IS_INVERTED = false;
 
         public static double MAX_HEIGHT_METERS = 0.33;
-        public static double MIN_HEIGHT_METERS = 0.05;
-        public static double HEIGHT_METERS = MAX_HEIGHT_METERS - MIN_HEIGHT_METERS; 
-
-        public static double MAX_SPEED = 0.05;
-
+        public static double MIN_HEIGHT_METERS = 0;
         public static double kElevatorGearRatio = 9;
 
         public static int CURRENT_STALL_LIMIT = 30;
         public static int CURRENT_FREE_LIMIT = 30;
-
-        public static double kSocketDiameterMeters = 1.43;
     }
 }
