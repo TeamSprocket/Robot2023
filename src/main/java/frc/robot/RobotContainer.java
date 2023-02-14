@@ -2,7 +2,7 @@ package frc.robot;
 
 import java.util.List;
 
-// import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -25,6 +25,9 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.SwerveDriveCmd;
+// import frc.robot.commands.peresistent.ElevateJoystick;
+// import frc.robot.commands.peresistent.ElevatePosition;
+// import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.SwerveDrive;
 import frc.robot.Constants;
 
@@ -42,7 +45,9 @@ public final class RobotContainer {
 
 	SendableChooser<Command> chooser = new SendableChooser<>(); 
 
-	// Swerve Drive
+	private final SwerveDrive swerveDrive = new SwerveDrive();
+	// private final Elevator elevator = new Elevator();
+
 
 	public RobotContainer() {
 		
@@ -75,6 +80,14 @@ public final class RobotContainer {
 		 	RobotMap.Controller.RESET_GYRO_HEADING_BUTTON_ID).whenPressed(() -> swerveDrive.zeroHeading());
 		new JoystickButton(driver, 2).whenPressed(() -> swerveDrive.zeroTalons());
 		// new JoystickButton(driveController, 3).whenPressed(() -> swerveDrive.zeroTalonsABS());
+
+		// Elevator
+		// elevator.setDefaultCommand(new ElevateJoystick(elevator, operator));
+		// new JoystickButton(operator, 1).whenPressed(new ElevatePosition(elevator, 0.05));
+		// new JoystickButton(operator, 2).whenPressed(new ElevatePosition(elevator, 0.92));
+		// new JoystickButton(operator,3).whenPressed(new ElevatePosition(elevator, 1.22));
+		// new JoystickButton(operator, 4).whenPressed(new ElevatePosition(elevator, 0.95));
+
 	}
 
 	// AUTON
