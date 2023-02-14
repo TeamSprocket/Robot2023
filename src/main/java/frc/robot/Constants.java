@@ -165,10 +165,16 @@ public class Constants {
         public static boolean ELEVATOR_RIGHT_IS_INVERTED = false;
 
         public static double MAX_HEIGHT_METERS = 0.33;
-        public static double MIN_HEIGHT_METERS = 0;
+        public static double MIN_HEIGHT_METERS = 0.05;
+        public static double HEIGHT_METERS = MAX_HEIGHT_METERS - MIN_HEIGHT_METERS; 
+
+        public static double MAX_SPEED = 0.05;
+
         public static double kElevatorGearRatio = 9;
 
         public static int CURRENT_STALL_LIMIT = 30;
         public static int CURRENT_FREE_LIMIT = 30;
+
+        public static double kSocketDiameterMeters = 1.43;
     }
 }

@@ -6,11 +6,11 @@ import frc.robot.subsystems.Elevator;
 import frc.util.Util;
 import frc.util.commands.PersistentCommand;
 
-public class ElevateManual extends PersistentCommand {
+public class ElevateJoystick extends PersistentCommand {
     private final Elevator elevator;
     private final XboxController gamepad;
   
-    public ElevateManual (Elevator elevator, XboxController gamepad) {
+    public ElevateJoystick (Elevator elevator, XboxController gamepad) {
       this.elevator = elevator;
       this.gamepad = gamepad;
   
@@ -19,10 +19,12 @@ public class ElevateManual extends PersistentCommand {
   
     @Override
     public void execute() {
-      double input = gamepad.getRightY();
-      double deadbandedInput = Util.deadband(0.1, input);
+      double leftY = gamepad.getLeftY();
+      double deadbandedInput = Util.deadband(0.1, leftY);
 
-      elevator.setOutputManual(deadbandedInput);
+      // elevator.setOutputManual(deadbandedInput);
+      double targetHeightMeters = (deadbandedInput + 1.0) / 2.0 * Constants.Elevator.MAX_HEIGHT_METERS;
+      elevator.setElevatorHeight(targetHeightMeters);
 
       // if (deadbandedInput > 0 && elevator.getElevtorHeightInMeters() > Constants.Elevator.MAX_HEIGHT_METERS){
       //   deadbandedInput = 0;
