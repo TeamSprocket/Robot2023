@@ -19,17 +19,14 @@ public class ElevatePosition extends PersistentCommand {
   
     @Override
     public void execute() {
+      
+      if (position >=  Constants.Elevator.MIN_HEIGHT_METERS || position <= Constants.Elevator.MIN_HEIGHT_METERS){
+        elevator.setElevatorHeight(elevator.getElevtorHeightInMeters());
+      }
+      else{
         elevator.setElevatorHeight(position);
-
-      // if (deadbandedInput > 0 && elevator.getElevtorHeightInMeters() > Constants.Elevator.MAX_HEIGHT_METERS){
-      //   deadbandedInput = 0;
-      // }
-      // else if (deadbandedInput < 0 && elevator.getElevtorHeightInMeters() < Constants.Elevator.MIN_HEIGHT_METERS){
-      //   deadbandedInput = 0;
-      // }
-      // else{
-      //   elevator.setOutputManual(deadbandedInput);
-      // }
+      }
+        
     }
   
     @Override

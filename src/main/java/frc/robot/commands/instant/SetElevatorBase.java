@@ -8,13 +8,11 @@ import frc.util.commands.PersistentCommand;
 
 public class SetElevatorBase extends InstantCommand {
     private final Elevator elevator;
-    private final XboxController gamepad;
     double desiredHeightInMeters = 1.063625;
   
-    public SetElevatorBase (Elevator elevator, XboxController gamepad) {
+    public SetElevatorBase (Elevator elevator) {
       this.elevator = elevator;
-      this.gamepad = gamepad;
-  
+
       addRequirements(elevator);
     }
   

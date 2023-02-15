@@ -15,11 +15,8 @@ import frc.robot.Constants;
 import frc.robot.RobotMap;
 
 
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.motorcontrol.MotorController;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.revrobotics.RelativeEncoder;
@@ -34,7 +31,7 @@ public class Elevator extends SubsystemBase{
     private CANSparkMax elevatorLeft = new CANSparkMax(RobotMap.Elevator.ELEVATOR_LEFT, MotorType.kBrushless);
     private CANSparkMax elevatorRight = new CANSparkMax(RobotMap.Elevator.ELEVATOR_RIGHT, MotorType.kBrushless);
 
-    private final PIDController elevatorPIDController = new PIDController(Constants.Elevator.P, Constants.Elevator.I, Constants.Elevator.D);
+    private final PIDController elevatorPIDController = new PIDController(Constants.Elevator.kP, Constants.Elevator.kI, Constants.Elevator.kD);
 
     private RelativeEncoder elevatorLeftEncoder = elevatorLeft.getEncoder(SparkMaxRelativeEncoder.Type.kQuadrature, 4096);
     private RelativeEncoder elevatorRightEncoder = elevatorRight.getEncoder(SparkMaxRelativeEncoder.Type.kQuadrature, 4096);
@@ -46,12 +43,9 @@ public class Elevator extends SubsystemBase{
         elevatorRight.restoreFactoryDefaults();
 
 
-        elevatorLeft.setInverted(false);
+        elevatorLeft.setInverted(Constants.Elevator.ELEVATOR_LEFT_IS_INVERTED);
 
-        elevatorRight.follow(elevatorLeft, true);
-        
-        // elevatorLeft.follow(elevatorRight);
-        // elevatorRight.setInverted(false);
+        elevatorRight.follow(elevatorLeft, Constants.Elevator.ELEVATOR_RIGHT_IS_INVERTED);
         
         // elevatorLeft.enableVoltageCompensation(8);
         // elevatorRight.enableVoltageCompensation(8);
@@ -78,9 +72,9 @@ public class Elevator extends SubsystemBase{
         // return elevatorEncoderBase;
     // }
 
-    // public void setElevatorEncoderBase(double elevatorHeight){
-        // elevatorEncoderBase = elevatorHeight;
-    // }
+    public void setElevatorEncoderBase(double elevatorHeight){
+        elevatorEncoderBase = elevatorHeight;
+    }
 
 
     //TODO: Use encoder values for height measurement
@@ -112,6 +106,7 @@ public class Elevator extends SubsystemBase{
                 output *= (Math.abs(getElevtorHeightInMeters() - setpoint) / Constants.Elevator.HEIGHT_METERS);
             }
         
+        //TODO CHECK DIVISION OR MULTIPLICATION
         output /= Constants.Elevator.MAX_SPEED;
         elevatorLeft.set(output);
     }
@@ -122,6 +117,8 @@ public class Elevator extends SubsystemBase{
     public void periodic(){
         SmartDashboard.putNumber("Encoder Left Position", elevatorLeftEncoder.getPosition());
         SmartDashboard.putNumber("Encoder Right Position", elevatorRightEncoder.getPosition());
+
+        SmartDashboard.putNumber("Elvator Height", getElevtorHeightInMeters());
 
         SmartDashboard.putNumber("Voltage", elevatorLeft.getBusVoltage());
         SmartDashboard.putNumber("Output", elevatorLeft.getAppliedOutput());

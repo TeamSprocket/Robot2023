@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.SwerveDriveCmd;
+import frc.robot.commands.instant.SetElevatorBase;
 import frc.robot.commands.peresistent.ElevateJoystick;
 import frc.robot.commands.peresistent.ElevatePosition;
 import frc.robot.subsystems.Elevator;
@@ -40,19 +41,20 @@ import frc.robot.Constants;
  */
 public final class RobotContainer {
 
+	//Controllers
 	private final XboxController driver = new XboxController(0);
 	private final XboxController operator = new XboxController(1);
 
+	//Smartdashboard
 	SendableChooser<Command> chooser = new SendableChooser<>(); 
 
+	//Subsystems
 	private final SwerveDrive swerveDrive = new SwerveDrive();
 	private final Elevator elevator = new Elevator();
 
 
 	public RobotContainer() {
 		
-		
-
 		
 		configureButtonBindings();
 		SmartDashboard.putData(chooser);
@@ -82,11 +84,14 @@ public final class RobotContainer {
 		// new JoystickButton(driveController, 3).whenPressed(() -> swerveDrive.zeroTalonsABS());
 
 		// Elevator
+		//TODO CHECK THE POSITIONS OF THE ELEVATOR
 		elevator.setDefaultCommand(new ElevateJoystick(elevator, operator));
 		new JoystickButton(operator, 1).whenPressed(new ElevatePosition(elevator, 0.05));
 		new JoystickButton(operator, 2).whenPressed(new ElevatePosition(elevator, 0.92));
 		new JoystickButton(operator,3).whenPressed(new ElevatePosition(elevator, 1.22));
 		new JoystickButton(operator, 4).whenPressed(new ElevatePosition(elevator, 0.95));
+
+		// new JoystickButton(operator, 5).whenPressed(new SetElevatorBase(elevator));
 
 	}
 

@@ -149,9 +149,10 @@ public class Constants {
     }
 
     public static final class Arm{
-        public static double P = 0.1;
-        public static double I = 0;
-        public static double D = 0;
+        public static double kS = 0.1;
+        public static double kG = 0;
+        public static double kV = 0;
+        public static double kPA = 0;
 
 
         //TODO UPDATE THIS
@@ -170,17 +171,18 @@ public class Constants {
 
 
     public static final class Elevator {
-        public static double P = 0.1;
-        public static double I = 0;
-        public static double D = 0;
-        public static double Iz = 0;
+        //TODO Edit PID values, check inversions, check elvator heights, tune speeds, gear ratio, check if setting encoder base is necessary
+
+        public static double kP = 0.1;
+        public static double kI = 0;
+        public static double kD = 0;
         public static double FF = 0;
 
         public static int kMaxOutput = 1;
         public static int kMinOutput = -1;
 
         public static boolean ELEVATOR_LEFT_IS_INVERTED = false;
-        public static boolean ELEVATOR_RIGHT_IS_INVERTED = false;
+        public static boolean ELEVATOR_RIGHT_IS_INVERTED = true;
 
         public static double MAX_HEIGHT_METERS = 0.33;
         public static double MIN_HEIGHT_METERS = 0.05;
