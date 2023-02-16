@@ -53,6 +53,10 @@ public class SwerveDriveCmd extends CommandBase {
 
   @Override
   public void execute() {
+    // Update Position Estimation
+    swerveDrive.updatePos();
+
+
     // Speed with deadband
     double xSpeed = runDeadband(xSPDFunct.get());
     double ySpeed = runDeadband(ySPDFunct.get());

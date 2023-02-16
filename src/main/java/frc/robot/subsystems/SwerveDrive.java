@@ -4,6 +4,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -55,22 +56,9 @@ public class SwerveDrive extends SubsystemBase {
 
     // Init gyro
     private final ADIS16470_IMU gyro = new ADIS16470_IMU();
+    // private final SwerveDrivePoseEstimator posEstimator;
     
-    public void zeroHeading() {
-        gyro.reset();
-    }
-    public void zeroTalons() {
-        frontLeft.zeroTalon();
-        frontRight.zeroTalon();
-        backLeft.zeroTalon();
-        backRight.zeroTalon();
-    }
-    public void zeroTalonsABS() {
-        frontLeft.resetEncoderPos();
-        frontRight.resetEncoderPos();
-        backLeft.resetEncoderPos();
-        backRight.resetEncoderPos();
-    }
+
 
     public SwerveDrive() {
         // Init gyro with delay
@@ -89,6 +77,23 @@ public class SwerveDrive extends SubsystemBase {
 
     }
 
+    public void zeroHeading() {
+        gyro.reset();
+    }
+    public void zeroTalons() {
+        frontLeft.zeroTalon();
+        frontRight.zeroTalon();
+        backLeft.zeroTalon();
+        backRight.zeroTalon();
+    }
+    public void zeroTalonsABS() {
+        frontLeft.resetEncoderPos();
+        frontRight.resetEncoderPos();
+        backLeft.resetEncoderPos();
+        backRight.resetEncoderPos();
+    }
+
+
     // Get gyro angle from -360 to 360
     public double getHeading() {
         double angle = gyro.getAngle() % 360.0;
@@ -106,6 +111,12 @@ public class SwerveDrive extends SubsystemBase {
         backLeft.stop();
         backRight.stop();
     }
+
+
+    public void updatePos() {
+        
+    }
+
 
     // Set module speeds/angles
     public void setModuleStates(SwerveModuleState[] desiredStates) {
