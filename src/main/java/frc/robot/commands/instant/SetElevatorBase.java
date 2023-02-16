@@ -8,7 +8,7 @@ import frc.util.commands.PersistentCommand;
 
 public class SetElevatorBase extends InstantCommand {
     private final Elevator elevator;
-    double desiredHeightInMeters = 1.063625;
+    // double desiredHeightInMeters = 1.063625;
   
     public SetElevatorBase (Elevator elevator) {
       this.elevator = elevator;

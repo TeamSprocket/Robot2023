@@ -152,13 +152,26 @@ public class Constants {
         public static double kS = 0.1;
         public static double kG = 0;
         public static double kV = 0;
-        public static double kPA = 0;
+        public static double kA = 0;
 
+        public static double kP = 0.1;
+        public static double kI = 0;
+        public static double kD = 0;
+        public static double FF = 0;
 
-        //TODO UPDATE THIS
-        public static double MAX_HEIGHT_METERS_ELEVATOR = 0.15;
-        public static double MIN_HEIGHT_METERS_ELEVATOR = 0.1;
-        public static double HEIGHT_METERS_ELEVATOR = MAX_HEIGHT_METERS_ELEVATOR - MIN_HEIGHT_METERS_ELEVATOR; 
+        public static double velocityRadPerSec = 0.5;
+        public static double accelRadPerSecSquared  = 0.2;
+
+        //Heights listed in meters
+        public static double elevatorHeightRestriction = 0.23;
+
+        //TODO UPDATE THIS - all in radians
+        public static double armMaxAngle = 1.39;
+        public static double armMinAngleNoElevator = 0.75;
+        public static double armMinAngleElevator = 0.26;
+        // public static double MAX_HEIGHT_METERS_ELEVATOR = 0.15;
+        // public static double MIN_HEIGHT_METERS_ELEVATOR = 0.1;
+        // public static double HEIGHT_METERS_ELEVATOR = MAX_HEIGHT_METERS_ELEVATOR - MIN_HEIGHT_METERS_ELEVATOR; 
 
 
         //TODO UPDATE THIS
@@ -171,7 +184,7 @@ public class Constants {
 
 
     public static final class Elevator {
-        //TODO Edit PID values, check inversions, check elvator heights, tune speeds, gear ratio, check if setting encoder base is necessary
+        //TODO Edit PID values, check inversions, tune speeds, gear ratio, check if setting encoder base is necessary
 
         public static double kP = 0.1;
         public static double kI = 0;
@@ -184,10 +197,12 @@ public class Constants {
         public static boolean ELEVATOR_LEFT_IS_INVERTED = false;
         public static boolean ELEVATOR_RIGHT_IS_INVERTED = true;
 
-        public static double MAX_HEIGHT_METERS = 0.33;
-        public static double MIN_HEIGHT_METERS = 0.05;
+        //Heights listed in meters
+        public static double MAX_HEIGHT_METERS = 0.335;
+        public static double MIN_HEIGHT_METERS = 0.03;
         public static double HEIGHT_METERS = MAX_HEIGHT_METERS - MIN_HEIGHT_METERS; 
 
+        //TODO put units (ex. m/s)
         public static double MAX_SPEED = 0.05;
 
         public static double kElevatorGearRatio = 9;
