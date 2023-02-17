@@ -5,13 +5,13 @@ import frc.util.commands.MacroCommand;
 import frc.robot.subsystems.Wheels;
 
 
-public class MoveWheels extends MacroCommand {
-    private final Wheels wheelMovement;
+public class MoveClaw extends MacroCommand {
+    private final Wheels clawMovement;
 
     private final XboxController driveController;
 
-    public MoveWheels(Wheels wheelMovement, XboxController driveController) {
-        this.wheelMovement = wheelMovement;
+    public MoveClaw(Wheels clawMovement, XboxController driveController) {
+        this.clawMovement = clawMovement;
         this.driveController = driveController;
     }
 
@@ -20,12 +20,12 @@ public class MoveWheels extends MacroCommand {
         double input = driveController.getRightTriggerAxis() - driveController.getLeftTriggerAxis(); 
         double deadbandedInput = Util.deadband(0.1, input);
 
-        wheelMovement.setOutput(0.10 * deadbandedInput);
+        clawMovement.setSpeed(0.10 * deadbandedInput);
 
     }
     @Override
     public void end(boolean interrupted) {
-        wheelMovement.setOutput(0);
+        clawMovement.setSpeed(0);
     }
 
     @Override
