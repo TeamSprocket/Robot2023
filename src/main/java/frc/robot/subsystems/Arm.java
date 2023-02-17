@@ -19,6 +19,9 @@ public class Arm extends SubsystemBase {
     private final CANSparkMax armLeft = new CANSparkMax(RobotMap.Arm.ARM_LEFT,MotorType.kBrushless);
     private final CANSparkMax armRight = new CANSparkMax(RobotMap.Arm.ARM_RIGHT, MotorType.kBrushless);
 
+    //CHANGE KS IF FRICTION
+    //CHANGE KG UNTIL ARM CAN HOLD ITS POSITION
+    //CHANGE KV UNTIL SMOOTH AND SLOW MOTION
     private ArmFeedforward armFeedforward = new ArmFeedforward(Constants.Arm.kS, Constants.Arm.kG, 
                                                                 Constants.Arm.kV, Constants.Arm.kA);
 
