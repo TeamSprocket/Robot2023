@@ -58,22 +58,22 @@ public class Arm extends SubsystemBase {
 
     //TODO Add Offset since 0 degrees is assumed parallel w/ floor - get default angle between the arm and elevator
 
-    // public void setArmPositionA(double setpoint){
-    //     double output = armPIDController.calculate(
-    //         getArmPosition(),
-    //         setpoint);
-    //     //TODO ADD ELEVATOR HEIGHT CHANGES
+    public void setArmPositionA(double setpoint){
+        double output = armFeedforward.calculate(
+            getArmPosition(),
+            setpoint);
+        //TODO ADD ELEVATOR HEIGHT CHANGES
         
 
 
-    //     if (getArmPosition() >= (0.8 * Constants.Arm.HEIGHT_METERS_NO_ELEVATOR)
-    //     || getArmPosition() <= (0.2 * Constants.Arm.HEIGHT_METERS_NO_ELEVATOR)) {
-    //         output *= (Math.abs(getArmPosition() - setpoint) / Constants.Elevator.HEIGHT_METERS);
-    //     }
+        if (getArmPosition() >= (0.8 * Constants.Arm.HEIGHT_METERS_NO_ELEVATOR)
+        || getArmPosition() <= (0.2 * Constants.Arm.HEIGHT_METERS_NO_ELEVATOR)) {
+            output *= (Math.abs(getArmPosition() - setpoint) / Constants.Elevator.HEIGHT_METERS);
+        }
         
-    //     output /= Constants.Elevator.MAX_SPEED;
-    //     armLeft.set(output);
-    // }
+        output /= Constants.Elevator.MAX_SPEED;
+        armLeft.set(output);
+    }
 
     public void setArmPosition(double setpoint){
         double output = armPIDController.calculate(
