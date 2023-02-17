@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -27,7 +28,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.commands.RunMotor;
 import frc.robot.commands.SwerveDriveCmd;
-import frc.robot.commands.macro.MoveWheels;
+import frc.robot.commands.macro.MoveClaw;
 import frc.robot.subsystems.Wheels;
 // import frc.robot.commands.auton.OneBall;
 // import frc.robot.commands.auton.ZeroBall;
@@ -125,8 +126,8 @@ public final class RobotContainer {
 			() -> driveController.getRightX(), 
 			() -> Constants.Drivetrain.IS_FIELD_ORIENTED));
 		// new JoystickButton(driveController, 1).whenPressed(swerveDrive.resetGyro());
-		new JoystickButton(driveController,7).whenPressed(new MoveWheels(Wheels, driveController));
-		new JoystickButton(driveController, 8).whenPressed(new MoveWheels(Wheels, driveController));
+		new JoystickButton(driveController, 7).whenPressed(new MoveClaw(Wheels, driveController));
+		new JoystickButton(driveController, 8).whenPressed(new MoveClaw(Wheels, driveController));
 
 		// drivetrain.setDefaultCommand(new Drive(drivetrain, leftJoystick, rightJoystick));
 		// new JoystickButton(gamepad, 4).whenPressed(new ToggleCompressor(pch, gamepad));
