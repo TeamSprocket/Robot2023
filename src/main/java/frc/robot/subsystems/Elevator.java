@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
@@ -33,8 +34,8 @@ public class Elevator extends SubsystemBase{
 
     private final PIDController elevatorPIDController = new PIDController(Constants.Elevator.kP, Constants.Elevator.kI, Constants.Elevator.kD);
 
-    private RelativeEncoder elevatorLeftEncoder = elevatorLeft.getEncoder(SparkMaxRelativeEncoder.Type.kQuadrature, 4096);
-    private RelativeEncoder elevatorRightEncoder = elevatorRight.getEncoder(SparkMaxRelativeEncoder.Type.kQuadrature, 4096);
+    private RelativeEncoder elevatorLeftEncoder = elevatorLeft.getEncoder();
+    private RelativeEncoder elevatorRightEncoder = elevatorRight.getEncoder();
 
     private double elevatorEncoderBase;
 
@@ -44,6 +45,7 @@ public class Elevator extends SubsystemBase{
 
 
         elevatorLeft.setInverted(Constants.Elevator.ELEVATOR_LEFT_IS_INVERTED);
+
 
         elevatorRight.follow(elevatorLeft, Constants.Elevator.ELEVATOR_RIGHT_IS_INVERTED);
         
@@ -111,6 +113,22 @@ public class Elevator extends SubsystemBase{
         elevatorLeft.set(output);
     }
 
+    public void setElevatorHeightEncoder(double setpoint) {
+        double encoderHeight = elevatorLeftEncoder.getPositionConversionFactor();
+        double output = elevatorPIDController.calculate(
+            encoderHeight,
+            setpoint);
+        if (encoderHeight >= (0.8 * Constants.Elevator.MAX_ENCODER_VALUE)
+            || encoderHeight <= (0.2 * Constants.Elevator.MIN_ENCODER_VALUE)) {
+                output *= (Math.abs(encoderHeight - setpoint) / Constants.Elevator.ENCODER_RANGE);
+            }
+        
+        //TODO CHECK DIVISION OR MULTIPLICATION
+        output /= Constants.Elevator.MAX_SPEED;
+        elevatorLeft.set(output);
+    }
+
+
 
 
     @Override
@@ -118,7 +136,7 @@ public class Elevator extends SubsystemBase{
         SmartDashboard.putNumber("Encoder Left Position", elevatorLeftEncoder.getPosition());
         SmartDashboard.putNumber("Encoder Right Position", elevatorRightEncoder.getPosition());
 
-        SmartDashboard.putNumber("Elvator Height", getElevtorHeightInMeters());
+        SmartDashboard.putNumber("Elvator Height", (elevatorLeftEncoder.getPositionConversionFactor()/Constants.Elevator.kElevatorGearRatio)*(2 * Math.PI * (Units.inchesToMeters(Constants.Elevator.kSocketDiameterMeters) / 2)));
 
         SmartDashboard.putNumber("Voltage", elevatorLeft.getBusVoltage());
         SmartDashboard.putNumber("Output", elevatorLeft.getAppliedOutput());

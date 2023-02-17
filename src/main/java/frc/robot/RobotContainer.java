@@ -28,7 +28,9 @@ import frc.robot.commands.SwerveDriveCmd;
 import frc.robot.commands.instant.SetElevatorBase;
 import frc.robot.commands.peresistent.ElevateJoystick;
 import frc.robot.commands.peresistent.ElevatePosition;
+import frc.robot.commands.peresistent.MoveArmJoystick;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.SwerveDrive;
 import frc.robot.Constants;
 
@@ -51,6 +53,7 @@ public final class RobotContainer {
 	//Subsystems
 	private final SwerveDrive swerveDrive = new SwerveDrive();
 	private final Elevator elevator = new Elevator();
+	private final Arm arm = new Arm();
 
 
 	public RobotContainer() {
@@ -85,11 +88,12 @@ public final class RobotContainer {
 
 		// Elevator
 		//TODO CHECK THE POSITIONS OF THE ELEVATOR
-		elevator.setDefaultCommand(new ElevateJoystick(elevator, operator));
-		new JoystickButton(operator, 1).whenPressed(new ElevatePosition(elevator, 0.05));
-		new JoystickButton(operator, 2).whenPressed(new ElevatePosition(elevator, 0.92));
-		new JoystickButton(operator,3).whenPressed(new ElevatePosition(elevator, 1.22));
-		new JoystickButton(operator, 4).whenPressed(new ElevatePosition(elevator, 0.95));
+		// elevator.setDefaultCommand(new ElevateJoystick(elevator, operator));
+		new JoystickButton(operator, 1).whenPressed(new ElevatePosition(elevator, 0.000005));
+		new JoystickButton(operator, 2).whenPressed(new ElevatePosition(elevator, 10));
+		new JoystickButton(operator,3).whenPressed(new ElevatePosition(elevator, 15));
+		new JoystickButton(operator, 4).whenPressed(new ElevatePosition(elevator, 20));
+		new JoystickButton(driver, 3).whenPressed(new MoveArmJoystick(arm, elevator, 10.0));
 
 		// new JoystickButton(operator, 5).whenPressed(new SetElevatorBase(elevator));
 

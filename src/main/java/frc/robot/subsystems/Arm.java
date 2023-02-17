@@ -28,8 +28,8 @@ public class Arm extends SubsystemBase {
     private PIDController armPIDController = new PIDController(Constants.Arm.kP, Constants.Arm.kI, Constants.Arm.kD);                                                  
 
     
-    private RelativeEncoder armLeftEncoder = armLeft.getEncoder(SparkMaxRelativeEncoder.Type.kQuadrature, 4096);
-    private RelativeEncoder armRightEncoder = armRight.getEncoder(SparkMaxRelativeEncoder.Type.kQuadrature, 4096); 
+    private RelativeEncoder armLeftEncoder = armLeft.getEncoder();
+    private RelativeEncoder armRightEncoder = armRight.getEncoder(); 
 
 
     public Arm(){

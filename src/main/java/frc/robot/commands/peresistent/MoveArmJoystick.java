@@ -12,7 +12,7 @@ public class MoveArmJoystick extends PersistentCommand {
     private final Elevator elevator;
     private final double position;
   
-    public MoveArmJoystick (Arm arm,Elevator elevator, double position) {
+    public MoveArmJoystick (Arm arm, Elevator elevator, double position) {
         this.arm = arm;
         this.elevator = elevator;
         this.position = position;

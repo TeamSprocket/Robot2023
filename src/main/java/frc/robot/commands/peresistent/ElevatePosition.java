@@ -26,6 +26,16 @@ public class ElevatePosition extends PersistentCommand {
       else{
         elevator.setElevatorHeight(position);
       }
+
+      // if (encoder >=  Constants.Elevator.MAX_ENCODER_VALUE){
+      //   elevator.setElevatorHeightEncoder(Constants.Elevator.MAX_ENCODER_VALUE);
+      // }
+      // else if (encoder <=  Constants.Elevator.MIN_ENCODER_VALUE){
+      //   elevator.setElevatorHeightEncoder(Constants.Elevator.MIN_ENCODER_VALUE);
+      // }        
+      // else{
+      //   elevator.setElevatorHeightEncoder(encoder);
+      // }
         
     }
   
