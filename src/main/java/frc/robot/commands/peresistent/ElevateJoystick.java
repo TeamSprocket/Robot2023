@@ -10,6 +10,9 @@ import frc.util.commands.PersistentCommand;
 public class ElevateJoystick extends PersistentCommand {
     private final Elevator elevator;
     private final XboxController gamepad;
+
+    private static double elevatorOutput;
+    private static double targetHeight;
   
     public ElevateJoystick (Elevator elevator, XboxController gamepad) {
       this.elevator = elevator;
@@ -17,17 +20,54 @@ public class ElevateJoystick extends PersistentCommand {
   
       addRequirements(elevator);
     }
+
+    public static double getTargetHeight(){
+      return targetHeight;
+    }
+
+    public static double getElevatorOutput(){
+      return elevatorOutput;
+    }
   
     @Override
     public void execute() {
       double leftY = gamepad.getLeftY();
 
-      double deadbandedInput = Util.deadband(0.2, leftY);
+      double deadbandedInput = Util.deadband(0.1, leftY);
 
       /////////////////////////////////////////////////////////////
       //USING HEIGHT
-      double targetHeightMeters = (deadbandedInput) / 2.0 * Constants.Elevator.MAX_HEIGHT_METERS;
-      if (deadbandedInput > 0 && elevator.getElevtorHeightInMeters() > Constants.Elevator.MAX_HEIGHT_METERS){
+      double targetHeightMeters = (deadbandedInput) * Constants.Elevator.MAX_HEIGHT_METERS;
+      targetHeight = targetHeightMeters;
+
+      if (deadbandedInput == 0){
+        double lEValue = elevator.getLeftEncoder();
+        double tHM;
+        //lEValue = 4.133*(tHM^2) - 0.061*(tHM) - 0.102;
+        //tHM = (0.061 + Math.sqrt(0.061*0.061 - 4*4.133*-0.102) ) / (2*(4.133)) - lEValue;
+        tHM = Math.sqrt((lEValue + 0.127)/4.109);
+        System.out.println(tHM);
+        // if(lEValue > Constants.Elevator.MAX_ENCODER_VALUE){
+        //   lEValue = 23;
+        // }
+        // else if (lEValue < Constants.Elevator.MIN_ENCODER_VALUE){
+        //   lEValue = 0;
+        // }
+        //else{
+          if (lEValue > 6 && lEValue < 14){
+            tHM -= 0.05;
+          }
+          if (lEValue > 20) {
+            tHM += 0.05;
+          }    
+        //}
+        elevator.setElevatorHeight(tHM-0.05);
+      }
+
+      
+
+
+      else if (deadbandedInput > 0 && elevator.getElevtorHeightInMeters() > Constants.Elevator.MAX_HEIGHT_METERS){
         deadbandedInput = 0;
       }
       else if (deadbandedInput < 0 && elevator.getElevtorHeightInMeters() < Constants.Elevator.MIN_HEIGHT_METERS){

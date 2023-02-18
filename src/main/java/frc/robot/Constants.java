@@ -203,11 +203,11 @@ public class Constants {
         public static double HEIGHT_METERS = MAX_HEIGHT_METERS - MIN_HEIGHT_METERS; 
 
         public static double MAX_ENCODER_VALUE = 23;
-        public static double MIN_ENCODER_VALUE = 0;
+        public static double MIN_ENCODER_VALUE = 1;
         public static double ENCODER_RANGE = MAX_ENCODER_VALUE - MIN_ENCODER_VALUE;
 
         //TODO put units (ex. m/s)
-        public static double MAX_SPEED = 2.5;
+        public static double MAX_SPEED = 1.25;
 
         public static double kElevatorGearRatio = 9; //16.5
 

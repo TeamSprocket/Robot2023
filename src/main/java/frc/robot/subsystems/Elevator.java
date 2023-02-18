@@ -14,10 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
-
-
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.TimedRobot;
+import frc.robot.commands.peresistent.ElevateJoystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.revrobotics.RelativeEncoder;
@@ -100,6 +97,19 @@ public class Elevator extends SubsystemBase{
 //////////////////////////////////////////////////
 
 
+    public double getElevatorOutput(double setpoint) {
+        double output = elevatorPIDController.calculate(
+            getElevtorHeightInMeters(),
+            setpoint);
+        if (getElevtorHeightInMeters() >= (0.8 * Constants.Elevator.HEIGHT_METERS)
+            || getElevtorHeightInMeters() <= (0.2 * Constants.Elevator.HEIGHT_METERS)) {
+                output *= (Math.abs(getElevtorHeightInMeters() - setpoint) / Constants.Elevator.HEIGHT_METERS);
+            }
+        
+        //TODO CHECK DIVISION OR MULTIPLICATION
+        output *= Constants.Elevator.MAX_SPEED;
+        return output;
+    }
     public void setElevatorHeight(double setpoint) {
         double output = elevatorPIDController.calculate(
             getElevtorHeightInMeters(),
@@ -128,7 +138,9 @@ public class Elevator extends SubsystemBase{
         output /= Constants.Elevator.MAX_SPEED;
         elevatorLeft.set(output);
     }
-
+    public double getLeftEncoder(){
+        return elevatorLeftEncoder.getPosition();
+    }
 
 
 
@@ -138,7 +150,8 @@ public class Elevator extends SubsystemBase{
         SmartDashboard.putNumber("Encoder Right Position", elevatorRightEncoder.getPosition());
 
 
-        // SmartDashboard.putNumber("Elvator Height", (elevatorLeftEncoder.getPositionConversionFactor()/Constants.Elevator.kElevatorGearRatio)*(2 * Math.PI * (Units.inchesToMeters(Constants.Elevator.kSocketDiameterMeters) / 2)));
+        SmartDashboard.putNumber("Elvator Target Height", ElevateJoystick.getTargetHeight());
+        // SmartDashboard.putNumber("Elvator Output", elevatorLeftEncoder.getElevatorOutput());
 
         SmartDashboard.putNumber("Voltage", elevatorLeft.getBusVoltage());
         SmartDashboard.putNumber("Output", elevatorLeft.getAppliedOutput());
