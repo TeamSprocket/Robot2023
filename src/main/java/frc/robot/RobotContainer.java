@@ -24,6 +24,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+// import src.main.deploy.auto.Test40;
+
 // import frc.robot.commands.RunMotor;
 import frc.robot.commands.SwerveDriveCmd;
 // import frc.robot.commands.auton.OneBall;
@@ -59,6 +61,7 @@ import frc.robot.Constants;
  */
 public final class RobotContainer {
 	
+	// private final Command Test40 = new Test40(swerveDrive);
 
 	// private final Drivetrain drivetrain = new Drivetrain();
 	// private final PCH pch = new PCH();
@@ -81,6 +84,7 @@ public final class RobotContainer {
 	// private final Command zeroBall = new ZeroBall(drivetrain);
 	// private final Command threeBall = new ThreeBall(drivetrain, intake, feeder, shooter);
 	SendableChooser<Command> chooser = new SendableChooser<>(); 
+	// private final Command Test40 = new Test40(swerveDrive);
 
 	// Swerve Drive
 	private final SwerveDrive swerveDrive = new SwerveDrive();
@@ -101,6 +105,7 @@ public final class RobotContainer {
 		// chooser.addOption("2-ball, human player", twoBallRight);
 		// chooser.setDefaultOption("2-ball, NOT human player", twoBallLeft);
 		// chooser.addOption("BIG BALLS", threeBall);
+		// chooser.addOption("test40", test40);
 		SmartDashboard.putData(chooser);
 	}
 
@@ -142,8 +147,9 @@ public final class RobotContainer {
 	}
 
 	// AUTON
-	// public Command getAutonomousCommand() {
-	// 	// return chooser.getSelected();
+	public Command getAutonomousCommand() {
+		return chooser.getSelected();
+	}
 
 	// 	// Create Trajectory Speed/Settings
 	// 	TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
