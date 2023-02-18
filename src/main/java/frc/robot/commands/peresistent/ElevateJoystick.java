@@ -53,18 +53,14 @@ public class ElevateJoystick extends PersistentCommand {
         // else if (lEValue < Constants.Elevator.MIN_ENCODER_VALUE){
         //   lEValue = 0;
         // }
-        //else{
-          if (lEValue > 6 && lEValue < 14){
-            tHM -= 0.05;
-          }
-          if (lEValue > 20) {
-            tHM += 0.05;
-          }    
-        //}
+        if (lEValue > 6 && lEValue < 14){
+          tHM -= 0.05;
+        }
+        if (lEValue > 20) {
+          tHM += 0.05;
+        }    
         elevator.setElevatorHeight(tHM-0.05);
       }
-
-      
 
 
       else if (deadbandedInput > 0 && elevator.getElevtorHeightInMeters() > Constants.Elevator.MAX_HEIGHT_METERS){

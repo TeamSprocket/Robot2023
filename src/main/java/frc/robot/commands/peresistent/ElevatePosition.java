@@ -20,22 +20,25 @@ public class ElevatePosition extends PersistentCommand {
     @Override
     public void execute() {
       
-      if (position >=  Constants.Elevator.MIN_HEIGHT_METERS || position <= Constants.Elevator.MIN_HEIGHT_METERS){
-        elevator.setElevatorHeight(elevator.getElevtorHeightInMeters());
-      }
-      else{
-        elevator.setElevatorHeight(position);
-      }
-
-      // if (encoder >=  Constants.Elevator.MAX_ENCODER_VALUE){
-      //   elevator.setElevatorHeightEncoder(Constants.Elevator.MAX_ENCODER_VALUE);
-      // }
-      // else if (encoder <=  Constants.Elevator.MIN_ENCODER_VALUE){
-      //   elevator.setElevatorHeightEncoder(Constants.Elevator.MIN_ENCODER_VALUE);
-      // }        
-      // else{
-      //   elevator.setElevatorHeightEncoder(encoder);
-      // }
+      double lEValue = elevator.getLeftEncoder();
+        double tHM;
+        //lEValue = 4.133*(tHM^2) - 0.061*(tHM) - 0.102;
+        //tHM = (0.061 + Math.sqrt(0.061*0.061 - 4*4.133*-0.102) ) / (2*(4.133)) - lEValue;
+        tHM = Math.sqrt((lEValue + 0.127)/4.109);
+        System.out.println(tHM);
+        // if(lEValue > Constants.Elevator.MAX_ENCODER_VALUE){
+        //   lEValue = 23;
+        // }
+        // else if (lEValue < Constants.Elevator.MIN_ENCODER_VALUE){
+        //   lEValue = 0;
+        // }
+        if (lEValue > 6 && lEValue < 14){
+          tHM -= 0.05;
+        }
+        if (lEValue > 20) {
+          tHM += 0.05;
+        }    
+        elevator.setElevatorHeight(tHM-0.05);
         
     }
   
