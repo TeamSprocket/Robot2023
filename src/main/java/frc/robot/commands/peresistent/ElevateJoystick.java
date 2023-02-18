@@ -41,6 +41,8 @@ public class ElevateJoystick extends PersistentCommand {
       targetHeight = targetHeightMeters;
 
       if (deadbandedInput == 0){
+
+        //add offset from starting elevator higher
         double lEValue = elevator.getLeftEncoder();
         double tHM;
         //lEValue = 4.133*(tHM^2) - 0.061*(tHM) - 0.102;

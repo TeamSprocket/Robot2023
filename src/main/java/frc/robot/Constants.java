@@ -186,6 +186,7 @@ public class Constants {
     public static final class Elevator {
         //TODO Edit PID values, check inversions, tune speeds, gear ratio, check if setting encoder base is necessary
 
+        //tune values
         public static double kP = 0.5;
         public static double kI = 0;
         public static double kD = 0.000;
@@ -198,6 +199,7 @@ public class Constants {
         public static boolean ELEVATOR_RIGHT_IS_INVERTED = true;
 
         //Heights listed in meters
+        //TUNE THE MAX/MIN VALUES
         public static double MAX_HEIGHT_METERS = 10; //0.335
         public static double MIN_HEIGHT_METERS = 0.03;
         public static double HEIGHT_METERS = MAX_HEIGHT_METERS - MIN_HEIGHT_METERS; 
@@ -206,7 +208,7 @@ public class Constants {
         public static double MIN_ENCODER_VALUE = 1;
         public static double ENCODER_RANGE = MAX_ENCODER_VALUE - MIN_ENCODER_VALUE;
 
-        //TODO put units (ex. m/s)
+        //TODO put units (ex. m/s) & tune speed
         public static double MAX_SPEED = 1.25;
 
         public static double kElevatorGearRatio = 9; //16.5
