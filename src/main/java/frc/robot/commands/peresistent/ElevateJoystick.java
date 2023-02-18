@@ -22,19 +22,11 @@ public class ElevateJoystick extends PersistentCommand {
     public void execute() {
       double leftY = gamepad.getLeftY();
 
-      int direction;
-      if (leftY > 0){
-        direction = 1;
-      }
-      else{
-        direction = -1;
-      }
-
       double deadbandedInput = Util.deadband(0.2, leftY);
 
       /////////////////////////////////////////////////////////////
       //USING HEIGHT
-      double targetHeightMeters = (deadbandedInput + 1.0) / 2.0 * Constants.Elevator.MAX_HEIGHT_METERS;
+      double targetHeightMeters = (deadbandedInput) / 2.0 * Constants.Elevator.MAX_HEIGHT_METERS;
       if (deadbandedInput > 0 && elevator.getElevtorHeightInMeters() > Constants.Elevator.MAX_HEIGHT_METERS){
         deadbandedInput = 0;
       }
@@ -42,12 +34,7 @@ public class ElevateJoystick extends PersistentCommand {
         deadbandedInput = 0;
       }
       else{
-        if (direction ==-1){
-          elevator.setElevatorHeight(-targetHeightMeters);
-        }
-        else{
-          elevator.setElevatorHeight(targetHeightMeters);
-        }
+        elevator.setElevatorHeight(targetHeightMeters);
       }
 
       /////////////////////////////////////////////////////////

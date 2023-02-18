@@ -88,7 +88,7 @@ public final class RobotContainer {
 
 		// Elevator
 		//TODO CHECK THE POSITIONS OF THE ELEVATOR
-		// elevator.setDefaultCommand(new ElevateJoystick(elevator, operator));
+		elevator.setDefaultCommand(new ElevateJoystick(elevator, operator));
 		new JoystickButton(operator, 1).whenPressed(new ElevatePosition(elevator, 0.000005));
 		new JoystickButton(operator, 2).whenPressed(new ElevatePosition(elevator, 10));
 		new JoystickButton(operator,3).whenPressed(new ElevatePosition(elevator, 15));

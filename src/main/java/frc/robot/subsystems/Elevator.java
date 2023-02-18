@@ -36,6 +36,7 @@ public class Elevator extends SubsystemBase{
 
     private RelativeEncoder elevatorLeftEncoder = elevatorLeft.getEncoder();
     private RelativeEncoder elevatorRightEncoder = elevatorRight.getEncoder();
+    
 
     private double elevatorEncoderBase;
 
@@ -84,7 +85,7 @@ public class Elevator extends SubsystemBase{
      * @return Returns elevator position in meters
      */
     public double getElevtorHeightInMeters(){
-        double motorPos = elevatorLeftEncoder.getPositionConversionFactor();
+        double motorPos = elevatorLeftEncoder.getPosition() * 2 * Math.PI;
         double sprocketPos = motorPos / Constants.Elevator.kElevatorGearRatio;
 
         double circum = 2 * Math.PI * (Units.inchesToMeters(Constants.Elevator.kSocketDiameterMeters) / 2);
@@ -109,7 +110,7 @@ public class Elevator extends SubsystemBase{
             }
         
         //TODO CHECK DIVISION OR MULTIPLICATION
-        output /= Constants.Elevator.MAX_SPEED;
+        output *= Constants.Elevator.MAX_SPEED;
         elevatorLeft.set(output);
     }
 
@@ -136,7 +137,8 @@ public class Elevator extends SubsystemBase{
         SmartDashboard.putNumber("Encoder Left Position", elevatorLeftEncoder.getPosition());
         SmartDashboard.putNumber("Encoder Right Position", elevatorRightEncoder.getPosition());
 
-        SmartDashboard.putNumber("Elvator Height", (elevatorLeftEncoder.getPositionConversionFactor()/Constants.Elevator.kElevatorGearRatio)*(2 * Math.PI * (Units.inchesToMeters(Constants.Elevator.kSocketDiameterMeters) / 2)));
+
+        // SmartDashboard.putNumber("Elvator Height", (elevatorLeftEncoder.getPositionConversionFactor()/Constants.Elevator.kElevatorGearRatio)*(2 * Math.PI * (Units.inchesToMeters(Constants.Elevator.kSocketDiameterMeters) / 2)));
 
         SmartDashboard.putNumber("Voltage", elevatorLeft.getBusVoltage());
         SmartDashboard.putNumber("Output", elevatorLeft.getAppliedOutput());
