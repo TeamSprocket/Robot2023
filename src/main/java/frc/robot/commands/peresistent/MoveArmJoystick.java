@@ -23,14 +23,14 @@ public class MoveArmJoystick extends PersistentCommand {
     @Override
     public void execute() {
 
-      double elevatorHeight = elevator.getElevtorHeightInMeters();
+      double elevatorHeight = elevator.getElevtorHeight();
 
       if (elevatorHeight < Constants.Arm.elevatorHeightRestriction){
         arm.setArmPosition(arm.getArmPosition());
       }
       else{
         if (position >=  Constants.Elevator.MIN_HEIGHT_METERS || position <= Constants.Elevator.MIN_HEIGHT_METERS){
-          elevator.setElevatorHeight(elevator.getElevtorHeightInMeters());
+          elevator.setElevatorHeight(elevator.getElevtorHeight());
         }
         else{
           elevator.setElevatorHeight(position);

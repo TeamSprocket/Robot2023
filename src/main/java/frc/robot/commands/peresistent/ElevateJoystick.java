@@ -41,36 +41,38 @@ public class ElevateJoystick extends PersistentCommand {
       targetHeight = targetHeightMeters;
 
       if (deadbandedInput == 0){
-
-        //add offset from starting elevator higher
-        double lEValue = elevator.getLeftEncoder();
+        double lEValue = elevator.getLeftEncoder() + 16.46;
         double tHM;
         //lEValue = 4.133*(tHM^2) - 0.061*(tHM) - 0.102;
         //tHM = (0.061 + Math.sqrt(0.061*0.061 - 4*4.133*-0.102) ) / (2*(4.133)) - lEValue;
         tHM = Math.sqrt((lEValue + 0.127)/4.109);
         System.out.println(tHM);
-        // if(lEValue > Constants.Elevator.MAX_ENCODER_VALUE){
-        //   lEValue = 23;
-        // }
-        // else if (lEValue < Constants.Elevator.MIN_ENCODER_VALUE){
-        //   lEValue = 0;
-        // }
+
+        //CHECK MAX/MIN VALUES
+        if(lEValue > Constants.Elevator.MAX_ENCODER_VALUE){
+          lEValue = 23;
+        }
+        if (lEValue < Constants.Elevator.MIN_ENCODER_VALUE){
+          lEValue = 0;
+        }
+
+
         if (lEValue > 6 && lEValue < 14){
           tHM -= 0.05;
         }
         if (lEValue > 20) {
           tHM += 0.05;
         }    
-        elevator.setElevatorHeight(tHM-0.05);
+        elevator.setElevatorHeight(tHM - 0.05);
       }
 
 
-      else if (deadbandedInput > 0 && elevator.getElevtorHeightInMeters() > Constants.Elevator.MAX_HEIGHT_METERS){
-        deadbandedInput = 0;
-      }
-      else if (deadbandedInput < 0 && elevator.getElevtorHeightInMeters() < Constants.Elevator.MIN_HEIGHT_METERS){
-        deadbandedInput = 0;
-      }
+      // else if (deadbandedInput > 0 && elevator.getElevtorHeightInMeters() > Constants.Elevator.MAX_HEIGHT_METERS){
+      //   deadbandedInput = 0;
+      // }
+      // else if (deadbandedInput < 0 && elevator.getElevtorHeightInMeters() < Constants.Elevator.MIN_HEIGHT_METERS){
+      //   deadbandedInput = 0;
+      // }
       else{
         elevator.setElevatorHeight(targetHeightMeters);
       }

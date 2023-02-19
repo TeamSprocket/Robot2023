@@ -204,8 +204,8 @@ public class Constants {
         public static double MIN_HEIGHT_METERS = 0.03;
         public static double HEIGHT_METERS = MAX_HEIGHT_METERS - MIN_HEIGHT_METERS; 
 
-        public static double MAX_ENCODER_VALUE = 23;
-        public static double MIN_ENCODER_VALUE = 1;
+        public static double MAX_ENCODER_VALUE = 6.54;
+        public static double MIN_ENCODER_VALUE = -16.4;
         public static double ENCODER_RANGE = MAX_ENCODER_VALUE - MIN_ENCODER_VALUE;
 
         //TODO put units (ex. m/s) & tune speed

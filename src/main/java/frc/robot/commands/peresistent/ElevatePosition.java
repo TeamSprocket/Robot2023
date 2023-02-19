@@ -8,24 +8,20 @@ import frc.util.commands.PersistentCommand;
 
 public class ElevatePosition extends PersistentCommand {
     private final Elevator elevator;
-    private final double position;
+    private final double encoder;
   
-    public ElevatePosition (Elevator elevator, double position) {
+    public ElevatePosition (Elevator elevator, double encoder) {
       this.elevator = elevator;
-      this.position = position;
+      this.encoder = encoder;
   
       addRequirements(elevator);
     }
   
     @Override
     public void execute() {
-      
-      //USING HEIGHT
-      double targetHeightMeters = position;
-
 
       //add offset from starting elevator higher
-      double lEValue = elevator.getLeftEncoder();
+      double lEValue = encoder + 16.46;
       double tHM;
       //lEValue = 4.133*(tHM^2) - 0.061*(tHM) - 0.102;
       //tHM = (0.061 + Math.sqrt(0.061*0.061 - 4*4.133*-0.102) ) / (2*(4.133)) - lEValue;
@@ -44,7 +40,6 @@ public class ElevatePosition extends PersistentCommand {
         tHM += 0.05;
       }    
       elevator.setElevatorHeight(tHM-0.05);
-        
     }
   
     @Override

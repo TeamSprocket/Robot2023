@@ -35,8 +35,6 @@ public class Elevator extends SubsystemBase{
     private RelativeEncoder elevatorRightEncoder = elevatorRight.getEncoder();
     
 
-    private double elevatorEncoderBase;
-
     public Elevator(){
         elevatorLeft.restoreFactoryDefaults();
         elevatorRight.restoreFactoryDefaults();
@@ -55,33 +53,13 @@ public class Elevator extends SubsystemBase{
     }
 
 
-/////////////////////////////////////////////////////////////////
-
-
-    // public void setOutputManual(double output){
-    //     elevatorLeft.set(output);
-    //     elevatorRight.set(output);
-    // }
-
-    // public void setOutputPID(double setpoint){
-        // elevatorPIDController.setReference(setpoint, CANSparkMax.ControlType.kPosition);
-    // }
-
-
-    // public double getElevatorEncoderBase(){
-        // return elevatorEncoderBase;
-    // }
-
-    public void setElevatorEncoderBase(double elevatorHeight){
-        elevatorEncoderBase = elevatorHeight;
-    }
-
+////////////////////////////////////////////////////////////////
 
     //TODO: Use encoder values for height measurement
     /**
      * @return Returns elevator position in meters
      */
-    public double getElevtorHeightInMeters(){
+    public double getElevtorHeight(){
         double motorPos = elevatorLeftEncoder.getPosition() * 2 * Math.PI;
         double sprocketPos = motorPos / Constants.Elevator.kElevatorGearRatio;
 
@@ -99,11 +77,11 @@ public class Elevator extends SubsystemBase{
 
     public double getElevatorOutput(double setpoint) {
         double output = elevatorPIDController.calculate(
-            getElevtorHeightInMeters(),
+            getElevtorHeight(),
             setpoint);
-        if (getElevtorHeightInMeters() >= (0.8 * Constants.Elevator.HEIGHT_METERS)
-            || getElevtorHeightInMeters() <= (0.2 * Constants.Elevator.HEIGHT_METERS)) {
-                output *= (Math.abs(getElevtorHeightInMeters() - setpoint) / Constants.Elevator.HEIGHT_METERS);
+        if (getElevtorHeight() >= (0.8 * Constants.Elevator.HEIGHT_METERS)
+            || getElevtorHeight() <= (0.2 * Constants.Elevator.HEIGHT_METERS)) {
+                output *= (Math.abs(getElevtorHeight() - setpoint) / Constants.Elevator.HEIGHT_METERS);
             }
         
         //TODO CHECK DIVISION OR MULTIPLICATION
@@ -112,11 +90,11 @@ public class Elevator extends SubsystemBase{
     }
     public void setElevatorHeight(double setpoint) {
         double output = elevatorPIDController.calculate(
-            getElevtorHeightInMeters(),
+            getElevtorHeight(),
             setpoint);
-        if (getElevtorHeightInMeters() >= (0.8 * Constants.Elevator.HEIGHT_METERS)
-            || getElevtorHeightInMeters() <= (0.2 * Constants.Elevator.HEIGHT_METERS)) {
-                output *= (Math.abs(getElevtorHeightInMeters() - setpoint) / Constants.Elevator.HEIGHT_METERS);
+        if (getElevtorHeight() >= (0.8 * Constants.Elevator.HEIGHT_METERS)
+            || getElevtorHeight() <= (0.2 * Constants.Elevator.HEIGHT_METERS)) {
+                output *= (Math.abs(getElevtorHeight() - setpoint) / Constants.Elevator.HEIGHT_METERS);
             }
         
         //TODO CHECK DIVISION OR MULTIPLICATION
