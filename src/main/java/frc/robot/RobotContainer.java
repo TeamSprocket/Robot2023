@@ -91,10 +91,10 @@ public final class RobotContainer {
 		//TODO CHECK THE POSITIONS OF THE ELEVATOR
 		elevator.setDefaultCommand(new ElevateJoystick(elevator, operator));
 		new JoystickButton(operator, 5).whenPressed(new ElevateHold(elevator, operator));
-		new JoystickButton(operator, 1).whenPressed(new ElevatePosition(elevator, 5-16.4));
-		new JoystickButton(operator, 2).whenPressed(new ElevatePosition(elevator, 10-16.4));
-		new JoystickButton(operator,3).whenPressed(new ElevatePosition(elevator, 15-16.4));
-		new JoystickButton(operator, 4).whenPressed(new ElevatePosition(elevator, 20-16.4));
+		new JoystickButton(operator, 1).whenHeld(new ElevatePosition(elevator, 5-16.4));
+		new JoystickButton(operator, 2).whenHeld(new ElevatePosition(elevator, 10-16.4));
+		new JoystickButton(operator,3).whenHeld(new ElevatePosition(elevator, 15-16.4));
+		new JoystickButton(operator, 4).whenHeld(new ElevatePosition(elevator, 20-16.4));
 		new JoystickButton(driver, 3).whenPressed(new MoveArmJoystick(arm, elevator, operator));
 
 		// new JoystickButton(operator, 5).whenPressed(new SetElevatorBase(elevator));
