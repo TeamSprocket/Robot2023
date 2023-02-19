@@ -10,12 +10,12 @@ import frc.util.commands.PersistentCommand;
 public class MoveArmJoystick extends PersistentCommand {
     private final Arm arm;
     private final Elevator elevator;
-    private final double position;
+    private final XboxController gamepad;
   
-    public MoveArmJoystick (Arm arm, Elevator elevator, double position) {
+    public MoveArmJoystick (Arm arm, Elevator elevator, XboxController gamepad) {
         this.arm = arm;
         this.elevator = elevator;
-        this.position = position;
+        this.gamepad = gamepad;
   
         addRequirements(arm, elevator);
     }
@@ -23,19 +23,34 @@ public class MoveArmJoystick extends PersistentCommand {
     @Override
     public void execute() {
 
-      double elevatorHeight = elevator.getElevtorHeight();
+      double armMaxHeight;
+      double armMinHeight;
+      double armRange;
 
-      if (elevatorHeight < Constants.Arm.elevatorHeightRestriction){
-        arm.setArmPosition(arm.getArmPosition());
+      double elevatorHeight = elevator.getElevtorHeight();
+      if (elevatorHeight > 16.4){
+        armMaxHeight = Constants.Arm.MAX_HEIGHT_METERS_ELEVATOR;
+        armMaxHeight = Constants.Arm.MIN_HEIGHT_METERS_ELEVATOR;
+        armRange = Constants.Arm.HEIGHT_METERS_ELEVATOR;
       }
       else{
-        if (position >=  Constants.Elevator.MIN_HEIGHT_METERS || position <= Constants.Elevator.MIN_HEIGHT_METERS){
-          elevator.setElevatorHeight(elevator.getElevtorHeight());
-        }
-        else{
-          elevator.setElevatorHeight(position);
-        }
+        armMaxHeight = Constants.Arm.MAX_HEIGHT_METERS_NO_ELEVATOR;
+        armMaxHeight = Constants.Arm.MIN_HEIGHT_METERS_NO_ELEVATOR;
+        armRange = Constants.Arm.HEIGHT_METERS_NO_ELEVATOR;
       }
+
+      double rightY = gamepad.getRightY();
+      double deadbandedInput = Util.deadband(0.1, rightY);
+
+      double targetHeight = (deadbandedInput) * armRange;
+
+
+      //PID VERSION - adjust PID values
+      arm.setArmPosition(targetHeight);
+
+      //AFF version
+      // arm.setArmPositionAFF(targetHeight);
+
       
         
     }

@@ -169,12 +169,14 @@ public class Constants {
         public static double armMaxAngle = 1.39;
         public static double armMinAngleNoElevator = 0.75;
         public static double armMinAngleElevator = 0.26;
-        // public static double MAX_HEIGHT_METERS_ELEVATOR = 0.15;
-        // public static double MIN_HEIGHT_METERS_ELEVATOR = 0.1;
-        // public static double HEIGHT_METERS_ELEVATOR = MAX_HEIGHT_METERS_ELEVATOR - MIN_HEIGHT_METERS_ELEVATOR; 
+
+        //elevator is all the way up - use for starting config
+        public static double MAX_HEIGHT_METERS_ELEVATOR = 0.15;
+        public static double MIN_HEIGHT_METERS_ELEVATOR = 0.1;
+        public static double HEIGHT_METERS_ELEVATOR = MAX_HEIGHT_METERS_ELEVATOR - MIN_HEIGHT_METERS_ELEVATOR; 
 
 
-        //TODO UPDATE THIS
+        //elevator is at minimum
         public static double MAX_HEIGHT_METERS_NO_ELEVATOR = 0;
         public static double MIN_HEIGHT_METERS_NO_ELEVATOR = 0;
         public static double HEIGHT_METERS_NO_ELEVATOR = MAX_HEIGHT_METERS_NO_ELEVATOR - MIN_HEIGHT_METERS_NO_ELEVATOR;
