@@ -36,7 +36,8 @@ public class Arm extends SubsystemBase {
         armLeft.restoreFactoryDefaults();
         armRight.restoreFactoryDefaults();
         
-        armLeft.setInverted(false);
+        armLeft.setInverted(true);
+        armRight.setInverted(true);
 
         armRight.follow(armLeft);
 
@@ -47,10 +48,10 @@ public class Arm extends SubsystemBase {
     //choose a specific point on the arm(the end of the arm) to measure the height with the angle
     public double getArmPosition() {
         double motorPos = armLeftEncoder.getPosition();
-        double sprocketPos = motorPos / Constants.Elevator.kElevatorGearRatio;
+        double sprocketPos = motorPos / Constants.Arm.kArmGearRatio;
 
-        double armPosRad = sprocketPos * (2 * Math.PI);
-        return armPosRad;
+        // double armPosRad = sprocketPos * (2 * Math.PI);
+        return sprocketPos;
 
         //double circum = 2 * Math.PI * (Units.inchesToMeters(5.731) / 2); 
         // return 2;
@@ -58,23 +59,24 @@ public class Arm extends SubsystemBase {
 
     //TODO Add Offset since 0 degrees is assumed parallel w/ floor - get default angle between the arm and elevator
 
-    public void setArmPositionAFF(double setpoint){
+    // public void setArmPositionAFF(double setpoint){
 
-        //CHANGE THE VELOCITY OF ARM
-        double output = armFeedforward.calculate(getArmPosition(),10);
+    //     //CHANGE THE VELOCITY OF ARM
+    //     double output = armFeedforward.calculate(getArmPosition(),10);
     
-        output *= (Math.abs(getArmPosition() - setpoint) / Constants.Elevator.HEIGHT_METERS);
-        output *= Constants.Elevator.MAX_SPEED;
+    //     output *= (Math.abs(getArmPosition() - setpoint) / Constants.Elevator.HEIGHT_METERS);
+    //     output *= Constants.Elevator.MAX_SPEED;
 
-        armLeft.set(output);
-    }
+    //     armLeft.set(output);
+    // }
 
     public void setArmPosition(double setpoint){
         double output = armPIDController.calculate(getArmPosition(), setpoint);
 
-        output *= (Math.abs(getArmPosition() - setpoint) / Constants.Elevator.HEIGHT_METERS);
+        output *= (Math.abs(getArmPosition() - setpoint) / Constants.Arm.HEIGHT_METERS_NO_ELEVATOR);
         
         output *= Constants.Arm.MAX_SPEED;
+        System.out.println("arm speed: " + output);
         armLeft.set(output);
     }
 

@@ -154,13 +154,15 @@ public class Constants {
         public static double kV = 0;
         public static double kA = 0;
 
-        public static double kP = 0.1;
+        public static double kP = 0.25;
         public static double kI = 0;
         public static double kD = 0;
         public static double FF = 0;
 
         public static double velocityRadPerSec = 0.5;
         public static double accelRadPerSecSquared  = 0.2;
+
+        public static double kArmGearRatio = 31.5;
 
         //Heights listed in meters
         public static double elevatorHeightRestriction = 0.23;
@@ -171,17 +173,17 @@ public class Constants {
         public static double armMinAngleElevator = 0.26;
 
         //elevator is all the way up - use for starting config
-        public static double MAX_HEIGHT_METERS_ELEVATOR = 0.15;
-        public static double MIN_HEIGHT_METERS_ELEVATOR = 0.1;
+        public static double MAX_HEIGHT_METERS_ELEVATOR = 100;
+        public static double MIN_HEIGHT_METERS_ELEVATOR = 1;
         public static double HEIGHT_METERS_ELEVATOR = MAX_HEIGHT_METERS_ELEVATOR - MIN_HEIGHT_METERS_ELEVATOR; 
 
 
         //elevator is at minimum
-        public static double MAX_HEIGHT_METERS_NO_ELEVATOR = 0;
-        public static double MIN_HEIGHT_METERS_NO_ELEVATOR = 0;
+        public static double MAX_HEIGHT_METERS_NO_ELEVATOR = 15;
+        public static double MIN_HEIGHT_METERS_NO_ELEVATOR = 1;
         public static double HEIGHT_METERS_NO_ELEVATOR = MAX_HEIGHT_METERS_NO_ELEVATOR - MIN_HEIGHT_METERS_NO_ELEVATOR;
 
-        public static double MAX_SPEED = 0.01;
+        public static double MAX_SPEED = 5;
     }
 
 

@@ -28,14 +28,14 @@ public class MoveArmJoystick extends PersistentCommand {
       double armRange;
 
       double elevatorHeight = elevator.getElevtorHeight();
-      if (elevatorHeight > 16.4){
+      if (elevatorHeight > 0){
         armMaxHeight = Constants.Arm.MAX_HEIGHT_METERS_ELEVATOR;
-        armMaxHeight = Constants.Arm.MIN_HEIGHT_METERS_ELEVATOR;
+        armMinHeight = Constants.Arm.MIN_HEIGHT_METERS_ELEVATOR;
         armRange = Constants.Arm.HEIGHT_METERS_ELEVATOR;
       }
       else{
         armMaxHeight = Constants.Arm.MAX_HEIGHT_METERS_NO_ELEVATOR;
-        armMaxHeight = Constants.Arm.MIN_HEIGHT_METERS_NO_ELEVATOR;
+        armMinHeight = Constants.Arm.MIN_HEIGHT_METERS_NO_ELEVATOR;
         armRange = Constants.Arm.HEIGHT_METERS_NO_ELEVATOR;
       }
 
