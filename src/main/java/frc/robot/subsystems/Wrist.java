@@ -9,6 +9,7 @@ import com.revrobotics.SparkMaxRelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 import frc.robot.Constants;
@@ -24,7 +25,7 @@ public class Wrist extends SubsystemBase {
     public Wrist() {
         wrist.restoreFactoryDefaults();
 
-        wrist.setInverted(false);
+        wrist.setInverted(true);
 
         
     }
@@ -45,7 +46,7 @@ public class Wrist extends SubsystemBase {
         output *= (Math.abs(getWristHeight() - setpoint) / Constants.Wrist.ENCODER_RANGE);
         
         output *= Constants.Wrist.MAX_SPEED;
-        System.out.println("arm speed: " + output);
+        System.out.println("wrist speed: " + output);
         wrist.set(output);
     }
 
@@ -53,5 +54,12 @@ public class Wrist extends SubsystemBase {
  
     public void stop() {
         wrist.stopMotor();
+    }
+
+    @Override
+    public void periodic(){
+        SmartDashboard.putNumber("Wrist Encoder Position", wristEncoder.getPosition()); 
+
+        SmartDashboard.putNumber("Arm Angle", getWristHeight());
     }
 }

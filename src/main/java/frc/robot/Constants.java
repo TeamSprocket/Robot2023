@@ -195,13 +195,13 @@ public class Constants {
         public static int kMaxOutput = 1;
         public static int kMinOutput = -1;
 
-        public static double MAX_ENCODER_VALUE = 15;
-        public static double MIN_ENCODER_VALUE = 0;
+        public static double MAX_ENCODER_VALUE = 0.5;
+        public static double MIN_ENCODER_VALUE = -2.65;
         public static double ENCODER_RANGE = MAX_ENCODER_VALUE - MIN_ENCODER_VALUE;
 
-        public static double MAX_SPEED = 5;
+        public static double MAX_SPEED = 0.75;
 
-        public static double kWristGearRatio = 0;
+        public static double kWristGearRatio = 2.75;
     }
 
     public static final class Elevator {
