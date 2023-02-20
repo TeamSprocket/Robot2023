@@ -47,7 +47,7 @@ public class Arm extends SubsystemBase {
     //use encoder values to get the height of the arm
     //choose a specific point on the arm(the end of the arm) to measure the height with the angle
     public double getArmPosition() {
-        double motorPos = armLeftEncoder.getPosition();
+        double motorPos = armLeftEncoder.getPosition() * 2 * Math.PI;
         double sprocketPos = motorPos / Constants.Arm.kArmGearRatio;
 
         // double armPosRad = sprocketPos * (2 * Math.PI);
@@ -72,7 +72,11 @@ public class Arm extends SubsystemBase {
 
     public void setArmPosition(double setpoint){
         double output = armPIDController.calculate(getArmPosition(), setpoint);
-
+        if (getArmPosition() >= (0.8 * Constants.Arm.MAX_HEIGHT_METERS_NO_ELEVATOR)
+            || getArmPosition() <= (0.2 * Constants.Arm.MAX_HEIGHT_METERS_NO_ELEVATOR)) {
+                output *= (Math.abs(getArmPosition() - setpoint) / Constants.Arm.HEIGHT_METERS_NO_ELEVATOR);
+            }
+        
         output *= (Math.abs(getArmPosition() - setpoint) / Constants.Arm.HEIGHT_METERS_NO_ELEVATOR);
         
         output *= Constants.Arm.MAX_SPEED;

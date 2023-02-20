@@ -29,9 +29,11 @@ import frc.robot.commands.macro.ElevatePosition;
 // import frc.robot.commands.auton.SwerveAutonTest;
 import frc.robot.commands.peresistent.ElevateJoystick;
 import frc.robot.commands.peresistent.MoveArmJoystick;
+import frc.robot.commands.peresistent.MoveWristJoystick;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.SwerveDrive;
+import frc.robot.subsystems.Wrist;
 import frc.robot.Constants;
 
 /**
@@ -51,6 +53,7 @@ public final class RobotContainer {
 	private final SwerveDrive swerveDrive = new SwerveDrive();
 	private final Elevator elevator = new Elevator();
 	private final Arm arm = new Arm();
+	private final Wrist wrist = new Wrist();
 
 	// Manual Autons
 	SendableChooser<Command> chooser = new SendableChooser<>();  
@@ -89,7 +92,9 @@ public final class RobotContainer {
 		// Elevator
 		//TODO CHECK THE POSITIONS OF THE ELEVATOR
 		elevator.setDefaultCommand(new ElevateJoystick(elevator, operator));
-		arm.setDefaultCommand(new MoveArmJoystick(arm, elevator, operator));
+		arm.setDefaultCommand(new MoveArmJoystick(arm, operator));
+		// wrist.setDefaultCommand(new MoveWristJoystick(wrist, arm, operator));
+
 		new JoystickButton(operator, 1).whenHeld(new ElevatePosition(elevator, 5-16.4));
 		new JoystickButton(operator, 2).whenHeld(new ElevatePosition(elevator, 10-16.4));
 		new JoystickButton(operator,3).whenHeld(new ElevatePosition(elevator, 15-16.4));

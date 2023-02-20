@@ -173,19 +173,36 @@ public class Constants {
         public static double armMinAngleElevator = 0.26;
 
         //elevator is all the way up - use for starting config
-        public static double MAX_HEIGHT_METERS_ELEVATOR = 100;
+        public static double MAX_HEIGHT_METERS_ELEVATOR = 6;
         public static double MIN_HEIGHT_METERS_ELEVATOR = 1;
         public static double HEIGHT_METERS_ELEVATOR = MAX_HEIGHT_METERS_ELEVATOR - MIN_HEIGHT_METERS_ELEVATOR; 
 
 
-        //elevator is at minimum
-        public static double MAX_HEIGHT_METERS_NO_ELEVATOR = 15;
+        //elevator is at minimums
+        public static double MAX_HEIGHT_METERS_NO_ELEVATOR = 5;
         public static double MIN_HEIGHT_METERS_NO_ELEVATOR = 1;
         public static double HEIGHT_METERS_NO_ELEVATOR = MAX_HEIGHT_METERS_NO_ELEVATOR - MIN_HEIGHT_METERS_NO_ELEVATOR;
 
-        public static double MAX_SPEED = 5;
+        public static double MAX_SPEED = 1.5;
     }
 
+    public static final class Wrist {
+        public static double P = 0.1;
+        public static double I = 0;
+        public static double D = 0;
+        public static double FF = 0;
+
+        public static int kMaxOutput = 1;
+        public static int kMinOutput = -1;
+
+        public static double MAX_ENCODER_VALUE = 15;
+        public static double MIN_ENCODER_VALUE = 0;
+        public static double ENCODER_RANGE = MAX_ENCODER_VALUE - MIN_ENCODER_VALUE;
+
+        public static double MAX_SPEED = 5;
+
+        public static double kWristGearRatio = 0;
+    }
 
     public static final class Elevator {
         //TODO Edit PID values, check inversions, tune speeds, gear ratio, check if setting encoder base is necessary

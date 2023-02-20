@@ -116,15 +116,15 @@ public class Elevator extends SubsystemBase{
 
     @Override
     public void periodic(){
-        SmartDashboard.putNumber("Encoder Left Position", elevatorLeftEncoder.getPosition());
-        SmartDashboard.putNumber("Encoder Right Position", elevatorRightEncoder.getPosition());
+        SmartDashboard.putNumber("Elvator Encoder Left Position", elevatorLeftEncoder.getPosition());
+        SmartDashboard.putNumber("Elvator Encoder Right Position", elevatorRightEncoder.getPosition());
 
 
         SmartDashboard.putNumber("Elvator Target Height", ElevateJoystick.getTargetHeight());
         // SmartDashboard.putNumber("Elvator Output", elevatorLeftEncoder.getElevatorOutput());
 
-        SmartDashboard.putNumber("Voltage", elevatorLeft.getBusVoltage());
-        SmartDashboard.putNumber("Output", elevatorLeft.getAppliedOutput());
+        SmartDashboard.putNumber("Elvator Voltage", elevatorLeft.getBusVoltage());
+        SmartDashboard.putNumber("Elvator Output", elevatorLeft.getAppliedOutput());
 
 
 

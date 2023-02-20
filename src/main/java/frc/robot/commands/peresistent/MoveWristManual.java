@@ -2,47 +2,48 @@ package frc.robot.commands.peresistent;
 
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants;
+import frc.robot.subsystems.Wrist;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Arm;
 import frc.util.Util;
 import frc.util.commands.PersistentCommand;
 
-public class MoveArmJoystick extends PersistentCommand {
-    private final Arm arm;
-    // private final Elevator elevator;
+public class MoveWristManual extends PersistentCommand {
+    private final Wrist wrist;
+    // private final Arm arm;
     private final XboxController gamepad;
   
-    public MoveArmJoystick (Arm arm, XboxController gamepad) {
-        this.arm = arm;
-        // this.elevator = elevator;
+    public MoveWristManual (Wrist wrist, XboxController gamepad) {
+        this.wrist = wrist;
+        // this.arm = arm;
         this.gamepad = gamepad;
   
-        addRequirements(arm);
+        addRequirements(wrist);
     }
   
     @Override
     public void execute() {
 
-      double armMaxHeight;
-      double armMinHeight;
-      double armRange = Constants.Arm.HEIGHT_METERS_NO_ELEVATOR;
+      double wristMaxHeight;
+      double wristMinHeight;
+      double wristRange = Constants.Wrist.ENCODER_RANGE;
 
-      // double elevatorHeight = elevator.getElevtorHeight();
-      // if (elevatorHeight >= 0){
-      //   armMaxHeight = Constants.Arm.MAX_HEIGHT_METERS_ELEVATOR;
-      //   armMinHeight = Constants.Arm.MIN_HEIGHT_METERS_ELEVATOR;
-      //   armRange = Constants.Arm.HEIGHT_METERS_ELEVATOR;
-      // } 
+      double input = gamepad.getLeftTriggerAxis() - gamepad.getRightTriggerAxis(); 
+		  double deadbandedInput = Util.deadband(0.1, input);
+
+      // double armPosition = arm.getArmPosition();
+      // if (armPosition > 0){
+      //   wristMaxHeight = Constants.Arm.MAX_HEIGHT_METERS_ELEVATOR;
+      //   wristMinHeight = Constants.Arm.MIN_HEIGHT_METERS_ELEVATOR;
+      //   wristRange = Constants.Arm.HEIGHT_METERS_ELEVATOR;
+      // }
       // else{
-      //   armMaxHeight = Constants.Arm.MAX_HEIGHT_METERS_NO_ELEVATOR;
-      //   armMinHeight = Constants.Arm.MIN_HEIGHT_METERS_NO_ELEVATOR;
-      //   armRange = Constants.Arm.HEIGHT_METERS_NO_ELEVATOR;
+      //   wristMaxHeight = Constants.Arm.MAX_HEIGHT_METERS_NO_ELEVATOR;
+      //   wristMinHeight = Constants.Arm.MIN_HEIGHT_METERS_NO_ELEVATOR;
+      //   wristRange = Constants.Arm.HEIGHT_METERS_NO_ELEVATOR;
       // }
 
-      double rightY = gamepad.getRightY();
-      double armInput = Util.deadband(0.1, rightY);
-
-      double targetArmPosition = (armInput) * armRange;
+      double targetHeight = (deadbandedInput) * wristRange;
 
       /*
       if (deadbandedInput == 0) {
@@ -65,7 +66,7 @@ public class MoveArmJoystick extends PersistentCommand {
         */
 
       //PID VERSION - adjust PID values
-      arm.setArmPosition(targetArmPosition);
+      wrist.setWrist(targetHeight);
 
       //AFF version
       // arm.setArmPositionAFF(targetHeight);
@@ -74,6 +75,6 @@ public class MoveArmJoystick extends PersistentCommand {
   
     @Override
     public void end(boolean interrupted) {
-        arm.stop();
+      wrist.stop();
     }
 }
