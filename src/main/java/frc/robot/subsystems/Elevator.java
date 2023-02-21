@@ -48,7 +48,6 @@ public class Elevator extends SubsystemBase{
     }
     
     public void moveElevator(double output){
-        System.out.println(output);
         elevatorLeft.set(output);
     }
 

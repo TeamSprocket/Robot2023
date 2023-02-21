@@ -41,23 +41,10 @@ public class Constants {
         public static double kD = 0;
         public static double FF = 0;
 
-        public static double velocityRadPerSec = 0.5;
-        public static double accelRadPerSecSquared  = 0.2;
-
         public static double kArmGearRatio = 31.5;
 
-        //Heights listed in meters
-        public static double elevatorHeightRestriction = 0.23;
+        public static double angleConversionFactor = 360.0 / kArmGearRatio;
 
-        //TODO UPDATE THIS - all in radians
-        public static double armMaxAngle = 1.39;
-        public static double armMinAngleNoElevator = 0.75;
-        public static double armMinAngleElevator = 0.26;
-
-        //arm positions - encoders
-        public static double MAX_ENCODER = 7;
-        public static double MIN_ENCODER_ELEVATOR_DOWN = 2.024;
-        public static double MIN_ENCODER_ELEVATOR_UP = 0.02;
     }
 
     public static final class Wrist {
