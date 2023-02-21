@@ -10,6 +10,81 @@ public class Constants {
         public static final double NORMALIZED_SUPPLY_VOLTAGE = 0; //TODO: Figure out the value
     }
 
+    //TODO Edit PID values, tune speeds
+    public static final class Elevator {
+    
+        //check sprocket diamter
+        public static double kSprocketRadius = 2.938;
+        public static double kElevatorGearRatio = 9;
+
+        //height between base & starting config
+        public static double offset = 33.638;
+
+        //TODO put units (ex. m/s) & tune speed
+        // public static double MAX_SPEED = 1;
+
+        public static double kP = 0.2;
+        public static double kI = 0;
+        public static double kD = 0.0075;
+        public static double FF = 0;
+        
+
+        //Heights listed in meters
+        //TUNE THE MAX/MIN VALUES
+        public static double MAX_HEIGHT = -13.12711;
+        public static double MIN_HEIGHT = 34.45866374;
+        public static double TOTAL_HEIGHT = MAX_HEIGHT - MIN_HEIGHT; 
+
+        public static int CURRENT_STALL_LIMIT = 30;
+        public static int CURRENT_FREE_LIMIT = 30;
+    }
+
+    public static final class Arm{
+
+        public static double kP = 0.75;
+        public static double kI = 0;
+        public static double kD = 0;
+        public static double FF = 0;
+
+        public static double velocityRadPerSec = 0.5;
+        public static double accelRadPerSecSquared  = 0.2;
+
+        public static double kArmGearRatio = 31.5;
+
+        //Heights listed in meters
+        public static double elevatorHeightRestriction = 0.23;
+
+        //TODO UPDATE THIS - all in radians
+        public static double armMaxAngle = 1.39;
+        public static double armMinAngleNoElevator = 0.75;
+        public static double armMinAngleElevator = 0.26;
+
+        //arm positions - encoders
+        public static double MAX_ENCODER = 7;
+        public static double MIN_ENCODER_ELEVATOR_DOWN = 2.024;
+        public static double MIN_ENCODER_ELEVATOR_UP = 0.02;
+
+        public static double MAX_SPEED = 1.5;
+    }
+
+    public static final class Wrist {
+        public static double P = 0.1;
+        public static double I = 0;
+        public static double D = 0;
+        public static double FF = 0;
+
+        public static int kMaxOutput = 1;
+        public static int kMinOutput = -1;
+
+        public static double MAX_ENCODER_VALUE = 0.5;
+        public static double MIN_ENCODER_VALUE = -2.65;
+        public static double ENCODER_RANGE = MAX_ENCODER_VALUE - MIN_ENCODER_VALUE;
+
+        public static double MAX_SPEED = 0.75;
+
+        public static double kWristGearRatio = 2.75;
+    }
+
     public static final class Drivetrain {
         // public static final double TURN_kP = 0.00385;
         // public static final double TURN_kI = 0;
@@ -148,81 +223,5 @@ public class Constants {
         
     }
 
-    public static final class Arm{
-
-        public static double kP = 0.75;
-        public static double kI = 0;
-        public static double kD = 0;
-        public static double FF = 0;
-
-        public static double velocityRadPerSec = 0.5;
-        public static double accelRadPerSecSquared  = 0.2;
-
-        public static double kArmGearRatio = 31.5;
-
-        //Heights listed in meters
-        public static double elevatorHeightRestriction = 0.23;
-
-        //TODO UPDATE THIS - all in radians
-        public static double armMaxAngle = 1.39;
-        public static double armMinAngleNoElevator = 0.75;
-        public static double armMinAngleElevator = 0.26;
-
-        //arm positions - encoders
-        public static double MAX_ENCODER = 7;
-        public static double MIN_ENCODER_ELEVATOR_DOWN = 2.024;
-        public static double MIN_ENCODER_ELEVATOR_UP = 0.02;
-
-        public static double MAX_SPEED = 1.5;
-    }
-
-    public static final class Wrist {
-        public static double P = 0.1;
-        public static double I = 0;
-        public static double D = 0;
-        public static double FF = 0;
-
-        public static int kMaxOutput = 1;
-        public static int kMinOutput = -1;
-
-        public static double MAX_ENCODER_VALUE = 0.5;
-        public static double MIN_ENCODER_VALUE = -2.65;
-        public static double ENCODER_RANGE = MAX_ENCODER_VALUE - MIN_ENCODER_VALUE;
-
-        public static double MAX_SPEED = 0.75;
-
-        public static double kWristGearRatio = 2.75;
-    }
-
-    public static final class Elevator {
-        //TODO Edit PID values, tune speeds
-
-        //tune values
-        public static double kP = 0.75;
-        public static double kI = 0;
-        public static double kD = 0.000;
-        public static double FF = 0;
-
-        // public static int kMaxOutput = 1;
-        // public static int kMinOutput = -1;
-
-        public static boolean ELEVATOR_LEFT_IS_INVERTED = false;
-        public static boolean ELEVATOR_RIGHT_IS_INVERTED = true;
-
-        //Heights listed in meters
-        //TUNE THE MAX/MIN VALUES
-        public static double MAX_ENCODER_VALUE = 6.54; //0.335
-        public static double MIN_ENCODER_VALUE = -16.4;
-        public static double ENCODER_RANGE = MAX_ENCODER_VALUE - MIN_ENCODER_VALUE; 
-
-        //TODO put units (ex. m/s) & tune speed
-        public static double MAX_SPEED = 1;
-
-        public static double kElevatorGearRatio = 9; //16.5
-
-        public static int CURRENT_STALL_LIMIT = 30;
-        public static int CURRENT_FREE_LIMIT = 30;
-
-        public static double kSocketDiameterMeters = 1.43;
-    }
+    
 }
