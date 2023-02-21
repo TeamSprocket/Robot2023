@@ -13,24 +13,19 @@ public class Constants {
     //TODO Edit PID values, tune speeds
     public static final class Elevator {
     
-        //check sprocket diamter
+        //check sprocket radius in inches
         public static double kSprocketRadius = 2.938;
         public static double kElevatorGearRatio = 9;
 
         //height between base & starting config
         public static double offset = 33.638;
 
-        //TODO put units (ex. m/s) & tune speed
-        // public static double MAX_SPEED = 1;
-
         public static double kP = 0.2;
         public static double kI = 0;
         public static double kD = 0.0075;
         public static double FF = 0;
         
-
-        //Heights listed in meters
-        //TUNE THE MAX/MIN VALUES
+        //Max/min heights in inches;
         public static double MAX_HEIGHT = -13.12711;
         public static double MIN_HEIGHT = 34.45866374;
         public static double TOTAL_HEIGHT = MAX_HEIGHT - MIN_HEIGHT; 
