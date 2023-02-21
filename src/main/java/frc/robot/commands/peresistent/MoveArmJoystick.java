@@ -23,9 +23,9 @@ public class MoveArmJoystick extends PersistentCommand {
     @Override
     public void execute() {
 
-      double armMaxHeight;
-      double armMinHeight;
-      double armRange = Constants.Arm.HEIGHT_METERS_NO_ELEVATOR;
+      // double armMaxHeight;
+      // double armMinHeight;
+      // double armRange = Constants.Arm.MAX_ENCODER - Constants.Arm.MIN_ENCODER_ELEVATOR_DOWN;
 
       // double elevatorHeight = elevator.getElevtorHeight();
       // if (elevatorHeight >= 0){
@@ -42,8 +42,14 @@ public class MoveArmJoystick extends PersistentCommand {
       double rightY = gamepad.getRightY();
       double armInput = Util.deadband(0.1, rightY);
 
-      double targetArmPosition = (armInput) * armRange;
+      double targetArmPosition = (armInput) * (Constants.Arm.MAX_ENCODER - Constants.Arm.MIN_ENCODER_ELEVATOR_DOWN);
+      if (arm.getArmLeftEncoder() == Constants.Arm.MAX_ENCODER){
+        arm.setArmPosition(Constants.Arm.MAX_ENCODER - Constants.Arm.MIN_ENCODER_ELEVATOR_DOWN);
+      }
+      else{
+        arm.setArmPosition(targetArmPosition);
 
+      }
       /*
       if (deadbandedInput == 0) {
         double lEValue = elevator.getLeftEncoder() + 16.2;  //range 0-23
@@ -64,8 +70,15 @@ public class MoveArmJoystick extends PersistentCommand {
         elevator.setElevatorHeight(tHM - 0.75); //set speed + compensate error
         */
 
+      // if (armInput == 0){
+      //   double armValue = arm.getArmLeftEncoder();
+      //   double tFM;
+      //   //tFM = (0.061 + Math.sqrt(0.061*0.061 - 4*4.133*-0.102) ) / (2*(4.133)) - armValue;
+      //   // tFM = Math.sqrt((armValue + 0.127)/4.109); //math
+      //   // System.out.println(armValue); //check
+      // }
+
       //PID VERSION - adjust PID values
-      arm.setArmPosition(targetArmPosition);
 
       //AFF version
       // arm.setArmPositionAFF(targetHeight);

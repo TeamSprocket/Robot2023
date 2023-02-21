@@ -31,7 +31,7 @@ public class ElevatePosition extends MacroCommand {
       //lEValue = 4.133*(tHM^2) - 0.061*(tHM) - 0.102;
       //tHM = (0.061 + Math.sqrt(0.061*0.061 - 4*4.133*-0.102) ) / (2*(4.133)) - lEValue;
       tHM = Math.sqrt((lEValue + 0.127)/4.109);
-      System.out.println(tHM);
+      // System.out.println("Elevator Output" + tHM);
       // if(lEValue > Constants.Elevator.MAX_ENCODER_VALUE){
       //   lEValue = 23;
       // }

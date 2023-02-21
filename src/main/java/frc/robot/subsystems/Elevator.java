@@ -77,9 +77,9 @@ public class Elevator extends SubsystemBase{
 
     public double getElevatorOutput(double setpoint) {
         double output = elevatorPIDController.calculate(getElevtorHeight(), setpoint);
-        if (getElevtorHeight() >= (0.8 * Constants.Elevator.HEIGHT_METERS)
-            || getElevtorHeight() <= (0.2 * Constants.Elevator.HEIGHT_METERS)) {
-                output *= (Math.abs(getElevtorHeight() - setpoint) / Constants.Elevator.HEIGHT_METERS);
+        if (getElevtorHeight() >= (0.8 * Constants.Elevator.ENCODER_RANGE)
+            || getElevtorHeight() <= (0.2 * Constants.Elevator.ENCODER_RANGE)) {
+                output *= (Math.abs(getElevtorHeight() - setpoint) / Constants.Elevator.ENCODER_RANGE);
             }
         
         //TODO CHECK DIVISION OR MULTIPLICATION
@@ -88,8 +88,8 @@ public class Elevator extends SubsystemBase{
     }
     public void setElevatorHeight(double setpoint) {
         double output = elevatorPIDController.calculate(getElevtorHeight(), setpoint);
-        if (getElevtorHeight() >= (0.8 * Constants.Elevator.HEIGHT_METERS) || getElevtorHeight() <= (0.2 * Constants.Elevator.HEIGHT_METERS)){
-            output *= (Math.abs(getElevtorHeight() - setpoint) / Constants.Elevator.HEIGHT_METERS);
+        if (getElevtorHeight() >= (0.8 * Constants.Elevator.ENCODER_RANGE) || getElevtorHeight() <= (0.2 * Constants.Elevator.ENCODER_RANGE)){
+            output *= (Math.abs(getElevtorHeight() - setpoint) / Constants.Elevator.ENCODER_RANGE);
         }
         
         //TODO CHECK DIVISION OR MULTIPLICATION

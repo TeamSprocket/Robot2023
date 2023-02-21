@@ -22,8 +22,8 @@ public class Arm extends SubsystemBase {
     //CHANGE KS IF FRICTION
     //CHANGE KG UNTIL ARM CAN HOLD ITS POSITION
     //CHANGE KV UNTIL SMOOTH AND SLOW MOTION
-    private ArmFeedforward armFeedforward = new ArmFeedforward(Constants.Arm.kS, Constants.Arm.kG, 
-                                                                Constants.Arm.kV, Constants.Arm.kA);
+    // private ArmFeedforward armFeedforward = new ArmFeedforward(Constants.Arm.kS, Constants.Arm.kG, 
+    //                                                             Constants.Arm.kV, Constants.Arm.kA);
 
     private PIDController armPIDController = new PIDController(Constants.Arm.kP, Constants.Arm.kI, Constants.Arm.kD);                                                  
 
@@ -70,18 +70,36 @@ public class Arm extends SubsystemBase {
     //     armLeft.set(output);
     // }
 
+
+    // public double getArmPositionOutput(double setpoint){
+    //     double output = armPIDController.calculate(getArmPosition(), setpoint);
+    //     if (getArmPosition() >= (0.8 * Constants.Arm.MAX_ENCODER)
+    //         || getArmPosition() <= (0.2 * Constants.Arm.MAX_ENCODER)) {
+    //             output *= (Math.abs(getArmPosition() - setpoint) / Constants.Arm.MAX_ENCODER);
+    //         }
+        
+    //     output *= (Math.abs(getArmPosition() - setpoint) / Constants.Arm.MAX_ENCODER);
+        
+    //     output *= Constants.Arm.MAX_SPEED;
+    //     return output;
+    // }
+
     public void setArmPosition(double setpoint){
         double output = armPIDController.calculate(getArmPosition(), setpoint);
-        if (getArmPosition() >= (0.8 * Constants.Arm.MAX_HEIGHT_METERS_NO_ELEVATOR)
-            || getArmPosition() <= (0.2 * Constants.Arm.MAX_HEIGHT_METERS_NO_ELEVATOR)) {
-                output *= (Math.abs(getArmPosition() - setpoint) / Constants.Arm.HEIGHT_METERS_NO_ELEVATOR);
+        if (getArmPosition() >= (0.8 * Constants.Arm.MAX_ENCODER)
+            || getArmPosition() <= (0.2 * Constants.Arm.MAX_ENCODER)) {
+                output *= (Math.abs(getArmPosition() - setpoint) / Constants.Arm.MAX_ENCODER);
             }
         
-        output *= (Math.abs(getArmPosition() - setpoint) / Constants.Arm.HEIGHT_METERS_NO_ELEVATOR);
+        output *= (Math.abs(getArmPosition() - setpoint) / Constants.Arm.MAX_ENCODER);
         
         output *= Constants.Arm.MAX_SPEED;
         System.out.println("arm speed: " + output);
         armLeft.set(output);
+    }
+
+    public double getArmLeftEncoder(){
+        return armLeftEncoder.getPosition();
     }
 
     public void stop() {

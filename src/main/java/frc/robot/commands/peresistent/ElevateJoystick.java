@@ -37,7 +37,7 @@ public class ElevateJoystick extends PersistentCommand {
 
       /////////////////////////////////////////////////////////////
       //USING HEIGHT
-      double targetHeightMeters = (deadbandedInput) * Constants.Elevator.MAX_HEIGHT_METERS;
+      double targetHeightMeters = (deadbandedInput) * Constants.Elevator.ENCODER_RANGE;
       targetHeight = targetHeightMeters;
 
       if (deadbandedInput == 0) {
@@ -46,7 +46,7 @@ public class ElevateJoystick extends PersistentCommand {
         //lEValue = 4.133*(tHM^2) - 0.061*(tHM) - 0.102;
         //tHM = (0.061 + Math.sqrt(0.061*0.061 - 4*4.133*-0.102) ) / (2*(4.133)) - lEValue;
         tHM = Math.sqrt((lEValue + 0.127)/4.109); //math
-        System.out.println(lEValue); //check
+        // System.out.println(lEValue); //check
 
         //CHECK MAX/MIN VALUES
         // if(lEValue > Constants.Elevator.MAX_ENCODER_VALUE){
