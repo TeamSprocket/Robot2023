@@ -1,11 +1,7 @@
 package frc.robot.commands.macro;
 
-import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.Constants;
 import frc.robot.subsystems.Elevator;
-import frc.util.Util;
 import frc.util.commands.MacroCommand;
-import frc.util.commands.PersistentCommand;
 
 public class ElevatePosition extends MacroCommand {
     private final Elevator elevator;

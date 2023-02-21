@@ -36,7 +36,7 @@ public class Constants {
 
     public static final class Arm{
 
-        public static double kP = 0.75;
+        public static double kP = 0.1;
         public static double kI = 0;
         public static double kD = 0;
         public static double FF = 0;
@@ -58,8 +58,6 @@ public class Constants {
         public static double MAX_ENCODER = 7;
         public static double MIN_ENCODER_ELEVATOR_DOWN = 2.024;
         public static double MIN_ENCODER_ELEVATOR_UP = 0.02;
-
-        public static double MAX_SPEED = 1.5;
     }
 
     public static final class Wrist {

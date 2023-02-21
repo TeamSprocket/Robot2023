@@ -33,10 +33,4 @@ public class ElevateJoystick extends PersistentCommand {
     public void end(boolean interrupted) {
         elevator.stop();
     }
-
-    // @Override
-    // public void periodic(){
-    //     SmartDashboard.putNumber("Elvator Height", getElevtorHeightInMeters);
-
-    // }
 }

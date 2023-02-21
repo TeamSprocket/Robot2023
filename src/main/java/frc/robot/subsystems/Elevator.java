@@ -71,8 +71,5 @@ public class Elevator extends SubsystemBase{
 
         SmartDashboard.putNumber("[Elvator] Voltage", elevatorLeft.getBusVoltage());
         SmartDashboard.putNumber("[Elvator] Output", elevatorLeft.getAppliedOutput());
-
-
-
     }
 }
