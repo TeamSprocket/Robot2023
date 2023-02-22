@@ -6,11 +6,11 @@ import frc.util.commands.MacroCommand;
 
 public class MoveWristAngle extends MacroCommand {
     private final Wrist wrist;
-    private final double angle;
+    private final double operator;
   
-    public MoveWristAngle (Wrist wrist, double angle) {
+    public MoveWristAngle (Wrist wrist, double operator) {
       this.wrist = wrist;
-      this.angle = angle;
+      this.operator = operator;
   
       addRequirements(wrist);
     }
@@ -21,7 +21,7 @@ public class MoveWristAngle extends MacroCommand {
 
     @Override
     public void execute() {
-      wrist.setWristAngle(wrist.getWristAngle(), angle);
+      wrist.setWristAngle(wrist.getWristAngle(), operator);
     }
 
     public boolean isFinished(){

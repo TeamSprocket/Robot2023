@@ -26,6 +26,8 @@ import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.SwerveDriveCmd;
 import frc.robot.commands.macro.ElevatePosition;
+import frc.robot.commands.macro.MoveArmPosition;
+import frc.robot.commands.macro.MoveWristAngle;
 // import frc.robot.commands.auton.SwerveAutonTest;
 import frc.robot.commands.peresistent.ElevateJoystick;
 import frc.robot.commands.peresistent.MoveArmJoystick;
@@ -93,12 +95,17 @@ public final class RobotContainer {
 		//TODO CHECK THE POSITIONS OF THE ELEVATOR
 		elevator.setDefaultCommand(new ElevateJoystick(elevator, operator));
 		arm.setDefaultCommand(new MoveArmJoystick(arm, operator));
-		// wrist.setDefaultCommand(new MoveWristManual(wrist, operator));
+		wrist.setDefaultCommand(new MoveWristManual(wrist, operator));
 
-		new JoystickButton(operator, 1).whenHeld(new ElevatePosition(elevator, 34.45866374));
-		new JoystickButton(operator, 2).whenHeld(new ElevatePosition(elevator, 18.6));
-		new JoystickButton(operator,3).whenHeld(new ElevatePosition(elevator, 2.735));
-		new JoystickButton(operator, 4).whenHeld(new ElevatePosition(elevator, -18.5));
+		// new JoystickButton(operator, 1).whenHeld(new ElevatePosition(elevator, 34.45866374));
+		// new JoystickButton(operator, 2).whenHeld(new ElevatePosition(elevator, 18.6));
+		// new JoystickButton(operator,3).whenHeld(new ElevatePosition(elevator, 2.735));
+		new JoystickButton(operator, 4).whenHeld(new ElevatePosition(elevator, -13.13));
+		// new JoystickButton(operator, 1).whenHeld(new MoveArmPosition(arm, -6));
+		new JoystickButton(operator, 2).whenHeld(new MoveArmPosition(arm, -50));
+		new JoystickButton(operator, 3).whenHeld(new MoveArmPosition(arm, -80));
+		// new JoystickButton(operator, 1).whenHeld(new MoveWristAngle(wrist, 0));
+
 
 		// new JoystickButton(operator, 5).whenPressed(new SetElevatorBase(elevator));
 
