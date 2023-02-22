@@ -33,12 +33,15 @@ public class Wrist extends SubsystemBase {
         return angle;
     }
 
-    public void setWrist(double setpoint) {
-        
+    public void moveWrist(double output) {
+        wrist.set(output); 
     }
 
-    
- 
+    public void setWristAngle(double currentAngle, double setpoint){
+        double output = wristPIDController.calculate(currentAngle, setpoint);
+        wrist.set(output);
+    }
+
     public void stop() {
         wrist.stopMotor();
     }
