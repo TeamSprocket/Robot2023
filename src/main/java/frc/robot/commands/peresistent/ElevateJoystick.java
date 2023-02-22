@@ -24,6 +24,7 @@ public class ElevateJoystick extends PersistentCommand {
       double leftY = gamepad.getLeftY();
 
       double deadbandedInput = Util.deadband(0.1, leftY);
+      System.out.println("DEADBAND INPUT: " + deadbandedInput);
 
       elevator.moveElevator(deadbandedInput);
 

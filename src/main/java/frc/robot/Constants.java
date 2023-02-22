@@ -20,7 +20,7 @@ public class Constants {
         //height between base & starting config
         public static double offset = 33.638;
 
-        public static double kP = 0.2;
+        public static double kP = 0.175;
         public static double kI = 0;
         public static double kD = 0.0075;
         public static double FF = 0;
@@ -35,15 +35,20 @@ public class Constants {
     }
 
     public static final class Arm{
+        
+        public static double kArmGearRatio = 31.5;
 
+        public static double angleConversionFactor = 360.0 / kArmGearRatio;
+
+        public static double maxAngle;
+        public static double minAngle;
+        public static double angleRange;
+        
         public static double kP = 0.1;
         public static double kI = 0;
         public static double kD = 0;
         public static double FF = 0;
 
-        public static double kArmGearRatio = 31.5;
-
-        public static double angleConversionFactor = 360.0 / kArmGearRatio;
 
     }
 
