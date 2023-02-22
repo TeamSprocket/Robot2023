@@ -40,13 +40,13 @@ public class Constants {
 
         public static double angleConversionFactor = 360.0 / kArmGearRatio;
 
-        public static double maxAngle;
-        public static double minAngle;
-        public static double angleRange;
+        public static double maxAngle = -80;
+        public static double groundAngle = -22;
+        public static double startingAngle = -6;
         
-        public static double kP = 0.1;
+        public static double kP = 0.025;
         public static double kI = 0;
-        public static double kD = 0;
+        public static double kD = 0.000002;
         public static double FF = 0;
 
 
