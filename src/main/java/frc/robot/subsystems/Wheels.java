@@ -4,7 +4,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import frc.robot.RobotMap;
 
@@ -19,6 +19,14 @@ public class Wheels extends SubsystemBase {
 
         clawLeft.setNeutralMode(NeutralMode.Coast);
         clawRight.setNeutralMode(NeutralMode.Coast);
+
+        TalonFXConfiguration leftConfig = new TalonFXConfiguration();
+        leftConfig.voltageCompSaturation = 10; //change
+        clawLeft.configAllSettings(leftConfig);
+
+        TalonFXConfiguration rightConfig = new TalonFXConfiguration();
+        rightConfig.voltageCompSaturation = 10; //change
+        clawRight.configAllSettings(rightConfig);
     }
 
     public void setSpeed(double speed) {
