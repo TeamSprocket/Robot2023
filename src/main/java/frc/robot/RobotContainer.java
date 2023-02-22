@@ -102,7 +102,6 @@ public final class RobotContainer {
 		new JoystickButton(operator, 1).whenHeld(new MoveArmPosition(arm, -6));
 		new JoystickButton(operator, 2).whenHeld(new MoveArmPosition(arm, -50));
 		new JoystickButton(operator, 3).whenHeld(new MoveArmPosition(arm, -80));
-		
 
 		// new JoystickButton(operator, 5).whenPressed(new SetElevatorBase(elevator));
 
