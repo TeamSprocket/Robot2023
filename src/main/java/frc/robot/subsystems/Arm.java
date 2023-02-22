@@ -25,8 +25,8 @@ public class Arm extends SubsystemBase {
         armLeft.restoreFactoryDefaults();
         armRight.restoreFactoryDefaults();
         
-        armLeft.setInverted(true);
-        armRight.setInverted(true);
+        armLeft.setInverted(false);
+        armRight.setInverted(false);
 
         armRight.follow(armLeft);
 
