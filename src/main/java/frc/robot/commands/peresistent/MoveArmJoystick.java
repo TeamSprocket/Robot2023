@@ -23,9 +23,10 @@ public class MoveArmJoystick extends PersistentCommand {
 
       double rightY = gamepad.getRightY();
       
-      double armInput = Util.deadband(0.1, rightY);
+    //   double armInput = Util.deadband(0.1, rightY);
+        System.out.println(rightY);
       System.out.println(arm.getArmAngle());
-      arm.moveArm(armInput);
+      arm.moveArm(rightY);
     }
   
     @Override

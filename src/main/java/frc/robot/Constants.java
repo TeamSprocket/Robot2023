@@ -44,9 +44,9 @@ public class Constants {
         public static double groundAngle = -22;
         public static double startingAngle = -6;
         
-        public static double kP = 0.6;
+        public static double kP = 0.025;
         public static double kI = 0;
-        public static double kD = 0.000025;
+        public static double kD = 0.000002;
         public static double FF = 0;
 
 
