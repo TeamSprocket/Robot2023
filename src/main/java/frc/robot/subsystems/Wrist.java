@@ -29,7 +29,8 @@ public class Wrist extends SubsystemBase {
 
     }
     public double getWristAngle(){
-        double angle = wristEncoder.getPosition() Constants.Wrist.angleConversionFactor;
+        double angle = wristEncoder.getPosition() * Constants.Wrist.angleConversionFactor;
+        return angle;
     }
 
     public void setWrist(double setpoint) {
