@@ -1,4 +1,4 @@
-// package frc.robot.commands.peresistent;
+package frc.robot.commands.peresistent;
 
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants;
@@ -16,11 +16,11 @@ public class MoveWristManual extends PersistentCommand {
         this.wrist = wrist;
         this.gamepad = gamepad;
   
-//         addRequirements(wrist);
-//     }
+        addRequirements(wrist);
+    }
   
-//     @Override
-//     public void execute() {
+    @Override
+    public void execute() {
 
       double input = gamepad.getLeftTriggerAxis() - gamepad.getRightTriggerAxis(); 
 

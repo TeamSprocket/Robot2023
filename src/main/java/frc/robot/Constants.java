@@ -48,8 +48,6 @@ public class Constants {
         public static double kI = 0;
         public static double kD = 0.000002;
         public static double FF = 0;
-
-
     }
 
     public static final class Wrist {

@@ -66,8 +66,9 @@ public final class RobotMap {
     public static final int WRIST = 44;
   }
 
-  public static final class Intake{
-    public static final int INTAKE = 45;
+  public static final class Claw{
+    public static final int CLAW_LEFT = 45;
+    public static final int CLAW_RIGHT = 46;
 
     //TODO: check piston ports from electrical
     public static final int PISTON_LEFT_FORWARD = 0;

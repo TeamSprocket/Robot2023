@@ -26,10 +26,10 @@ import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.SwerveDriveCmd;
 import frc.robot.commands.macro.ElevatePosition;
-import frc.robot.commands.macro.MoveArmPosition;
 // import frc.robot.commands.auton.SwerveAutonTest;
 import frc.robot.commands.peresistent.ElevateJoystick;
 import frc.robot.commands.peresistent.MoveArmJoystick;
+import frc.robot.commands.peresistent.MoveWristManual;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.SwerveDrive;
@@ -44,37 +44,38 @@ import frc.robot.Constants;
  * commands, and button mappings) should be declared here.
  */
 public final class RobotContainer {
-	private final Wrist Wrist = new Wrist();
+	//Controllers
+	private final XboxController driver = new XboxController(0);
+	private final XboxController operator = new XboxController(1);
 
-	// private final Drivetrain drivetrain = new Drivetrain();
-	// private final PCH pch = new PCH();
-	// private final Climber climber = new Climber();
-	// private final Intake intake = new Intake();
-	// private final Shooter shooter = new Shooter();
-	// private final Feeder feeder = new Feeder();
-	// private final LEDStrip ledStrip = new LEDStrip();
+	//Smartdashboard
+	//Subsystems
+	private final SwerveDrive swerveDrive = new SwerveDrive();
+	private final Elevator elevator = new Elevator();
+	private final Arm arm = new Arm();
+	private final Wrist wrist = new Wrist();
 
-	// private final Joystick leftJoystick = new Joystick(0);
-	// private final Joystick rightJoystick = new Joystick(1);
+	// Manual Autons
+	SendableChooser<Command> chooser = new SendableChooser<>();  
+	// SwerveAutonTest swerveAutonTest = new SwerveAutonTest(swerveDrive);
 
-	private final XboxController driveController = new XboxController(0);
-	private final XboxController gamepad = new XboxController(1);
-	// private final RunMotor runMotor = new RunMotor(driveController, 23);
+	public RobotContainer() {
+		// chooser.addOption("Swerve Auton Test", swerveAutonTest);
 
-	
+		configureButtonBindings();
+		SmartDashboard.putData(chooser);
+	}
 
-	// private final Command oneBall = new OneBall(drivetrain, feeder, intake, shooter, pch);
-	// private final Command twoBallRight = new TwoBallRight(drivetrain, intake, feeder, shooter);
-	// private final Command twoBallLeft = new TwoBallLeft(drivetrain, intake, feeder, shooter);
-	// private final Command zeroBall = new ZeroBall(drivetrain);
-	// private final Command threeBall = new ThreeBall(drivetrain, intake, feeder, shooter);
-	SendableChooser<Command> chooser = new SendableChooser<>(); 
-	 /* ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and
+	/**
+	 * Use this method to define your button->command mappings.  Buttons can be
+	 * created by instantiating a {@link GenericHID} or one of its subclasses
+	 * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and
 	 * then passing it to a
 	 * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
 	 */
 	private void configureButtonBindings() {
 		swerveDrive.setDefaultCommand(new SwerveDriveCmd(
+			swerveDrive, 
 			// X
 			() -> -driver.getLeftY(), 
 			// Y
@@ -94,13 +95,10 @@ public final class RobotContainer {
 		arm.setDefaultCommand(new MoveArmJoystick(arm, operator));
 		// wrist.setDefaultCommand(new MoveWristManual(wrist, operator));
 
-		// new JoystickButton(operator, 1).whenHeld(new ElevatePosition(elevator, 34.45866374));
-		// new JoystickButton(operator, 2).whenHeld(new ElevatePosition(elevator, 18.6));
-		// new JoystickButton(operator,3).whenHeld(new ElevatePosition(elevator, 2.735));
-		new JoystickButton(operator, 4).whenHeld(new ElevatePosition(elevator, -13.13));
-		new JoystickButton(operator, 1).whenHeld(new MoveArmPosition(arm, -6));
-		new JoystickButton(operator, 2).whenHeld(new MoveArmPosition(arm, -50));
-		new JoystickButton(operator, 3).whenHeld(new MoveArmPosition(arm, -80));
+		new JoystickButton(operator, 1).whenHeld(new ElevatePosition(elevator, 34.45866374));
+		new JoystickButton(operator, 2).whenHeld(new ElevatePosition(elevator, 18.6));
+		new JoystickButton(operator,3).whenHeld(new ElevatePosition(elevator, 2.735));
+		new JoystickButton(operator, 4).whenHeld(new ElevatePosition(elevator, -18.5));
 
 		// new JoystickButton(operator, 5).whenPressed(new SetElevatorBase(elevator));
 
