@@ -53,21 +53,20 @@ public class Constants {
     }
 
     public static final class Wrist {
+        
+        public static double kWristGearRatio = 2.75;
+
+        public static double angleConversionFactor = 360.0 / kWristGearRatio;
+        
         public static double P = 0.1;
         public static double I = 0;
         public static double D = 0;
         public static double FF = 0;
 
-        public static int kMaxOutput = 1;
-        public static int kMinOutput = -1;
+        public static double maxAngle;
+        public static double minAngle;
+        public static double angleRange;
 
-        public static double MAX_ENCODER_VALUE = 0.5;
-        public static double MIN_ENCODER_VALUE = -2.65;
-        public static double ENCODER_RANGE = MAX_ENCODER_VALUE - MIN_ENCODER_VALUE;
-
-        public static double MAX_SPEED = 0.75;
-
-        public static double kWristGearRatio = 2.75;
     }
 
     public static final class Drivetrain {

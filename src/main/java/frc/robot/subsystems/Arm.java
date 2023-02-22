@@ -54,8 +54,8 @@ public class Arm extends SubsystemBase {
 
     @Override
     public void periodic(){
-        SmartDashboard.putNumber("Arm Left Encoder Position", armLeftEncoder.getPosition()); 
-        SmartDashboard.putNumber("Arm Right Encoder Position", armRightEncoder.getPosition());
+        SmartDashboard.putNumber("[Arm] Left Encoder Position", armLeftEncoder.getPosition()); 
+        SmartDashboard.putNumber("[Arm] Right Encoder Position", armRightEncoder.getPosition());
 
     }
 }

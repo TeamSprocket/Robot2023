@@ -26,7 +26,6 @@ public class Wrist extends SubsystemBase {
         wrist.restoreFactoryDefaults();
 
         wrist.setInverted(true);
-
         
     }
     public double getWristHeight(){
