@@ -24,32 +24,16 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.RunMotor;
 import frc.robot.commands.SwerveDriveCmd;
-import frc.robot.commands.macro.MoveWrist;
-import frc.robot.subsystems.Wrist;
-// import frc.robot.commands.auton.OneBall;
-// import frc.robot.commands.auton.ZeroBall;
-// import frc.robot.commands.auton.ThreeBall;
-// import frc.robot.commands.auton.TwoBallLeft;
-// import frc.robot.commands.auton.TwoBallRight;
-// import frc.robot.commands.instant.ActuateClimb;
-// import frc.robot.commands.instant.ToggleCompressor;
-// import frc.robot.commands.instant.ToggleIntake;
-// import frc.robot.commands.macro.Shoot;
-// import frc.robot.commands.persistent.BlingBling;
-// import frc.robot.commands.persistent.ClimbArmManual;
-// import frc.robot.commands.persistent.Drive;
-// import frc.robot.commands.persistent.FeedManual;
-// import frc.robot.commands.persistent.RollIntakeManual;
-// import frc.robot.subsystems.Climber;
-// import frc.robot.subsystems.Drivetrain;
-// import frc.robot.subsystems.Feeder;
-// import frc.robot.subsystems.Intake;
-// import frc.robot.subsystems.LEDStrip;
-// import frc.robot.subsystems.PCH;
-// import frc.robot.subsystems.Shooter;
+import frc.robot.commands.macro.ElevatePosition;
+// import frc.robot.commands.auton.SwerveAutonTest;
+import frc.robot.commands.peresistent.ElevateJoystick;
+import frc.robot.commands.peresistent.MoveArmJoystick;
+import frc.robot.commands.peresistent.MoveWristManual;
+import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.SwerveDrive;
+import frc.robot.subsystems.Wrist;
 import frc.robot.Constants;
 
 /**
@@ -85,120 +69,95 @@ public final class RobotContainer {
 	// private final Command zeroBall = new ZeroBall(drivetrain);
 	// private final Command threeBall = new ThreeBall(drivetrain, intake, feeder, shooter);
 	SendableChooser<Command> chooser = new SendableChooser<>(); 
-
-	// Swerve Drive
-	private final SwerveDrive swerveDrive = new SwerveDrive();
-
-
-	public RobotContainer() {
-		// Swerve Drive
-		
-		// WPI_TalonFX talonTest = new WPI_TalonFX(23);
-		
-		
-
-		
-		configureButtonBindings();
-
-		// chooser.addOption("1-ball", oneBall);
-		// chooser.addOption("0-ball", zeroBall);
-		// chooser.addOption("2-ball, human player", twoBallRight);
-		// chooser.setDefaultOption("2-ball, NOT human player", twoBallLeft);
-		// chooser.addOption("BIG BALLS", threeBall);
-		SmartDashboard.putData(chooser);
-	}
-
-	/**
-	 * Use this method to define your button->command mappings.  Buttons can be
-	 * created by instantiating a {@link GenericHID} or one of its subclasses
-	 * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and
+	 /* ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and
 	 * then passing it to a
 	 * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
 	 */
 	private void configureButtonBindings() {
 		swerveDrive.setDefaultCommand(new SwerveDriveCmd(
-			swerveDrive, 
 			// X
-			() -> -driveController.getLeftY(), 
+			() -> -driver.getLeftY(), 
 			// Y
-			() -> driveController.getLeftX(), 
+			() -> driver.getLeftX(), 
 			// T
-			() -> driveController.getRightX(), 
-			() -> Constants.Drivetrain.IS_FIELD_ORIENTED));
-		// new JoystickButton(driveController, 1).whenPressed(swerveDrive.resetGyro());
-
-		new JoystickButton(gamepad, 4).whenPressed(new MoveWrist(Wrist, gamepad));
-
-		// drivetrain.setDefaultCommand(new Drive(drivetrain, leftJoystick, rightJoystick));
-		// new JoystickButton(gamepad, 4).whenPressed(new ToggleCompressor(pch, gamepad));
-		// new JoystickButton(gamepad, 6).whenPressed(new ActuateClimb(climber, true));
-		// new JoystickButton(gamepad, 5).whenPressed(new ActuateClimb(climber, false));
-		// new JoystickButton(gamepad, 3).whenPressed(new ToggleIntake(intake));
-		// new JoystickButton(gamepad, 2).whenHeld(new Shoot(shooter));
-		// // shooter.setDefaultCommand(new RollShooterManual(shooter, gamepad));
-		// feeder.setDefaultCommand(new FeedManual(feeder, gamepad));
-		// intake.setDefaultCommand(new RollIntakeManual(intake, gamepad));
-		// ledStrip.setDefaultCommand(new BlingBling(ledStrip, shooter));
-		// 	climber.setDefaultCommand(new ClimbArmManual(climber, gamepad));
+			() -> -driver.getRightX()));
 
 		// Swerve Drive (instant command reset heading)
-		new JoystickButton(driveController,
+		new JoystickButton(driver,
 		 	RobotMap.Controller.RESET_GYRO_HEADING_BUTTON_ID).whenPressed(() -> swerveDrive.zeroHeading());
-		new JoystickButton(driveController, 2).whenPressed(() -> swerveDrive.zeroTalons());
-		new JoystickButton(driveController, 3).whenPressed(() -> swerveDrive.zeroTalonsABS());
+		new JoystickButton(driver, 2).whenPressed(() -> swerveDrive.zeroTalons());
+		// new JoystickButton(driveController, 3).whenPressed(() -> swerveDrive.zeroTalonsABS());
+
+		// Elevator
+		//TODO CHECK THE POSITIONS OF THE ELEVATOR
+		elevator.setDefaultCommand(new ElevateJoystick(elevator, operator));
+		arm.setDefaultCommand(new MoveArmJoystick(arm, operator));
+		// wrist.setDefaultCommand(new MoveWristManual(wrist, operator));
+
+		new JoystickButton(operator, 1).whenHeld(new ElevatePosition(elevator, 34.45866374));
+		new JoystickButton(operator, 2).whenHeld(new ElevatePosition(elevator, 18.6));
+		new JoystickButton(operator,3).whenHeld(new ElevatePosition(elevator, 2.735));
+		new JoystickButton(operator, 4).whenHeld(new ElevatePosition(elevator, -13.13));
+
+		// new JoystickButton(operator, 5).whenPressed(new SetElevatorBase(elevator));
+
 	}
 
 	// AUTON
-// 	public Command getAutonomousCommand() {
-// 		// return chooser.getSelected();
+	public Command getAutonomousCommand() {
+		
+		return chooser.getSelected();
+	}
 
-// 		// Create Trajectory Speed/Settings
-// 		TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
-// 			Constants.Drivetrain.kMaxSpeedMetersPerSecond,
-// 				Constants.Drivetrain.kTeleDriveMaxAccelerationUnitsPerSecond)
-// 				.setKinematics(Constants.Drivetrain.driveKinematics);
+	// 	// Create Trajectory Speed/Settings
+	// 	TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
+	// 		Constants.Drivetrain.kMaxSpeedMetersPerSecond,
+	// 			Constants.Drivetrain.kTeleDriveMaxAccelerationUnitsPerSecond)
+	// 			.setKinematics(Constants.Drivetrain.driveKinematics);
 
-// 		// Create auton trajectory
-// 		Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-// 			// Initial point/rotation
-// 			new Pose2d(0, 0, new Rotation2d(0)),
-// 			// Points to traverse to
-// 			List.of(
-// 				new Translation2d(1, 0),
-// 				new Translation2d(1, -1)
-// 			),
-// 			// Final point + rotation
-// 			new Pose2d(2, -1, Rotation2d.fromDegrees(180)),
-// 			trajectoryConfig
-// 		);
+	// 	// Create auton trajectory
+	// 	Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+	// 		// Initial point/rotation
+	// 		new Pose2d(0, 0, new Rotation2d(0)),
+	// 		// Points to traverse to
+	// 		List.of(
+	// 			new Translation2d(1, 0),
+	// 			new Translation2d(1, -1)
+	// 		),
+	// 		// Final point + rotation
+	// 		new Pose2d(2, -1, Rotation2d.fromDegrees(180)),
+	// 		trajectoryConfig
+	// 	);
+	// 	// return trajectory;
+	// // }
 
-// 		// PID Controller for tracking trajectory (profiled = limits max speed/rot)
-// 		PIDController xController = new PIDController(Constants.Drivetrain.PID_CONTROLLER_X_P, 0, 0);
-// 		PIDController yController = new PIDController(Constants.Drivetrain.PID_CONTROLLER_Y_P, 0, 0);
-// 		ProfiledPIDController tController = new ProfiledPIDController(Constants.Drivetrain.PID_CONTROLLER_T_P, 0, 0,
-// 			new TrapezoidProfile.Constraints(
-// 				Constants.Drivetrain.kPhysicalMaxAngularSpeedRadiansPerSecond,
-// 				Constants.Drivetrain.kTeleDriveMaxAngularAccelerationUnitsPerSecond));
-// 		tController.enableContinuousInput(-Math.PI, Math.PI);
+	// 	// PID Controller for tracking trajectory (profiled = limits max speed/rot)
+	// 	// PIDController xController = new PIDController(Constants.Drivetrain.PID_CONTROLLER_X_P, 0, 0);
+	// 	// PIDController yController = new PIDController(Constants.Drivetrain.PID_CONTROLLER_Y_P, 0, 0);
+	// 	// ProfiledPIDController tController = new ProfiledPIDController(Constants.Drivetrain.PID_CONTROLLER_T_P, 0, 0,
+	// 	// 	new TrapezoidProfile.Constraints(
+	// 	// 		Constants.Drivetrain.kPhysicalMaxAngularSpeedRadiansPerSecond,
+	// 	// 		Constants.Drivetrain.kTeleDriveMaxAngularAccelerationUnitsPerSecond));
+	// 	// tController.enableContinuousInput(-Math.PI, Math.PI);
 
-// 		// Follow trajectory command
-// 		// SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
-// 		// 	trajectory,
-// 		// 	swerveDrive::getPose,
-// 		// 	Constants.Drivetrain.driveKinematics,
-// 		// 	xController,
-// 		// 	yController,
-// 		// 	tController,
-// 		// 	swerveDrive::setModuleStates,
-// 		// 	swerveDrive
-// 		// );
+		// Follow trajectory command
+		// SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
+		// 	trajectory,
+		// 	swerveDrive::getPose,
+		// 	Constants.Drivetrain.driveKinematics,
+		// 	xController,
+		// 	yController,
+		// 	tController,
+		// 	swerveDrive::setModuleStates,
+		// 	swerveDrive
+		// );
 
-// 		// Inits, wrapup, returns
-// 		// return new SequentialCommandGroup(
-// 		// 	new InstantCommand(() -> swerveDrive.resetOdometer(trajectory.getInitialPose())), 
-// 		// 	swerveControllerCommand, 
-// 		// 	new InstantCommand(() -> swerveDrive.stopModules())
-// 		// );
+		// Inits, wrapup, returns
+		// return new SequentialCommandGroup(
+		// 	new InstantCommand(() -> swerveDrive.resetOdometer(trajectory.getInitialPose())), 
+		// 	swerveControllerCommand, 
+		// 	new InstantCommand(() -> swerveDrive.stopModules())
+		// );
 
-// 	}	@Override
+	// }	@Override
 }

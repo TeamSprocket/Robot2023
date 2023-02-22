@@ -8,38 +8,44 @@ import com.revrobotics.SparkMaxRelativeEncoder;
 
 import com.revrobotics.SparkMaxPIDController;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 import frc.robot.Constants;
 
 public class Wrist extends SubsystemBase {
 
-    private final CANSparkMax wristMotor = new CANSparkMax(RobotMap.Wrist.WRIST, MotorType.kBrushless);
+    private final CANSparkMax wrist = new CANSparkMax(RobotMap.Wrist.WRIST, MotorType.kBrushless);
     
-    private SparkMaxPIDController wristPIDController = wristMotor.getPIDController();
+    private PIDController wristPIDController = new PIDController(Constants.Wrist.P, Constants.Wrist.I, Constants.Wrist.D);
     
-    private RelativeEncoder wristEncoder = wristMotor.getEncoder(SparkMaxRelativeEncoder.Type.kQuadrature, 4096);
+    private RelativeEncoder wristEncoder = wrist.getEncoder();
     
     public Wrist() {
-        wristMotor.setInverted(false);
+        wrist.restoreFactoryDefaults();
 
-        wristPIDController.setP(Constants.Wrist.P);
-        wristPIDController.setI(Constants.Wrist.I);
-        wristPIDController.setD(Constants.Wrist.D);
-        wristPIDController.setIZone(Constants.Wrist.Iz);
-        wristPIDController.setFF(Constants.Wrist.FF);
-        wristPIDController.setOutputRange(Constants.Wrist.kMinOutput, Constants.Wrist.kMaxOutput);
+        wrist.setInverted(true);
+
+    }
+    public double getWristAngle(){
+        double angle = wristEncoder.getPosition() * Constants.Wrist.angleConversionFactor;
+        return angle;
     }
 
-    public void setOutputManual(double output) {
-        wristMotor.set(output);
+    public void setWrist(double setpoint) {
+        
     }
 
-    public void setOutputPID(double setpoint) {
-        wristPIDController.setReference(setpoint, CANSparkMax.ControlType.kPosition);
-    }
+    
  
     public void stop() {
-        wristMotor.stopMotor();
+        wrist.stopMotor();
+    }
+
+    @Override
+    public void periodic(){
+        SmartDashboard.putNumber("Wrist Encoder Position", wristEncoder.getPosition()); 
+
     }
 }
