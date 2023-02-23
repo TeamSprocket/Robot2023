@@ -24,12 +24,22 @@ public class MoveWristManual extends PersistentCommand {
 
       double input = gamepad.getLeftTriggerAxis() - gamepad.getRightTriggerAxis(); 
 
-      //double deadbandedInput = Util.deadband(0.1, input);
+      double wristInput = Util.deadband(0.1, input);
       
-      System.out.println("angle: " + wrist.getWristAngle());
-      System.out.println("output: " + input);
+    //   System.out.println("angle: " + wrist.getWristAngle());
+    //   System.out.println("output: " + input);
       
-      wrist.moveWrist(input * 0.2);
+      if (wristInput == 0){
+        double output = wristInput;
+        output += 0.000482 * wrist.getWristAngle() - 0.7029;
+        
+        // output += 8.7947 * Math.pow(10,-7) * wrist.getWristAngle() * wrist.getWristAngle() - 0.67095;
+        
+        wrist.moveWrist(output);
+      }
+      else{
+        wrist.moveWrist(wristInput * 0.2);
+      }
     }
   
     @Override
