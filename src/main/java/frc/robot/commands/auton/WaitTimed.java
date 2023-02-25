@@ -1,6 +1,7 @@
 package frc.robot.commands.auton;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.util.commands.MacroCommand;
 
@@ -21,6 +22,8 @@ public class WaitTimed extends MacroCommand {
 
     @Override
     public void execute(){
+        System.out.println("WAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\n");
+        SmartDashboard.putString("Auton STATUS", "WAITING...");
     }
 
     public boolean isFinished(){

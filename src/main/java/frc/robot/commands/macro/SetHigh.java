@@ -9,7 +9,7 @@ import frc.robot.commands.macro.MoveArmPosition;
 import frc.robot.subsystems.*;
 import frc.util.commands.MacroCommand;
 
-public class SetMid extends MacroCommand{
+public class SetHigh extends MacroCommand{
     
     private final Elevator elevator;
     private final Arm arm;
@@ -18,7 +18,7 @@ public class SetMid extends MacroCommand{
     
     private double startTime;
 
-    public SetMid (Elevator elevator, Arm arm, Wrist wrist) {
+    public SetHigh (Elevator elevator, Arm arm, Wrist wrist) {
         this.elevator = elevator;
         this.arm = arm;
         this.wrist = wrist;
@@ -28,7 +28,7 @@ public class SetMid extends MacroCommand{
         
     }
 
-    
+
     public void initialize(){
         wrist.moveWrist(-0.115);
         startTime = System.currentTimeMillis();

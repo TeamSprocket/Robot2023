@@ -25,11 +25,13 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.SwerveDriveCmd;
+import frc.robot.commands.auton.SwerveDriveCmdTimed;
+import frc.robot.commands.auton.WaitTimed;
 import frc.robot.commands.macro.ElevatePosition;
 import frc.robot.commands.macro.MoveArmPosition;
 import frc.robot.commands.macro.MoveWristAngle;
 import frc.robot.commands.macro.SecondLevel;
-import frc.robot.commands.macro.SetMid;
+import frc.robot.commands.macro.SetHigh;
 // import frc.robot.commands.auton.SwerveAutonTest;
 import frc.robot.commands.peresistent.ElevateJoystick;
 import frc.robot.commands.peresistent.MoveArmJoystick;
@@ -107,7 +109,7 @@ public final class RobotContainer {
 		new JoystickButton(operator, 2).whenHeld(new MoveArmPosition(arm, -24.5));
 		new JoystickButton(operator, 3).whenHeld(new MoveArmPosition(arm, -80));
 		//new JoystickButton(operator, 1).whenHeld(new MoveWristAngle(wrist, -250));
-		new JoystickButton(operator, 1).whenHeld(new SetMid(elevator, arm, wrist));
+		new JoystickButton(operator, 1).whenHeld(new SetHigh(elevator, arm, wrist));
 
 
 
@@ -117,8 +119,14 @@ public final class RobotContainer {
 
 	// AUTON
 	public Command getAutonomousCommand() {
-		
-		return chooser.getSelected();
+		return new SequentialCommandGroup(
+			new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.1, new Rotation2d(0.0)), 1),
+			new WaitTimed(3),
+			new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.1, new Rotation2d(0.0)), 1)
+			);
+		// return new WaitTimed(100);
+
+		// return chooser.getSelected();
 	}
 
 	// 	// Create Trajectory Speed/Settings
