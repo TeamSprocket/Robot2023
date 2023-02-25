@@ -25,6 +25,7 @@ public class MoveArmPosition extends MacroCommand {
 
     public boolean isFinished(){
       return false;
+      
     }
 
     @Override

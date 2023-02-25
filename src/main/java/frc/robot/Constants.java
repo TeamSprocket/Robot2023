@@ -48,6 +48,12 @@ public class Constants {
         public static double kI = 0;
         public static double kD = 0.000002;
         public static double FF = 0;
+
+        public static double mP = 1.5;
+        public static double mI = 0;
+        public static double mD = 0.00000;
+        public static double mFF = 0;
+
     }
 
     public static final class Wrist {
@@ -56,7 +62,7 @@ public class Constants {
 
         public static double angleConversionFactor = 360.0 / kWristGearRatio;
         
-        public static double P = 0.001125;
+        public static double P = 0.0017500;
         public static double I = 0;
         public static double D = 0;
         public static double FF = 0;
