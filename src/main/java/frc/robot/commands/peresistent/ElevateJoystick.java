@@ -22,9 +22,9 @@ public class ElevateJoystick extends PersistentCommand {
     @Override
     public void execute() {
 
-      //double input = gamepad.getLeftTriggerAxis() - gamepad.getRightTriggerAxis(); 
+      double leftY = gamepad.getLeftTriggerAxis() - gamepad.getRightTriggerAxis(); 
 
-      double leftY = gamepad.getLeftY();
+      // double leftY = gamepad.getLeftY();
 
       double deadbandedInput = Util.deadband(0.1, leftY);
     
