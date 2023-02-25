@@ -28,6 +28,8 @@ import frc.robot.commands.SwerveDriveCmd;
 import frc.robot.commands.macro.ElevatePosition;
 import frc.robot.commands.macro.MoveArmPosition;
 import frc.robot.commands.macro.MoveWristAngle;
+import frc.robot.commands.macro.SecondLevel;
+import frc.robot.commands.macro.SetMid;
 // import frc.robot.commands.auton.SwerveAutonTest;
 import frc.robot.commands.peresistent.ElevateJoystick;
 import frc.robot.commands.peresistent.MoveArmJoystick;
@@ -104,7 +106,9 @@ public final class RobotContainer {
 		// new JoystickButton(operator, 1).whenHeld(new MoveArmPosition(arm, -6));
 		new JoystickButton(operator, 2).whenHeld(new MoveArmPosition(arm, -24.5));
 		new JoystickButton(operator, 3).whenHeld(new MoveArmPosition(arm, -80));
-		new JoystickButton(operator, 1).whenHeld(new MoveWristAngle(wrist, -250));
+		//new JoystickButton(operator, 1).whenHeld(new MoveWristAngle(wrist, -250));
+		new JoystickButton(operator, 1).whenHeld(new SetMid(elevator, arm, wrist));
+
 
 
 		// new JoystickButton(operator, 5).whenPressed(new SetElevatorBase(elevator));

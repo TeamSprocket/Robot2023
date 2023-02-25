@@ -23,7 +23,7 @@ public class SecondLevel extends MacroCommand {
   @Override
   public void initialize() {
     timer.start();
-    new ElevatePosition(elevator, 18.6);
+    new ElevatePosition(elevator, -13.13);
   }
 
 
