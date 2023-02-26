@@ -9,7 +9,7 @@ import frc.robot.commands.macro.MoveArmPosition;
 import frc.robot.subsystems.*;
 import frc.util.commands.MacroCommand;
 
-public class SetHigh extends MacroCommand{
+public class SetMid extends MacroCommand{
     
     private final Elevator elevator;
     private final Arm arm;
@@ -18,7 +18,7 @@ public class SetHigh extends MacroCommand{
     
     private double startTime;
 
-    public SetHigh (Elevator elevator, Arm arm, Wrist wrist) {
+    public SetMid (Elevator elevator, Arm arm, Wrist wrist) {
         this.elevator = elevator;
         this.arm = arm;
         this.wrist = wrist;
@@ -30,7 +30,7 @@ public class SetHigh extends MacroCommand{
 
 
     public void initialize(){
-        wrist.moveWrist(-0.105);
+        wrist.moveWrist(-0.13);
         startTime = System.currentTimeMillis();
     }
 
@@ -40,10 +40,10 @@ public class SetHigh extends MacroCommand{
         timer.start();
         
         if (timer.get() > 0.1 && timer.get() < 1){
-            elevator.setElevatorPosition(elevator.getElevatorHeight(), -13.13);
+            elevator.setElevatorPosition(elevator.getElevatorHeight(), -4);
         }
         else if(timer.get()> 1 && timer.get() < 2){
-            arm.setArmAngle(arm.getArmAngle(), -80);
+            arm.setArmAngle(arm.getArmAngle(), -60);
         };
 
         if (timer.get() > 2){
@@ -71,7 +71,7 @@ public class SetHigh extends MacroCommand{
 
     @Override
     public void end(boolean interrupted){
-        elevator.setElevatorPosition(elevator.getElevatorHeight(), -13.13);
-        arm.setArmAngle(arm.getArmAngle(), -80);
+        elevator.setElevatorPosition(elevator.getElevatorHeight(), 0);
+        arm.setArmAngle(arm.getArmAngle(), -40);
     }
 }

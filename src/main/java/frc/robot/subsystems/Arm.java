@@ -17,7 +17,7 @@ public class Arm extends SubsystemBase {
 
     private PIDController armPIDController = new PIDController(Constants.Arm.kP, Constants.Arm.kI, Constants.Arm.kD);   
     
-    private PIDController armManualPIDController = new PIDController(Constants.Arm.mP, Constants.Arm.mP, Constants.Arm.mP);
+    private PIDController armPIDControllerSlow = new PIDController(Constants.Arm.mP, Constants.Arm.mP, Constants.Arm.mP);
 
     private RelativeEncoder armLeftEncoder = armLeft.getEncoder();
     private RelativeEncoder armRightEncoder = armRight.getEncoder(); 
@@ -45,6 +45,11 @@ public class Arm extends SubsystemBase {
 
     public void setArmAngleManual(double currentAngle, double setpoint){
         double output = armPIDController.calculate(currentAngle, setpoint);
+        armLeft.set(output);
+    }
+
+    public void setArmAngleSlow(double currentAngle, double setpoint){
+        double output = armPIDControllerSlow.calculate(currentAngle, setpoint);
         armLeft.set(output);
     }
 

@@ -31,6 +31,7 @@ public class ElevateJoystick extends PersistentCommand {
 
       if (deadbandedInput == 0) {
         double output = 0;
+        System.out.println(elevator.getElevatorHeight());
         if (elevator.getElevatorHeight() > 27)
           output += 0.005;
         

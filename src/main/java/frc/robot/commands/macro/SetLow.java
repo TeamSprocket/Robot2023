@@ -9,7 +9,7 @@ import frc.robot.commands.macro.MoveArmPosition;
 import frc.robot.subsystems.*;
 import frc.util.commands.MacroCommand;
 
-public class SetHigh extends MacroCommand{
+public class SetLow extends MacroCommand{
     
     private final Elevator elevator;
     private final Arm arm;
@@ -18,7 +18,7 @@ public class SetHigh extends MacroCommand{
     
     private double startTime;
 
-    public SetHigh (Elevator elevator, Arm arm, Wrist wrist) {
+    public SetLow (Elevator elevator, Arm arm, Wrist wrist) {
         this.elevator = elevator;
         this.arm = arm;
         this.wrist = wrist;
@@ -30,7 +30,7 @@ public class SetHigh extends MacroCommand{
 
 
     public void initialize(){
-        wrist.moveWrist(-0.105);
+        wrist.moveWrist(-0.1215);
         startTime = System.currentTimeMillis();
     }
 
@@ -39,16 +39,16 @@ public class SetHigh extends MacroCommand{
       //new SequentialCommandGroup(
         timer.start();
         
-        if (timer.get() > 0.1 && timer.get() < 1){
+        if (timer.get() > 0.1 && timer.get() < 0.5){
             elevator.setElevatorPosition(elevator.getElevatorHeight(), -13.13);
         }
-        else if(timer.get()> 1 && timer.get() < 2){
-            arm.setArmAngle(arm.getArmAngle(), -80);
-        };
-
-        if (timer.get() > 2){
-            timer.reset();
+        else if (timer.get() > 0.5 && timer.get() < 1.5){
+            arm.setArmAngle(arm.getArmAngle(), -38);
         }
+        else if(timer.get() > 1.5 && timer.get() < 2){
+            elevator.setElevatorPosition(elevator.getElevatorHeight(), 30);
+        }
+        timer.reset();
         
         // new ElevatePosition(elevator, -13.13) //elevator up
         // new ParallelCommandGroup(
@@ -71,7 +71,7 @@ public class SetHigh extends MacroCommand{
 
     @Override
     public void end(boolean interrupted){
-        elevator.setElevatorPosition(elevator.getElevatorHeight(), -13.13);
-        arm.setArmAngle(arm.getArmAngle(), -80);
+        elevator.setElevatorPosition(elevator.getElevatorHeight(), 30);
+        arm.setArmAngle(arm.getArmAngle(), -24.5);
     }
 }

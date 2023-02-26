@@ -30,8 +30,10 @@ import frc.robot.commands.auton.WaitTimed;
 import frc.robot.commands.macro.ElevatePosition;
 import frc.robot.commands.macro.MoveArmPosition;
 import frc.robot.commands.macro.MoveWristAngle;
-import frc.robot.commands.macro.SecondLevel;
 import frc.robot.commands.macro.SetHigh;
+import frc.robot.commands.macro.SetHome;
+import frc.robot.commands.macro.SetLow;
+import frc.robot.commands.macro.SetMid;
 // import frc.robot.commands.auton.SwerveAutonTest;
 import frc.robot.commands.peresistent.ElevateJoystick;
 import frc.robot.commands.peresistent.MoveArmJoystick;
@@ -104,12 +106,19 @@ public final class RobotContainer {
 		// new JoystickButton(operator, 1).whenHeld(new ElevatePosition(elevator, 34.45866374));
 		// new JoystickButton(operator, 2).whenHeld(new ElevatePosition(elevator, 18.6));
 		// new JoystickButton(operator,3).whenHeld(new ElevatePosition(elevator, 2.735));
-		new JoystickButton(operator, 4).whenHeld(new ElevatePosition(elevator, -13.13));
-		// new JoystickButton(operator, 1).whenHeld(new MoveArmPosition(arm, -6));
-		new JoystickButton(operator, 2).whenHeld(new MoveArmPosition(arm, -24.5));
-		new JoystickButton(operator, 3).whenHeld(new MoveArmPosition(arm, -80));
-		//new JoystickButton(operator, 1).whenHeld(new MoveWristAngle(wrist, -250));
+		// new JoystickButton(operator, 4).whenHeld(new ElevatePosition(elevator, -13.13));
+		// // new JoystickButton(operator, 1).whenHeld(new MoveArmPosition(arm, -6));
+		// new JoystickButton(operator, 2).whenHeld(new MoveArmPosition(arm, -24.5));
+		// new JoystickButton(operator, 3).whenHeld(new MoveArmPosition(arm, -80));
+		// //new JoystickButton(operator, 1).whenHeld(new MoveWristAngle(wrist, -250));
+		// // new JoystickButton(operator, 1).whenHeld(new SetHigh(elevator, arm, wrist));
+		// new JoystickButton(operator, 1).whenHeld(new SetMid(elevator, arm, wrist));
+
+
+		new JoystickButton(operator, 4).whenHeld(new SetMid(elevator, arm, wrist));
+		new JoystickButton(operator, 3).whenHeld(new SetHome(elevator, arm, wrist));
 		new JoystickButton(operator, 1).whenHeld(new SetHigh(elevator, arm, wrist));
+		new JoystickButton(operator, 2).whenHeld(new SetLow(elevator, arm, wrist));
 
 
 

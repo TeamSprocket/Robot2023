@@ -9,7 +9,7 @@ import frc.robot.commands.macro.MoveArmPosition;
 import frc.robot.subsystems.*;
 import frc.util.commands.MacroCommand;
 
-public class SetHigh extends MacroCommand{
+public class SetHome extends MacroCommand{
     
     private final Elevator elevator;
     private final Arm arm;
@@ -18,7 +18,7 @@ public class SetHigh extends MacroCommand{
     
     private double startTime;
 
-    public SetHigh (Elevator elevator, Arm arm, Wrist wrist) {
+    public SetHome(Elevator elevator, Arm arm, Wrist wrist) {
         this.elevator = elevator;
         this.arm = arm;
         this.wrist = wrist;
@@ -30,7 +30,7 @@ public class SetHigh extends MacroCommand{
 
 
     public void initialize(){
-        wrist.moveWrist(-0.105);
+        wrist.moveWrist(-0.2);
         startTime = System.currentTimeMillis();
     }
 
@@ -39,28 +39,20 @@ public class SetHigh extends MacroCommand{
       //new SequentialCommandGroup(
         timer.start();
         
-        if (timer.get() > 0.1 && timer.get() < 1){
-            elevator.setElevatorPosition(elevator.getElevatorHeight(), -13.13);
+        if (timer.get() > 0 && timer.get() < 0.75){
+            elevator.setElevatorPosition(elevator.getElevatorHeight(), -20);
+            arm.setArmAngleSlow(arm.getArmAngle(), -35);
         }
-        else if(timer.get()> 1 && timer.get() < 2){
-            arm.setArmAngle(arm.getArmAngle(), -80);
-        };
-
-        if (timer.get() > 2){
+        if (timer.get() > 0.75 && timer.get() < 3.75){
+            arm.setArmAngleSlow(arm.getArmAngle(), 1);
+        }
+        if (timer.get() > 3.75 && timer.get() < 4){
+            elevator.setElevatorPosition(elevator.getElevatorHeight(), 32);
+        }
+        if (timer.get() > 4.15){
             timer.reset();
         }
         
-        // new ElevatePosition(elevator, -13.13) //elevator up
-        // new ParallelCommandGroup(
-        //     new ElevatePosition(elevator, -13.13), //keep elevator up
-        //     new MoveArmPosition(arm, -80) //arm up
-        // //new MoveWristAngle(wrist, -250) // move wrist
-        // ),
-        // new ParallelCommandGroup(
-        // new ElevatePosition(elevator, 34.45866374), //elevator down
-        // new MoveArmPosition(arm, -80) // keep arm up
-        // )
-
         
       
     }
@@ -71,7 +63,7 @@ public class SetHigh extends MacroCommand{
 
     @Override
     public void end(boolean interrupted){
-        elevator.setElevatorPosition(elevator.getElevatorHeight(), -13.13);
-        arm.setArmAngle(arm.getArmAngle(), -80);
+        elevator.setElevatorPosition(elevator.getElevatorHeight(), 32);
+        arm.setArmAngle(arm.getArmAngle(), 0);
     }
 }

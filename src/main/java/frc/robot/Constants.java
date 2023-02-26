@@ -44,12 +44,12 @@ public class Constants {
         public static double groundAngle = -22;
         public static double startingAngle = -6;
         
-        public static double kP = 0.025;
+        public static double kP = 0.05;
         public static double kI = 0;
         public static double kD = 0.000002;
         public static double FF = 0;
 
-        public static double mP = 1.5;
+        public static double mP = 0.0015125; //0.00145
         public static double mI = 0;
         public static double mD = 0.00000;
         public static double mFF = 0;
