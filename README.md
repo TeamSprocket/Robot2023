@@ -15,5 +15,5 @@ Special thanks to everyone that contributed
 - Single-Staged Continuous Elevator
 - Arm
 - Wrist
-- Pneumatically Actuated Double Jointed Claw
+- Pneumatically Actuated Claw
 
