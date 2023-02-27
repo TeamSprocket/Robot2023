@@ -12,7 +12,7 @@ Special thanks to everyone that contributed
 
 ## Subsystems
 - Field-Oriented Swerve Drive
-- Continuous Elevator
+- Single-Staged Continuous Elevator
 - Arm
 - Wrist
 - Pneumatically Actuated Double Jointed Claw
