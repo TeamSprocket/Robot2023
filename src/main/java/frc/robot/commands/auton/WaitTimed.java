@@ -22,7 +22,7 @@ public class WaitTimed extends MacroCommand {
 
     @Override
     public void execute(){
-        System.out.println("WAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\n");
+        // System.out.println("WAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\n");
         SmartDashboard.putString("Auton STATUS", "WAITING...");
     }
 

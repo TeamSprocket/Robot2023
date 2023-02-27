@@ -50,11 +50,24 @@ public class Arm extends SubsystemBase {
 
     public void setArmAngleSlow(double currentAngle, double setpoint){
         double output = armPIDControllerSlow.calculate(currentAngle, setpoint);
+        if (output < -0.35){
+            output = -0.35;
+        } 
+        else if (output > 0.35){
+            output = 0.35;
+        }
+        
         armLeft.set(output);
     }
 
     public void setArmAngle(double currentAngle, double setpoint){
         double output = armPIDController.calculate(currentAngle, setpoint);
+        if (output < -0.15){
+            output = -0.15;
+        } else if (output > 0.15) {
+            output = 0.15;
+        }
+        System.out.println("ANGLE: " + currentAngle);
         armLeft.set(output);
     }
 

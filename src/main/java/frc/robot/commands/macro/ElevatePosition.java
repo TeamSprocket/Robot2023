@@ -20,7 +20,6 @@ public class ElevatePosition extends MacroCommand {
 
     @Override
     public void execute() {
-      System.out.println(elevator.getElevatorHeight());
       elevator.setElevatorPosition(elevator.getElevatorHeight(), height);
     }
 
