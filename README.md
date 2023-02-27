@@ -16,3 +16,4 @@ Special thanks to everyone that contributed
 - Arm
 - Wrist
 - Pneumatically Actuated Double Jointed Claw
+![IMG_5098](https://user-images.githubusercontent.com/73210729/221700396-2c46f09c-e6bc-4692-973f-67d0ef03ebcb.png)
