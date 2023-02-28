@@ -43,7 +43,6 @@ public final class RobotMap {
     // public static final int kTurnP = 0;
     // public static final int kTurnI = 0;
     // public static final int kTurnD = 0;
-    
 
     // public static final int FRONT_LEFT_TALON_E = 9;
     // public static final int FRONT_RIGHT_TALON_E = 10;
@@ -52,20 +51,39 @@ public final class RobotMap {
 
   }
 
-  public static final class Elevator{
+  public static final class Elevator {
     public static final int ELEVATOR_LEFT = 40;
     public static final int ELEVATOR_RIGHT = 41;
   }
 
-  public static final class Arm{
+  public static final class Arm {
     public static final int ARM_LEFT = 42;
     public static final int ARM_RIGHT = 43;
   }
 
-  public static final class Wrist{
+  public static final class Wrist {
     public static final int WRIST = 44;
   }
 
+  public static final class Intake {
+    public static final int INTAKE = 45;
+
+    // TODO: check piston ports from electrical
+    public static final int PISTON_LEFT_FORWARD = 0;
+    public static final int PISTON_RIGHT_FORWARD = 1;
+    public static final int PISTON_RIGHT_BACKWARD = 2;
+    public static final int PISTON_LEFT_BACKWARD = 3;
+
+  }
+
+  public static final class Arm {
+    public static final int ARM_LEFT = 42;
+    public static final int ARM_RIGHT = 43;
+  }
+
+  public static final class Wrist {
+    public static final int WRIST = 44;
+  }
 
   public static final class PCH {
     public static final int PCH_CAN = 1;
@@ -73,19 +91,18 @@ public final class RobotMap {
     public static final int PRESSURE_SENSOR_CHANNEL = 0;
   }
 
-  public static final class Claw{
+  public static final class Claw {
     public static final int DOUBLE_SOLENOID_IN = 8;
 
     public static final int PISTON_LEFT_FORWARD = 0;
     public static final int PISTON_RIGHT_FORWARD = 1;
 
   }
-  
 
   public static final class Controller {
     public static final int DRIVER = 0;
     public static final int OPERATOR = 1;
-    
+
     public static final int RESET_GYRO_HEADING_BUTTON_ID = 1;
   }
 }
