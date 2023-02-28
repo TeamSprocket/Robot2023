@@ -102,7 +102,7 @@ public final class RobotMap {
   public static final class Controller {
     public static final int DRIVER = 0;
     public static final int OPERATOR = 1;
-
+    
     public static final int RESET_GYRO_HEADING_BUTTON_ID = 1;
   }
 }
