@@ -43,6 +43,7 @@ public class MoveArmJoystick extends PersistentCommand {
       //   arm.moveArm(armInput);
       // }
       double newSetpoint = (5 * armInput) + arm.getArmAngle();
+      System.out.println("ARM ANGLE: " + arm.getArmAngle());
       if (armInput == 0){
         // if (arm.getArmAngle() < 0 && arm.getArmAngle() > -1) {
         //   arm.setArmAngle(arm.getArmAngle(), newSetpoint+0.5);

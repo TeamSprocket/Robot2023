@@ -17,8 +17,6 @@ public class Arm extends SubsystemBase {
 
     private PIDController armPIDController = new PIDController(Constants.Arm.kP, Constants.Arm.kI, Constants.Arm.kD);   
     
-    private PIDController armPIDControllerSlow = new PIDController(Constants.Arm.mP, Constants.Arm.mP, Constants.Arm.mP);
-
     private RelativeEncoder armLeftEncoder = armLeft.getEncoder();
     private RelativeEncoder armRightEncoder = armRight.getEncoder(); 
 
@@ -48,13 +46,14 @@ public class Arm extends SubsystemBase {
         armLeft.set(output);
     }
 
-    public void setArmAngleSlow(double currentAngle, double setpoint){
-        double output = armPIDControllerSlow.calculate(currentAngle, setpoint);
-        armLeft.set(output);
-    }
-
     public void setArmAngle(double currentAngle, double setpoint){
         double output = armPIDController.calculate(currentAngle, setpoint);
+        if (output < -0.15){
+            output = -0.15;
+        } else if (output > 0.15) {
+            output = 0.15;
+        }
+        System.out.println("ANGLE: " + currentAngle);
         armLeft.set(output);
     }
 
@@ -62,7 +61,6 @@ public class Arm extends SubsystemBase {
         armLeft.stopMotor();
         armRight.stopMotor();
     }
-
 
     @Override
     public void periodic(){

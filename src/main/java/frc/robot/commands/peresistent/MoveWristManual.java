@@ -28,7 +28,7 @@ public class MoveWristManual extends PersistentCommand {
 
       double wristInput = Util.deadband(0.1, input);
       
-      System.out.println("angle: " + wrist.getWristAngle());
+      // System.out.println("angle: " + wrist.getWristAngle());
     //   System.out.println("output: " + input);
       
       // if (wristInput == 0){
