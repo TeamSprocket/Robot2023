@@ -20,6 +20,12 @@ public class Wheels extends SubsystemBase {
         clawLeft.setNeutralMode(NeutralMode.Coast);
         clawRight.setNeutralMode(NeutralMode.Coast);
 
+        clawLeft.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 40, 45, 00));
+        clawRight.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 40, 45, 00)); 
+        
+        //clawLeft.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40, 45, 00)); 
+        //clawRight.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40, 45, 00));
+
         TalonFXConfiguration leftConfig = new TalonFXConfiguration();
         leftConfig.voltageCompSaturation = 10; //change
         clawLeft.configAllSettings(leftConfig);

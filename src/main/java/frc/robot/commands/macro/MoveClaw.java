@@ -33,6 +33,8 @@ public class MoveClaw extends MacroCommand {
 
     }
 
+
+
     @Override
     public boolean isFinished () {
         return false;
