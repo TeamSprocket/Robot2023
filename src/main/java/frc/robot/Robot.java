@@ -3,12 +3,9 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-import edu.wpi.first.wpilibj.Timer;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.SwerveDriveCmd;
 
 
 /**
@@ -18,8 +15,6 @@ import frc.robot.commands.SwerveDriveCmd;
  * directory.
  */
 public class Robot extends TimedRobot {
-    Timer timer;
-
     private final RobotContainer robotContainer = new RobotContainer();
 
     public Robot() {
@@ -61,14 +56,11 @@ public class Robot extends TimedRobot {
     /** This function is run once each time the robot enters autonomous mode. */
     @Override
     public void autonomousInit() {
-        Command auton = robotContainer.getAutonomousCommand();
+        // Command auton = robotContainer.getAutonomousCommand();
 
-        if(auton!=null) {
-            auton.schedule();
-        }
-        // timer = new Timer();
-        // timer.start();
-        
+        // if(auton!=null) {
+        //     auton.schedule();
+        // }
     }
 
     /**
@@ -76,11 +68,6 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousPeriodic() {
-        // double time = timer.get();
-        // if (time < 1) {
-        //     new SwerveDriveCmd(swerveDrive, null, null, null))
-        // }
-        
     }
 
     /** This function is called once each time the robot enters teleoperated mode. */ 

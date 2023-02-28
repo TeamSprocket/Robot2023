@@ -4,7 +4,6 @@ package frc.robot.commands;
 import java.util.function.Supplier;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -24,13 +23,14 @@ public class SwerveDriveCmd extends CommandBase {
   private final SlewRateLimiter xSlewLimit, ySlewLimit, tSlewLimit;
 
     public SwerveDriveCmd(SwerveDrive swerveDrive,
-            Supplier<Double> xSPDFunct, Supplier<Double> ySPDFunct, Supplier<Double> tSPDFunct) {
+            Supplier<Double> xSPDFunct, Supplier<Double> ySPDFunct, Supplier<Double> tSPDFunct,
+            Supplier<Boolean> fieldOrientedFunct) {
 
         this.swerveDrive = swerveDrive;
         this.xSPDFunct = xSPDFunct;
         this.ySPDFunct = ySPDFunct;
         this.tSPDFunct = tSPDFunct;
-        this.fieldOrientedFunct = () -> Constants.Drivetrain.IS_FIELD_ORIENTED;
+        this.fieldOrientedFunct = fieldOrientedFunct;
         this.xSlewLimit = new SlewRateLimiter(Constants.Drivetrain.kTeleDriveMaxAccelerationUnitsPerSecond);
         this.ySlewLimit = new SlewRateLimiter(Constants.Drivetrain.kTeleDriveMaxAccelerationUnitsPerSecond);
         this.tSlewLimit = new SlewRateLimiter(Constants.Drivetrain.kTeleDriveMaxAngularAccelerationUnitsPerSecond);
@@ -74,9 +74,7 @@ public class SwerveDriveCmd extends CommandBase {
     ChassisSpeeds chassisSpeeds;
     // Field Oriented
     if (Constants.Drivetrain.IS_FIELD_ORIENTED) {
-      double headingRad = Math.toRadians(swerveDrive.getHeading());
-      chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-          xSpeed, ySpeed, tSpeed, new Rotation2d(headingRad));
+      chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, tSpeed, swerveDrive.getRotation2d());
     } else { // Robot oriented
       chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, tSpeed);
       SmartDashboard.putString("Chassis Speed", chassisSpeeds.toString());
@@ -91,8 +89,8 @@ public class SwerveDriveCmd extends CommandBase {
     SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.Drivetrain.kMaxSpeedMetersPerSecond);
 
     // Apply to modules
-    swerveDrive.setModuleStates(moduleStates);
-    SmartDashboard.putString("Module States Desaturated", moduleStates[2].toString());
+    swerveDrive.setModuleStates(moduleStates, xSpeed, ySpeed);
+    SmartDashboard.putString("Module State 2", moduleStates[2].toString());
 
   }
 
