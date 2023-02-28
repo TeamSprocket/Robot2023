@@ -68,6 +68,15 @@ public class Constants {
 
     }
 
+    public static final class Claw {
+        public static double revSetpoint = 400;
+    }
+
+    public static final class Compressor {
+        public static double MIN_PSI = 100;
+        public static double MAX_PSI = 150;
+    }
+
     public static final class Drivetrain {
         // public static final double TURN_kP = 0.00385;
         // public static final double TURN_kI = 0;

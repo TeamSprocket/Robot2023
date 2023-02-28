@@ -1,4 +1,4 @@
-package frc.robot.commands.peresistent;
+package frc.robot.commands.persistent;
 
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants;

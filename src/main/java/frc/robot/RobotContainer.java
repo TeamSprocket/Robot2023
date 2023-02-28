@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.SwerveDriveCmd;
 import frc.robot.commands.auton.SwerveDriveCmdTimed;
 import frc.robot.commands.auton.WaitTimed;
+// import frc.robot.commands.instant.ToggleCompressor;
 import frc.robot.commands.macro.ElevatePosition;
 import frc.robot.commands.macro.MoveArmPosition;
 import frc.robot.commands.macro.MoveWristAngle;
@@ -34,12 +35,14 @@ import frc.robot.commands.macro.SetHigh;
 import frc.robot.commands.macro.SetHome;
 import frc.robot.commands.macro.SetLow;
 import frc.robot.commands.macro.SetMid;
-// import frc.robot.commands.auton.SwerveAutonTest;
-import frc.robot.commands.peresistent.ElevateJoystick;
-import frc.robot.commands.peresistent.MoveArmJoystick;
-import frc.robot.commands.peresistent.MoveWristManual;
+import frc.robot.commands.persistent.ElevateJoystick;
+import frc.robot.commands.persistent.MoveArmJoystick;
+import frc.robot.commands.persistent.MoveWristManual;
+import frc.robot.commands.persistent.RollClaw;
 import frc.robot.subsystems.Elevator;
+// import frc.robot.subsystems.PCH;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.SwerveDrive;
 import frc.robot.subsystems.Wrist;
 import frc.robot.Constants;
@@ -58,10 +61,12 @@ public final class RobotContainer {
 
 	//Smartdashboard
 	//Subsystems
+	// private final PCH pch = new PCH();
 	private final SwerveDrive swerveDrive = new SwerveDrive();
 	private final Elevator elevator = new Elevator();
 	private final Arm arm = new Arm();
 	private final Wrist wrist = new Wrist();
+	private final Claw claw = new Claw();
 
 	// Manual Autons
 	SendableChooser<Command> chooser = new SendableChooser<>();  
@@ -102,6 +107,7 @@ public final class RobotContainer {
 		elevator.setDefaultCommand(new ElevateJoystick(elevator, operator));
 		arm.setDefaultCommand(new MoveArmJoystick(arm, operator));
 		wrist.setDefaultCommand(new MoveWristManual(wrist, operator));
+		claw.setDefaultCommand(new RollClaw(claw, driver));
 
 		// new JoystickButton(operator, 1).whenHeld(new ElevatePosition(elevator, 34.45866374));
 		// new JoystickButton(operator, 2).whenHeld(new ElevatePosition(elevator, 18.6));
@@ -119,6 +125,9 @@ public final class RobotContainer {
 		new JoystickButton(operator, 3).whenHeld(new SetHome(elevator, arm, wrist));
 		new JoystickButton(operator, 1).whenHeld(new SetHigh(elevator, arm, wrist));
 		new JoystickButton(operator, 2).whenHeld(new SetLow(elevator, arm, wrist));
+
+		// new JoystickButton(driver, 4).whenPressed(new ToggleCompressor(pch, driver));
+
 
 
 
