@@ -8,10 +8,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
 public class Claw extends SubsystemBase{
-    private final DoubleSolenoid clawPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, RobotMap.Intake.PISTON_LEFT_FORWARD, RobotMap.Intake.PISTON_RIGHT_FORWARD);
+    private final DoubleSolenoid clawPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, RobotMap.Claw.PISTON_LEFT_FORWARD, RobotMap.Claw.PISTON_RIGHT_FORWARD);
    
-    public void actuateIntakeArm(boolean out) {
-        if (out){
+    public void actuateClaw(boolean out) {
+        if (!out){
             clawPiston.set(Value.kForward);
         }
         else{

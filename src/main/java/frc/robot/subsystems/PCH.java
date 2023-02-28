@@ -19,11 +19,9 @@ public class PCH extends SubsystemBase {
     
     public void setCompression(boolean on) {
         if(on) {
-            SmartDashboard.putBoolean("[PCM] Compress", true);
             pneumaticHub.enableCompressorAnalog(Constants.PCH.MIN_PSI, Constants.PCH.MAX_PSI);
         }
         else {
-            SmartDashboard.putBoolean("[PCM] Compress", false);
             pneumaticHub.disableCompressor();
         }
     }

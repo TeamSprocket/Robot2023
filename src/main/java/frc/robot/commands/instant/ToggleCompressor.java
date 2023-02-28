@@ -21,11 +21,9 @@ public class ToggleCompressor extends InstantCommand {
         if(pch.isEnabled()) {
             pch.setCompression(false);
             gamepad.setRumble(RumbleType.kLeftRumble, 0.0);
-            SmartDashboard.putString("Compressor Status", "Enabled");
         } else {
             pch.setCompression(true);   
             gamepad.setRumble(RumbleType.kLeftRumble, 1.0);
-            SmartDashboard.putString("Compressor Status", "Disabled");
         }
     }   
 }
