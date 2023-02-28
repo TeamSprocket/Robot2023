@@ -52,19 +52,6 @@ public class SetMid extends MacroCommand{
             arm.setArmAngle(arm.getArmAngle(), -60);
         }
         
-        // new ElevatePosition(elevator, -13.13) //elevator up
-        // new ParallelCommandGroup(
-        //     new ElevatePosition(elevator, -13.13), //keep elevator up
-        //     new MoveArmPosition(arm, -80) //arm up
-        // //new MoveWristAngle(wrist, -250) // move wrist
-        // ),
-        // new ParallelCommandGroup(
-        // new ElevatePosition(elevator, 34.45866374), //elevator down
-        // new MoveArmPosition(arm, -80) // keep arm up
-        // )
-
-        
-      
     }
 
     public boolean isFinished(){

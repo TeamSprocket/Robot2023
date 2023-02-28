@@ -54,20 +54,6 @@ public class SetLow extends MacroCommand{
             elevator.setElevatorPosition(elevator.getElevatorHeight(), 30);
             arm.setArmAngle(arm.getArmAngle(), -25);
         }
-        
-        
-        // new ElevatePosition(elevator, -13.13) //elevator up
-        // new ParallelCommandGroup(
-        //     new ElevatePosition(elevator, -13.13), //keep elevator up
-        //     new MoveArmPosition(arm, -80) //arm up
-        // //new MoveWristAngle(wrist, -250) // move wrist
-        // ),
-        // new ParallelCommandGroup(
-        // new ElevatePosition(elevator, 34.45866374), //elevator down
-        // new MoveArmPosition(arm, -80) // keep arm up
-        // )
-
-        
       
     }
 
