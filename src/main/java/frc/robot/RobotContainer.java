@@ -27,7 +27,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.SwerveDriveCmd;
 import frc.robot.commands.auton.SwerveDriveCmdTimed;
 import frc.robot.commands.auton.WaitTimed;
-// import frc.robot.commands.instant.ToggleCompressor;
+import frc.robot.commands.instant.ToggleClaw;
+import frc.robot.commands.instant.ToggleCompressor;
 import frc.robot.commands.macro.ElevatePosition;
 import frc.robot.commands.macro.MoveArmPosition;
 import frc.robot.commands.macro.MoveWristAngle;
@@ -40,7 +41,7 @@ import frc.robot.commands.persistent.MoveArmJoystick;
 import frc.robot.commands.persistent.MoveWristManual;
 import frc.robot.commands.persistent.RollClaw;
 import frc.robot.subsystems.Elevator;
-// import frc.robot.subsystems.PCH;
+import frc.robot.subsystems.PCH;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.SwerveDrive;
@@ -61,7 +62,7 @@ public final class RobotContainer {
 
 	//Smartdashboard
 	//Subsystems
-	// private final PCH pch = new PCH();
+	private final PCH pch = new PCH();
 	private final SwerveDrive swerveDrive = new SwerveDrive();
 	private final Elevator elevator = new Elevator();
 	private final Arm arm = new Arm();
@@ -126,7 +127,8 @@ public final class RobotContainer {
 		new JoystickButton(operator, 1).whenHeld(new SetHigh(elevator, arm, wrist));
 		new JoystickButton(operator, 2).whenHeld(new SetLow(elevator, arm, wrist));
 
-		// new JoystickButton(driver, 4).whenPressed(new ToggleCompressor(pch, driver));
+		new JoystickButton(driver, 4).whenPressed(new ToggleCompressor(pch, driver));
+		new JoystickButton(driver, 5).whenPressed(new ToggleClaw(claw));
 
 
 

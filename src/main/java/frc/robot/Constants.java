@@ -74,7 +74,7 @@ public class Constants {
 
     public static final class Compressor {
         public static double MIN_PSI = 100;
-        public static double MAX_PSI = 150;
+        public static double MAX_PSI = 119;
     }
 
     public static final class Drivetrain {
