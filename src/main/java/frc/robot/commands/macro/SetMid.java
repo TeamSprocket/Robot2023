@@ -42,14 +42,14 @@ public class SetMid extends MacroCommand{
         
         if (timer.get() > 0.1 && timer.get() < 1){
             elevator.setElevatorPosition(elevator.getElevatorHeight(), -4);
-            arm.setArmAngle(arm.getArmAngle(), -60);
+            arm.setArmAngle(arm.getArmAngle(), -70);
         }
         else if(timer.get()> 1 && timer.get() < 2){
-            arm.setArmAngle(arm.getArmAngle(), -60);
+            arm.setArmAngle(arm.getArmAngle(), -70);
         }
         else{
             elevator.setElevatorPosition(elevator.getElevatorHeight(), -4);
-            arm.setArmAngle(arm.getArmAngle(), -60);
+            arm.setArmAngle(arm.getArmAngle(), -70);
         }
         
         // new ElevatePosition(elevator, -13.13) //elevator up
