@@ -21,13 +21,27 @@ public class ElevateJoystick extends PersistentCommand {
   
     @Override
     public void execute() {
-      double leftY = gamepad.getLeftY();
+
+      double leftY = gamepad.getLeftTriggerAxis() - gamepad.getRightTriggerAxis(); 
+
+      // double leftY = gamepad.getLeftY();
 
       double deadbandedInput = Util.deadband(0.1, leftY);
-      System.out.println("DEADBAND INPUT: " + deadbandedInput);
+    
 
-      elevator.moveElevator(deadbandedInput);
-
+      if (deadbandedInput == 0) {
+        double output = 0;
+        System.out.println(elevator.getElevatorHeight());
+        if (elevator.getElevatorHeight() > 27)
+          output += 0.005;
+        
+        output += (-0.0000212*elevator.getElevatorHeight()-0.0532628);
+        elevator.moveElevator(output);
+        
+      }
+      else{
+        elevator.moveElevator(deadbandedInput);
+      }
     }
   
     @Override

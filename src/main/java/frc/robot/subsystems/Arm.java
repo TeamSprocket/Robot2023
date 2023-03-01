@@ -15,8 +15,8 @@ public class Arm extends SubsystemBase {
     private final CANSparkMax armLeft = new CANSparkMax(RobotMap.Arm.ARM_LEFT,MotorType.kBrushless);
     private final CANSparkMax armRight = new CANSparkMax(RobotMap.Arm.ARM_RIGHT, MotorType.kBrushless);
 
-    private PIDController armPIDController = new PIDController(Constants.Arm.kP, Constants.Arm.kI, Constants.Arm.kD);                                                  
-
+    private PIDController armPIDController = new PIDController(Constants.Arm.kP, Constants.Arm.kI, Constants.Arm.kD);   
+    
     private RelativeEncoder armLeftEncoder = armLeft.getEncoder();
     private RelativeEncoder armRightEncoder = armRight.getEncoder(); 
 
@@ -25,8 +25,8 @@ public class Arm extends SubsystemBase {
         armLeft.restoreFactoryDefaults();
         armRight.restoreFactoryDefaults();
         
-        armLeft.setInverted(true);
-        armRight.setInverted(true);
+        armLeft.setInverted(false);
+        armRight.setInverted(false);
 
         armRight.follow(armLeft);
 
@@ -41,8 +41,19 @@ public class Arm extends SubsystemBase {
         armLeft.set(output);
     }
 
+    public void setArmAngleManual(double currentAngle, double setpoint){
+        double output = armPIDController.calculate(currentAngle, setpoint);
+        armLeft.set(output);
+    }
+
     public void setArmAngle(double currentAngle, double setpoint){
         double output = armPIDController.calculate(currentAngle, setpoint);
+        if (output < -0.15){
+            output = -0.15;
+        } else if (output > 0.15) {
+            output = 0.15;
+        }
+        System.out.println("ANGLE: " + currentAngle);
         armLeft.set(output);
     }
 
@@ -51,11 +62,10 @@ public class Arm extends SubsystemBase {
         armRight.stopMotor();
     }
 
-
     @Override
     public void periodic(){
-        SmartDashboard.putNumber("Arm Left Encoder Position", armLeftEncoder.getPosition()); 
-        SmartDashboard.putNumber("Arm Right Encoder Position", armRightEncoder.getPosition());
+        SmartDashboard.putNumber("[Arm] Left Encoder Position", armLeftEncoder.getPosition()); 
+        SmartDashboard.putNumber("[Arm] Right Encoder Position", armRightEncoder.getPosition());
 
     }
 }

@@ -25,33 +25,28 @@ public class Wrist extends SubsystemBase {
     public Wrist() {
         wrist.restoreFactoryDefaults();
 
-        wrist.setInverted(true);
+        wrist.setInverted(false);
 
-        
     }
-    public double getWristHeight(){
-        double motorPos = wristEncoder.getPosition() * 2 * Math.PI;
-        double sprocketPos = motorPos / Constants.Wrist.kWristGearRatio;
-
-        // double armPosRad = sprocketPos * (2 * Math.PI);
-        return sprocketPos;
-
-        //double circum = 2 * Math.PI * (Units.inchesToMeters(5.731) / 2); 
-        // return 2;
+    public double getWristAngle(){
+        double angle = wristEncoder.getPosition() * Constants.Wrist.angleConversionFactor;
+        return angle;
     }
 
-    public void setWrist(double setpoint) {
-        double output = wristPIDController.calculate(getWristHeight(), setpoint);
+    public void moveWrist(double output) {
+        wrist.set(output); 
+    }
 
-        output *= (Math.abs(getWristHeight() - setpoint) / Constants.Wrist.ENCODER_RANGE);
-        
-        output *= Constants.Wrist.MAX_SPEED;
-        System.out.println("wrist speed: " + output);
+    public void setWristAngle(double currentAngle, double setpoint){
+        double output = wristPIDController.calculate(currentAngle, setpoint);
+        if (output < -0.2){
+            output = -0.2;
+        } else if (output > 0.2) {
+            output = 0.2;
+        }
         wrist.set(output);
     }
 
-    
- 
     public void stop() {
         wrist.stopMotor();
     }
@@ -60,6 +55,5 @@ public class Wrist extends SubsystemBase {
     public void periodic(){
         SmartDashboard.putNumber("Wrist Encoder Position", wristEncoder.getPosition()); 
 
-        SmartDashboard.putNumber("Arm Angle", getWristHeight());
     }
 }

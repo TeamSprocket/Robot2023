@@ -53,6 +53,12 @@ public class Elevator extends SubsystemBase{
 
     public void setElevatorPosition(double currentPosition, double setpoint){
         double output = elevatorPIDController.calculate(currentPosition, setpoint);
+        if (output < -0.275){
+            output = -0.275;
+        } 
+        else if (output > 0.275){
+            output = 0.275;
+        }
         elevatorLeft.set(output);
     }
 
