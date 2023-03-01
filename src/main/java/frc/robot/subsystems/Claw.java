@@ -36,7 +36,7 @@ public class Claw extends SubsystemBase{
     }
 
     public void actuateClaw(boolean out) {
-        if (!out){
+        if (out){
             clawSolenoid.set(Value.kForward);
         }
         else{

@@ -122,10 +122,10 @@ public final class RobotContainer {
 		// new JoystickButton(operator, 1).whenHeld(new SetMid(elevator, arm, wrist));
 
 
-		new JoystickButton(operator, 4).whenHeld(new SetMid(elevator, arm, wrist));
+		new JoystickButton(operator, 2).whenHeld(new SetMid(elevator, arm, wrist));
 		new JoystickButton(operator, 3).whenHeld(new SetHome(elevator, arm, wrist));
-		new JoystickButton(operator, 1).whenHeld(new SetHigh(elevator, arm, wrist));
-		new JoystickButton(operator, 2).whenHeld(new SetLow(elevator, arm, wrist));
+		new JoystickButton(operator, 4).whenHeld(new SetHigh(elevator, arm, wrist));
+		new JoystickButton(operator, 1).whenHeld(new SetLow(elevator, arm, wrist));
 
 		new JoystickButton(driver, 4).whenPressed(new ToggleCompressor(pch, driver));
 		new JoystickButton(driver, 5).whenPressed(new ToggleClaw(claw));

@@ -70,8 +70,8 @@ public class Constants {
     }
 
     public static final class PCH {
-        public static double MIN_PSI = 100;
-        public static double MAX_PSI = 119;
+        public static double MIN_PSI = 80;
+        public static double MAX_PSI = 100;
     }
 
     public static final class Drivetrain {
