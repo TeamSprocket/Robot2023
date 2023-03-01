@@ -22,7 +22,7 @@ public class MoveWristManual extends PersistentCommand {
     @Override
     public void execute() {
   
-      double input = gamepad.getRightY();
+      double input = gamepad.getLeftY();
 
       // double input = gamepad.getLeftTriggerAxis() - gamepad.getRightTriggerAxis(); 
 
