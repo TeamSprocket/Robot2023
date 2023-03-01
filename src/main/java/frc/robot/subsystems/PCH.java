@@ -19,7 +19,7 @@ public class PCH extends SubsystemBase {
     
     public void setCompression(boolean on) {
         if(on) {
-            pneumaticHub.enableCompressorAnalog(Constants.Compressor.MIN_PSI, Constants.Compressor.MAX_PSI);
+            pneumaticHub.enableCompressorAnalog(Constants.PCH.MIN_PSI, Constants.PCH.MAX_PSI);
             // pneumaticHub.enableCompressorAnalog(Constants.Compressor.MIN_PSI, Constants.Compressor.MAX_PSI);
         }
         else {
