@@ -48,39 +48,40 @@ public class MoveArmJoystick extends PersistentCommand {
         // if (arm.getArmAngle() < 0 && arm.getArmAngle() > -1) {
         //   arm.setArmAngle(arm.getArmAngle(), newSetpoint+0.5);
         // }
-        if (arm.getArmAngle() < -1 && arm.getArmAngle() > -4.5) {
+        if (arm.getArmAngle() < -1 && arm.getArmAngle() > -80) {
           double output = armInput;
-          output += 0.00224556 * arm.getArmAngle() + 0.103286;
-          //if (arm.getArmAngle() > -60 && arm.getArmAngle() < 0) {
-            output -= 0.03;
-          //if (arm.getArmAngle() > -30 && arm.getArmAngle() < 0) {
-            output -= 0.01;
-          //}
+          output += 0.00224556 * arm.getArmAngle() + 0.083286;
+          if (arm.getArmAngle() > -28) {
+            output -= 0.025;
+            if (arm.getArmAngle() > -15) {
+              output -= 0.020;
+            } 
+            if (arm.getArmAngle() > -1) {
+              output += 0.015;
+            } 
+
+          }
+          if (arm.getArmAngle() < -65) {
+            output += 0.025;
+          }
+
+          // if (arm.getArmAngle() > -60 && arm.getArmAngle() < 0) {
+          //   output -= 0.03;
+          // if (arm.getArmAngle() > -30 && arm.getArmAngle() < 0) {
+          //   output -= 0.01;
+          // }
           arm.moveArm(output);
         }
         
-        
-        else if (arm.getArmAngle() < -4.5 && arm.getArmAngle() > -5.3) {
-          arm.setArmAngle(arm.getArmAngle(), newSetpoint+0.5);
-        }
-        else if (arm.getArmAngle() < -5.5 && arm.getArmAngle() > -6.4){
-          arm.setArmAngle(arm.getArmAngle(), newSetpoint-1.5);
-        }
-        else if (arm.getArmAngle() < -6.4) {
-          arm.setArmAngle(arm.getArmAngle(), newSetpoint-1.8);
-        }
-        else {
-          arm.setArmAngle(arm.getArmAngle(), newSetpoint-1);
-        }
-        //arm.setArmAngle(arm.getArmAngle(), newSetpoint-1);
+      
       }
       else{
         
         arm.setArmAngleManual(arm.getArmAngle(), newSetpoint);
       }
-    
-
     }
+
+    
   
     @Override
     public void end(boolean interrupted) {
