@@ -25,6 +25,9 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.SwerveDriveCmd;
+import frc.robot.commands.auton.SwerveAutonTest;
+import frc.robot.commands.auton.SwerveDriveCmdTimed;
+import frc.robot.commands.auton.WaitTimed;
 import frc.robot.commands.macro.ElevatePosition;
 // import frc.robot.commands.auton.SwerveAutonTest;
 import frc.robot.commands.peresistent.ElevateJoystick;
@@ -57,10 +60,10 @@ public final class RobotContainer {
 
 	// Manual Autons
 	SendableChooser<Command> chooser = new SendableChooser<>();  
-	// SwerveAutonTest swerveAutonTest = new SwerveAutonTest(swerveDrive);
+	Command swerveAutonTest = new SwerveAutonTest(swerveDrive);
 
-	public RobotContainer() {
-		// chooser.addOption("Swerve Auton Test", swerveAutonTest);
+	public RobotContainer() {	
+		chooser.setDefaultOption("Swerve Auton Test", swerveAutonTest); 
 
 		configureButtonBindings();
 		SmartDashboard.putData(chooser);
@@ -106,6 +109,12 @@ public final class RobotContainer {
 
 	// AUTON
 	public Command getAutonomousCommand() {
+		// Command autonRoutine = new SequentialCommandGroup(
+		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0, 0.2, new Rotation2d(0.0)), 1),
+		// 	new WaitTimed(3),
+		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0, -0.2, new Rotation2d(0.0)), 1)
+		// );
+		// return autonRoutine;
 		
 		return chooser.getSelected();
 	}

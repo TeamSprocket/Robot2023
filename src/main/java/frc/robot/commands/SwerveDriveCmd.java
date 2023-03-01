@@ -23,6 +23,13 @@ public class SwerveDriveCmd extends CommandBase {
   private final Supplier<Boolean> fieldOrientedFunct;
   private final SlewRateLimiter xSlewLimit, ySlewLimit, tSlewLimit;
 
+    /**
+     * Used to send outputs to SwerveDrive
+     * @param swerveDrive SwerveDrive object
+     * @param xSPDFunct Vertical speed of the bot
+     * @param ySPDFunct Horizontal speed of the bot
+     * @param tSPDFunct Angular speed of the bot 
+     */
     public SwerveDriveCmd(SwerveDrive swerveDrive,
             Supplier<Double> xSPDFunct, Supplier<Double> ySPDFunct, Supplier<Double> tSPDFunct) {
 
