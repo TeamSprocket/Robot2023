@@ -2,6 +2,8 @@ package frc.robot.commands.auton;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.util.commands.MacroCommand;
 
@@ -10,6 +12,7 @@ import frc.util.commands.MacroCommand;
 public class WaitTimed extends MacroCommand {
     private final double seconds;
     private final Timer timer;
+    private double iter = 0;
 
     public WaitTimed(double seconds){
         this.seconds = seconds;
@@ -17,14 +20,24 @@ public class WaitTimed extends MacroCommand {
     }
 
     public void initialize(){
-        timer.start();
+        System.out.println("Bruh");
+        Command command = new SequentialCommandGroup();
+        
+        timer.reset();
     }
 
     @Override
     public void execute(){
-        // System.out.println("WAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\nWAITING.....\n");
-        SmartDashboard.putString("Auton STATUS", "WAITING...");
-    }
+        // if (iter == 0) {
+        timer.start();
+            // iter += 1;
+        // }
+
+        // System.out.println("WAITING.....");
+        // for (int i = 0; i < 10; i++) {
+            // System.out.println(timer.get());
+        // }
+       } 
 
     public boolean isFinished(){
         if (timer.get() >= seconds) {
@@ -37,6 +50,9 @@ public class WaitTimed extends MacroCommand {
 
     @Override
     public void end(boolean interrupted){
+        // for (int i = 0; i < 100; i++) {
+        //     System.out.println("END END END");
+        // }
     }
 
 }

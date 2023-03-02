@@ -25,7 +25,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.SwerveDriveCmd;
-import frc.robot.commands.auton.SwerveDriveCmdTimed;
+// import frc.robot.commands.auton.SwerveAutonTest;
 import frc.robot.commands.auton.WaitTimed;
 import frc.robot.commands.instant.ToggleClaw;
 import frc.robot.commands.instant.ToggleCompressor;
@@ -40,6 +40,9 @@ import frc.robot.commands.persistent.ElevateJoystick;
 import frc.robot.commands.persistent.MoveArmJoystick;
 import frc.robot.commands.persistent.MoveWristManual;
 import frc.robot.commands.persistent.RollClaw;
+import frc.robot.commands.macro.SwerveDriveCmdTimed;
+import frc.robot.commands.macro.SwerveDriveCmdTimed;
+// import frc.robot.commands.auton.SwerveAutonTest;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.PCH;
 import frc.robot.subsystems.Arm;
@@ -71,14 +74,13 @@ public final class RobotContainer {
 
 	// Manual Autons
 	SendableChooser<Command> chooser = new SendableChooser<>();  
-	// SwerveAutonTest swerveAutonTest = new SwerveAutonTest(swerveDrive);
+	// Command swerveAutonTest = new SwerveAutonTest(swerveDrive);
 
-	public RobotContainer() {
-		// chooser.addOption("Swerve Auton Test", swerveAutonTest);
-
-		configureButtonBindings();
+	public RobotContainer() {	
+		// chooser.setDefaultOption("Swerve Auton Test", swerveAutonTest); 
+		
 		SmartDashboard.putData(chooser);
-	}
+	}	
 
 	/**
 	 * Use this method to define your button->command mappings.  Buttons can be
@@ -87,7 +89,7 @@ public final class RobotContainer {
 	 * then passing it to a
 	 * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
 	 */
-	private void configureButtonBindings() {
+	public void configureButtonBindings() {
 		swerveDrive.setDefaultCommand(new SwerveDriveCmd(
 			swerveDrive, 
 			// X
@@ -138,14 +140,23 @@ public final class RobotContainer {
 	}
 
 	// AUTON
+	// public Command getAutonomousCommand() {
 	public Command getAutonomousCommand() {
-		return new SequentialCommandGroup(
-			new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.1, new Rotation2d(0.0)), 1),
-			new WaitTimed(3),
-			new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.1, new Rotation2d(0.0)), 1)
-			);
-		// return new WaitTimed(100);
+		// Command autonRoutine = new SequentialCommandGroup(
+		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0, 0.2, new Rotation2d(0.0)), 1),
+		// 	new WaitTimed(3),
+		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0, -0.2, new Rotation2d(0.0)), 1)
+		// );
+		// return autonRoutine;
 
+		return (Command) (new SequentialCommandGroup(
+			new SwerveDriveCmdTimed(swerveDrive, new Pose2d(-0.25, 0, new Rotation2d(0.0)), 2.0),
+			new WaitTimed(3),
+			new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.25, 0, new Rotation2d(0.0)), 1.5),
+			new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0, new Rotation2d(0.1)), 2.0)
+
+		));
+		
 		// return chooser.getSelected();
 	}
 

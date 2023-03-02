@@ -53,7 +53,7 @@ public class Arm extends SubsystemBase {
         } else if (output > 0.15) {
             output = 0.15;
         }
-        System.out.println("ANGLE: " + currentAngle);
+        // System.out.println("ANGLE: " + currentAngle);
         armLeft.set(output);
     }
 

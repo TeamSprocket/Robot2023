@@ -48,7 +48,7 @@ public class SwerveModule extends SubsystemBase {
     turnMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
 
     driveMotor.setInverted(driveMotorIsReversed);
-    turnMotor.setInverted(turnMotorIsReversed);
+    turnMotor.setInverted(turnMotorIsReversed); 
 
     this.isTurnedReverse = isTurnedReverse;
 
