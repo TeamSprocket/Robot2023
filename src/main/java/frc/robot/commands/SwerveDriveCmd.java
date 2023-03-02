@@ -33,6 +33,7 @@ public class SwerveDriveCmd extends CommandBase {
     public SwerveDriveCmd(SwerveDrive swerveDrive,
             Supplier<Double> xSPDFunct, Supplier<Double> ySPDFunct, Supplier<Double> tSPDFunct) {
 
+          // System.out.println("SWERVE DRIVE CMD STARTED!!!!!!!!!\nSWERVE DRIVE CMD STARTED!!!!!!!!!\nSWERVE DRIVE CMD STARTED!!!!!!!!!\nSWERVE DRIVE CMD STARTED!!!!!!!!!\nSWERVE DRIVE CMD STARTED!!!!!!!!!\nSWERVE DRIVE CMD STARTED!!!!!!!!!\n");
         this.swerveDrive = swerveDrive;
         this.xSPDFunct = xSPDFunct;
         this.ySPDFunct = ySPDFunct;

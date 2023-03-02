@@ -31,7 +31,7 @@ public class SetHome extends MacroCommand{
 
     public void initialize(){
         wrist.moveWrist(-0.2);
-        startTime = System.currentTimeMillis();
+        // startTime = System.currentTimeMillis();
         timer.reset();
     }
 

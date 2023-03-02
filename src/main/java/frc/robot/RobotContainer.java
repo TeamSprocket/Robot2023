@@ -26,7 +26,6 @@ import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.SwerveDriveCmd;
 import frc.robot.commands.auton.SwerveAutonTest;
-import frc.robot.commands.auton.SwerveDriveCmdTimed;
 import frc.robot.commands.auton.WaitTimed;
 import frc.robot.commands.macro.ElevatePosition;
 import frc.robot.commands.macro.MoveArmPosition;
@@ -35,6 +34,8 @@ import frc.robot.commands.macro.SetHigh;
 import frc.robot.commands.macro.SetHome;
 import frc.robot.commands.macro.SetLow;
 import frc.robot.commands.macro.SetMid;
+import frc.robot.commands.macro.SwerveDriveCmdJason;
+import frc.robot.commands.macro.SwerveDriveCmdTimed;
 // import frc.robot.commands.auton.SwerveAutonTest;
 import frc.robot.commands.peresistent.ElevateJoystick;
 import frc.robot.commands.peresistent.MoveArmJoystick;
@@ -70,8 +71,7 @@ public final class RobotContainer {
 
 	public RobotContainer() {	
 		chooser.setDefaultOption("Swerve Auton Test", swerveAutonTest); 
-
-		configureButtonBindings();
+		
 		SmartDashboard.putData(chooser);
 	}
 
@@ -82,7 +82,7 @@ public final class RobotContainer {
 	 * then passing it to a
 	 * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
 	 */
-	private void configureButtonBindings() {
+	public void configureButtonBindings() {
 		swerveDrive.setDefaultCommand(new SwerveDriveCmd(
 			swerveDrive, 
 			// X
@@ -135,8 +135,16 @@ public final class RobotContainer {
 		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0, -0.2, new Rotation2d(0.0)), 1)
 		// );
 		// return autonRoutine;
+
+		return (Command) (new SequentialCommandGroup(
+			new SwerveDriveCmdJason(swerveDrive, new Pose2d(-0.25, 0, new Rotation2d(0.0)), 2.0),
+			new WaitTimed(3),
+			new SwerveDriveCmdJason(swerveDrive, new Pose2d(0.25, 0, new Rotation2d(0.0)), 1.5),
+			new SwerveDriveCmdJason(swerveDrive, new Pose2d(0.0, 0, new Rotation2d(0.1)), 2.0)
+
+		));
 		
-		return chooser.getSelected();
+		// return chooser.getSelected();
 	}
 
 	// 	// Create Trajectory Speed/Settings

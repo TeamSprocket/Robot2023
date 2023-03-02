@@ -1,13 +1,17 @@
 
-package frc.robot.commands.auton;
+package frc.robot.commands.macro;
+
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.RobotMap;
 import frc.robot.commands.SwerveDriveCmd;
 import frc.robot.subsystems.SwerveDrive;
 import frc.util.commands.MacroCommand;
@@ -18,6 +22,9 @@ public class SwerveDriveCmdTimed extends MacroCommand {
   private final double yTarget, xTarget, tTarget;
   private final Timer timer;
   private final double duration;
+  private boolean first = true;
+  private double startTime;
+  private WPI_TalonFX talon;
 
   /**
    * 
@@ -33,6 +40,8 @@ public class SwerveDriveCmdTimed extends MacroCommand {
     this.tTarget = target.getRotation().getRadians();
     this.timer = new Timer();
     this.duration = duration;
+    talon = new WPI_TalonFX(RobotMap.Drivetrain.FRONT_LEFT_TALON_D);
+    
   }
 
   // public atTarget() {
@@ -54,25 +63,44 @@ public class SwerveDriveCmdTimed extends MacroCommand {
   // Called when the command is initially scheduled
   @Override
   public void initialize() {
-    timer.start();
+    timer.reset();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    SmartDashboard.putNumber("AUTON Y SPEED", yTarget);
+    // if (first) {
+    timer.start();
+    
+      // first = false;
+    // }
+    
     new SwerveDriveCmd(
       swerveDrive, 
       () -> yTarget, 
       () -> xTarget, 
       () -> tTarget
     );
+    // new SwerveDriveCmd(
+    //   swerveDrive, 
+    //   () -> 0.5, 
+    //   () -> 0.0, 
+    //   () -> 0.0
+    // );
+
+    // System.out.println("SWERVE IS RUNNING\nSWERVE IS RUNNING\nSWERVE IS RUNNING\nSWERVE IS RUNNING\nSWERVE IS RUNNING\n");
+    // for (int i = 0; i < 10; i++) {
+    //   System.out.println("SWERVE TIME: " + (Timer.getFPGATimestamp() - startTime));
+    // }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     swerveDrive.stopModules();
+      // for (int i = 0; i < 100; i++) {
+      //     System.out.println("END SWERVE END SWERVE END SWERVE");
+      // }
   }
 
   // Returns true when the command should end.

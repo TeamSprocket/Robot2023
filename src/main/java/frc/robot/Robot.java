@@ -65,6 +65,8 @@ public class Robot extends TimedRobot {
 
         if(auton!=null) {
             auton.schedule();
+        } else {
+            System.out.println("AUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\n");
         }
         // timer = new Timer();
         // timer.start();
@@ -76,16 +78,19 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousPeriodic() {
+
         // double time = timer.get();
         // if (time < 1) {
         //     new SwerveDriveCmd(swerveDrive, null, null, null))
         // }
-        
+ 
     }
 
     /** This function is called once each time the robot enters teleoperated mode. */ 
     @Override
     public void teleopInit() {
+        System.out.println("TELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\n");
+        robotContainer.configureButtonBindings();
         CommandScheduler.getInstance().cancelAll();
     }
     
