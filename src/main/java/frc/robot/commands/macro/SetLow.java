@@ -30,7 +30,7 @@ public class SetLow extends MacroCommand{
 
 
     public void initialize(){
-        wrist.moveWrist(-0.1095);
+        wrist.moveWrist(-0.11025);
         startTime = System.currentTimeMillis();
         timer.reset();
     }

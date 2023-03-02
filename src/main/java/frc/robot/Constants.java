@@ -6,9 +6,6 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 
 public class Constants {
-    public static final class PCH {
-        public static final double NORMALIZED_SUPPLY_VOLTAGE = 0; //TODO: Figure out the value
-    }
 
     //TODO Edit PID values, tune speeds
     public static final class Elevator {
@@ -66,6 +63,15 @@ public class Constants {
         public static double minAngle;
         public static double angleRange;
 
+    }
+
+    public static final class Claw {
+        public static double revSetpoint = 400;
+    }
+
+    public static final class PCH {
+        public static double MIN_PSI = 80;
+        public static double MAX_PSI = 100;
     }
 
     public static final class Drivetrain {
