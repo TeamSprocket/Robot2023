@@ -125,19 +125,7 @@ public final class RobotContainer {
 			() -> driveController.getLeftX(), 
 			// T
 			() -> -driveController.getRightX()));
-		// new JoystickButton(driveController, 1).whenPressed(swerveDrive.resetGyro());
-
-		// drivetrain.setDefaultCommand(new Drive(drivetrain, leftJoystick, rightJoystick));
-		// new JoystickButton(gamepad, 4).whenPressed(new ToggleCompressor(pch, gamepad));
-		// new JoystickButton(gamepad, 6).whenPressed(new ActuateClimb(climber, true));
-		// new JoystickButton(gamepad, 5).whenPressed(new ActuateClimb(climber, false));
-		// new JoystickButton(gamepad, 3).whenPressed(new ToggleIntake(intake));
-		// new JoystickButton(gamepad, 2).whenHeld(new Shoot(shooter));
-		// // shooter.setDefaultCommand(new RollShooterManual(shooter, gamepad));
-		// feeder.setDefaultCommand(new FeedManual(feeder, gamepad));
-		// intake.setDefaultCommand(new RollIntakeManual(intake, gamepad));
-		// ledStrip.setDefaultCommand(new BlingBling(ledStrip, shooter));
-		// 	climber.setDefaultCommand(new ClimbArmManual(climber, gamepad));
+	
 
 		// Swerve Drive (instant command reset heading)
 		new JoystickButton(driveController,

@@ -3,16 +3,19 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
+import java.io.File;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.function.Consumer;
 
 import com.dacubeking.AutoBuilder.robot.NetworkAuto;
 import com.dacubeking.AutoBuilder.robot.robotinterface.AutonomousContainer;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableEvent;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -21,8 +24,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.auton.TemplateAuto;
 import frc.auton.Test;
+import frc.auton.guiauto.serialization.reflection.ClassInformationSender;
 import frc.util.OrangeUtility;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
+
+// import edu.wpi.first.networktables.EntryListenerFlags;
+// import edu.wpi.first.networktables.EntryNotification;
+import edu.wpi.first.networktables.NetworkTableInstance;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -43,26 +52,47 @@ public class Robot extends TimedRobot {
     private final Lock networkAutoLock = new ReentrantLock();
     NetworkAuto networkAuto;
     
-
     String lastAutoPath = null;
 
     ExecutorService deserializerExecutor = Executors.newSingleThreadExecutor();
 
     //Auto
     // WeakSide weakSideAuto = new WeakSide();
-    Test testAuto = new Test();
+    // Test testAuto = new Test(); CHANGE CHANGE CHANGE CHANGE CHANGE TEST
+    Test testAuto;
     // TwoBall twoBallAuto;
     // FiveBall fiveBallAuto; 
-    TemplateAuto selectedAuto;
+    TemplateAuto selectedAuto;  
     Thread autoThread;
     private final SendableChooser<String> autoChooser = new SendableChooser<>();
 
-    
-
     private final RobotContainer robotContainer = new RobotContainer();
-    // private final SendableChooser<String> autoChooser = new SendableChooser<>();
-    // private final SendableChooser<String> sideChooser = new SendableChooser<>();
+    private final SendableChooser<String> sideChooser = new SendableChooser<>();
 
+    
+    Consumer<NetworkTableEvent> autoPathListener = (event ->
+    // Consumer<EntryNotification> autoPathListener = (event ->
+        deserializerExecutor.execute(() -> { //Start deserializing on another thread
+            System.out.println("starting to parse autonomous");
+            //Set networktable entries for the gui notifications
+            pathProcessingStatusEntry.setDouble(1);
+            pathProcessingStatusIdEntry.setDouble(pathProcessingStatusIdEntry.getDouble(0) + 1);
+            networkAutoLock.lock();
+            try {
+                networkAuto = new NetworkAuto(); //Create the auto object which will start deserializing the json
+                // and the auto
+            } finally {
+                networkAutoLock.unlock();
+            }
+
+            // ready to be run
+            System.out.println("done parsing autonomous");
+            //Set networktable entries for the gui notifications
+            pathProcessingStatusEntry.setDouble(2);
+            pathProcessingStatusIdEntry.setDouble(pathProcessingStatusIdEntry.getDouble(0) + 1);
+        }
+    ));
+    
     public Robot() {
     }
 
@@ -79,13 +109,13 @@ public class Robot extends TimedRobot {
 
         selectedAuto = testAuto;    
         // if (autoPath.getString(null) != null) {
-        //     autoPathListener.accept(new EntryNotification(NetworkTableInstance.getDefault(), 1, 1, "", null, 12));
-       
+            // autoPathListener.accept(new NetworkTableEntry(NetworkTableInstance.getDefault(), 1));
+            // autoPathListener.accept(new NetworkTableEvent(NetworkTableInstance.getDefault(), 1, 1, "", null, 12));
         // }
 
         // autoPath.addListener(autoPathListener, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
 
-
+        // @ilyallyn wrote this code ^^ Frfr
 
         // startSubsystems();
         // drive.resetHeading();
@@ -99,12 +129,12 @@ public class Robot extends TimedRobot {
         SmartDashboard.putData(autoChooser);
         AutonomousContainer.getInstance().getAutonomousNames().forEach(name -> autoChooser.addOption(name, name));
 
-    //     //Ensure the second String is the name of the folder where your sided autos are located
-    //     sideChooser.setDefaultOption("Blue", "blue"); 
-    //     sideChooser.addOption("Red", "red");
+        //Ensure the second String is the name of the folder where your sided autos are located
+        sideChooser.setDefaultOption("Blue", "blue"); 
+        sideChooser.addOption("Red", "red");
 
-    //     SmartDashboard.putData("Auto choices", autoChooser);
-    //     SmartDashboard.putData("Red or Blue", sideChooser);  
+        SmartDashboard.putData("Auto choices", autoChooser);
+        SmartDashboard.putData("Red or Blue", sideChooser);  
 
     /**
      * This function is called every robot packet, no matter the mode. Use this for items like
@@ -118,6 +148,25 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
+
+            //Listen changes in the network auto
+        if (autoPath.getString(null) != null && !autoPath.getString(null).equals(lastAutoPath)) {
+            lastAutoPath = autoPath.getString(null);
+            deserializerExecutor.execute(() -> { //Start deserializing on another thread
+                System.out.println("**************************");
+                System.out.println("start parsing autonomous");
+                //Set networktable entries for the gui notifications
+                pathProcessingStatusEntry.setDouble(1);
+                pathProcessingStatusIdEntry.setDouble(pathProcessingStatusIdEntry.getDouble(0) + 1);
+                networkAuto = new NetworkAuto(); //Create the auto object which will start deserializing the json and the auto
+                // ready to be run
+                System.out.println("**************************");
+                System.out.println("done parsing autonomous");
+                //Set networktable entries for the gui notifications
+                pathProcessingStatusEntry.setDouble(2);
+                pathProcessingStatusIdEntry.setDouble(pathProcessingStatusIdEntry.getDouble(0) + 1);
+            });
+        }
     }
 
     /**
@@ -159,18 +208,18 @@ public class Robot extends TimedRobot {
          }
  
 
-    //     String autoName = autoChooser.getSelected();
-    //     if (autoName == null) {
-    //         autoName = "1ball"; // Default auto if none is selected
-    //     }
-    //     // If it can't find a sided auto it will try to find a non-sided auto
-    //     AutonomousContainer.getInstance().runAutonomous(autoName, sideChooser.getSelected(), true); // The last boolean is about allowing network autos to run, keep this set to true unless you have a reason to disable them.
-    // }
-        // Command auton = robotContainer.getAutonomousCommand();
+        String autoName = autoChooser.getSelected();
+        if (autoName == null) {
+            autoName = "1ball"; // Default auto if none is selected
+        }
+        // If it can't find a sided auto it will try to find a non-sided auto
+        AutonomousContainer.getInstance().runAutonomous(autoName, sideChooser.getSelected(), true); // The last boolean is about allowing network autos to run, keep this set to true unless you have a reason to disable them.
+        
+        Command auton = robotContainer.getAutonomousCommand();
 
-        // if(auton!=null) {
-        //     auton.schedule();
-        // }
+        if (auton!=null) {
+            auton.schedule();
+        }
     }
 
     /**
@@ -196,6 +245,11 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().cancelAll();
     }
 
+    @Override
+    public void simulationInit() {
+        ClassInformationSender.updateReflectionInformation(
+                new File("C:/Users/mnikk/OneDrive/Documents/GitHub/AutoBuilder"+ "/robotCodeData.json"));
+    }
     /**
      * This function is called periodically during test mode.
      */
