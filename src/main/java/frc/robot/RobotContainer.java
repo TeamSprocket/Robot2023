@@ -34,7 +34,7 @@ import frc.robot.commands.macro.SetHigh;
 import frc.robot.commands.macro.SetHome;
 import frc.robot.commands.macro.SetLow;
 import frc.robot.commands.macro.SetMid;
-import frc.robot.commands.macro.SwerveDriveCmdJason;
+import frc.robot.commands.macro.SwerveDriveCmdTimed;
 import frc.robot.commands.macro.SwerveDriveCmdTimed;
 // import frc.robot.commands.auton.SwerveAutonTest;
 import frc.robot.commands.peresistent.ElevateJoystick;
@@ -138,10 +138,10 @@ public final class RobotContainer {
 		// return autonRoutine;
 
 		return (Command) (new SequentialCommandGroup(
-			new SwerveDriveCmdJason(swerveDrive, new Pose2d(-0.25, 0, new Rotation2d(0.0)), 2.0),
+			new SwerveDriveCmdTimed(swerveDrive, new Pose2d(-0.25, 0, new Rotation2d(0.0)), 2.0),
 			new WaitTimed(3),
-			new SwerveDriveCmdJason(swerveDrive, new Pose2d(0.25, 0, new Rotation2d(0.0)), 1.5),
-			new SwerveDriveCmdJason(swerveDrive, new Pose2d(0.0, 0, new Rotation2d(0.1)), 2.0)
+			new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.25, 0, new Rotation2d(0.0)), 1.5),
+			new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0, new Rotation2d(0.1)), 2.0)
 
 		));
 		
