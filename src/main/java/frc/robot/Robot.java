@@ -41,6 +41,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
  */
 public class Robot extends TimedRobot {
 
+    
     NetworkTableInstance instance = NetworkTableInstance.getDefault();
     NetworkTable autoDataTable = instance.getTable("autodata");
     NetworkTableEntry autoPath = autoDataTable.getEntry("autoPath");
