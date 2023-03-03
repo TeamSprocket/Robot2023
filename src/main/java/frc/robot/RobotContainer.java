@@ -45,7 +45,6 @@ import frc.robot.commands.macro.timed.SetLowTimed;
 import frc.robot.commands.macro.timed.SwerveDriveCmdTimed;
 import frc.robot.commands.macro.SetHumanPlayer;
 import frc.robot.commands.persistent.Elevate;
-import frc.robot.commands.persistent.ElevateTimed;
 import frc.robot.commands.persistent.MoveArmJoystick;
 import frc.robot.commands.persistent.MoveWristManual;
 import frc.robot.commands.persistent.RollClaw;
@@ -141,6 +140,72 @@ public final class RobotContainer {
 	// AUTON
 	// public Command getAutonomousCommand() {
 	public Command getAutonomousCommand() {
+
+		// Do nothing (0)
+		// return (Command) (new SequentialCommandGroup(
+			
+		// ));
+
+		// Move back (4)
+		// return (Command) (new SequentialCommandGroup(
+		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.2, new Rotation2d(0.1)), 4) //4
+		// ));
+
+		//Place cone & move back (9.5)
+		// return (Command) (new SequentialCommandGroup(
+		// 	new DeportArm(elevator, arm, wrist), //2
+		// 	new SetHighTimed(elevator, arm, wrist, 2), //2
+		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.2, new Rotation2d(0.0)), 1), //1
+		// 	new ToggleClaw(claw), //0
+		// 	new WaitTimed(0.5), //0.5
+		// 	new ParallelCommandGroup( //4
+		// 		new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.2, new Rotation2d(0.1)), 4), //4*
+		// 		new SetHomeTimed(elevator, arm, wrist, 4) //4*
+		// 	)
+		// ));
+
+		//Place cone & move back (10)
+		return (Command) (new SequentialCommandGroup(
+			new DeportArm(elevator, arm, wrist), //2
+			new SetHighTimed(elevator, arm, wrist, 2), //2
+			new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.2, new Rotation2d(0.0)), 1), //1
+			new RollClawTimed(claw, 0.5, 1), //1
+			new ParallelCommandGroup( //4
+				new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.2, new Rotation2d(0.1)), 4), //4*
+				new SetHomeTimed(elevator, arm, wrist, 4) //4*
+			)
+		));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		//////////////////////////////////////////
+
+
 		// Command autonRoutine = new SequentialCommandGroup(
 		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0, 0.2, new Rotation2d(0.0)), 1),
 		// 	new WaitTimed(3),
@@ -148,7 +213,6 @@ public final class RobotContainer {
 		// );
 		// return autonRoutine;
 
-		return (Command) (new SequentialCommandGroup(
 				// new DeportArm(elevator, arm, wrist),
 				// new SetHighTimed(elevator, arm, wrist, 3),
 				// new SetHumanPlayerTimed(elevator, arm, wrist, 2),
@@ -160,7 +224,7 @@ public final class RobotContainer {
 				// new SetHighTimed(elevator, arm, wrist, 3),
 				// new RollClawTimed(claw, 1, 1),
 				// new SetHomeTimed(elevator, arm, wrist, 3)
-		));
+		
 		
 		// return chooser.getSelected();
 	}
