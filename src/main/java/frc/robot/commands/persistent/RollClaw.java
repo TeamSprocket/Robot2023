@@ -22,7 +22,7 @@ public class RollClaw extends PersistentCommand {
         double input = controller.getRightTriggerAxis() - controller.getLeftTriggerAxis(); 
         double deadbandedInput = Util.deadband(0.1, input);
 
-        claw.moveClaw(deadbandedInput*0.3);
+        claw.moveClaw(deadbandedInput);
 
     }
     @Override

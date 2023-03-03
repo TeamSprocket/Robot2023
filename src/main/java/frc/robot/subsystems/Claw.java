@@ -30,8 +30,8 @@ public class Claw extends SubsystemBase{
     }
 
     public void moveClaw(double output){
-        leftClaw.set(output);
-        rightClaw.set(output);
+        leftClaw.set(output * 0.2);
+        rightClaw.set(output * 0.2);
         // rightClaw.set(ControlMode.PercentOutput, output);
     }
 

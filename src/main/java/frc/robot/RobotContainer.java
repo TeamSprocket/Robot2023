@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -35,13 +36,19 @@ import frc.robot.commands.macro.MoveWristAngle;
 import frc.robot.commands.macro.SetHigh;
 import frc.robot.commands.macro.SetHome;
 import frc.robot.commands.macro.SetLow;
+import frc.robot.commands.macro.timed.DeportArm;
+import frc.robot.commands.macro.timed.RollClawTimed;
+import frc.robot.commands.macro.timed.SetHighTimed;
+import frc.robot.commands.macro.timed.SetHomeTimed;
+import frc.robot.commands.macro.timed.SetHumanPlayerTimed;
+import frc.robot.commands.macro.timed.SetLowTimed;
+import frc.robot.commands.macro.timed.SwerveDriveCmdTimed;
 import frc.robot.commands.macro.SetHumanPlayer;
-import frc.robot.commands.persistent.ElevateJoystick;
+import frc.robot.commands.persistent.Elevate;
+import frc.robot.commands.persistent.ElevateTimed;
 import frc.robot.commands.persistent.MoveArmJoystick;
 import frc.robot.commands.persistent.MoveWristManual;
 import frc.robot.commands.persistent.RollClaw;
-import frc.robot.commands.macro.SwerveDriveCmdTimed;
-import frc.robot.commands.macro.SwerveDriveCmdTimed;
 // import frc.robot.commands.auton.SwerveAutonTest;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.PCH;
@@ -103,7 +110,8 @@ public final class RobotContainer {
 
 		// Elevator
 		//TODO CHECK THE POSITIONS OF THE ELEVATOR
-		elevator.setDefaultCommand(new ElevateJoystick(elevator, operator));
+		// elevator.setDefaultCommand(new Elevate(elevator, (operator.getLeftTriggerAxis() - operator.getRightTriggerAxis())));
+		elevator.setDefaultCommand(new Elevate(elevator, operator));
 		arm.setDefaultCommand(new MoveArmJoystick(arm, operator));
 		wrist.setDefaultCommand(new MoveWristManual(wrist, operator));
 		claw.setDefaultCommand(new RollClaw(claw, driver));
@@ -119,10 +127,15 @@ public final class RobotContainer {
 		new JoystickButton(operator, 2).whenHeld(new SetHumanPlayer(elevator, arm, wrist));
 		new JoystickButton(operator, 3).whenHeld(new SetHome(elevator, arm, wrist));
 		new JoystickButton(operator, 4).whenHeld(new SetHigh(elevator, arm, wrist));
+		new JoystickButton(operator, 6).whenPressed(new DeportArm(elevator, arm, wrist));
 
 	
 		// new JoystickButton(operator, 5).whenPressed(new SetElevatorBase(elevator));
 
+	}
+
+	public void autonInit() {
+		swerveDrive.zeroTalons();
 	}
 
 	// AUTON
@@ -136,11 +149,22 @@ public final class RobotContainer {
 		// return autonRoutine;
 
 		return (Command) (new SequentialCommandGroup(
-			new SwerveDriveCmdTimed(swerveDrive, new Pose2d(-0.25, 0, new Rotation2d(0.0)), 2.0),
-			new WaitTimed(3),
-			new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.25, 0, new Rotation2d(0.0)), 1.5),
-			new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0, new Rotation2d(0.1)), 2.0)
-
+			// new SwerveDriveCmdTimed(swerveDrive, new Pose2d(-0.25, 0, new Rotation2d(0.0)), 2.0),
+			// new WaitTimed(3),
+			// new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.25, 0, new Rotation2d(0.0)), 1.5),
+			// new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0, new Rotation2d(0.1)), 2.0)
+			// new ElevateTimed(elevator, 0.5, 2),
+				new DeportArm(elevator, arm, wrist),
+				new SetHighTimed(elevator, arm, wrist, 3),
+				new SetHumanPlayerTimed(elevator, arm, wrist, 2),
+				new RollClawTimed(claw, 1, 1),
+				new ParallelCommandGroup(
+					new SetLowTimed(elevator, arm, wrist, 5),
+					new RollClawTimed(claw, -0.5, 5)
+				),
+				new SetHighTimed(elevator, arm, wrist, 3),
+				new RollClawTimed(claw, 1, 1),
+				new SetHomeTimed(elevator, arm, wrist, 3)
 		));
 		
 		// return chooser.getSelected();

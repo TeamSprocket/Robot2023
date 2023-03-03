@@ -1,5 +1,5 @@
 
-package frc.robot.commands.macro;
+package frc.robot.commands.macro.timed;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
