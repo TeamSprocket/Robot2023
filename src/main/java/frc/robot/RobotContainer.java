@@ -149,22 +149,17 @@ public final class RobotContainer {
 		// return autonRoutine;
 
 		return (Command) (new SequentialCommandGroup(
-			// new SwerveDriveCmdTimed(swerveDrive, new Pose2d(-0.25, 0, new Rotation2d(0.0)), 2.0),
-			// new WaitTimed(3),
-			// new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.25, 0, new Rotation2d(0.0)), 1.5),
-			// new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0, new Rotation2d(0.1)), 2.0)
-			// new ElevateTimed(elevator, 0.5, 2),
-				new DeportArm(elevator, arm, wrist),
-				new SetHighTimed(elevator, arm, wrist, 3),
-				new SetHumanPlayerTimed(elevator, arm, wrist, 2),
-				new RollClawTimed(claw, 1, 1),
-				new ParallelCommandGroup(
-					new SetLowTimed(elevator, arm, wrist, 5),
-					new RollClawTimed(claw, -0.5, 5)
-				),
-				new SetHighTimed(elevator, arm, wrist, 3),
-				new RollClawTimed(claw, 1, 1),
-				new SetHomeTimed(elevator, arm, wrist, 3)
+				// new DeportArm(elevator, arm, wrist),
+				// new SetHighTimed(elevator, arm, wrist, 3),
+				// new SetHumanPlayerTimed(elevator, arm, wrist, 2),
+				// new RollClawTimed(claw, 1, 1),
+				// new ParallelCommandGroup(
+				// 	new SetLowTimed(elevator, arm, wrist, 5),
+				// 	new RollClawTimed(claw, -0.5, 5)
+				// ),
+				// new SetHighTimed(elevator, arm, wrist, 3),
+				// new RollClawTimed(claw, 1, 1),
+				// new SetHomeTimed(elevator, arm, wrist, 3)
 		));
 		
 		// return chooser.getSelected();

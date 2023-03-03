@@ -58,6 +58,7 @@ public class SwerveDrive extends SubsystemBase {
     
     public void zeroHeading() {
         gyro.reset();
+        // gyro.setYawAxis(null)
     }
     public void zeroTalons() {
         frontLeft.zeroTalon();
