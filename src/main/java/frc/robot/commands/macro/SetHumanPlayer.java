@@ -9,7 +9,7 @@ import frc.robot.commands.macro.MoveArmPosition;
 import frc.robot.subsystems.*;
 import frc.util.commands.MacroCommand;
 
-public class SetMid extends MacroCommand{
+public class SetHumanPlayer extends MacroCommand{
     
     private final Elevator elevator;
     private final Arm arm;
@@ -18,7 +18,7 @@ public class SetMid extends MacroCommand{
     
     private double startTime;
 
-    public SetMid (Elevator elevator, Arm arm, Wrist wrist) {
+    public SetHumanPlayer (Elevator elevator, Arm arm, Wrist wrist) {
         this.elevator = elevator;
         this.arm = arm;
         this.wrist = wrist;
@@ -30,7 +30,7 @@ public class SetMid extends MacroCommand{
 
 
     public void initialize(){
-        wrist.moveWrist(-0.105);
+        wrist.moveWrist(-0.1115);
         startTime = System.currentTimeMillis();
         timer.reset();
     }
@@ -41,15 +41,14 @@ public class SetMid extends MacroCommand{
         timer.start();
         
         if (timer.get() > 0.1 && timer.get() < 1){
-            elevator.setElevatorPosition(elevator.getElevatorHeight(), -10);
-            arm.setArmAngle(arm.getArmAngle(), -70);
+            elevator.setElevatorPosition(elevator.getElevatorHeight(), -12.13);
         }
         else if(timer.get()> 1 && timer.get() < 2){
-            arm.setArmAngle(arm.getArmAngle(), -70);
+            arm.setArmAngle(arm.getArmAngle(), -80);
         }
         else{
-            elevator.setElevatorPosition(elevator.getElevatorHeight(), -10);
-            arm.setArmAngle(arm.getArmAngle(), -70);
+            elevator.setElevatorPosition(elevator.getElevatorHeight(), -12.13);
+            arm.setArmAngle(arm.getArmAngle(), -80);
         }
         
     }
@@ -60,7 +59,7 @@ public class SetMid extends MacroCommand{
 
     @Override
     public void end(boolean interrupted){
-        elevator.setElevatorPosition(elevator.getElevatorHeight(), -4);
-        arm.setArmAngle(arm.getArmAngle(), -60);
+        elevator.setElevatorPosition(elevator.getElevatorHeight(), -13.13);
+        arm.setArmAngle(arm.getArmAngle(), -80);
     }
 }

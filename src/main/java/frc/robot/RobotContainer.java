@@ -35,7 +35,7 @@ import frc.robot.commands.macro.MoveWristAngle;
 import frc.robot.commands.macro.SetHigh;
 import frc.robot.commands.macro.SetHome;
 import frc.robot.commands.macro.SetLow;
-import frc.robot.commands.macro.SetMid;
+import frc.robot.commands.macro.SetHumanPlayer;
 import frc.robot.commands.persistent.ElevateJoystick;
 import frc.robot.commands.persistent.MoveArmJoystick;
 import frc.robot.commands.persistent.MoveWristManual;
@@ -99,11 +99,7 @@ public final class RobotContainer {
 			// T
 			() -> -driver.getRightX()));
 
-		// Swerve Drive (instant command reset heading)
-		new JoystickButton(driver,
-		 	RobotMap.Controller.RESET_GYRO_HEADING_BUTTON_ID).whenPressed(() -> swerveDrive.zeroHeading());
-		new JoystickButton(driver, 2).whenPressed(() -> swerveDrive.zeroTalons());
-		// new JoystickButton(driveController, 3).whenPressed(() -> swerveDrive.zeroTalonsABS());
+		
 
 		// Elevator
 		//TODO CHECK THE POSITIONS OF THE ELEVATOR
@@ -112,29 +108,19 @@ public final class RobotContainer {
 		wrist.setDefaultCommand(new MoveWristManual(wrist, operator));
 		claw.setDefaultCommand(new RollClaw(claw, driver));
 
-		// new JoystickButton(operator, 1).whenHeld(new ElevatePosition(elevator, 34.45866374));
-		// new JoystickButton(operator, 2).whenHeld(new ElevatePosition(elevator, 18.6));
-		// new JoystickButton(operator,3).whenHeld(new ElevatePosition(elevator, 2.735));
-		// new JoystickButton(operator, 4).whenHeld(new ElevatePosition(elevator, -13.13));
-		// // new JoystickButton(operator, 1).whenHeld(new MoveArmPosition(arm, -6));
-		// new JoystickButton(operator, 2).whenHeld(new MoveArmPosition(arm, -24.5));
-		// new JoystickButton(operator, 3).whenHeld(new MoveArmPosition(arm, -80));
-		// //new JoystickButton(operator, 1).whenHeld(new MoveWristAngle(wrist, -250));
-		// // new JoystickButton(operator, 1).whenHeld(new SetHigh(elevator, arm, wrist));
-		// new JoystickButton(operator, 1).whenHeld(new SetMid(elevator, arm, wrist));
-
-
-		new JoystickButton(operator, 2).whenHeld(new SetMid(elevator, arm, wrist));
-		new JoystickButton(operator, 3).whenHeld(new SetHome(elevator, arm, wrist));
-		new JoystickButton(operator, 4).whenHeld(new SetHigh(elevator, arm, wrist));
-		new JoystickButton(operator, 1).whenHeld(new SetLow(elevator, arm, wrist));
-
+		// Swerve Drive (instant command reset heading)
+		new JoystickButton(driver,
+		 	RobotMap.Controller.RESET_GYRO_HEADING_BUTTON_ID).whenPressed(() -> swerveDrive.zeroHeading());
+		new JoystickButton(driver, 2).whenPressed(() -> swerveDrive.zeroTalons());
 		new JoystickButton(driver, 4).whenPressed(new ToggleCompressor(pch, driver));
 		new JoystickButton(driver, 5).whenPressed(new ToggleClaw(claw));
 
+		new JoystickButton(operator, 1).whenHeld(new SetLow(elevator, arm, wrist));
+		new JoystickButton(operator, 2).whenHeld(new SetHumanPlayer(elevator, arm, wrist));
+		new JoystickButton(operator, 3).whenHeld(new SetHome(elevator, arm, wrist));
+		new JoystickButton(operator, 4).whenHeld(new SetHigh(elevator, arm, wrist));
 
-
-
+	
 		// new JoystickButton(operator, 5).whenPressed(new SetElevatorBase(elevator));
 
 	}

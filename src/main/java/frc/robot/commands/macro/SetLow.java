@@ -44,10 +44,10 @@ public class SetLow extends MacroCommand{
             elevator.setElevatorPosition(elevator.getElevatorHeight(), -13.13);
             arm.setArmAngle(arm.getArmAngle(), -30);
         }
-        else if (timer.get() > 0.75 && timer.get() < 1.75){
+        else if (timer.get() > 0.75 && timer.get() < 1.5){
             arm.setArmAngle(arm.getArmAngle(), -25);
         }
-        else if(timer.get() > 1.75 && timer.get() < 2.25){
+        else if(timer.get() > 1.5 && timer.get() < 1.75){
             elevator.setElevatorPosition(elevator.getElevatorHeight(), 30);
             arm.setArmAngle(arm.getArmAngle(), -25);
         }else{
