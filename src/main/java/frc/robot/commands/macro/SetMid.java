@@ -28,7 +28,7 @@ public class SetMid extends MacroCommand{
 
 
     public void initialize(){
-        wrist.moveWrist(-0.1045);
+        wrist.moveWrist(-0.1015);
         timer.reset();
     }
 
@@ -41,11 +41,11 @@ public class SetMid extends MacroCommand{
             elevator.setElevatorPosition(elevator.getElevatorHeight(), -9.5);
         }
         else if(timer.get()> 1 && timer.get() < 2){
-            arm.setArmAngle(arm.getArmAngle(), -60);
+            arm.setArmAngle(arm.getArmAngle(), -70);
         }
         else{
             elevator.setElevatorPosition(elevator.getElevatorHeight(), -9.5);
-            arm.setArmAngle(arm.getArmAngle(), -60);
+            arm.setArmAngle(arm.getArmAngle(), -70);
         }
         
     }
@@ -57,6 +57,6 @@ public class SetMid extends MacroCommand{
     @Override
     public void end(boolean interrupted){
         elevator.setElevatorPosition(elevator.getElevatorHeight(), -9.5);
-        arm.setArmAngle(arm.getArmAngle(), -60);
+        arm.setArmAngle(arm.getArmAngle(), -70);
     }
 }

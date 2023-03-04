@@ -25,7 +25,9 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.SwerveDriveCmd;
+import frc.robot.commands.auton.BalanceOnChargeStationVertical;
 // import frc.robot.commands.auton.SwerveAutonTest;
 import frc.robot.commands.auton.WaitTimed;
 import frc.robot.commands.instant.ToggleClaw;
@@ -36,6 +38,8 @@ import frc.robot.commands.macro.MoveWristAngle;
 import frc.robot.commands.macro.SetHigh;
 import frc.robot.commands.macro.SetHome;
 import frc.robot.commands.macro.SetLow;
+import frc.robot.commands.macro.SetMid;
+import frc.robot.commands.macro.SwerveDriveCmdPrecise;
 import frc.robot.commands.macro.timed.DeportArm;
 import frc.robot.commands.macro.timed.RollClawTimed;
 import frc.robot.commands.macro.timed.SetHighTimed;
@@ -118,7 +122,7 @@ public final class RobotContainer {
 		// Swerve Drive (instant command reset heading)
 		new JoystickButton(driver,
 		 	RobotMap.Controller.RESET_GYRO_HEADING_BUTTON_ID).whenPressed(() -> swerveDrive.zeroHeading());
-		new JoystickButton(driver, 2).whenPressed(() -> swerveDrive.zeroTalons());
+		// new JoystickButton(driver, 2).whenPressed(() -> swerveDrive.zeroTalons());
 		new JoystickButton(driver, 4).whenPressed(new ToggleCompressor(pch, driver));
 		new JoystickButton(driver, 5).whenPressed(new ToggleClaw(claw));
 
@@ -126,7 +130,19 @@ public final class RobotContainer {
 		new JoystickButton(operator, 2).whenHeld(new SetHumanPlayer(elevator, arm, wrist));
 		new JoystickButton(operator, 3).whenHeld(new SetHome(elevator, arm, wrist));
 		new JoystickButton(operator, 4).whenHeld(new SetHigh(elevator, arm, wrist));
-		new JoystickButton(operator, 6).whenPressed(new DeportArm(elevator, arm, wrist));
+		new JoystickButton(operator, 5).whenHeld(new SetMid(elevator, arm, wrist));
+		new JoystickButton(operator, 6).whenHeld(new DeportArm(elevator, arm, wrist));
+		
+		new POVButton(driver, 90).whenHeld(new SwerveDriveCmdPrecise(swerveDrive, 1, 0));
+		new POVButton(driver, 270).whenHeld(new SwerveDriveCmdPrecise(swerveDrive, -1, 0));
+		new POVButton(driver, 0).whenHeld(new SwerveDriveCmdPrecise(swerveDrive, 0, 1));
+		new POVButton(driver, 180).whenHeld(new SwerveDriveCmdPrecise(swerveDrive, 0, -1));
+
+		new POVButton(driver, 45).whenHeld(new SwerveDriveCmdPrecise(swerveDrive, 1, 1));
+		new POVButton(driver, 135).whenHeld(new SwerveDriveCmdPrecise(swerveDrive, -1, 1));
+		new POVButton(driver, 225).whenHeld(new SwerveDriveCmdPrecise(swerveDrive, -1, -1));
+		new POVButton(driver, 315).whenHeld(new SwerveDriveCmdPrecise(swerveDrive, 1, -1));
+
 
 	
 		// new JoystickButton(operator, 5).whenPressed(new SetElevatorBase(elevator));
@@ -141,9 +157,14 @@ public final class RobotContainer {
 	// public Command getAutonomousCommand() {
 	public Command getAutonomousCommand() {
 
+		// return (Command) (new SequentialCommandGroup(
+		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.2, new Rotation2d(0.0)), 1),
+		// 	new WaitTimed(3),
+		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.0, new Rotation2d(0.1)), 1)
+		// )); 
+
 		// Do nothing (0)
 		// return (Command) (new SequentialCommandGroup(
-			
 		// ));
 
 		// Move back (4)
@@ -164,19 +185,34 @@ public final class RobotContainer {
 		// 	)
 		// ));
 
-		//Place cone & move back (10)
+		//Place cube & move back (10)
+		// return (Command) (new SequentialCommandGroup(
+		// 	new DeportArm(elevator, arm, wrist), //2
+		// 	new SetHighTimed(elevator, arm, wrist, 2), //2
+		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.2, new Rotation2d(0.0)), 1), //1
+		// 	new RollClawTimed(claw, 0.5, 1), //1
+		// 	new ParallelCommandGroup( //4
+		// 		new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.2, new Rotation2d(0.1)), 4), //4*
+		// 		new SetHomeTimed(elevator, arm, wrist, 4) //4*
+		// 	)
+		// ));
+
+		// Balance Charging Station BLUE (idk)
 		return (Command) (new SequentialCommandGroup(
-			new DeportArm(elevator, arm, wrist), //2
-			new SetHighTimed(elevator, arm, wrist, 2), //2
-			new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.2, new Rotation2d(0.0)), 1), //1
-			new RollClawTimed(claw, 0.5, 1), //1
-			new ParallelCommandGroup( //4
-				new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.2, new Rotation2d(0.1)), 4), //4*
-				new SetHomeTimed(elevator, arm, wrist, 4) //4*
-			)
+			new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.3, new Rotation2d(0.0)), 2),
+			new SwerveDriveCmdTimed(swerveDrive, new Pose2d(-0.24, 0.0, new Rotation2d(0.0)), 2),
+			new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.5, new Rotation2d(0.0)), 1.75) //4
 		));
 
+		// Balance Charging Station RED (idk)
+		// return (Command) (new SequentialCommandGroup(
+		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.3, new Rotation2d(0.0)), 2),
+		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.24, 0.0, new Rotation2d(0.0)), 2),
+		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.5, new Rotation2d(0.0)), 1.75) //4
+		// ));
 
+
+		
 
 
 

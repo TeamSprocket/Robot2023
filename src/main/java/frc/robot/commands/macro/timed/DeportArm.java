@@ -46,7 +46,7 @@ public class DeportArm extends MacroCommand{
         }
         else if(timer.get()> 1 && timer.get() < 2){
             arm.setArmAngle(arm.getArmAngle(), -40);
-            wrist.moveWrist(0.2);
+            wrist.moveWrist(0.15);
         }
         else{
             elevator.setElevatorPosition(elevator.getElevatorHeight(), -17.13);

@@ -41,13 +41,13 @@ public class SetHumanPlayer extends MacroCommand{
         timer.start();
         
         if (timer.get() > 0.1 && timer.get() < 1){
-            elevator.setElevatorPosition(elevator.getElevatorHeight(), -10.5);
+            elevator.setElevatorPosition(elevator.getElevatorHeight(), -11);
         }
         else if(timer.get()> 1 && timer.get() < 2){
             arm.setArmAngle(arm.getArmAngle(), -80);
         }
         else{
-            elevator.setElevatorPosition(elevator.getElevatorHeight(), -10.5);
+            elevator.setElevatorPosition(elevator.getElevatorHeight(), -11);
             arm.setArmAngle(arm.getArmAngle(), -80);
         }
         
@@ -59,7 +59,7 @@ public class SetHumanPlayer extends MacroCommand{
 
     @Override
     public void end(boolean interrupted){
-        elevator.setElevatorPosition(elevator.getElevatorHeight(), -10.5);
+        elevator.setElevatorPosition(elevator.getElevatorHeight(), -11);
         arm.setArmAngle(arm.getArmAngle(), -80);
     }
 }

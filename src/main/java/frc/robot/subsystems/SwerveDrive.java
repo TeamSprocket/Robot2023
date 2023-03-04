@@ -136,6 +136,10 @@ public class SwerveDrive extends SubsystemBase {
 
     }
 
+    public double getFrontLeftTicks() {
+        return frontLeft.getDrivePosition();
+    }
+
     
     // // Odometer
 

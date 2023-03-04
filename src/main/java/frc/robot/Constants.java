@@ -136,7 +136,14 @@ public class Constants {
         public static final double kPBalance = 0.1;
         public static final double kIBalance = 0;
         public static final double kDBalance = 0.0015;
-        public static final boolean START_REVERSED = true;
+        
+        public static final boolean START_REVERSED = false;
+
+        public static final double CENTER_OF_MASS_FROMT_BACK_Y_METERS = 0.3898;
+        public static final double BUMPER_THICKNESS_Y_METERS = Units.inchesToMeters(3);
+        // public static final double LENGTH_OF_BOT_Y_METERS = 0.7112;
+        public static final double CHARGING_STATION_TO_CENTER_Y_METERS = 0.965;
+
     }
 
 

@@ -53,6 +53,7 @@ public class SwerveModule extends SubsystemBase {
     this.isTurnedReverse = isTurnedReverse;
 
     turnMotor.setNeutralMode(NeutralMode.Coast);
+    driveMotor.setNeutralMode(NeutralMode.Brake);
 
     turnPIDController = new PIDController(Constants.Drivetrain.kPTurn, Constants.Drivetrain.kITurn, Constants.Drivetrain.kDTurn);
 
