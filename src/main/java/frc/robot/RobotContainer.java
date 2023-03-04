@@ -197,12 +197,17 @@ public final class RobotContainer {
 		// 	)
 		// ));
 
-		// Balance Charging Station BLUE (idk)
+		//MOVE FORWARD ONLY
 		return (Command) (new SequentialCommandGroup(
-			new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.3, new Rotation2d(0.0)), 2),
-			new SwerveDriveCmdTimed(swerveDrive, new Pose2d(-0.24, 0.0, new Rotation2d(0.0)), 2),
-			new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.5, new Rotation2d(0.0)), 1.75) //4
+			new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.3, new Rotation2d(0.0)), 2)
 		));
+
+		// Balance Charging Station BLUE (idk)
+		// return (Command) (new SequentialCommandGroup(
+		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.3, new Rotation2d(0.0)), 2),
+		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(-0.24, 0.0, new Rotation2d(0.0)), 2),
+		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.5, new Rotation2d(0.0)), 1.75) //4
+		// ));
 
 		// Balance Charging Station RED (idk)
 		// return (Command) (new SequentialCommandGroup(
