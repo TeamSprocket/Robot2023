@@ -4,6 +4,7 @@
 
 package frc.robot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -47,6 +48,8 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
+        robotContainer.clearStickyFaults();
+        // SmartDashboard.putNumber("Robot Wheel Position Meters", robotContainer.getSwerveDrive().getDrivePosition());
     }
 
     /**
@@ -64,6 +67,8 @@ public class Robot extends TimedRobot {
     /** This function is run once each time the robot enters autonomous mode. */
     @Override
     public void autonomousInit() {
+        robotContainer.autonInit();
+
         this.auton = robotContainer.getAutonomousCommand();
         // new SwerveDriveCmdTimed(swerveDrive, new Pose2d(-0.25, 0.0, new Rotation2d(0.0)), 1);
         // timer.start();
@@ -74,7 +79,7 @@ public class Robot extends TimedRobot {
             System.out.println("AUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\n");
         }
 
-        robotContainer.autonInit();
+        
         
         // timer = new Timer();
         // timer.start();

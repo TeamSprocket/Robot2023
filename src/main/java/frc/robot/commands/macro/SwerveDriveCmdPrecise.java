@@ -31,6 +31,7 @@ public class SwerveDriveCmdPrecise extends MacroCommand {
   private WPI_TalonFX talonFR;
   private WPI_TalonFX talonBL;
   private WPI_TalonFX talonBR;
+  private Timer timer;
 
   SlewRateLimiter xSlewLimit, ySlewLimit, tSlewLimit;
 
@@ -51,8 +52,10 @@ public class SwerveDriveCmdPrecise extends MacroCommand {
     this.xTarget = y;
     this.yTarget = x;
     
-    this.xSpeed = xTarget / 12;
-    this.ySpeed = yTarget / 12;
+    this.xSpeed = xTarget / 5;
+    this.ySpeed = yTarget / 5;
+
+
   }
 
     
@@ -60,12 +63,14 @@ public class SwerveDriveCmdPrecise extends MacroCommand {
   // Called when the command is initially scheduled
   @Override
   public void initialize() {
-    
+    timer.reset();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    timer.start();
+
     ChassisSpeeds chassisSpeeds;
     // // Field Oriented
     if (Constants.Drivetrain.IS_FIELD_ORIENTED) {
@@ -94,7 +99,10 @@ public class SwerveDriveCmdPrecise extends MacroCommand {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-        return true;
+    if (timer.get() >= 0.2) {
+      return true;
+    }
+    return false;
   }
 
 }

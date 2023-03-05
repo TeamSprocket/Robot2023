@@ -65,8 +65,8 @@ public class SwerveModule extends SubsystemBase {
 
 
     public double getDrivePosition() {
-      double circum = (Math.PI) * Constants.Drivetrain.kWheelDiameterMeters;
-      double currentRots = driveMotor.getSelectedSensorPosition() / 2048.0;
+      double circum = 2 * (Math.PI) * (Constants.Drivetrain.kWheelDiameterMeters / 2);
+      double currentRots = driveMotor.getSelectedSensorPosition() / (2048.0 * Constants.Drivetrain.kDriveMotorGearRatio);
       return currentRots * circum;
     }
 
@@ -136,6 +136,9 @@ public class SwerveModule extends SubsystemBase {
       }
 
 
+      if (Constants.Drivetrain.SWERVE_IS_SLOW) {
+        driveSpd /= 3.0;
+      }
       driveMotor.set(driveSpd);
 
       double turnOutput = turnPIDController.calculate(

@@ -90,6 +90,10 @@ public class SwerveDrive extends SubsystemBase {
 
     }
 
+    public double getDrivePosition() {
+        return (frontLeft.getDrivePosition() + frontRight.getDrivePosition() + backLeft.getDrivePosition() + backRight.getDrivePosition()) / 4;
+    }
+
     // Get gyro angle from -360 to 360
     public double getHeading() {
         double angle = gyro.getAngle() % 360.0;

@@ -130,14 +130,16 @@ public class Constants {
         public static double kTicks2Radians(double ticks) {
             return Math.toRadians((ticks / 2048.0 / 21.4) * 360);
         }
+
+        public static boolean SWERVE_IS_SLOW = false;
     }
 
     public static final class Auton {
-        public static final double kPBalance = 0.1;
+        public static final boolean FACING_DRIVERS = true;
+
+        public static final double kPBalance = 0.08;
         public static final double kIBalance = 0;
-        public static final double kDBalance = 0.0015;
-        
-        public static final boolean START_REVERSED = false;
+        public static final double kDBalance = 0.00;
 
         public static final double CENTER_OF_MASS_FROMT_BACK_Y_METERS = 0.3898;
         public static final double BUMPER_THICKNESS_Y_METERS = Units.inchesToMeters(3);

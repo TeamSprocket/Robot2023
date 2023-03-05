@@ -30,7 +30,7 @@ public class SetHumanPlayer extends MacroCommand{
 
 
     public void initialize(){
-        wrist.moveWrist(-0.1115);
+        wrist.moveWrist(-0.1100);
         startTime = System.currentTimeMillis();
         timer.reset();
     }

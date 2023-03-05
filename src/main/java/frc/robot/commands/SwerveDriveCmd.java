@@ -84,7 +84,7 @@ public class SwerveDriveCmd extends CommandBase {
     if (Constants.Drivetrain.IS_FIELD_ORIENTED) {
       double headingRad = Math.toRadians(swerveDrive.getHeading());
       
-      if (Constants.Auton.START_REVERSED) {
+      if (Constants.Auton.FACING_DRIVERS) {
         headingRad += Math.PI;
       }
 
