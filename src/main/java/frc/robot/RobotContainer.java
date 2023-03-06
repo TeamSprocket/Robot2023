@@ -42,6 +42,7 @@ import frc.robot.commands.macro.SetHigh;
 import frc.robot.commands.macro.SetHome;
 import frc.robot.commands.macro.SetLow;
 import frc.robot.commands.macro.SetMid;
+import frc.robot.commands.macro.ShootClaw;
 import frc.robot.commands.macro.SwerveDriveCmdPrecise;
 import frc.robot.commands.macro.ToggleSwervePrecise;
 import frc.robot.commands.macro.timed.DeportArm;
@@ -135,6 +136,8 @@ public final class RobotContainer {
 		// new JoystickButton(driver, 2).whenPressed(() -> swerveDrive.zeroTalons());
 		new JoystickButton(driver, 4).whenPressed(new ToggleCompressor(pch, driver));
 		new JoystickButton(driver, 5).whenPressed(new ToggleClaw(claw));
+		// new JoystickButton(driver, 3).whenHeld(new ShootClaw(10));
+		
 		// new JoystickButton(driver, 7).whenPressed(() -> swerveDrive.zeroTalons());
 
 		new JoystickButton(operator, 1).whenHeld(new SetLow(elevator, arm, wrist));
@@ -169,6 +172,7 @@ public final class RobotContainer {
 
 	public void clearStickyFaults() {
 		pdh.clearStickyFaults();
+		pch.clearStickyFaults();
 	}
 
 
@@ -216,7 +220,23 @@ public final class RobotContainer {
 				new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.3, new Rotation2d(0.0)), 3.25),
 				new SetHomeTimed(elevator, arm, wrist, 4) //4*
 			)
-		));		
+		));	
+		
+
+		// Place Cube Only
+		// return (Command) (new SequentialCommandGroup(
+		// 	new DeportArm(elevator, arm, wrist), //2
+		// 	new SetHighTimed(elevator, arm, wrist, 2), //2
+		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.25, new Rotation2d(0.0)), 2), //1
+			// // new WaitTimed(0.5),
+		// 	new RollClawTimed(claw, 0.5, 1) //1
+		// 	// new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.25, new Rotation2d(0.0)), 2),
+		// 	// new ParallelCommandGroup(
+		// 	// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.3, new Rotation2d(0.0)), 3.25),
+		// 	// new SetHomeTimed(elevator, arm, wrist, 4) //4*
+		// 	// )
+		// ));	
+		
 
 		//MOVE FORWARD ONLY
 		// return (Command) (new SequentialCommandGroup(

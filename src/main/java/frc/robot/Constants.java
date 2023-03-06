@@ -67,6 +67,11 @@ public class Constants {
 
     public static final class Claw {
         public static double revSetpoint = 400;
+
+        public static double kPShooter = 0.03;
+        public static double kIShooter = 0;
+        public static double kDShooter = 0.00;
+        
     }
 
     public static final class PCH {
@@ -134,7 +139,7 @@ public class Constants {
         public static boolean SWERVE_IS_SLOW = false;
     }
 
-    public static final class Auton {
+    public static final class Auton { 
         public static final boolean FACING_DRIVERS = true;
 
         public static final double kPBalance = 0.08;

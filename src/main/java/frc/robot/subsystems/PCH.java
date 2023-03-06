@@ -10,11 +10,15 @@ public class PCH extends SubsystemBase {
     private final PneumaticHub pneumaticHub = new PneumaticHub(RobotMap.PCH.PCH_CAN);
     
     public PCH() {
-        
+
     }
 
     public boolean isEnabled() {
         return pneumaticHub.getCompressor();
+    }
+
+    public void clearStickyFaults() {
+        pneumaticHub.clearStickyFaults();
     }
     
     public void setCompression(boolean on) {
