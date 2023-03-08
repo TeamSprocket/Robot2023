@@ -2,7 +2,6 @@ package frc.robot.commands.instant;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.PCH;
 import frc.util.commands.InstantCommand;
 
@@ -12,7 +11,8 @@ public class ToggleCompressor extends InstantCommand {
      
     public ToggleCompressor(PCH pch, XboxController gamepad) {
         this.pch = pch;
-        this.gamepad = gamepad;        
+        this.gamepad = gamepad;
+        
         addRequirements(pch);
     }
 
@@ -20,10 +20,10 @@ public class ToggleCompressor extends InstantCommand {
     public void initialize() {
         if(pch.isEnabled()) {
             pch.setCompression(false);
-            gamepad.setRumble(RumbleType.kLeftRumble, 0.0);
-        } else {
+        } 
+        else {
             pch.setCompression(true);   
-            gamepad.setRumble(RumbleType.kLeftRumble, 1.0);
         }
+
     }   
 }

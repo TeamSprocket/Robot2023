@@ -22,10 +22,18 @@ public class SwerveDriveCmd extends CommandBase {
   private final Supplier<Boolean> fieldOrientedFunct;
   private final SlewRateLimiter xSlewLimit, ySlewLimit, tSlewLimit;
 
+    /**
+     * Used to send outputs to SwerveDrive
+     * @param swerveDrive SwerveDrive object
+     * @param xSPDFunct Vertical speed of the bot
+     * @param ySPDFunct Horizontal speed of the bot
+     * @param tSPDFunct Angular speed of the bot 
+     */
     public SwerveDriveCmd(SwerveDrive swerveDrive,
             Supplier<Double> xSPDFunct, Supplier<Double> ySPDFunct, Supplier<Double> tSPDFunct,
             Supplier<Boolean> fieldOrientedFunct) {
 
+          // System.out.println("SWERVE DRIVE CMD STARTED!!!!!!!!!\nSWERVE DRIVE CMD STARTED!!!!!!!!!\nSWERVE DRIVE CMD STARTED!!!!!!!!!\nSWERVE DRIVE CMD STARTED!!!!!!!!!\nSWERVE DRIVE CMD STARTED!!!!!!!!!\nSWERVE DRIVE CMD STARTED!!!!!!!!!\n");
         this.swerveDrive = swerveDrive;
         this.xSPDFunct = xSPDFunct;
         this.ySPDFunct = ySPDFunct;
@@ -74,7 +82,14 @@ public class SwerveDriveCmd extends CommandBase {
     ChassisSpeeds chassisSpeeds;
     // Field Oriented
     if (Constants.Drivetrain.IS_FIELD_ORIENTED) {
-      chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, tSpeed, swerveDrive.getRotation2d());
+      double headingRad = Math.toRadians(swerveDrive.getHeading());
+      
+      if (Constants.Auton.FACING_DRIVERS) {
+        headingRad += Math.PI;
+      }
+
+      chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+          xSpeed, ySpeed, tSpeed, new Rotation2d(headingRad));
     } else { // Robot oriented
       chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, tSpeed);
       SmartDashboard.putString("Chassis Speed", chassisSpeeds.toString());

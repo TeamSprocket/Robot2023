@@ -57,11 +57,12 @@ public class SwerveModule extends SubsystemBase {
 
 
     driveMotor.setInverted(driveMotorIsReversed);
-    turnMotor.setInverted(turnMotorIsReversed);
+    turnMotor.setInverted(turnMotorIsReversed); 
 
     this.isTurnedReverse = isTurnedReverse;
 
-    turnMotor.setNeutralMode(NeutralMode.Brake);
+    turnMotor.setNeutralMode(NeutralMode.Coast);
+    driveMotor.setNeutralMode(NeutralMode.Brake);
 
     turnPIDController = new PIDController(Constants.Drivetrain.kPTurn, Constants.Drivetrain.kITurn, Constants.Drivetrain.kDTurn);
     // drivePIDController = new PIDController(Constants.Drivetrain.kPDrive, Constants.Drivetrain.kITurn, 0);
@@ -74,7 +75,9 @@ public class SwerveModule extends SubsystemBase {
 
 
     public double getDrivePosition() {
-      return Constants.Drivetrain.kTicks2Radians(driveMotor.getSelectedSensorPosition());
+      double circum = 2 * (Math.PI) * (Constants.Drivetrain.kWheelDiameterMeters / 2);
+      double currentRots = driveMotor.getSelectedSensorPosition() / (2048.0 * Constants.Drivetrain.kDriveMotorGearRatio);
+      return currentRots * circum;
     }
 
     public double getTurnPosition() {
@@ -137,6 +140,10 @@ public class SwerveModule extends SubsystemBase {
         driveMotor.set(driveSpd);
       }
 
+      if (Constants.Drivetrain.SWERVE_IS_SLOW) {
+        driveSpd /= 3.0;
+      }
+      driveMotor.set(driveSpd);
 
       double turnOutput = turnPIDController.calculate(getTurnPosition() % Math.PI, Math.toRadians(targetDeg));
         // double turnOutput = turnPIDController.calculate(getTurnPosition() % Math.PI, sate.angle.getRadians());

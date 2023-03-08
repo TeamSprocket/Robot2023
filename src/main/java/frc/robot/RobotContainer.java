@@ -14,52 +14,56 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.trajectory.TrajectoryParameterizer.TrajectoryGenerationException;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.subsystems.PCH;
-import frc.robot.subsystems.Claw;
-import frc.robot.commands.instant.ToggleCompressor;
-import frc.robot.commands.instant.ToggleClaw;
-
-//auton imports
-
-//import subsystems
-
-//import commands
-
-import frc.robot.commands.RunMotor;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.SwerveDriveCmd;
-import frc.robot.commands.macro.MoveClaw;
-import frc.robot.subsystems.Wheels;
-// import frc.robot.commands.auton.OneBall;
-// import frc.robot.commands.auton.ZeroBall;
-// import frc.robot.commands.auton.ThreeBall;
-// import frc.robot.commands.auton.TwoBallLeft;
-// import frc.robot.commands.auton.TwoBallRight;
-// import frc.robot.commands.instant.ActuateClimb;
-// import frc.robot.commands.instant.ToggleCompressor;
-// import frc.robot.commands.instant.ToggleIntake;
-// import frc.robot.commands.macro.Shoot;
-// import frc.robot.commands.persistent.BlingBling;
-// import frc.robot.commands.persistent.ClimbArmManual;
-// import frc.robot.commands.persistent.Drive;
-// import frc.robot.commands.persistent.FeedManual;
-// import frc.robot.commands.persistent.RollIntakeManual;
-// import frc.robot.subsystems.Climber;
-// import frc.robot.subsystems.Drivetrain;
-// import frc.robot.subsystems.Feeder;
-// import frc.robot.subsystems.Intake;
-// import frc.robot.subsystems.LEDStrip;
-// import frc.robot.subsystems.PCH;
-// import frc.robot.subsystems.Shooter;
+import frc.robot.commands.auton.BalanceOnChargeStationVertical;
+import frc.robot.commands.auton.OneMeterForward;
+// import frc.robot.commands.auton.SwerveAutonTest;
+import frc.robot.commands.auton.WaitTimed;
+import frc.robot.commands.instant.ToggleClaw;
+import frc.robot.commands.instant.ToggleCompressor;
+import frc.robot.commands.macro.ElevatePosition;
+import frc.robot.commands.macro.MoveArmPosition;
+import frc.robot.commands.macro.MoveWristAngle;
+import frc.robot.commands.macro.SetHigh;
+import frc.robot.commands.macro.SetHome;
+import frc.robot.commands.macro.SetLow;
+import frc.robot.commands.macro.SetMid;
+import frc.robot.commands.macro.ShootClaw;
+import frc.robot.commands.macro.SwerveDriveCmdPrecise;
+import frc.robot.commands.macro.ToggleSwervePrecise;
+import frc.robot.commands.macro.timed.DeportArm;
+import frc.robot.commands.macro.timed.RollClawTimed;
+import frc.robot.commands.macro.timed.SetHighTimed;
+import frc.robot.commands.macro.timed.SetHomeTimed;
+import frc.robot.commands.macro.timed.SetHumanPlayerTimed;
+import frc.robot.commands.macro.timed.SetLowTimed;
+import frc.robot.commands.macro.timed.SwerveDriveCmdTimed;
+import frc.robot.commands.macro.SetHumanPlayer;
+import frc.robot.commands.persistent.Elevate;
+import frc.robot.commands.persistent.MoveArmJoystick;
+import frc.robot.commands.persistent.MoveWristManual;
+import frc.robot.commands.persistent.RollClaw;
+// import frc.robot.commands.auton.SwerveAutonTest;
+import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.PCH;
+import frc.robot.subsystems.PDH;
+import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.SwerveDrive;
 import frc.robot.Constants;
 
@@ -76,58 +80,28 @@ public final class RobotContainer {
 	private final PCH pch = new PCH();
 	private final Claw claw = new Claw();
 
-	// instantiate subsystems
-	// private final Drivetrain drivetrain = new Drivetrain();
-
-	private final Wheels Wheels = new Wheels();
-	// private final Drivetrain drivetrain = new Drivetrain();
-	// private final PCH pch = new PCH();
-	// private final Climber climber = new Climber();
-	// private final Intake intake = new Intake();
-	// private final Shooter shooter = new Shooter();
-	// private final Feeder feeder = new Feeder();
-	// private final LEDStrip ledStrip = new LEDStrip();
-
-	// private final Joystick leftJoystick = new Joystick(0);
-	// private final Joystick rightJoystick = new Joystick(1);
-
-	// private final RunMotor runMotor = new RunMotor(driveController, 23);
-
-	// private final Command oneBall = new OneBall(drivetrain, feeder, intake,
-	// shooter, pch);
-	// private final Command twoBallRight = new TwoBallRight(drivetrain, intake,
-	// feeder, shooter);
-	// private final Command twoBallLeft = new TwoBallLeft(drivetrain, intake,
-	// feeder, shooter);
-	// private final Command zeroBall = new ZeroBall(drivetrain);
-	// private final Command threeBall = new ThreeBall(drivetrain, intake, feeder,
-	// shooter);
-	SendableChooser<Command> chooser = new SendableChooser<>();
-
-	// Swerve Drive
+	//Smartdashboard
+	//Subsystems
+	private final PCH pch = new PCH();
+	private final PDH pdh = new PDH();
 	private final SwerveDrive swerveDrive = new SwerveDrive();
+	private final Elevator elevator = new Elevator();
+	private final Arm arm = new Arm();
+	private final Wrist wrist = new Wrist();
+	private final Claw claw = new Claw();
 
-	public RobotContainer() {
-		// Swerve Drive
+	// Manual Autons
+	SendableChooser<Command> chooser = new SendableChooser<>();  
+	// Command swerveAutonTest = new SwerveAutonTest(swerveDrive);
 
-		// WPI_TalonFX talonTest = new WPI_TalonFX(23);
-
-		configureButtonBindings();
-
-		/*
-		 * assign auton to shuffleboard
-		 * chooser.setDefaultOption(String name, auton)
-		 * chooser.addOption(String name, auton)
-		 */
-
-		configureButtonBindings();
-
-		// chooser.addOption("1-ball", oneBall);
-		// chooser.addOption("0-ball", zeroBall);
-		// chooser.addOption("2-ball, human player", twoBallRight);
-		// chooser.setDefaultOption("2-ball, NOT human player", twoBallLeft);
-		// chooser.addOption("BIG BALLS", threeBall);
+	public RobotContainer() {	
+		// chooser.setDefaultOption("Swerve Auton Test", swerveAutonTest); 
+		
 		SmartDashboard.putData(chooser);
+	}	
+
+	public SwerveDrive getSwerveDrive() {
+		return swerveDrive;
 	}
 
 	/**
@@ -137,19 +111,7 @@ public final class RobotContainer {
 	 * then passing it to a
 	 * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
 	 */
-	private void configureButtonBindings() {
-		new JoystickButton(operator, 5).whenPressed(new ToggleClaw(claw));
-		new JoystickButton(operator, 4).whenPressed(new ToggleCompressor(pch, gamepad));
-		/*
-		 * drivetrain
-		 * drivetrain.setDefaultCommand(new Drive(drivetrain, leftJoystick,
-		 * rightJoystick));
-		 */
-
-		// gamepad commands
-		// new JoystickButton(gamepad, BUTTONNUMBER)Z.whenPressed(NEW
-		// COMMAND(SUBSYSTEMS));
-		// subsystem.setDefaultCommand(NEW COMMAND(SUBSYSTEMS, GAMEPAD));
+	public void configureButtonBindings() {
 		swerveDrive.setDefaultCommand(new SwerveDriveCmd(
 				swerveDrive,
 				// X
@@ -177,20 +139,203 @@ public final class RobotContainer {
 		// ledStrip.setDefaultCommand(new BlingBling(ledStrip, shooter));
 		// climber.setDefaultCommand(new ClimbArmManual(climber, gamepad));
 
+		
+
+		// Elevator
+		//TODO CHECK THE POSITIONS OF THE ELEVATOR
+		// elevator.setDefaultCommand(new Elevate(elevator, (operator.getLeftTriggerAxis() - operator.getRightTriggerAxis())));
+		elevator.setDefaultCommand(new Elevate(elevator, operator));
+		arm.setDefaultCommand(new MoveArmJoystick(arm, operator));
+		wrist.setDefaultCommand(new MoveWristManual(wrist, operator));
+		claw.setDefaultCommand(new RollClaw(claw, driver));
+
 		// Swerve Drive (instant command reset heading)
-		new JoystickButton(driveController,
-				RobotMap.Controller.RESET_GYRO_HEADING_BUTTON_ID).whenPressed(() -> swerveDrive.zeroHeading());
+		new JoystickButton(driver,
+		 	RobotMap.Controller.RESET_GYRO_HEADING_BUTTON_ID).whenPressed(() -> swerveDrive.zeroHeading());
+		// new JoystickButton(driver, 2).whenPressed(() -> swerveDrive.zeroTalons());
+		new JoystickButton(driver, 4).whenPressed(new ToggleCompressor(pch, driver));
+		new JoystickButton(driver, 5).whenPressed(new ToggleClaw(claw));
+		// new JoystickButton(driver, 3).whenHeld(new ShootClaw(10));
+		
+		// new JoystickButton(driver, 7).whenPressed(() -> swerveDrive.zeroTalons());
+
+		new JoystickButton(operator, 1).whenHeld(new SetLow(elevator, arm, wrist));
+		new JoystickButton(operator, 2).whenHeld(new SetHumanPlayer(elevator, arm, wrist));
+		new JoystickButton(operator, 3).whenHeld(new SetHome(elevator, arm, wrist));
+		new JoystickButton(operator, 4).whenHeld(new SetHigh(elevator, arm, wrist));
+		new JoystickButton(operator, 5).whenHeld(new SetMid(elevator, arm, wrist));
+		new JoystickButton(operator, 6).whenHeld(new DeportArm(elevator, arm, wrist));
+		
+		// new POVButton(driver, 90).whenHeld(new SwerveDriveCmdPrecise(swerveDrive, 1, 0));
+		// new POVButton(driver, 270).whenHeld(new SwerveDriveCmdPrecise(swerveDrive, -1, 0));
+		// new POVButton(driver, 0).whenHeld(new SwerveDriveCmdPrecise(swerveDrive, 0, 1));
+		// new POVButton(driver, 180).whenHeld(new SwerveDriveCmdPrecise(swerveDrive, 0, -1));
+
+		// new POVButton(driver, 45).whenHeld(new SwerveDriveCmdPrecise(swerveDrive, 1, 1));
+		// new POVButton(driver, 135).whenHeld(new SwerveDriveCmdPrecise(swerveDrive, -1, 1));
+		// new POVButton(driver, 225).whenHeld(new SwerveDriveCmdPrecise(swerveDrive, -1, -1));
+		// new POVButton(driver, 315).whenHeld(new SwerveDriveCmdPrecise(swerveDrive, 1, -1));
+
+
+	
+		// new JoystickButton(operator, 5).whenPressed(new SetElevatorBase(elevator));
+
 	}
+
+	public void autonInit() {
+		swerveDrive.zeroTalons();
+		swerveDrive.zeroHeading();	
+		pdh.clearStickyFaults();
+		
+	}
+
+	public void clearStickyFaults() {
+		pdh.clearStickyFaults();
+		pch.clearStickyFaults();
+	}
+
 
 	// AUTON
 	// public Command getAutonomousCommand() {
-	// // return chooser.getSelected();
+	public Command getAutonomousCommand() {
 
-	// // Create Trajectory Speed/Settings
-	// TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
-	// Constants.Drivetrain.kMaxSpeedMetersPerSecond,
-	// Constants.Drivetrain.kTeleDriveMaxAccelerationUnitsPerSecond)
-	// .setKinematics(Constants.Drivetrain.driveKinematics);
+		// return (Command) (new SequentialCommandGroup(
+		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.2, new Rotation2d(0.0)), 1),
+		// 	new WaitTimed(3),
+		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.0, new Rotation2d(0.1)), 1)
+		// )); 
+
+		// Do nothing (0)
+		// return (Command) (new SequentialCommandGroup(
+		// ));
+
+		// Move back (4)
+		// return (Command) (new SequentialCommandGroup(
+		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.2, new Rotation2d(0.1)), 4) //4
+		// ));
+
+		//Place cone & move back (9.5)
+		// return (Command) (new SequentialCommandGroup(
+		// 	new DeportArm(elevator, arm, wrist), //2
+		// 	new SetHighTimed(elevator, arm, wrist, 2), //2
+		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.2, new Rotation2d(0.0)), 1), //1
+		// 	new ToggleClaw(claw), //0
+		// 	new WaitTimed(0.5), //0.5
+		// 	new ParallelCommandGroup( //4
+		// 		new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.2, new Rotation2d(0.0)), 4), //4*
+		// 		new SetHomeTimed(elevator, arm, wrist, 4) //4*
+		// 	)
+		// ));
+
+		// Place cube & move back (10)
+		return (Command) (new SequentialCommandGroup(
+			new DeportArm(elevator, arm, wrist), //2
+			new SetHighTimed(elevator, arm, wrist, 2), //2
+			new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.25, new Rotation2d(0.0)), 2), //1
+			// new WaitTimed(0.5),
+			new RollClawTimed(claw, 0.5, 1), //1
+			new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.3, new Rotation2d(0.0)), 1),
+			new ParallelCommandGroup(
+				new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.3, new Rotation2d(0.0)), 3.25),
+				new SetHomeTimed(elevator, arm, wrist, 4) //4*
+			)
+		));	
+		
+
+		// Place Cube Only
+		// return (Command) (new SequentialCommandGroup(
+		// 	new DeportArm(elevator, arm, wrist), //2
+		// 	new SetHighTimed(elevator, arm, wrist, 2), //2
+		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.25, new Rotation2d(0.0)), 2), //1
+			// // new WaitTimed(0.5),
+		// 	new RollClawTimed(claw, 0.5, 1) //1
+		// 	// new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.25, new Rotation2d(0.0)), 2),
+		// 	// new ParallelCommandGroup(
+		// 	// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.3, new Rotation2d(0.0)), 3.25),
+		// 	// new SetHomeTimed(elevator, arm, wrist, 4) //4*
+		// 	// )
+		// ));	
+		
+
+		//MOVE FORWARD ONLY
+		// return (Command) (new SequentialCommandGroup(
+		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.3, new Rotation2d(0.0)), 2)
+		// ));
+
+		// Balance Charging Station BLUE (idk)
+		// return (Command) (new SequentialCommandGroup(
+		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.3, new Rotation2d(0.0)), 2),
+		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(-0.24, 0.0, new Rotation2d(0.0)), 2),
+		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.5, new Rotation2d(0.0)), 1.75), //4
+		// new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.0, new Rotation2d(0.01), 0.5))
+		// ));pz
+
+		// Balance Charging Station RED (idk)
+		// return (Command) (new SequentialCommandGroup(
+		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.3, new Rotation2d(0.0)), 2),
+		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.24, 0.0, new Rotation2d(0.0)), 2),
+		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.5, new Rotation2d(0.0)), 1.75), //4
+		// new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.0, new Rotation2d(0.01), 0.5))
+		// ));
+
+		// PID Charging Station (idkkkkkkkk)
+		// return (Command) (new SequentialCommandGroup(
+		// 	new OneMeterForward(swerveDrive)
+		// ));
+
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		//////////////////////////////////////////
+
+
+		// Command autonRoutine = new SequentialCommandGroup(
+		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0, 0.2, new Rotation2d(0.0)), 1),
+		// 	new WaitTimed(3),
+		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0, -0.2, new Rotation2d(0.0)), 1)
+		// );
+		// return autonRoutine;
+
+				// new DeportArm(elevator, arm, wrist),
+				// new SetHighTimed(elevator, arm, wrist, 3),
+				// new SetHumanPlayerTimed(elevator, arm, wrist, 2),
+				// new RollClawTimed(claw, 1, 1),
+				// new ParallelCommandGroup(
+				// 	new SetLowTimed(elevator, arm, wrist, 5),
+				// 	new RollClawTimed(claw, -0.5, 5)
+				// ),
+				// new SetHighTimed(elevator, arm, wrist, 3),
+				// new RollClawTimed(claw, 1, 1),
+				// new SetHomeTimed(elevator, arm, wrist, 3)
+		
+		
+		// return chooser.getSelected();
+	}
 
 	// // Create auton trajectory
 	// Trajectory trajectory = TrajectoryGenerator.generateTrajectory(

@@ -8,7 +8,7 @@ import frc.robot.RobotMap;
 
 public class PCH extends SubsystemBase {
     private final PneumaticHub pneumaticHub = new PneumaticHub(RobotMap.PCH.PCH_CAN);
-
+    
     public PCH() {
 
     }
@@ -16,10 +16,15 @@ public class PCH extends SubsystemBase {
     public boolean isEnabled() {
         return pneumaticHub.getCompressor();
     }
+
+    public void clearStickyFaults() {
+        pneumaticHub.clearStickyFaults();
+    }
     
     public void setCompression(boolean on) {
         if(on) {
             pneumaticHub.enableCompressorAnalog(Constants.PCH.MIN_PSI, Constants.PCH.MAX_PSI);
+            // pneumaticHub.enableCompressorAnalog(Constants.Compressor.MIN_PSI, Constants.Compressor.MAX_PSI);
         }
         else {
             pneumaticHub.disableCompressor();
@@ -27,7 +32,7 @@ public class PCH extends SubsystemBase {
     }
     
     public double getPressure() {
-        return pneumaticHub.getPressure(RobotMap.PCH.PRESSURE_SENSOR_CHANNEL);
+        return Math.abs(pneumaticHub.getPressure(RobotMap.PCH.PRESSURE_SENSOR_CHANNEL));
     }
       
     @Override

@@ -14,6 +14,6 @@ public class ToggleClaw extends InstantCommand{
 
     @Override
     public void initialize(){
-        claw.actuateIntakeArm(claw.isActuated());
+        claw.actuateClaw(claw.isActuated());
     }
 }
