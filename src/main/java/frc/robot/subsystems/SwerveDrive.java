@@ -58,6 +58,7 @@ public class SwerveDrive extends SubsystemBase {
     
     public void zeroHeading() {
         gyro.reset();
+        // gyro.setYawAxis(null)
     }
     public void zeroTalons() {
         frontLeft.zeroTalon();
@@ -87,6 +88,10 @@ public class SwerveDrive extends SubsystemBase {
         }
         ).start();
 
+    }
+
+    public double getDrivePosition() {
+        return (frontLeft.getDrivePosition() + frontRight.getDrivePosition() + backLeft.getDrivePosition() + backRight.getDrivePosition()) / 4;
     }
 
     // Get gyro angle from -360 to 360
@@ -135,8 +140,50 @@ public class SwerveDrive extends SubsystemBase {
 
     }
 
+    public double getFrontLeftTicks() {
+        return frontLeft.getDrivePosition();
+    }
+
     
     // // Odometer
+
+    // public SwerveModulePosition[] getModulePositions() {
+        // return new SwerveModulePosition[] {
+            // new SwerveModulePosition(frontLeft.getDrivePosition(), new Rotation2d(frontLeft.getTurnPosition())),
+            // new SwerveModulePosition(frontRight.getDrivePosition(), new Rotation2d(frontRight.getTurnPosition())),
+            // new SwerveModulePosition(backLeft.getDrivePosition(), new Rotation2d(backLeft.getTurnPosition())),
+            // new SwerveModulePosition(backRight.getDrivePosition(), new Rotation2d(backRight.getTurnPosition())),
+        // };
+    // }
+    // private SwerveModulePosition[] swerveModulePositions = {
+    //     new SwerveModulePosition(frontLeft.getDrivePosition(), new Rotation2d(frontLeft.getTurnPosition())),
+    //     new SwerveModulePosition(frontRight.getDrivePosition(), new Rotation2d(frontRight.getTurnPosition())),
+    //     new SwerveModulePosition(backLeft.getDrivePosition(), new Rotation2d(backLeft.getTurnPosition())),
+    //     new SwerveModulePosition(backRight.getDrivePosition(), new Rotation2d(backRight.getTurnPosition())),
+    // };
+
+    // private final SwerveDriveOdometry odometer = new SwerveDriveOdometry( 
+    //     Constants.Drivetrain.driveKinematics, new Rotation2d(getHeading()), getModulePositions()); 
+
+    
+    // // Update Odometer
+    // @Override
+    // public void periodic() {
+    //     odometer.update(new Rotation2d(Math.toRadians(getHeading())), getModulePositions());
+    // }
+
+    // // Get odometer position (pose2d contains x, y, theta in translation/rotation 2d)
+    // public Pose2d getPose() {
+    //     return odometer.getPoseMeters();
+    // }
+
+    // // Reset odometer TODO: Check getting odometry pose method vs getting actual pose
+    // public void resetOdometer() {
+    //     odometer.resetPosition(new Rotation2d(Math.toRadians(getHeading())),
+    //     getModulePositions(),
+    //     getPose());
+    // }
+
 
     // public SwerveModulePosition[] getModulePositions() {
         // return new SwerveModulePosition[] {

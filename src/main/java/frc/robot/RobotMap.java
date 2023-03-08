@@ -66,20 +66,17 @@ public final class RobotMap {
     public static final int WRIST = 44;
   }
 
-  public static final class Intake{
-    public static final int INTAKE = 45;
+  public static final class Claw{
+    public static final int CLAW_LEFT = 45;
+    public static final int CLAW_RIGHT = 46;
 
-    //TODO: check piston ports from electrical
-    public static final int PISTON_LEFT_FORWARD = 0;
-    public static final int PISTON_RIGHT_FORWARD = 1;
-    public static final int PISTON_RIGHT_BACKWARD = 2;
-    public static final int PISTON_LEFT_BACKWARD = 3;
-    
+    public static final int PISTON_LEFT = 14;
+    public static final int PISTON_RIGHT = 15;
+
   }
 
   public static final class PCH {
     public static final int PCH_CAN = 1;
-    public static final int COMPRESSOR = 1;
     public static final int PRESSURE_SENSOR_CHANNEL = 0;
   }
   

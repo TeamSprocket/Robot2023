@@ -3,9 +3,15 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.SwerveDriveCmd;
+import frc.robot.subsystems.SwerveDrive;
 
 
 /**
@@ -15,6 +21,9 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * directory.
  */
 public class Robot extends TimedRobot {
+    Timer timer;
+    Command auton;
+
     private final RobotContainer robotContainer = new RobotContainer();
 
     public Robot() {
@@ -39,6 +48,8 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
+        robotContainer.clearStickyFaults();
+        // SmartDashboard.putNumber("Robot Wheel Position Meters", robotContainer.getSwerveDrive().getDrivePosition());
     }
 
     /**
@@ -56,11 +67,23 @@ public class Robot extends TimedRobot {
     /** This function is run once each time the robot enters autonomous mode. */
     @Override
     public void autonomousInit() {
-        // Command auton = robotContainer.getAutonomousCommand();
+        robotContainer.autonInit();
 
-        // if(auton!=null) {
-        //     auton.schedule();
-        // }
+        this.auton = robotContainer.getAutonomousCommand();
+        // new SwerveDriveCmdTimed(swerveDrive, new Pose2d(-0.25, 0.0, new Rotation2d(0.0)), 1);
+        // timer.start();
+
+        if(auton!=null) {
+            auton.schedule();
+        } else {
+            System.out.println("AUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\n");
+        }
+
+        
+        
+        // timer = new Timer();
+        // timer.start();
+        
     }
 
     /**
@@ -68,11 +91,19 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousPeriodic() {
+
+        // double time = timer.get();
+        // if (time < 1) {
+        //     new SwerveDriveCmd(swerveDrive, 0.0, 0.0, 0.0));
+        // }
+ 
     }
 
     /** This function is called once each time the robot enters teleoperated mode. */ 
     @Override
     public void teleopInit() {
+        System.out.println("TELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\n");
+        robotContainer.configureButtonBindings();
         CommandScheduler.getInstance().cancelAll();
     }
     
