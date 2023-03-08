@@ -132,11 +132,11 @@ public class SwerveDrive extends SubsystemBase {
     }
 
     // Set module speeds/angles
-    public void setModuleStates(SwerveModuleState[] desiredStates, double xSpeed, double ySpeed) {
-        frontLeft.setDesiredState(desiredStates[0], xSpeed, ySpeed);
-        frontRight.setDesiredState(desiredStates[1], xSpeed, ySpeed);
-        backLeft.setDesiredState(desiredStates[2], xSpeed, ySpeed);
-        backRight.setDesiredState(desiredStates[3], xSpeed, ySpeed);
+    public void setModuleStates(SwerveModuleState[] desiredStates) {
+        frontLeft.setDesiredState(desiredStates[0]);
+        frontRight.setDesiredState(desiredStates[1]);
+        backLeft.setDesiredState(desiredStates[2]);
+        backRight.setDesiredState(desiredStates[3]);
 
         // Debug
         SmartDashboard.putNumber("FrontLeftAngle", desiredStates[0].angle.getDegrees());

@@ -21,7 +21,6 @@ import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -65,6 +64,7 @@ import frc.robot.subsystems.PDH;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.SwerveDrive;
+import frc.robot.subsystems.Wrist;
 import frc.robot.Constants;
 
 /**
@@ -75,10 +75,9 @@ import frc.robot.Constants;
  * commands, and button mappings) should be declared here.
  */
 public final class RobotContainer {
+	//Controllers
 	private final XboxController driver = new XboxController(0);
 	private final XboxController operator = new XboxController(1);
-	private final PCH pch = new PCH();
-	private final Claw claw = new Claw();
 
 	//Smartdashboard
 	//Subsystems
@@ -105,41 +104,24 @@ public final class RobotContainer {
 	}
 
 	/**
-	 * Use this method to define your button->command mappings. Buttons can be
+	 * Use this method to define your button->command mappings.  Buttons can be
 	 * created by instantiating a {@link GenericHID} or one of its subclasses
 	 * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and
 	 * then passing it to a
 	 * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
 	 */
+	
 	public void configureButtonBindings() {
 		swerveDrive.setDefaultCommand(new SwerveDriveCmd(
-				swerveDrive,
-				// X
-				() -> -driveController.getLeftY(),
-				// Y
-				() -> driveController.getLeftX(),
-				// T
-				() -> driveController.getRightX(),
-				() -> Constants.Drivetrain.IS_FIELD_ORIENTED));
-		// new JoystickButton(driveController, 1).whenPressed(swerveDrive.resetGyro());
-		new JoystickButton(driveController, 7).whenPressed(new MoveClaw(Wheels, driveController));
-		new JoystickButton(driveController, 8).whenPressed(new MoveClaw(Wheels, driveController));
-
-		// drivetrain.setDefaultCommand(new Drive(drivetrain, leftJoystick,
-		// rightJoystick));
-		// new JoystickButton(gamepad, 4).whenPressed(new ToggleCompressor(pch,
-		// gamepad));
-		// new JoystickButton(gamepad, 6).whenPressed(new ActuateClimb(climber, true));
-		// new JoystickButton(gamepad, 5).whenPressed(new ActuateClimb(climber, false));
-		// new JoystickButton(gamepad, 3).whenPressed(new ToggleIntake(intake));
-		// new JoystickButton(gamepad, 2).whenHeld(new Shoot(shooter));
-		// // shooter.setDefaultCommand(new RollShooterManual(shooter, gamepad));
-		// feeder.setDefaultCommand(new FeedManual(feeder, gamepad));
-		// intake.setDefaultCommand(new RollIntakeManual(intake, gamepad));
-		// ledStrip.setDefaultCommand(new BlingBling(ledStrip, shooter));
-		// climber.setDefaultCommand(new ClimbArmManual(climber, gamepad));
-
+			swerveDrive, 
+			// X
+			() -> -driver.getLeftY(), 
+			// Y
+			() -> driver.getLeftX(), 
+			// T
+			() -> -driver.getRightX()));
 		
+	
 
 		// Elevator
 		//TODO CHECK THE POSITIONS OF THE ELEVATOR
@@ -337,52 +319,55 @@ public final class RobotContainer {
 		// return chooser.getSelected();
 	}
 
-	// // Create auton trajectory
-	// Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-	// // Initial point/rotation
-	// new Pose2d(0, 0, new Rotation2d(0)),
-	// // Points to traverse to
-	// List.of(
-	// new Translation2d(1, 0),
-	// new Translation2d(1, -1)
-	// ),
-	// // Final point + rotation
-	// new Pose2d(2, -1, Rotation2d.fromDegrees(180)),
-	// trajectoryConfig
-	// );
+	// 	// Create Trajectory Speed/Settings
+	// 	TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
+	// 		Constants.Drivetrain.kMaxSpeedMetersPerSecond,
+	// 			Constants.Drivetrain.kTeleDriveMaxAccelerationUnitsPerSecond)
+	// 			.setKinematics(Constants.Drivetrain.driveKinematics);
 
-	// // PID Controller for tracking trajectory (profiled = limits max speed/rot)
-	// PIDController xController = new
-	// PIDController(Constants.Drivetrain.PID_CONTROLLER_X_P, 0, 0);
-	// PIDController yController = new
-	// PIDController(Constants.Drivetrain.PID_CONTROLLER_Y_P, 0, 0);
-	// ProfiledPIDController tController = new
-	// ProfiledPIDController(Constants.Drivetrain.PID_CONTROLLER_T_P, 0, 0,
-	// new TrapezoidProfile.Constraints(
-	// Constants.Drivetrain.kPhysicalMaxAngularSpeedRadiansPerSecond,
-	// Constants.Drivetrain.kTeleDriveMaxAngularAccelerationUnitsPerSecond));
-	// tController.enableContinuousInput(-Math.PI, Math.PI);
+	// 	// Create auton trajectory
+	// 	Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+	// 		// Initial point/rotation
+	// 		new Pose2d(0, 0, new Rotation2d(0)),
+	// 		// Points to traverse to
+	// 		List.of(
+	// 			new Translation2d(1, 0),
+	// 			new Translation2d(1, -1)
+	// 		),
+	// 		// Final point + rotation
+	// 		new Pose2d(2, -1, Rotation2d.fromDegrees(180)),
+	// 		trajectoryConfig
+	// 	);
+	// 	// return trajectory;
+	// // }
 
-	// // Follow trajectory command
-	// // SwerveControllerCommand swerveControllerCommand = new
-	// SwerveControllerCommand(
-	// // trajectory,
-	// // swerveDrive::getPose,
-	// // Constants.Drivetrain.driveKinematics,
-	// // xController,
-	// // yController,
-	// // tController,
-	// // swerveDrive::setModuleStates,
-	// // swerveDrive
-	// // );
+	// 	// PID Controller for tracking trajectory (profiled = limits max speed/rot)
+	// 	// PIDController xController = new PIDController(Constants.Drivetrain.PID_CONTROLLER_X_P, 0, 0);
+	// 	// PIDController yController = new PIDController(Constants.Drivetrain.PID_CONTROLLER_Y_P, 0, 0);
+	// 	// ProfiledPIDController tController = new ProfiledPIDController(Constants.Drivetrain.PID_CONTROLLER_T_P, 0, 0,
+	// 	// 	new TrapezoidProfile.Constraints(
+	// 	// 		Constants.Drivetrain.kPhysicalMaxAngularSpeedRadiansPerSecond,
+	// 	// 		Constants.Drivetrain.kTeleDriveMaxAngularAccelerationUnitsPerSecond));
+	// 	// tController.enableContinuousInput(-Math.PI, Math.PI);
 
-	// // Inits, wrapup, returns
-	// // return new SequentialCommandGroup(
-	// // new InstantCommand(() ->
-	// swerveDrive.resetOdometer(trajectory.getInitialPose())),
-	// // swerveControllerCommand,
-	// // new InstantCommand(() -> swerveDrive.stopModules())
-	// // );
+		// Follow trajectory command
+		// SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
+		// 	trajectory,
+		// 	swerveDrive::getPose,
+		// 	Constants.Drivetrain.driveKinematics,
+		// 	xController,
+		// 	yController,
+		// 	tController,
+		// 	swerveDrive::setModuleStates,
+		// 	swerveDrive
+		// );
 
-	// } @Override
+		// Inits, wrapup, returns
+		// return new SequentialCommandGroup(
+		// 	new InstantCommand(() -> swerveDrive.resetOdometer(trajectory.getInitialPose())), 
+		// 	swerveControllerCommand, 
+		// 	new InstantCommand(() -> swerveDrive.stopModules())
+		// );
+
+	// }	@Override
 }

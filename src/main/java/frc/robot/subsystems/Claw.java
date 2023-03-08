@@ -14,24 +14,21 @@ import frc.robot.Constants;
 
 public class Claw extends SubsystemBase{
 
-    private final WPI_TalonFX leftClaw = new WPI_TalonFX(RobotMap.Claw.CLAW_LEFT);
-    private final WPI_TalonFX rightClaw = new WPI_TalonFX(RobotMap.Claw.CLAW_RIGHT);
+    private final WPI_TalonFX claw = new WPI_TalonFX(RobotMap.Claw.CLAW);
 
     private final DoubleSolenoid clawSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, RobotMap.Claw.PISTON_LEFT, RobotMap.Claw.PISTON_RIGHT);
    
     public Claw() {
-        leftClaw.setInverted(false);
-        rightClaw.setInverted(true);
-        
-        leftClaw.setNeutralMode(NeutralMode.Coast);
-        rightClaw.setNeutralMode(NeutralMode.Coast);
+        claw.setInverted(false);
 
-        rightClaw.follow(leftClaw);
+        
+        claw.setNeutralMode(NeutralMode.Coast);
+
     }
 
     public void moveClaw(double output){
-        leftClaw.set(output * 0.2);
-        rightClaw.set(output * 0.2);
+        claw.set(output * 0.2);
+
         // rightClaw.set(ControlMode.PercentOutput, output);
     }
 

@@ -4,6 +4,7 @@ package frc.robot.commands;
 import java.util.function.Supplier;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -104,7 +105,7 @@ public class SwerveDriveCmd extends CommandBase {
     SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.Drivetrain.kMaxSpeedMetersPerSecond);
 
     // Apply to modules
-    swerveDrive.setModuleStates(moduleStates, xSpeed, ySpeed);
+    swerveDrive.setModuleStates(moduleStates);
     SmartDashboard.putString("Module State 2", moduleStates[2].toString());
 
   }
