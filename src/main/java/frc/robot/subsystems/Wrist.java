@@ -28,6 +28,11 @@ public class Wrist extends SubsystemBase {
         wrist.setInverted(false);
 
     }
+
+    public double getWristPosition(){
+        return wristEncoder.getPosition();
+    }
+
     public double getWristAngle(){
         double angle = wristEncoder.getPosition() * Constants.Wrist.angleConversionFactor;
         return angle;
