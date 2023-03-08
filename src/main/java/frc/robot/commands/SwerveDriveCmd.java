@@ -31,15 +31,14 @@ public class SwerveDriveCmd extends CommandBase {
      * @param tSPDFunct Angular speed of the bot 
      */
     public SwerveDriveCmd(SwerveDrive swerveDrive,
-            Supplier<Double> xSPDFunct, Supplier<Double> ySPDFunct, Supplier<Double> tSPDFunct,
-            Supplier<Boolean> fieldOrientedFunct) {
+            Supplier<Double> xSPDFunct, Supplier<Double> ySPDFunct, Supplier<Double> tSPDFunct) {
 
           // System.out.println("SWERVE DRIVE CMD STARTED!!!!!!!!!\nSWERVE DRIVE CMD STARTED!!!!!!!!!\nSWERVE DRIVE CMD STARTED!!!!!!!!!\nSWERVE DRIVE CMD STARTED!!!!!!!!!\nSWERVE DRIVE CMD STARTED!!!!!!!!!\nSWERVE DRIVE CMD STARTED!!!!!!!!!\n");
         this.swerveDrive = swerveDrive;
         this.xSPDFunct = xSPDFunct;
         this.ySPDFunct = ySPDFunct;
         this.tSPDFunct = tSPDFunct;
-        this.fieldOrientedFunct = fieldOrientedFunct;
+        this.fieldOrientedFunct = () -> Constants.Drivetrain.IS_FIELD_ORIENTED;
         this.xSlewLimit = new SlewRateLimiter(Constants.Drivetrain.kTeleDriveMaxAccelerationUnitsPerSecond);
         this.ySlewLimit = new SlewRateLimiter(Constants.Drivetrain.kTeleDriveMaxAccelerationUnitsPerSecond);
         this.tSlewLimit = new SlewRateLimiter(Constants.Drivetrain.kTeleDriveMaxAngularAccelerationUnitsPerSecond);
@@ -106,7 +105,7 @@ public class SwerveDriveCmd extends CommandBase {
 
     // Apply to modules
     swerveDrive.setModuleStates(moduleStates);
-    SmartDashboard.putString("Module State 2", moduleStates[2].toString());
+    SmartDashboard.putString("Module States Desaturated", moduleStates[2].toString());
 
   }
 
@@ -120,6 +119,5 @@ public class SwerveDriveCmd extends CommandBase {
     return false;
   }
 }
-
 
 

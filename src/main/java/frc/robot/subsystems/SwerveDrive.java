@@ -55,6 +55,7 @@ public class SwerveDrive extends SubsystemBase {
 
     // Init gyro
     private final ADIS16470_IMU gyro = new ADIS16470_IMU();
+    
     public void zeroHeading() {
         gyro.reset();
         // gyro.setYawAxis(null)
@@ -72,18 +73,14 @@ public class SwerveDrive extends SubsystemBase {
         backRight.resetEncoderPos();
     }
 
-    // Odometer
-    // private final SwerveDriveOdometry odometer = new SwerveDriveOdometry( 
-    //     Constants.Drivetrain.driveKinematics, 
-    //     gyro.getRotation2d(), 
-    //     null); 
-
     public SwerveDrive() {
         // Init gyro with delay
         new Thread(() -> {
             try {
                 Thread.sleep(Constants.Drivetrain.GYRO_DELAY_MS);
                 zeroHeading();
+                // zeroTalonsABS();
+                zeroTalons();
             }
             catch (Exception e) {
 
@@ -99,30 +96,14 @@ public class SwerveDrive extends SubsystemBase {
 
     // Get gyro angle from -360 to 360
     public double getHeading() {
-        return gyro.getAngle() % 360.0;
+        double angle = gyro.getAngle() % 360.0;
+        if (angle > 180) {
+            angle = -1.0 * (360 - angle);
+        }
+        return -angle;
     }
 
-    // Get rotation as rotation2d
-    public Rotation2d getRotation2d() {
-        return Rotation2d.fromDegrees(getHeading());
-    } 
-
-    // Update Odometer
-    @Override
-    public void periodic() {
-        // odometer.update(getRotation2d(), SwerveModulePosition(0, gyro.getRotation2d()));
-    }
-
-    // Get odometer position (pose2d contains x, y, theta in translation/rotation 2d)
-    // public Pose2d getPose() {
-    //     return odometer.getPoseMeters();
-    // }
-
-    // Reset odometer
-    // public void resetOdometer(Pose2d pose) {
-        // odometer.resetPosition(gyro.getRotation2d(), getPose(), pose);
-    // }
-
+    
     // Stop modules
     public void stopModules() {
         frontLeft.stop();
@@ -138,11 +119,12 @@ public class SwerveDrive extends SubsystemBase {
         backLeft.setDesiredState(desiredStates[2]);
         backRight.setDesiredState(desiredStates[3]);
 
+
         // Debug
-        SmartDashboard.putNumber("FrontLeftAngle", desiredStates[0].angle.getDegrees());
-        SmartDashboard.putNumber("FrontRightAngle", desiredStates[1].angle.getDegrees());
-        SmartDashboard.putNumber("BackLeftAngle", desiredStates[2].angle.getDegrees());
-        SmartDashboard.putNumber("BackRightAngle", desiredStates[3].angle.getDegrees());
+        SmartDashboard.putNumber("FrontLeftAngleTarget", desiredStates[0].angle.getDegrees());
+        SmartDashboard.putNumber("FrontRightAngleTarget", desiredStates[1].angle.getDegrees());
+        SmartDashboard.putNumber("BackLeftAngleTarget", desiredStates[2].angle.getDegrees());
+        SmartDashboard.putNumber("BackRightAngleTarget", desiredStates[3].angle.getDegrees());
 
         SmartDashboard.putNumber("FrontLeftAngleABS", Math.toDegrees(frontLeft.getAbsEncoderRad()));
         SmartDashboard.putNumber("FrontRightAngleABS", Math.toDegrees(frontRight.getAbsEncoderRad()));
@@ -153,13 +135,6 @@ public class SwerveDrive extends SubsystemBase {
         SmartDashboard.putNumber("FrontRightAngleTalonEncoder", Math.toDegrees(frontRight.getTurnPosition()));
         SmartDashboard.putNumber("BackLeftAngleTalonEncoder", Math.toDegrees(backLeft.getTurnPosition()));
         SmartDashboard.putNumber("BackRightAngleTalonEncoder", Math.toDegrees(backRight.getTurnPosition()));
-
-        // SmartDashboard.putNumber("FL CURRENT ENCODER POS DEG", Math.toDegrees(frontLeft.getTurnPosition()));
-
-        
-        // SmartDashboard.putString("FrontRightAngle", desiredStates[1].angle.toString());
-        // SmartDashboard.putString("BackLeftAngle", desiredStates[2].angle.toString());
-        // SmartDashboard.putString("BackRightAngle", desiredStates[3].angle.toString());
 
         SmartDashboard.putNumber("Gyro", getHeading());
 
