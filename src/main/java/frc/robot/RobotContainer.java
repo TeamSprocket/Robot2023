@@ -209,8 +209,8 @@ public final class RobotContainer {
 
 		// This trajectory can then be passed to a path follower such as a
 		// PPSwerveControllerCommand
-
-		// TODO: MAKE PPSwerveControllerCommand
+		// followTrajectoryCommand parameters are PathPlannerTrajectory name and boolean isFirstPath
+		swerveDrive.followTrajectoryCommand(testPath, true);
 
 		// Or the path can be sampled at a given point in time for custom path following
 

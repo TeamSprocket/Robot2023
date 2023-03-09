@@ -21,6 +21,7 @@ import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 
 
 public class SwerveDrive extends SubsystemBase {
@@ -60,6 +61,19 @@ public class SwerveDrive extends SubsystemBase {
             RobotMap.Drivetrain.BACK_RIGHT_ABS_ENCODER_ID,
             Constants.Drivetrain.BACK_RIGHT_ABS_ENCODER_OFFSET_RAD,
             true);
+
+ 
+    // FOR SWERVEDRIVEKINEMATICS
+    // locations of the swerve modules relative to the center of the bot
+    Translation2d frontLeftLocation = new Translation2d(0.381, 0.381); // not sure abt the parameters of these
+    Translation2d frontRightLocation = new Translation2d(0.381, -0.381); //
+    Translation2d backLeftLocation = new Translation2d(-0.381, 0.381); //
+    Translation2d backRightLocation = new Translation2d(-0.381, -0.381); //
+            
+    // Creating my kinematics object using the module locations
+    SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
+        frontLeftLocation, frontRightLocation, backLeftLocation, backRightLocation
+    );
 
     // Init gyro
     private final ADIS16470_IMU gyro = new ADIS16470_IMU();
@@ -209,7 +223,7 @@ public class SwerveDrive extends SubsystemBase {
                     // Reset odometry for the first path you run during auto
                     if (isFirstPath) {
                         // this.resetOdometry(traj.getInitialHolonomicPose());
-                        resetOdometer();
+                        this.resetOdometer(); // check if there is a resetOdometry or if I gotta make one
                     }
                 }),
                 new PPSwerveControllerCommand(
