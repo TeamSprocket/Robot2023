@@ -63,17 +63,6 @@ public class SwerveDrive extends SubsystemBase {
             true);
 
  
-    // FOR SWERVEDRIVEKINEMATICS
-    // locations of the swerve modules relative to the center of the bot
-    Translation2d frontLeftLocation = new Translation2d(0.381, 0.381); // not sure abt the parameters of these
-    Translation2d frontRightLocation = new Translation2d(0.381, -0.381); //
-    Translation2d backLeftLocation = new Translation2d(-0.381, 0.381); //
-    Translation2d backRightLocation = new Translation2d(-0.381, -0.381); //
-            
-    // Creating my kinematics object using the module locations
-    SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
-        frontLeftLocation, frontRightLocation, backLeftLocation, backRightLocation
-    );
 
     // Init gyro
     private final ADIS16470_IMU gyro = new ADIS16470_IMU();
@@ -230,8 +219,10 @@ public class SwerveDrive extends SubsystemBase {
                 new PPSwerveControllerCommand(
                         traj,
                         this::getPose, // Pose supplier
-                        this.kinematics, // SwerveDriveKinematics
+                        Constants.Drivetrain.driveKinematics,
+                        // this.driveKinematics, // SwerveDriveKinematics
                         // TODO: FOR ALL PIDController CHANGE THE VALUES ACCORDINGLY
+                        // NEED TESTING
                         new PIDController(0, 0, 0), // X controller. Tune these values for your robot. Leaving them 0
                                                     // will only use feedforwards.
                         new PIDController(0, 0, 0), // Y controller (usually the same values as X controller)
