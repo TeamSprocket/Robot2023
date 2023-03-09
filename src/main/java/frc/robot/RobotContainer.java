@@ -71,12 +71,16 @@ import frc.robot.Constants;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
+import java.util.Map;
 import java.lang.Object;
+import java.time.Instant;
 
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
+import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
 
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 
@@ -197,22 +201,48 @@ public final class RobotContainer {
 	// public Command getAutonomousCommand() {
 	public Command getAutonomousCommand() {
 
-		// autopath
+		// This will load the file "Example Path.path" and generate it with a max
+		// ^ i changed it to "Test Path" so it should load "Test Path.path"
+		// velocity of 4 m/s and a max acceleration of 3 m/s^2
+		PathPlannerTrajectory testPath = PathPlanner.loadPath("Test Path", new PathConstraints(4, 3));
+		
+
+		// This trajectory can then be passed to a path follower such as a
+		// PPSwerveControllerCommand
+
+		// TODO: MAKE PPSwerveControllerCommand
+
+		// Or the path can be sampled at a given point in time for custom path following
+
+
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////
+		// these are just tests i think
+		//sampling speed of da robot at 1.2 seconds
+
+		// Sample the state of the path at 1.2 seconds
+		PathPlannerState testState = (PathPlannerState) testPath.sample(1.2);
+		// Print the velocity at the sampled time
+		System.out.println(testState.velocityMetersPerSecond);
+
+
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////
+		// // autopath
 		// List<PathPlannerTrajectory> pathGroup = PathPlanner.loadPathGroup("FullAuto",
-		// new PathConstraints(4, 3)); // maxVelocity:4 and maxAcceleration:3
+		// 		new PathConstraints(4, 3)); // maxVelocity:4 and maxAcceleration:3
 
 		// HashMap<String, Command> eventMap = new HashMap<>();
 		// eventMap.put("marker1", new PrintCommand("Passed marker 1"));
 
 		// SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
-		// // swerveDrive.getDrivePosition(),
-		// null,
-		// null,
-		// null,
-		// null,
-		// null,
-		// eventMap,
-		// null);
+		// 		swerveDrive::getPose,
+		// 		// swerveDrive::resetOdometer,
+		// 		null,
+		// 		null,
+		// 		null,
+		// 		null,
+		// 		eventMap,
+		// 		// SwerveDrive
+		// 		null);
 
 		// return (Command) (new SequentialCommandGroup(
 		// new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.2, new
