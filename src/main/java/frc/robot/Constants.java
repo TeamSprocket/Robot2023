@@ -6,9 +6,6 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 
 public class Constants {
-    public static final class PCH {
-        public static final double NORMALIZED_SUPPLY_VOLTAGE = 0; //TODO: Figure out the value
-    }
 
     //TODO Edit PID values, tune speeds
     public static final class Elevator {
@@ -68,6 +65,20 @@ public class Constants {
 
     }
 
+    public static final class Claw {
+        public static double revSetpoint = 400;
+
+        public static double kPShooter = 0.03;
+        public static double kIShooter = 0;
+        public static double kDShooter = 0.00;
+        
+    }
+
+    public static final class PCH {
+        public static double MIN_PSI = 80;
+        public static double MAX_PSI = 100;
+    }
+
     public static final class Drivetrain {
         public static final double kWheelDiameterMeters = Units.inchesToMeters(4);
 
@@ -112,7 +123,7 @@ public class Constants {
         public static final double kDTurn = 0.0015; 
         
         public static final double kMaxSpeedMetersPerSecond = 0.1;
-        public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 1;
+        public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 0.75;
         
         public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 0.3;
         public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 0.75;
@@ -124,12 +135,22 @@ public class Constants {
         public static double kTicks2Radians(double ticks) {
             return Math.toRadians((ticks / 2048.0 / 21.4) * 360);
         }
+
+        public static boolean SWERVE_IS_SLOW = false;
     }
 
-    public static final class Auton {
-        public static final double kPBalance = 0.1;
+    public static final class Auton { 
+        public static final boolean FACING_DRIVERS = true;
+
+        public static final double kPBalance = 0.08;
         public static final double kIBalance = 0;
-        public static final double kDBalance = 0.0015;
+        public static final double kDBalance = 0.00;
+
+        public static final double CENTER_OF_MASS_FROMT_BACK_Y_METERS = 0.3898;
+        public static final double BUMPER_THICKNESS_Y_METERS = Units.inchesToMeters(3);
+        // public static final double LENGTH_OF_BOT_Y_METERS = 0.7112;
+        public static final double CHARGING_STATION_TO_CENTER_Y_METERS = 0.965;
+
     }
 
 

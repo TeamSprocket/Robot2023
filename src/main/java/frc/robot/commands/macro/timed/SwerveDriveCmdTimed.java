@@ -1,5 +1,5 @@
 
-package frc.robot.commands.macro;
+package frc.robot.commands.macro.timed;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -51,9 +51,9 @@ public class SwerveDriveCmdTimed extends MacroCommand {
    */
   public SwerveDriveCmdTimed(SwerveDrive swerveDrive, Pose2d target, double duration) {
     this.swerveDrive = swerveDrive;
-    this.xTarget = target.getX();
-    this.yTarget = target.getY();
-    this.tTarget = target.getRotation().getRadians();
+    this.xTarget = target.getY();
+    this.yTarget = target.getX();
+    this.tTarget = (target.getRotation().getRadians() / 10);
     this.timer = new Timer();
     this.duration = duration;
     talonFL = new WPI_TalonFX(RobotMap.Drivetrain.FRONT_LEFT_TALON_D);

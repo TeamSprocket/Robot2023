@@ -4,45 +4,33 @@
 
 package frc.robot.commands.macro;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 
-public class RunMotorPersistent extends CommandBase {
-  boolean isFinished = false;
-  WPI_TalonFX talon;
-  double speed;
-  /** Creates a new RunMotorPersistent. */
-  public RunMotorPersistent(WPI_TalonFX talon, double speed) {
-    this.talon = talon;
-    this.speed = speed;
+public class ToggleSwervePrecise extends CommandBase {
+  /** Creates a new ToggleSwervePrecise. */
+  public ToggleSwervePrecise() {
     // Use addRequirements() here to declare subsystem dependencies.
-  }
-
-  public void stop() {
-    isFinished = true;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    System.out.println("AOIDFJAUOIFJESLGRSOILJELIFJAESLIGSEJLIAEJFLAIEJFLAIWFJLAIJFLIAWJFLIAWF");
-    talon.set(ControlMode.PercentOutput, 1);
+    if (Constants.Drivetrain.SWERVE_IS_SLOW) {
+      Constants.Drivetrain.SWERVE_IS_SLOW = false;
+    } else {
+      Constants.Drivetrain.SWERVE_IS_SLOW = true;
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() { 
-    
-    System.out.println("RUNNING");
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

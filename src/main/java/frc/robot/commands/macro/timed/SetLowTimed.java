@@ -1,4 +1,4 @@
-package frc.robot.commands.macro;
+package frc.robot.commands.macro.timed;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -9,19 +9,21 @@ import frc.robot.commands.macro.MoveArmPosition;
 import frc.robot.subsystems.*;
 import frc.util.commands.MacroCommand;
 
-public class SetLow extends MacroCommand{
+public class SetLowTimed extends MacroCommand{
     
     private final Elevator elevator;
     private final Arm arm;
     private final Wrist wrist;
     private final Timer timer;
+    private final double duration;
     
     private double startTime;
 
-    public SetLow (Elevator elevator, Arm arm, Wrist wrist) {
+    public SetLowTimed (Elevator elevator, Arm arm, Wrist wrist, double duration) {
         this.elevator = elevator;
         this.arm = arm;
         this.wrist = wrist;
+        this.duration = duration;
         timer = new Timer();
 
         addRequirements(elevator, arm, wrist);
@@ -58,7 +60,10 @@ public class SetLow extends MacroCommand{
     }
 
     public boolean isFinished(){
-      return false;
+        if (timer.get() >= duration) {
+            return true;
+          }
+          return false;
     }
 
     @Override

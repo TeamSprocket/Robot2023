@@ -58,6 +58,7 @@ public class SwerveDrive extends SubsystemBase {
     
     public void zeroHeading() {
         gyro.reset();
+        // gyro.setYawAxis(null)
     }
     public void zeroTalons() {
         frontLeft.zeroTalon();
@@ -87,6 +88,10 @@ public class SwerveDrive extends SubsystemBase {
         }
         ).start();
 
+    }
+
+    public double getDrivePosition() {
+        return (frontLeft.getDrivePosition() + frontRight.getDrivePosition() + backLeft.getDrivePosition() + backRight.getDrivePosition()) / 4;
     }
 
     // Get gyro angle from -360 to 360
@@ -133,6 +138,10 @@ public class SwerveDrive extends SubsystemBase {
 
         SmartDashboard.putNumber("Gyro", getHeading());
 
+    }
+
+    public double getFrontLeftTicks() {
+        return frontLeft.getDrivePosition();
     }
 
     

@@ -1,4 +1,4 @@
-package frc.robot.commands.peresistent;
+package frc.robot.commands.persistent;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -7,12 +7,12 @@ import frc.robot.subsystems.Elevator;
 import frc.util.Util;
 import frc.util.commands.PersistentCommand;
 
-public class ElevateJoystick extends PersistentCommand {
+public class Elevate extends PersistentCommand {
     private final Elevator elevator;
     private final XboxController gamepad;
 
   
-    public ElevateJoystick (Elevator elevator, XboxController gamepad) {
+    public Elevate (Elevator elevator, XboxController gamepad) {
       this.elevator = elevator;
       this.gamepad = gamepad;
   
@@ -44,6 +44,8 @@ public class ElevateJoystick extends PersistentCommand {
       }
     }
   
+    
+
     @Override
     public void end(boolean interrupted) {
         elevator.stop();

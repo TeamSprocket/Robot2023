@@ -1,4 +1,4 @@
-package frc.robot.commands.macro;
+package frc.robot.commands.macro.timed;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -9,14 +9,16 @@ import frc.robot.commands.macro.MoveArmPosition;
 import frc.robot.subsystems.*;
 import frc.util.commands.MacroCommand;
 
-public class SetMid extends MacroCommand{
+public class DeportArm extends MacroCommand{
     
     private final Elevator elevator;
     private final Arm arm;
     private final Wrist wrist;
     private final Timer timer;
     
-    public SetMid (Elevator elevator, Arm arm, Wrist wrist) {
+    private double startTime;
+
+    public DeportArm (Elevator elevator, Arm arm, Wrist wrist) {
         this.elevator = elevator;
         this.arm = arm;
         this.wrist = wrist;
@@ -26,9 +28,10 @@ public class SetMid extends MacroCommand{
         
     }
 
-
+    @Override
     public void initialize(){
-        wrist.moveWrist(-0.1015);
+        wrist.moveWrist(-0.12);
+        startTime = System.currentTimeMillis();
         timer.reset();
     }
 
@@ -38,25 +41,31 @@ public class SetMid extends MacroCommand{
         timer.start();
         
         if (timer.get() > 0.1 && timer.get() < 1){
-            elevator.setElevatorPosition(elevator.getElevatorHeight(), -9.5);
+            elevator.setElevatorPosition(elevator.getElevatorHeight(), -19.13);
+            arm.setArmAngle(arm.getArmAngle(), 0);
         }
         else if(timer.get()> 1 && timer.get() < 2){
-            arm.setArmAngle(arm.getArmAngle(), -70);
+            arm.setArmAngle(arm.getArmAngle(), -40);
+            wrist.moveWrist(0.15);
         }
         else{
-            elevator.setElevatorPosition(elevator.getElevatorHeight(), -9.5);
-            arm.setArmAngle(arm.getArmAngle(), -70);
+            elevator.setElevatorPosition(elevator.getElevatorHeight(), -17.13);
+            arm.setArmAngle(arm.getArmAngle(), -40);
         }
         
     }
 
+    @Override
     public boolean isFinished(){
-      return false;
+        if (timer.get() >= 2) {
+            return true;
+          }
+          return false;
     }
 
     @Override
     public void end(boolean interrupted){
-        elevator.setElevatorPosition(elevator.getElevatorHeight(), -9.5);
-        arm.setArmAngle(arm.getArmAngle(), -70);
+        elevator.setElevatorPosition(elevator.getElevatorHeight(), -17.13);
+        arm.setArmAngle(arm.getArmAngle(), -80);
     }
 }

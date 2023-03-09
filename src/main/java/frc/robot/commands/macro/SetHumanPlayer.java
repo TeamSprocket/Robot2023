@@ -9,14 +9,16 @@ import frc.robot.commands.macro.MoveArmPosition;
 import frc.robot.subsystems.*;
 import frc.util.commands.MacroCommand;
 
-public class SetMid extends MacroCommand{
+public class SetHumanPlayer extends MacroCommand{
     
     private final Elevator elevator;
     private final Arm arm;
     private final Wrist wrist;
     private final Timer timer;
     
-    public SetMid (Elevator elevator, Arm arm, Wrist wrist) {
+    private double startTime;
+
+    public SetHumanPlayer (Elevator elevator, Arm arm, Wrist wrist) {
         this.elevator = elevator;
         this.arm = arm;
         this.wrist = wrist;
@@ -28,7 +30,8 @@ public class SetMid extends MacroCommand{
 
 
     public void initialize(){
-        wrist.moveWrist(-0.1015);
+        wrist.moveWrist(-0.1100);
+        startTime = System.currentTimeMillis();
         timer.reset();
     }
 
@@ -38,14 +41,14 @@ public class SetMid extends MacroCommand{
         timer.start();
         
         if (timer.get() > 0.1 && timer.get() < 1){
-            elevator.setElevatorPosition(elevator.getElevatorHeight(), -9.5);
+            elevator.setElevatorPosition(elevator.getElevatorHeight(), -11);
         }
         else if(timer.get()> 1 && timer.get() < 2){
-            arm.setArmAngle(arm.getArmAngle(), -70);
+            arm.setArmAngle(arm.getArmAngle(), -80);
         }
         else{
-            elevator.setElevatorPosition(elevator.getElevatorHeight(), -9.5);
-            arm.setArmAngle(arm.getArmAngle(), -70);
+            elevator.setElevatorPosition(elevator.getElevatorHeight(), -11);
+            arm.setArmAngle(arm.getArmAngle(), -80);
         }
         
     }
@@ -56,7 +59,7 @@ public class SetMid extends MacroCommand{
 
     @Override
     public void end(boolean interrupted){
-        elevator.setElevatorPosition(elevator.getElevatorHeight(), -9.5);
-        arm.setArmAngle(arm.getArmAngle(), -70);
+        elevator.setElevatorPosition(elevator.getElevatorHeight(), -11);
+        arm.setArmAngle(arm.getArmAngle(), -80);
     }
 }
