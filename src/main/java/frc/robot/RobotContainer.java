@@ -210,7 +210,7 @@ public final class RobotContainer {
 		// This trajectory can then be passed to a path follower such as a
 		// PPSwerveControllerCommand
 		// followTrajectoryCommand parameters are PathPlannerTrajectory name and boolean isFirstPath
-		swerveDrive.followTrajectoryCommand(testPath, true);
+		return swerveDrive.followTrajectoryCommand(testPath, true);
 
 		// Or the path can be sampled at a given point in time for custom path following
 
@@ -220,9 +220,9 @@ public final class RobotContainer {
 		//sampling speed of da robot at 1.2 seconds
 
 		// Sample the state of the path at 1.2 seconds
-		PathPlannerState testState = (PathPlannerState) testPath.sample(1.2);
+		// PathPlannerState testState = (PathPlannerState) testPath.sample(1.2);
 		// Print the velocity at the sampled time
-		System.out.println(testState.velocityMetersPerSecond);
+		// System.out.println(testState.velocityMetersPerSecond);
 
 
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -277,18 +277,21 @@ public final class RobotContainer {
 		// )
 		// ));
 
+
+
 		// Place cube & move back (10)
-		return (Command) (new SequentialCommandGroup(
-				new DeportArm(elevator, arm, wrist), // 2
-				new SetHighTimed(elevator, arm, wrist, 2), // 2
-				new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.25, new Rotation2d(0.0)), 2), // 1
-				// new WaitTimed(0.5),
-				new RollClawTimed(claw, 0.5, 1), // 1
-				new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.3, new Rotation2d(0.0)), 1),
-				new ParallelCommandGroup(
-						new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.3, new Rotation2d(0.0)), 3.25),
-						new SetHomeTimed(elevator, arm, wrist, 4) // 4*
-				)));
+		// return (Command) (new SequentialCommandGroup(
+		// 		new DeportArm(elevator, arm, wrist), // 2
+		// 		new SetHighTimed(elevator, arm, wrist, 2), // 2
+		// 		new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.25, new Rotation2d(0.0)), 2), // 1
+		// 		// new WaitTimed(0.5),
+		// 		new RollClawTimed(claw, 0.5, 1), // 1
+		// 		new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.3, new Rotation2d(0.0)), 1),
+		// 		new ParallelCommandGroup(
+		// 				new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.3, new Rotation2d(0.0)), 3.25),
+		// 				new SetHomeTimed(elevator, arm, wrist, 4) // 4*
+		// 		)));
+
 
 		// Place Cube Only
 		// return (Command) (new SequentialCommandGroup(

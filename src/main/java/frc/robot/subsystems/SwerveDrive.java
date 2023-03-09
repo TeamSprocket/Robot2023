@@ -212,6 +212,7 @@ public class SwerveDrive extends SubsystemBase {
                 getPose());
     }
 
+
     // Assuming this method is part of a drivetrain subsystem that provides the
     // necessary methods
     
@@ -223,13 +224,14 @@ public class SwerveDrive extends SubsystemBase {
                     // Reset odometry for the first path you run during auto
                     if (isFirstPath) {
                         // this.resetOdometry(traj.getInitialHolonomicPose());
-                        this.resetOdometer(); // check if there is a resetOdometry or if I gotta make one
+                        this.resetOdometer(); // check if this works or if I gotta make a new one
                     }
                 }),
                 new PPSwerveControllerCommand(
                         traj,
                         this::getPose, // Pose supplier
                         this.kinematics, // SwerveDriveKinematics
+                        // TODO: FOR ALL PIDController CHANGE THE VALUES ACCORDINGLY
                         new PIDController(0, 0, 0), // X controller. Tune these values for your robot. Leaving them 0
                                                     // will only use feedforwards.
                         new PIDController(0, 0, 0), // Y controller (usually the same values as X controller)
