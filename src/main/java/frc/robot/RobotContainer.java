@@ -35,6 +35,7 @@ import frc.robot.commands.auton.OneMeterForward;
 import frc.robot.commands.auton.WaitTimed;
 import frc.robot.commands.instant.ToggleClaw;
 import frc.robot.commands.instant.ToggleCompressor;
+import frc.robot.commands.macro.AutoAim;
 import frc.robot.commands.macro.ElevatePosition;
 import frc.robot.commands.macro.MoveArmPosition;
 import frc.robot.commands.macro.MoveWristAngle;
@@ -59,6 +60,7 @@ import frc.robot.commands.persistent.MoveWristManual;
 import frc.robot.commands.persistent.RollClaw;
 // import frc.robot.commands.auton.SwerveAutonTest;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.PCH;
 import frc.robot.subsystems.PDH;
 import frc.robot.subsystems.Arm;
@@ -81,6 +83,7 @@ public final class RobotContainer {
 
 	//Smartdashboard
 	//Subsystems
+	private final Limelight limelight = new Limelight();
 	private final PCH pch = new PCH();
 	private final PDH pdh = new PDH();
 	private final SwerveDrive swerveDrive = new SwerveDrive();
@@ -136,6 +139,7 @@ public final class RobotContainer {
 		// new JoystickButton(driver, 2).whenPressed(() -> swerveDrive.zeroTalons());
 		new JoystickButton(driver, 4).whenPressed(new ToggleCompressor(pch, driver));
 		new JoystickButton(driver, 5).whenPressed(new ToggleClaw(claw));
+		new JoystickButton(driver, 6).whenPressed(new AutoAim(limelight, swerveDrive));
 		// new JoystickButton(driver, 3).whenHeld(new ShootClaw(10));
 		
 		// new JoystickButton(driver, 7).whenPressed(() -> swerveDrive.zeroTalons());

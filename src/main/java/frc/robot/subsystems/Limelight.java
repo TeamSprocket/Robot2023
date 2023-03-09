@@ -41,21 +41,21 @@ public class Limelight extends SubsystemBase {
     return distanceFromLimelightToGoalInches;
   }
 
-  public double autoAim()
-  {
-      double heading_error = tx; //Might need to be negative
-      double steering_adjusment = 0.0;
-      if(tx > AIM_THRESHOLD)
-      {
-          steering_adjusment = kP * heading_error;
-      }
-      else if(tx < AIM_THRESHOLD)
-      {
-          steering_adjusment = kP * heading_error;
-      }
-      double rotation = steering_adjusment;
-      return rotation;
-  }
+  // public double autoAim()
+  // {
+  //     double heading_error = tx; //Might need to be negative
+  //     double steering_adjusment = 0.0;
+  //     if(tx > 6.22)
+  //     {
+  //         steering_adjusment = kP * heading_error;
+  //     }
+  //     else if(tx < 6.22)
+  //     {
+  //         steering_adjusment = kP * heading_error;
+  //     }
+  //     double rotation = steering_adjusment;
+  //     return rotation;
+  // }
 
   public double getTx() {
     return tx;
