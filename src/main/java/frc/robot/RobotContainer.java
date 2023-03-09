@@ -67,7 +67,6 @@ import frc.robot.subsystems.SwerveDrive;
 import frc.robot.subsystems.Wrist;
 import frc.robot.Constants;
 
-
 // importing stuff for path planner
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +79,6 @@ import com.pathplanner.lib.auto.SwerveAutoBuilder;
 import com.pathplanner.lib.PathPlannerTrajectory;
 
 import edu.wpi.first.wpilibj2.command.PrintCommand;
-
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -106,10 +104,10 @@ public final class RobotContainer {
 
 	// Manual Autons
 	SendableChooser<Command> chooser = new SendableChooser<>();
-	// Command swerveAutonTest = new SwerveAutonTest(swerveDrive);
+	Command AutonTest = new OneMeterForward(swerveDrive);
 
 	public RobotContainer() {
-		// chooser.setDefaultOption("Swerve Auton Test", swerveAutonTest);
+		chooser.setDefaultOption("Auton Test", AutonTest);
 
 		SmartDashboard.putData(chooser);
 	}
@@ -199,23 +197,22 @@ public final class RobotContainer {
 	// public Command getAutonomousCommand() {
 	public Command getAutonomousCommand() {
 
-
-//	autopath
-		// List<PathPlannerTrajectory> pathGroup = PathPlanner.loadPathGroup("FullAuto", new PathConstraints(4, 3)); // maxVelocity:4 and maxAcceleration:3
+		// autopath
+		// List<PathPlannerTrajectory> pathGroup = PathPlanner.loadPathGroup("FullAuto",
+		// new PathConstraints(4, 3)); // maxVelocity:4 and maxAcceleration:3
 
 		// HashMap<String, Command> eventMap = new HashMap<>();
 		// eventMap.put("marker1", new PrintCommand("Passed marker 1"));
 
-
 		// SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
-		// 	// swerveDrive.getDrivePosition(), 
-		// 	null,
-		// 	null, 
-		// 	null, 
-		// 	null, 
-		// 	null, 
-		// 	eventMap, 
-		// 	null);
+		// // swerveDrive.getDrivePosition(),
+		// null,
+		// null,
+		// null,
+		// null,
+		// null,
+		// eventMap,
+		// null);
 
 		// return (Command) (new SequentialCommandGroup(
 		// new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.2, new
