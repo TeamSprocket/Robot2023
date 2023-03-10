@@ -100,7 +100,7 @@ public class SwerveDrive extends SubsystemBase {
             }
         }).start();
 
-        SmartDashboard.putData("Debug/Drive/Field", m_field);
+        SmartDashboard.putData("Field", m_field);
 
     }
 
@@ -175,13 +175,22 @@ public class SwerveDrive extends SubsystemBase {
             new SwerveModulePosition(backRight.getDrivePosition(), new Rotation2d(backRight.getTurnPosition())),
     };
 
-    private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(
-            Constants.Drivetrain.driveKinematics, new Rotation2d(getHeading()), getModulePositions());
+    // private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(
+    //         Constants.Drivetrain.driveKinematics, new Rotation2d(getHeading()), getModulePositions());
+
+    public SwerveDriveOdometry odometry_ =
+    new SwerveDriveOdometry(
+      SwerveConstants.swerveKinematics,
+      new Rotation2d(0),
+      new Pose2d()
+    );    
 
     // Update Odometer
     @Override
     public void periodic() {
         odometer.update(new Rotation2d(Math.toRadians(getHeading())), getModulePositions());
+
+        m_field.setRobotPose(m_odometry.getPoseMeters());
     }
 
     // Get odometer position (pose2d contains x, y, theta in translation/rotation
