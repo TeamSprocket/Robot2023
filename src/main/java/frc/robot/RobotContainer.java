@@ -2,6 +2,7 @@ package frc.robot;
 
 import java.util.List;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -29,8 +30,11 @@ import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.SwerveDriveCmd;
+import frc.robot.commands.auton.BalanceOnChargeStation;
 import frc.robot.commands.auton.BalanceOnChargeStationVertical;
 import frc.robot.commands.auton.OneMeterForward;
+import frc.robot.commands.auton.PIDTurnTimed;
+import frc.robot.commands.auton.ParseAuton;
 // import frc.robot.commands.auton.SwerveAutonTest;
 import frc.robot.commands.auton.WaitTimed;
 import frc.robot.commands.instant.ToggleClaw;
@@ -133,7 +137,9 @@ public final class RobotContainer {
 		// Swerve Drive (instant command reset heading)
 		new JoystickButton(driver,
 		 	RobotMap.Controller.RESET_GYRO_HEADING_BUTTON_ID).whenPressed(() -> swerveDrive.zeroHeading());
-		// new JoystickButton(driver, 2).whenPressed(() -> swerveDrive.zeroTalons());
+		new JoystickButton(driver, 3).whenPressed(() -> swerveDrive.zeroTalonsABS());
+		new JoystickButton(driver, 2).whenPressed(() -> swerveDrive.zeroTalons());
+		
 		new JoystickButton(driver, 4).whenPressed(new ToggleCompressor(pch, driver));
 		new JoystickButton(driver, 5).whenPressed(new ToggleClaw(claw));
 		// new JoystickButton(driver, 3).whenHeld(new ShootClaw(10));
@@ -209,18 +215,18 @@ public final class RobotContainer {
 		// ));
 
 		// Place cube & move back (10)
-		return (Command) (new SequentialCommandGroup(
-			new DeportArm(elevator, arm, wrist), //2
-			new SetHighTimed(elevator, arm, wrist, 2), //2
-			new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.25, new Rotation2d(0.0)), 2), //1
-			// new WaitTimed(0.5),
-			new RollClawTimed(claw, 0.5, 1), //1
-			new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.3, new Rotation2d(0.0)), 1),
-			new ParallelCommandGroup(
-				new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.3, new Rotation2d(0.0)), 3.25),
-				new SetHomeTimed(elevator, arm, wrist, 4) //4*
-			)
-		));	
+		// return (Command) (new SequentialCommandGroup(
+		// 	new DeportArm(elevator, arm, wrist), //2
+		// 	new SetHighTimed(elevator, arm, wrist, 2), //2
+		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.25, new Rotation2d(0.0)), 2), //1
+		// 	// new WaitTimed(0.5),
+		// 	new RollClawTimed(claw, 0.5, 1), //1
+		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.3, new Rotation2d(0.0)), 1),
+		// 	new ParallelCommandGroup(
+		// 		new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.3, new Rotation2d(0.0)), 3.25),
+		// 		new SetHomeTimed(elevator, arm, wrist, 4) //4*
+		// 	)
+		// ));	
 		
 
 		// Place Cube Only
@@ -261,8 +267,17 @@ public final class RobotContainer {
 
 		// PID Charging Station (idkkkkkkkk)
 		// return (Command) (new SequentialCommandGroup(
-		// 	new OneMeterForward(swerveDrive)
+			// new OneMeterForward(swerveDrive)
+			// new BalanceOnChargeStation(swerveDrive, 0.035)
 		// ));
+
+
+		// Macro Recorder Test
+		return (Command) (new SequentialCommandGroup(
+			new ParseAuton(swerveDrive),
+			new PIDTurnTimed(swerveDrive, 0.0, 3),
+			new BalanceOnChargeStation(swerveDrive, 0.035)
+		));
 
 
 		
@@ -316,6 +331,15 @@ public final class RobotContainer {
 		
 		
 		// return chooser.getSelected();
+
+	}
+
+	public void setTurnDefaultMode(NeutralMode mode) {
+		swerveDrive.setTurnDefaultMode(mode);
+	}
+
+	public double headingOffset() {
+		return Math.abs(swerveDrive.getHeadingRad() - Math.PI);
 	}
 
 	// 	// Create Trajectory Speed/Settings

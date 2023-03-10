@@ -5,8 +5,12 @@
 package frc.robot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -23,11 +27,12 @@ import frc.robot.subsystems.SwerveDrive;
 public class Robot extends TimedRobot {
     Timer timer;
     Command auton;
+    // ADIS16470_IMU gyro;
 
     private final RobotContainer robotContainer = new RobotContainer();
 
     public Robot() {
-        
+        // this.gyro = new ADIS16470_IMU();
     }
 
     /**
@@ -49,6 +54,8 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
         robotContainer.clearStickyFaults();
+        SmartDashboard.putNumber("Drive Position Meters", robotContainer.getSwerveDrive().getDrivePosition());
+        
         // SmartDashboard.putNumber("Robot Wheel Position Meters", robotContainer.getSwerveDrive().getDrivePosition());
     }
 
@@ -58,6 +65,7 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledInit() {
         CommandScheduler.getInstance().cancelAll();
+        robotContainer.setTurnDefaultMode(NeutralMode.Coast);
     }
 
     @Override
@@ -67,6 +75,8 @@ public class Robot extends TimedRobot {
     /** This function is run once each time the robot enters autonomous mode. */
     @Override
     public void autonomousInit() {
+        robotContainer.setTurnDefaultMode(NeutralMode.Brake);
+
         robotContainer.autonInit();
 
         this.auton = robotContainer.getAutonomousCommand();
@@ -102,14 +112,19 @@ public class Robot extends TimedRobot {
     /** This function is called once each time the robot enters teleoperated mode. */ 
     @Override
     public void teleopInit() {
+        robotContainer.setTurnDefaultMode(NeutralMode.Brake);
+
         System.out.println("TELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\n");
         robotContainer.configureButtonBindings();
         CommandScheduler.getInstance().cancelAll();
+
+        robotContainer.getSwerveDrive().zeroDrive();
     }
     
     /** This function is called periodically during teleoperated mode. */
     @Override
     public void teleopPeriodic() {
+        SmartDashboard.putNumber("Offset", robotContainer.headingOffset());
     }
 
     @Override
