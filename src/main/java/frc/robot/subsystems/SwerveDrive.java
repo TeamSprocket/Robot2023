@@ -14,6 +14,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import com.pathplanner.lib.PathPlannerTrajectory;
@@ -62,7 +63,7 @@ public class SwerveDrive extends SubsystemBase {
             Constants.Drivetrain.BACK_RIGHT_ABS_ENCODER_OFFSET_RAD,
             true);
 
- 
+    private Field2d m_field = new Field2d();
 
     // Init gyro
     private final ADIS16470_IMU gyro = new ADIS16470_IMU();
@@ -98,6 +99,8 @@ public class SwerveDrive extends SubsystemBase {
 
             }
         }).start();
+
+        SmartDashboard.putData("Debug/Drive/Field", m_field);
 
     }
 
