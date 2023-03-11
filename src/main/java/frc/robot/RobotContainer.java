@@ -33,8 +33,7 @@ import frc.robot.commands.auton.BalanceOnChargeStationVertical;
 import frc.robot.commands.auton.OneMeterForward;
 // import frc.robot.commands.auton.SwerveAutonTest;
 import frc.robot.commands.auton.WaitTimed;
-import frc.robot.commands.instant.ToggleClaw;
-import frc.robot.commands.instant.ToggleCompressor;
+
 import frc.robot.commands.macro.ElevatePosition;
 import frc.robot.commands.macro.MoveArmPosition;
 import frc.robot.commands.macro.MoveWristAngle;
@@ -59,8 +58,7 @@ import frc.robot.commands.persistent.MoveWristManual;
 import frc.robot.commands.persistent.RollClaw;
 // import frc.robot.commands.auton.SwerveAutonTest;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.PCH;
-import frc.robot.subsystems.PDH;
+
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.SwerveDrive;
@@ -81,8 +79,7 @@ public final class RobotContainer {
 
 	//Smartdashboard
 	//Subsystems
-	private final PCH pch = new PCH();
-	private final PDH pdh = new PDH();
+
 	private final SwerveDrive swerveDrive = new SwerveDrive();
 	private final Elevator elevator = new Elevator();
 	private final Arm arm = new Arm();
@@ -120,6 +117,8 @@ public final class RobotContainer {
 			() -> driver.getLeftX(), 
 			// T
 			() -> -driver.getRightX()));
+		// claw.setDefaultCommand(new RollClaw(claw, () -> (driver.getRightTriggerAxis() - driver.getLeftTriggerAxis())));
+		claw.setDefaultCommand(new RollClaw(claw, driver));
 		
 	
 
@@ -129,14 +128,12 @@ public final class RobotContainer {
 		elevator.setDefaultCommand(new Elevate(elevator, operator));
 		arm.setDefaultCommand(new MoveArmJoystick(arm, operator));
 		wrist.setDefaultCommand(new MoveWristManual(wrist, operator));
-		claw.setDefaultCommand(new RollClaw(claw, driver));
+		
 
 		// Swerve Drive (instant command reset heading)
 		new JoystickButton(driver,
 		 	RobotMap.Controller.RESET_GYRO_HEADING_BUTTON_ID).whenPressed(() -> swerveDrive.zeroHeading());
 		// new JoystickButton(driver, 2).whenPressed(() -> swerveDrive.zeroTalons());
-		new JoystickButton(driver, 4).whenPressed(new ToggleCompressor(pch, driver));
-		new JoystickButton(driver, 5).whenPressed(new ToggleClaw(claw));
 		// new JoystickButton(driver, 3).whenHeld(new ShootClaw(10));
 		
 		// new JoystickButton(driver, 7).whenPressed(() -> swerveDrive.zeroTalons());
@@ -167,13 +164,11 @@ public final class RobotContainer {
 	public void autonInit() {
 		swerveDrive.zeroTalons();
 		swerveDrive.zeroHeading();	
-		pdh.clearStickyFaults();
 		
 	}
 
 	public void clearStickyFaults() {
-		pdh.clearStickyFaults();
-		pch.clearStickyFaults();
+
 	}
 
 

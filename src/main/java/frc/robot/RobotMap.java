@@ -70,14 +70,14 @@ public final class RobotMap {
     public static final int CLAW = 45; // or 46
 
 
-    public static final int PISTON_LEFT = 14;
-    public static final int PISTON_RIGHT = 15;
+    //public static final int PISTON_LEFT = 14;
+    //public static final int PISTON_RIGHT = 15;
 
   }
 
   public static final class PCH {
-    public static final int PCH_CAN = 1;
-    public static final int PRESSURE_SENSOR_CHANNEL = 0;
+    //public static final int PCH_CAN = 1;
+    //public static final int PRESSURE_SENSOR_CHANNEL = 0;
   }
   
 
