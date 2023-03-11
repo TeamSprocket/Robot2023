@@ -40,20 +40,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-        m_trajectory =
-        TrajectoryGenerator.generateTrajectory(
-            new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-            List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
-            new Pose2d(3, 0, Rotation2d.fromDegrees(0)),
-            new TrajectoryConfig(Units.feetToMeters(3.0), Units.feetToMeters(3.0)));
-
-            // Create and push Field2d to SmartDashboard.
-            m_field = new Field2d();
-            SmartDashboard.putData(m_field);
-
-            // Push the trajectory to Field2d.
-            m_field.getObject("traj").setTrajectory(m_trajectory);
-        }
+    
     }
 
     /**
