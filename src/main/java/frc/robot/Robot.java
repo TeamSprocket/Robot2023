@@ -5,6 +5,9 @@
 package frc.robot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import com.pathplanner.lib.server.PathPlannerServer;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -40,7 +43,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-    
+        PathPlannerServer.startServer(5811); // TODO: Adjust port number
     }
 
     /**
