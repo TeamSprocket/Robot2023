@@ -204,13 +204,15 @@ public final class RobotContainer {
 		// This will load the file "Example Path.path" and generate it with a max
 		// ^ i changed it to "Test Path" so it should load "Test Path.path"
 		// velocity of 4 m/s and a max acceleration of 3 m/s^2
-		PathPlannerTrajectory testPath = PathPlanner.loadPath("Test Path", new PathConstraints(4, 3));
+		// PathPlannerTrajectory testPath = PathPlanner.loadPath("Test Path", new PathConstraints(4, 3));
+		PathPlannerTrajectory straight = PathPlanner.loadPath("Straight", new PathConstraints(4, 3));
 		
 
 		// This trajectory can then be passed to a path follower such as a
 		// PPSwerveControllerCommand
 		// followTrajectoryCommand parameters are PathPlannerTrajectory name and boolean isFirstPath
-		return swerveDrive.followTrajectoryCommand(testPath, true);
+		// return swerveDrive.followTrajectoryCommand(testPath, true);
+		return swerveDrive.followTrajectoryCommand(straight, true);
 
 		// Or the path can be sampled at a given point in time for custom path following
 
