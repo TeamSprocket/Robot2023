@@ -4,11 +4,13 @@
 
 package frc.robot.commands.auton;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.SwerveDrive;
@@ -20,6 +22,7 @@ public class PIDTurnTimed extends CommandBase {
   Timer timer;
   double duration, target;
   boolean isFinished = false;
+  PIDController controller;
 
   public PIDTurnTimed(SwerveDrive swerveDrive, double target, double duration) {
     // this.imu = imu;
@@ -27,6 +30,11 @@ public class PIDTurnTimed extends CommandBase {
     this.timer = new Timer();
     this.duration = duration;
     this.target = target;
+    this.isFinished = false;
+
+    this.controller = new PIDController(0.1, 0, 0.00);
+    controller.enableContinuousInput(0, 2 * Math.PI);
+    
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -41,16 +49,13 @@ public class PIDTurnTimed extends CommandBase {
   public void execute() {
     timer.start();
     double speed = 0;
-    
-    if (swerveDrive.getHeadingRad() <= target) {
-      speed = 0.1;
-    } else {
-      speed = -0.1;
-    }
 
-    if (Math.abs(swerveDrive.getHeadingRad() - target) <= (Math.toRadians(5))) {
-      isFinished = true;
-    }
+    // if (Math.abs(swerveDrive.getHeadingRad() - target) <= (Math.toRadians(5))) {
+      // isFinished = true;
+    // } else {
+      speed = controller.calculate(swerveDrive.getHeadingRad(), target);
+      SmartDashboard.putNumber("PID Turn Speed", speed);
+    // }
       
 
     ChassisSpeeds chassisSpeeds;
@@ -71,11 +76,14 @@ public class PIDTurnTimed extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    System.out.println("FINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\n");
+  } 
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (timer.get() >= duration) || isFinished;
+    System.out.println();
+    return (timer.get() >= duration);
   }
 }

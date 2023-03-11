@@ -89,7 +89,6 @@ public class SwerveDrive extends SubsystemBase {
 
     public SwerveDrive() {
         this.timer = new Timer();
-        
         timer.reset();
 
         // Init gyro with delay
@@ -135,18 +134,17 @@ public class SwerveDrive extends SubsystemBase {
     // Get gyro angle from -360 to 360
     public double getHeading() {
         double angle = gyro.getAngle() % 360.0;
-        if (angle > 180) {
-            angle = -1.0 * (360 - angle);
+        if (angle < 0) {
+            angle += 360;
         }
-        return -angle;
+        return angle;
     }
 
     public double getHeadingRad() {
         double angle = gyro.getAngle() % 360.0;
-        if (angle > 180) {
-            angle = -1.0 * (360 - angle);
+        if (angle < 0) {
+            angle += 360;
         }
-        angle *= -1;
         angle = Math.toRadians(angle);
         
         return angle;

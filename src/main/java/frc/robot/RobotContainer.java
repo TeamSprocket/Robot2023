@@ -275,7 +275,7 @@ public final class RobotContainer {
 		// Macro Recorder Test
 		return (Command) (new SequentialCommandGroup(
 			new ParseAuton(swerveDrive),
-			new PIDTurnTimed(swerveDrive, 0.0, 3),
+			new PIDTurnTimed(swerveDrive, Math.PI, 3),
 			new BalanceOnChargeStation(swerveDrive, 0.035)
 		));
 

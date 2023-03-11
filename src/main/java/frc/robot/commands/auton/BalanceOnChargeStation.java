@@ -20,7 +20,7 @@ public class BalanceOnChargeStation extends CommandBase {
   double speedInitial;
   boolean onRamp = false;
   Timer timer;
-  double waitTime = 2.2;
+  double waitTime = 2.3;
   // PIDController controller;
    
   /**
