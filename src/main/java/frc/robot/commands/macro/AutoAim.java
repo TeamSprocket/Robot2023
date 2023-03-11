@@ -31,47 +31,71 @@ public class AutoAim extends MacroCommand{
     }
     @Override
     public void initialize(){
-        limelight.findDistance();
+        //limelight.findDistance();
     }
 
     @Override
     public void execute(){
         double xGoHere = 0;
         double yGoHere = 0;
+        double aGoHere = 0;
         xOffset = limelight.getTx();     //target 6.22
         yOffset = limelight.getTy();     //target -7.72
         aOffset = limelight.getTa();     //target 0.047
 
-        if (xOffset > 6.22) { //other way around?
+        //MOVE X AXIS
+        if (xOffset > 6.3) { //other way around?
             xGoHere = 0.3;
         }
-        else {
+        else if (xOffset < 6.15) {
             xGoHere = -0.3;
+        }
+        else {
+            xGoHere = 0;
         }
         double xOutput = controller.calculate(swerveDrive.getDrivePosition(), xGoHere);
         if (xOutput >= 0.1) {
           xOutput = 0.1;
         }
 
-        if (yOffset > -7.72) { //other way around?
+        //MOVE Y AXIS
+        if (yOffset > -7.85) { //other way around?
             yGoHere = 0.3;
         }
-        else {
+        else if (yOffset < -7.6) {
             yGoHere = -0.3;
+        }
+        else {
+            yGoHere = 0;
         }
         double yOutput = controller.calculate(swerveDrive.getDrivePosition(), yGoHere);
         if (yOutput >= 0.1) {
           yOutput = 0.1;
         }
         
+        //MOVE BY ROTATION
+        if (aOffset > 0.06) { //other way around?
+            aGoHere = 0.1;
+        }
+        else if (aOffset < 0.035) {
+            aGoHere = -0.1;
+        }
+        else {
+            aGoHere = 0;
+        }
+        double aOutput = controller.calculate(swerveDrive.getHeading(), aGoHere);
+        if (aOutput >= 0.1) {
+          aOutput = 0.1;
+        }
+
         //wtf does this mean bro
         ChassisSpeeds chassisSpeeds;
         if (Constants.Drivetrain.IS_FIELD_ORIENTED) {
           double headingRad = Math.toRadians(swerveDrive.getHeading());
           chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-              xOutput, yOutput, 0, new Rotation2d(headingRad));
+              xOutput, yOutput, aOutput, new Rotation2d(headingRad));
         } else { 
-          chassisSpeeds = new ChassisSpeeds(xOutput, yOutput, 0);
+          chassisSpeeds = new ChassisSpeeds(xOutput, yOutput, aOutput);
         }
     
         // Calculate module states per module
@@ -84,7 +108,7 @@ public class AutoAim extends MacroCommand{
 
     @Override
     public boolean isFinished(){
-        if (limelight.getTx() > 6.15 && limelight.getTx() < 6.3 && limelight.getTy() < -7.6 && limelight.getTy() > -7.9) {
+        if (xOffset > 6.15 && xOffset < 6.3 && yOffset < -7.6 && yOffset > -7.85 && aOffset > 0.035 && aOffset < 0.06) {
             return true;
         }
         return false;

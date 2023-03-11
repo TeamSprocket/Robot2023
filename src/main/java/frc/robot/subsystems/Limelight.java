@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -15,6 +17,7 @@ public class Limelight extends SubsystemBase {
   private boolean targetExists = false;
   private final double kP = 0.03; //check
   private final double AIM_THRESHOLD = 1.0;
+  private final HttpCamera camera;
 
 
   /**
@@ -23,23 +26,25 @@ public class Limelight extends SubsystemBase {
   public Limelight() {
     limelightTable = NetworkTableInstance.getDefault().getTable("limelight"); 
     ledEntry = limelightTable.getEntry("ledMode");
+    camera = new HttpCamera("limelight", "http://10.34.73.97:5800/stream.mjpg");
+    
     
   }
 
-  public double findDistance() {
-    double targetOffsetAngle_Vertical = ty;
-    // how many degrees back is your limelight rotated from perfectly vertical?
-    double limelightMountAngleDegrees = 25.0; //TODO CHANGE
-    // distance from the center of the Limelight lens to the floor
-    double limelightLensHeightInches = 20.0; //TODO CHANGE
-    // distance from the target to the floor
-    double goalHeightInches = 60.0; //TODO CHANGE
-    double angleToGoalDegrees = limelightMountAngleDegrees + targetOffsetAngle_Vertical;
-    double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
-    //calculate distance
-    double distanceFromLimelightToGoalInches = (goalHeightInches-limelightLensHeightInches)/Math.tan(angleToGoalRadians);
-    return distanceFromLimelightToGoalInches;
-  }
+  // public double findDistance() {
+  //   double targetOffsetAngle_Vertical = ty;
+  //   // how many degrees back is your limelight rotated from perfectly vertical?
+  //   double limelightMountAngleDegrees = 25.0; //TODO CHANGE
+  //   // distance from the center of the Limelight lens to the floor
+  //   double limelightLensHeightInches = 20.0; //TODO CHANGE
+  //   // distance from the target to the floor
+  //   double goalHeightInches = 60.0; //TODO CHANGE
+  //   double angleToGoalDegrees = limelightMountAngleDegrees + targetOffsetAngle_Vertical;
+  //   double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
+  //   //calculate distance
+  //   double distanceFromLimelightToGoalInches = (goalHeightInches-limelightLensHeightInches)/Math.tan(angleToGoalRadians);
+  //   return distanceFromLimelightToGoalInches;
+  // }
 
   // public double autoAim()
   // {
@@ -91,7 +96,9 @@ public class Limelight extends SubsystemBase {
     //post to smart dashboard periodically
     SmartDashboard.putNumber("LimelightX", tx);
     SmartDashboard.putNumber("LimelightY", ty);
-    SmartDashboard.putNumber("LimelightArea", ta);    
+    SmartDashboard.putNumber("LimelightArea", ta);   
+    CameraServer.addCamera(camera);
+    
   }
 
   
