@@ -2,6 +2,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -18,11 +20,12 @@ public class Claw extends SubsystemBase{
     private final WPI_TalonFX claw = new WPI_TalonFX(RobotMap.Claw.CLAW);
 
     private final DoubleSolenoid clawSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, RobotMap.Claw.PISTON_LEFT, RobotMap.Claw.PISTON_RIGHT);
-   
+      
     public Claw() {
         claw.setInverted(false);
+        claw.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true,20,25,1.0));
+        claw.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true,20,25,1.0));
 
-        
         claw.setNeutralMode(NeutralMode.Brake);
 
     }
