@@ -21,7 +21,7 @@ public class MoveWristAngle extends MacroCommand {
 
     @Override
     public void execute() {
-      wrist.setWristAngle(wrist.getWristPosition(), angle);
+      wrist.setWristAngle(wrist.getWristAngle(), angle);
     }
 
     public boolean isFinished(){

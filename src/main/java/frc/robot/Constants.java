@@ -52,9 +52,9 @@ public class Constants {
         
         public static double kWristGearRatio = 2.75;
 
-        public static double angleConversionFactor = 360.0 / kWristGearRatio;
+        public static double angleConversionFactor = 360.0 / (kWristGearRatio * 10);
         
-        public static double P = 0.0017500;
+        public static double P = 0.02;
         public static double I = 0;
         public static double D = 0;
         public static double FF = 0;
