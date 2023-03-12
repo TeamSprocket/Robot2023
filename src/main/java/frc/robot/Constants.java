@@ -41,9 +41,9 @@ public class Constants {
         public static double groundAngle = -22;
         public static double startingAngle = -6;
         
-        public static double kP = 0.05;
+        public static double kP = 0.075;
         public static double kI = 0;
-        public static double kD = 0.001;
+        public static double kD = 0.0005;
         public static double FF = 0;
 
     }
@@ -54,7 +54,7 @@ public class Constants {
 
         public static double angleConversionFactor = 360.0 / (kWristGearRatio * 10);
         
-        public static double P = 0.018;
+        public static double P = 0.0175;
         public static double I = 0;
         public static double D = 0.00;
         public static double FF = 0;

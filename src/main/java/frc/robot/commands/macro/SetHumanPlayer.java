@@ -33,35 +33,16 @@ public class SetHumanPlayer extends MacroCommand{
         timer.start();
 
         if (timer.get() > 0 && timer.get() < 2){
-            wrist.setWristAngle(wrist.getWristAngle(), 10);
+            wrist.setWristAngle(wrist.getWristAngle(), 27.5);
             arm.setArmAngleSpeed(arm.getArmAngle(), -80, 0.35);
             elevator.setElevatorPositionSpeed(0, -13, 0.6);
         }
         else{
-            wrist.setWristAngle(wrist.getWristAngle(), 10);
+            wrist.setWristAngle(wrist.getWristAngle(), 27.5);
             arm.setArmAngleSpeed(arm.getArmAngle(), -80, 0.35);
             elevator.setElevatorPositionSpeed(0, -13, 0.15);
         }
         
-        // if (elevator.getElevatorHeight() < 3 && elevator.getElevatorHeight() > -3){
-        //     if (timer.get() > 0 && timer.get() < 1){
-        //         wrist.setWristAngle(wrist.getWristAngle(), 0);
-        //         arm.setArmAngleSpeed(arm.getArmAngle(), 0, 0.1);
-        //         elevator.setElevatorPositionSpeed(0, -15, 0.6);
-        //     }
-        //     else if (timer.get() > 1 && timer.get() < 2){
-        //         wrist.setWristAngle(wrist.getWristAngle(), 10);
-        //         arm.setArmAngleSpeed(arm.getArmAngle(), -80, 0.35);
-        //         elevator.setElevatorPositionSpeed(0, -13, 0.1);
-        //     }
-        // }
-        // else{
-        //     if (timer.get() > 0 && timer.get() < 2){
-        //         wrist.setWristAngle(wrist.getWristAngle(), 10);
-        //         arm.setArmAngleSpeed(arm.getArmAngle(), -80, 0.35);
-        //         elevator.setElevatorPositionSpeed(0, -13, 0.3);
-        //     }
-        // }
         
     }
 
@@ -71,7 +52,7 @@ public class SetHumanPlayer extends MacroCommand{
 
     @Override
     public void end(boolean interrupted){
-        wrist.setWristAngle(wrist.getWristAngle(), 10);
+        wrist.setWristAngle(wrist.getWristAngle(), 27.5);
         arm.setArmAngleSpeed(arm.getArmAngle(), -80, 0.35);
         elevator.setElevatorPositionSpeed(0, -13, 0.1);
     }

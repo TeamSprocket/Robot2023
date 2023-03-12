@@ -42,6 +42,15 @@ public class DeportArm extends MacroCommand{
             arm.setArmAngleSpeed(arm.getArmAngle(), 0, 0.1);
             elevator.setElevatorPositionSpeed(0, -15, 0.6);
         }
+        else if (timer.get() > 0.5 && timer.get () > 1){
+            wrist.setWristAngle(wrist.getWristAngle(), 10);
+            arm.setArmAngleSpeed(arm.getArmAngle(), -20, 0.1);
+        }
+        else{
+            wrist.setWristAngle(wrist.getWristAngle(), 10);
+            arm.setArmAngleSpeed(arm.getArmAngle(), -20, 0.1);
+            elevator.setElevatorPositionSpeed(0, -5, 0.6);
+        }
         
     }
 
@@ -55,8 +64,8 @@ public class DeportArm extends MacroCommand{
 
     @Override
     public void end(boolean interrupted){
-        wrist.setWristAngle(wrist.getWristAngle(), 0);
-        arm.setArmAngleSpeed(arm.getArmAngle(), 0, 0.1);
-        elevator.setElevatorPositionSpeed(0, -15, 0.6);
+        wrist.setWristAngle(wrist.getWristAngle(), 10);
+        arm.setArmAngleSpeed(arm.getArmAngle(), -20, 0.1);
+        elevator.setElevatorPositionSpeed(0, -5, 0.6);
     }
 }
