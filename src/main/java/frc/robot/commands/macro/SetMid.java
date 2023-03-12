@@ -32,12 +32,12 @@ public class SetMid extends MacroCommand{
         timer.start();
         
         if (timer.get() > 0 && timer.get() < 2){
-            wrist.setWristAngle(wrist.getWristAngle(), 10);
+            wrist.setWristAngle(wrist.getWristAngle(), 13);
             arm.setArmAngleSpeed(arm.getArmAngle(), -60, 0.35);
             elevator.setElevatorPositionSpeed(0, -13, 0.6);
         }
         else{
-            wrist.setWristAngle(wrist.getWristAngle(), 10);
+            wrist.setWristAngle(wrist.getWristAngle(), 13);
             arm.setArmAngleSpeed(arm.getArmAngle(), -60, 0.2);
             elevator.setElevatorPositionSpeed(0, -13, 0.15);
         }

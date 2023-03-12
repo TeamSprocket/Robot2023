@@ -32,16 +32,16 @@ public class SetLow extends MacroCommand{
         timer.start();
         
         if (timer.get() > 0.1 && timer.get() < 0.5){
-            wrist.setWristAngle(wrist.getWristAngle(), 10);
+            wrist.setWristAngle(wrist.getWristAngle(), 12);
             arm.setArmAngle(arm.getArmAngle(), -25);
             elevator.setElevatorPositionSpeed(elevator.getElevatorHeight(), -13.13, 0.6);
         }
         else if(timer.get() > 0.5 && timer.get() < 1.25){
-            wrist.setWristAngle(wrist.getWristAngle(), 10);
+            wrist.setWristAngle(wrist.getWristAngle(), 12);
             arm.setArmAngle(arm.getArmAngle(), -25);
             elevator.setElevatorPositionSpeed(elevator.getElevatorHeight(), 30, 0.45);
         }else{
-            wrist.setWristAngle(wrist.getWristAngle(), 10);
+            wrist.setWristAngle(wrist.getWristAngle(), 12);
             arm.setArmAngle(arm.getArmAngle(), -25);
             elevator.setElevatorPositionSpeed(elevator.getElevatorHeight(), 30, 0.2);
         }
@@ -55,7 +55,7 @@ public class SetLow extends MacroCommand{
 
     @Override
     public void end(boolean interrupted){
-        wrist.setWristAngle(wrist.getWristAngle(), 10);
+        wrist.setWristAngle(wrist.getWristAngle(), 12);
         arm.setArmAngle(arm.getArmAngle(), -25);
         elevator.setElevatorPositionSpeed(elevator.getElevatorHeight(), 30, 0.2);
     }

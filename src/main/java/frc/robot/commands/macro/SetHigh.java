@@ -34,12 +34,12 @@ public class SetHigh extends MacroCommand{
         timer.start();
         
         if (timer.get() > 0 && timer.get() < 2){
-            wrist.setWristAngle(wrist.getWristAngle(), 8);
+            wrist.setWristAngle(wrist.getWristAngle(), 13);
             arm.setArmAngleSpeed(arm.getArmAngle(), -80, 0.35);
             elevator.setElevatorPositionSpeed(0, -15, 0.6);
         }
         else{
-            wrist.setWristAngle(wrist.getWristAngle(), 8);
+            wrist.setWristAngle(wrist.getWristAngle(), 13);
             arm.setArmAngleSpeed(arm.getArmAngle(), -80, 0.35);
             elevator.setElevatorPositionSpeed(0, -15, 0.15);
         }
@@ -53,7 +53,7 @@ public class SetHigh extends MacroCommand{
 
     @Override
     public void end(boolean interrupted){
-        wrist.setWristAngle(wrist.getWristAngle(), 8);
+        wrist.setWristAngle(wrist.getWristAngle(), 13);
         arm.setArmAngleSpeed(arm.getArmAngle(), -80, 0.25);
         elevator.setElevatorPositionSpeed(0, -15, 0.2);
     }

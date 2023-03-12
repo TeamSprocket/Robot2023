@@ -100,6 +100,10 @@ public final class RobotContainer {
 		return swerveDrive;
 	}
 
+	// public void calibrateGyro() {
+	// 	swerveDrive.calibrateGyro();
+	// }
+
 	/**
 	 * Use this method to define your button->command mappings.  Buttons can be
 	 * created by instantiating a {@link GenericHID} or one of its subclasses
@@ -167,8 +171,9 @@ public final class RobotContainer {
 
 	public void autonInit() {
 		swerveDrive.zeroTalons();
+
+		swerveDrive.calibrateGyro();
 		swerveDrive.zeroHeading();	
-		
 	}
 
 	public void clearStickyFaults() {

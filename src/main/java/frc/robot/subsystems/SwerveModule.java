@@ -63,6 +63,11 @@ public class SwerveModule extends SubsystemBase {
 
   }
 
+  public void clearStickyFaults() {
+    turnMotor.clearStickyFaults();
+    driveMotor.clearStickyFaults();
+  }
+
 
     public double getDrivePosition() {
       double circum = 2 * (Math.PI) * (Constants.Drivetrain.kWheelDiameterMeters / 2);
