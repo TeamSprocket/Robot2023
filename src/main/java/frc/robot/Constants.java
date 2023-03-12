@@ -43,7 +43,7 @@ public class Constants {
         
         public static double kP = 0.05;
         public static double kI = 0;
-        public static double kD = 0.000002;
+        public static double kD = 0.00075;
         public static double FF = 0;
 
     }
@@ -54,9 +54,9 @@ public class Constants {
 
         public static double angleConversionFactor = 360.0 / (kWristGearRatio * 10);
         
-        public static double P = 0.02;
+        public static double P = 0.018;
         public static double I = 0;
-        public static double D = 0;
+        public static double D = 0.00;
         public static double FF = 0;
 
         public static double maxAngle;

@@ -140,13 +140,15 @@ public final class RobotContainer {
 		
 		// new JoystickButton(driver, 7).whenPressed(() -> swerveDrive.zeroTalons());
 
+		//ALL CURRENT HUENEME COMMANDS
 		new JoystickButton(operator, 1).whenHeld(new SetLow(elevator, arm, wrist));
 		new JoystickButton(operator, 2).whenHeld(new SetHumanPlayer(elevator, arm, wrist));
 		new JoystickButton(operator, 3).whenHeld(new SetHome(elevator, arm, wrist));
 		new JoystickButton(operator, 4).whenHeld(new SetHigh(elevator, arm, wrist));
 		new JoystickButton(operator, 5).whenHeld(new SetMid(elevator, arm, wrist));
 		new JoystickButton(operator, 6).whenHeld(new DeportArm(elevator, arm, wrist));
-		new JoystickButton(operator, 7).whenHeld(new MoveWristAngle(wrist, 32.7));
+
+		new JoystickButton(operator, 7).whenHeld(new MoveWristAngle(wrist, 10));
 
 		
 		// new POVButton(driver, 90).whenHeld(new SwerveDriveCmdPrecise(swerveDrive, 1, 0));
