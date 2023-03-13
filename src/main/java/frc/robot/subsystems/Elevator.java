@@ -62,6 +62,16 @@ public class Elevator extends SubsystemBase{
         elevatorLeft.set(output);
     }
 
+    public void setElevatorPositionSpeed(double currentPosition, double setpoint, double limit){
+        double output = elevatorPIDController.calculate(currentPosition, setpoint);
+        if (output < -limit){
+            output = -limit;
+        } 
+        else if (output > limit){
+            output = limit;
+        }
+        elevatorLeft.set(output);
+    }
 
     public void stop(){
         elevatorLeft.stopMotor();

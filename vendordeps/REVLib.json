@@ -51,7 +51,7 @@
                 "osxuniversal"
             ]
         },
-        {
+{
             "groupId": "com.revrobotics.frc",
             "artifactId": "REVLib-driver",
             "version": "2023.1.3",

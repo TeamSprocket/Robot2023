@@ -20,7 +20,6 @@ public class WaitTimed extends MacroCommand {
     }
 
     public void initialize(){
-        System.out.println("Bruh");
         Command command = new SequentialCommandGroup();
         
         timer.reset();

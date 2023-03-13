@@ -21,6 +21,9 @@ public class MoveArmJoystick extends PersistentCommand {
     @Override
     public void execute() {
 
+      // += decreases output (goes down)
+      // -= increases output (goes up)
+
       double input = gamepad.getRightY();
 
       double armInput = Util.deadband(0.1, input);
@@ -30,28 +33,30 @@ public class MoveArmJoystick extends PersistentCommand {
       if (armInput == 0){
         if (arm.getArmAngle() < -1 && arm.getArmAngle() > -80) {
           double output = armInput;
-          output += 0.00224556 * arm.getArmAngle() + 0.083286;
-          if (arm.getArmAngle() > -28) {
-            output -= 0.025;
-            if (arm.getArmAngle() > -15) {
-              output -= 0.020;
+          output += 0.00224556 * arm.getArmAngle() + 0.1;
+          if (arm.getArmAngle() > -50) {
+            output -= 0.06;
+            if (arm.getArmAngle() > -25) {
+              output -= 0.050;
             } 
-            if (arm.getArmAngle() > -1) {
-              output += 0.015;
+            if (arm.getArmAngle() > -10) {
+              output -= 0.01;
             } 
 
+          }
+          if (arm.getArmAngle() < -50 && arm.getArmAngle() > -65) {
+            output -= 0.025;
+            
           }
           if (arm.getArmAngle() < -65) {
-            output += 0.025;
+            output -= 0.01;
           }
-
           arm.moveArm(output);
         }
         
       
       }
-      else{
-        
+      else{ 
         arm.setArmAngleManual(arm.getArmAngle(), newSetpoint);
       }
     }
