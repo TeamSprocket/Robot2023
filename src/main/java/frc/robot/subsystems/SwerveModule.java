@@ -67,10 +67,6 @@ public class SwerveModule extends SubsystemBase {
     turnMotor.clearStickyFaults();
     driveMotor.clearStickyFaults();
   }
-  
-  public void zeroDriveTalon() {
-    driveMotor.setSelectedSensorPosition(0);
-  }
 
 
     public double getDrivePosition() {

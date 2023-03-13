@@ -13,15 +13,9 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SwerveDrive extends SubsystemBase {
-    Timer timer;
-    double last = 0.0;
-    SwerveModuleState[] states = new SwerveModuleState[4];
-
-
     // Init Swerve Modules 
     private final SwerveModule frontLeft = new SwerveModule(
         RobotMap.Drivetrain.FRONT_LEFT_TALON_D,
@@ -79,17 +73,7 @@ public class SwerveDrive extends SubsystemBase {
         backRight.resetEncoderPos();
     }
 
-    public void zeroDrive() {
-        frontLeft.zeroDriveTalon();
-        frontRight.zeroDriveTalon();
-        backLeft.zeroDriveTalon();
-        backRight.zeroDriveTalon();
-    }
-
     public SwerveDrive() {
-        // this.timer = new Timer();
-        // timer.reset();
-
         // Init gyro with delay
         new Thread(() -> {
             try {
@@ -135,8 +119,6 @@ public class SwerveDrive extends SubsystemBase {
 
     // Set module speeds/angles
     public void setModuleStates(SwerveModuleState[] desiredStates) {
-        
-        
         frontLeft.setDesiredState(desiredStates[0]);
         frontRight.setDesiredState(desiredStates[1]);
         backLeft.setDesiredState(desiredStates[2]);
@@ -147,7 +129,6 @@ public class SwerveDrive extends SubsystemBase {
         backLeft.clearStickyFaults();
         backRight.clearStickyFaults();
 
-        states = desiredStates;
 
 
         // Debug
@@ -172,10 +153,6 @@ public class SwerveDrive extends SubsystemBase {
 
     public double getFrontLeftTicks() {
         return frontLeft.getDrivePosition();
-    }
-
-    public SwerveModuleState[] getDesiredStates() {
-        return states;
     }
 
     

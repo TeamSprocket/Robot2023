@@ -23,8 +23,6 @@ import frc.robot.subsystems.SwerveDrive;
 public class Robot extends TimedRobot {
     Timer timer;
     Command auton;
-    double last = 0.0;
-    // ADIS16470_IMU gyro;
 
     private final RobotContainer robotContainer = new RobotContainer();
 
@@ -107,25 +105,11 @@ public class Robot extends TimedRobot {
         System.out.println("TELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\n");
         robotContainer.configureButtonBindings();
         CommandScheduler.getInstance().cancelAll();
-
-        robotContainer.getSwerveDrive().zeroDrive();
-
-        timer.reset();
     }
     
     /** This function is called periodically during teleoperated mode. */
     @Override
     public void teleopPeriodic() {
-        // SmartDashboard.putNumber("Offset", robotContainer.headingOffset());
-        
-        timer.start();
-        double time = Math.round(timer.get() * 10) / 10.0;
-        // System.out.println(time);
-        if (time - (int) (time) != last) {
-            last = time - (int) (time);
-
-        robotContainer.outputAutonMacro();
-        }
     }
 
     @Override
