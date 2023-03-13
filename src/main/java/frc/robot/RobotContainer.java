@@ -9,6 +9,7 @@ import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
@@ -331,6 +332,14 @@ public final class RobotContainer {
 		
 		
 		// return chooser.getSelected();
+	}
+
+	public void outputAutonMacro() {
+		SwerveModuleState[] desiredStates = swerveDrive.getDesiredStates();
+		System.out.println("AutonLog: " + desiredStates[0].speedMetersPerSecond + " " + desiredStates[1].speedMetersPerSecond + " " + desiredStates[2].speedMetersPerSecond + " " + desiredStates[3].speedMetersPerSecond+ " " 
+                + desiredStates[0].angle.getRadians() + " " + desiredStates[1].angle.getRadians() + " " + desiredStates[2].angle.getRadians() + " " + desiredStates[3].angle.getRadians() + " "
+				+ operator.getRightBumperPressed() + " " + operator.getAButtonPressed() + " " + operator.getXButtonPressed() + " " 
+				+ driver.getRightTriggerAxis());
 	}
 
 	// 	// Create Trajectory Speed/Settings
