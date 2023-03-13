@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.Timer;
 import frc.robot.subsystems.*;
 import frc.robot.commands.macro.*;
 
-public class SetLowCone extends MacroCommand{
+public class SetLowConeTilted extends MacroCommand{
     
     private final Elevator elevator;
     private final Arm arm;
@@ -14,7 +14,7 @@ public class SetLowCone extends MacroCommand{
     
     private double startTime;
 
-    public SetLowCone (Elevator elevator, Arm arm, Wrist wrist) {
+    public SetLowConeTilted (Elevator elevator, Arm arm, Wrist wrist) {
         this.elevator = elevator;
         this.arm = arm;
         this.wrist = wrist;
@@ -34,13 +34,9 @@ public class SetLowCone extends MacroCommand{
         if (timer.get() > 0.1 && timer.get() < 0.5){
             wrist.setWristAngle(wrist.getWristAngle(), 22.5);
             arm.setArmAngle(arm.getArmAngle(), -20);
-            elevator.setElevatorPositionSpeed(elevator.getElevatorHeight(), -13.13, 0.6);
-        }
-        else if(timer.get() > 0.5 && timer.get() < 1.25){
-            wrist.setWristAngle(wrist.getWristAngle(), 22.5);
-            arm.setArmAngle(arm.getArmAngle(), -20);
             elevator.setElevatorPositionSpeed(elevator.getElevatorHeight(), 30, 0.45);
-        }else{
+        }
+        else{
             wrist.setWristAngle(wrist.getWristAngle(), 22.5);
             arm.setArmAngle(arm.getArmAngle(), -20);
             elevator.setElevatorPositionSpeed(elevator.getElevatorHeight(), 30, 0.2);
