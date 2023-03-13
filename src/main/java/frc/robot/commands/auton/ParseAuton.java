@@ -12,7 +12,7 @@ import frc.robot.Constants;
 // import frc.robot.Constants.Elevator;
 import frc.robot.commands.macro.SetHigh;
 import frc.robot.commands.macro.SetHome;
-import frc.robot.commands.macro.SetLow;
+import frc.robot.commands.macro.SetLowCube;
 import frc.robot.commands.macro.timed.DeportArm;
 import frc.robot.commands.macro.timed.RollClawTimed;
 import frc.robot.subsystems.Arm;
@@ -80,7 +80,7 @@ public class ParseAuton extends CommandBase {
           new SetHigh(elevator, arm, wrist);
         }
         else if (auton[cur][10] == 1.0) {
-          new SetLow(elevator, arm, wrist);
+          new SetLowCube(elevator, arm, wrist);
         }
         else if (auton[cur][11] == 1.0) {
           new SetHome(elevator, arm, wrist);
