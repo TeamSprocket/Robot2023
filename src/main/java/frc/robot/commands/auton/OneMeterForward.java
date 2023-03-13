@@ -8,6 +8,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants;
@@ -34,10 +35,15 @@ public class OneMeterForward extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    double angle = 0;
     double output = controller.calculate(swerveDrive.getDrivePosition(), 1);
-    if (output >= 0.1) {
-      output = 0.1;
-    }
+    SmartDashboard.putNumber("Drive Position Output PID", output);
+    // if (output >= 0.02) {
+      // output = 0.02;
+    // }
+    // if (output <= -0.02) {
+      // output = -0.02;
+    // }
 
     ChassisSpeeds chassisSpeeds;
     if (Constants.Drivetrain.IS_FIELD_ORIENTED) {
@@ -53,6 +59,8 @@ public class OneMeterForward extends CommandBase {
   
     // Apply to modules
     swerveDrive.setModuleStates(moduleStates);
+
+    
   }
 
   // Called once the command ends or is interrupted.

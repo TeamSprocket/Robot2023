@@ -53,7 +53,16 @@ public class Arm extends SubsystemBase {
         } else if (output > 0.15) {
             output = 0.15;
         }
-        // System.out.println("ANGLE: " + currentAngle);
+        armLeft.set(output);
+    }
+
+    public void setArmAngleSpeed(double currentAngle, double setpoint, double limit){
+        double output = armPIDController.calculate(currentAngle, setpoint);
+        if (output < -limit){
+            output = -limit;
+        } else if (output > limit) {
+            output = limit;
+        }
         armLeft.set(output);
     }
 

@@ -30,27 +30,26 @@ public class DeportArm extends MacroCommand{
 
     @Override
     public void initialize(){
-        wrist.moveWrist(-0.12);
-        startTime = System.currentTimeMillis();
         timer.reset();
     }
 
     @Override
     public void execute() {
-      //new SequentialCommandGroup(
         timer.start();
         
-        if (timer.get() > 0.1 && timer.get() < 1){
-            elevator.setElevatorPosition(elevator.getElevatorHeight(), -19.13);
-            arm.setArmAngle(arm.getArmAngle(), 0);
+        if (timer.get() > 0 && timer.get() < 0.5){
+            wrist.setWristAngle(wrist.getWristAngle(), 0);
+            arm.setArmAngleSpeed(arm.getArmAngle(), 0, 0.1);
+            elevator.setElevatorPositionSpeed(0, -15, 0.6);
         }
-        else if(timer.get()> 1 && timer.get() < 2){
-            arm.setArmAngle(arm.getArmAngle(), -40);
-            wrist.moveWrist(0.15);
+        else if (timer.get() > 0.5 && timer.get () > 1){
+            wrist.setWristAngle(wrist.getWristAngle(), 10);
+            arm.setArmAngleSpeed(arm.getArmAngle(), -20, 0.1);
         }
         else{
-            elevator.setElevatorPosition(elevator.getElevatorHeight(), -17.13);
-            arm.setArmAngle(arm.getArmAngle(), -40);
+            wrist.setWristAngle(wrist.getWristAngle(), 10);
+            arm.setArmAngleSpeed(arm.getArmAngle(), -20, 0.1);
+            elevator.setElevatorPositionSpeed(0, -5, 0.6);
         }
         
     }
@@ -65,7 +64,8 @@ public class DeportArm extends MacroCommand{
 
     @Override
     public void end(boolean interrupted){
-        elevator.setElevatorPosition(elevator.getElevatorHeight(), -17.13);
-        arm.setArmAngle(arm.getArmAngle(), -80);
+        wrist.setWristAngle(wrist.getWristAngle(), 10);
+        arm.setArmAngleSpeed(arm.getArmAngle(), -20, 0.1);
+        elevator.setElevatorPositionSpeed(0, -5, 0.6);
     }
 }
