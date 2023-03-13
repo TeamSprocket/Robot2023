@@ -9,8 +9,10 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.fasterxml.jackson.databind.util.ISO8601Utils;
+import com.revrobotics.AbsoluteEncoder;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -59,10 +61,19 @@ public class SwerveModule extends SubsystemBase {
 
     turnPIDController.enableContinuousInput(0, (2.0 * Math.PI));
 
-    resetEncoderPos();
+    // absEncoder.configMagnetOffset(Math.toDegrees(absEncoderOffsetRad));
+    absEncoder.configMagnetOffset(-Math.toDegrees(absEncoderOffsetRad));
+    absEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
+
+    
+
+    // resetEncoderPos();
 
   }
 
+    public void setTurnDefaultMode(NeutralMode mode) {
+      turnMotor.setNeutralMode(mode);
+    }
   public void clearStickyFaults() {
     turnMotor.clearStickyFaults();
     driveMotor.clearStickyFaults();
@@ -95,24 +106,34 @@ public class SwerveModule extends SubsystemBase {
     public double getAbsEncoderRad() {
       double angle = absEncoder.getAbsolutePosition();
       angle = Math.toRadians(angle);
-      angle -= absEncoderOffsetRad;
-      double rad = Math.abs(angle % (Math.PI * 2.0));
-      if (rad > Math.PI) {
-        rad = -1.0 * (2.0 * Math.PI - rad);
-      }
-      return rad;
+      // angle = Math.toRadians(angle);
+      // angle -= absEncoderOffsetRad;
+      // double rad = Math.abs(angle % (Math.PI * 2.0));
+      // if (rad > Math.PI) {
+      //   rad = -1.0 * (2.0 * Math.PI - rad);
+      // }
+
+      // angle -= absEncoderOffsetRad;
+      // return rad;
+      return angle;
 
     }
 
     public void resetEncoderPos() {
-      double tunedAbsEncoderRad = -getAbsEncoderRad();
-        turnMotor.setSelectedSensorPosition(tunedAbsEncoderRad / (2.0 * Math.PI)
-               * 2048.0 * Constants.Drivetrain.kTurningMotorGearRatio);
+      // double tunedAbsEncoderRad = -getAbsEncoderRad();
+      //   turnMotor.setSelectedSensorPosition(tunedAbsEncoderRad / (2.0 * Math.PI)
+      //          * 2048.0 * Constants.Drivetrain.kTurningMotorGearRatio);
+      turnMotor.setSelectedSensorPosition((getAbsEncoderRad() / (2 * Math.PI)) * 2048 * Constants.Drivetrain.kTurningMotorGearRatio);
+
     }
 
     public void zeroTalon() { 
       driveMotor.setSelectedSensorPosition(0);
       turnMotor.setSelectedSensorPosition(0);
+    }
+
+    public void zeroDrive() {
+      driveMotor.setSelectedSensorPosition(0);
     }
 
     public SwerveModuleState optimizeState(SwerveModuleState swerveState) {
@@ -126,6 +147,10 @@ public class SwerveModule extends SubsystemBase {
 
 
     public void setDesiredState(SwerveModuleState swerveState) {
+      // absEncoder.clearStickyFaults();
+      // driveMotor.clearStickyFaults();
+      // turnMotor.clearStickyFaults();
+
       SwerveModuleState state = optimizeState(swerveState);
     
 
