@@ -39,7 +39,7 @@ import frc.robot.commands.macro.MoveArmPosition;
 import frc.robot.commands.macro.MoveWristAngle;
 import frc.robot.commands.macro.SetHigh;
 import frc.robot.commands.macro.SetHome;
-import frc.robot.commands.macro.SetLowCone;
+import frc.robot.commands.macro.SetLowConeTilted;
 import frc.robot.commands.macro.SetLowCube;
 import frc.robot.commands.macro.SetMid;
 import frc.robot.commands.macro.ShootClaw;
@@ -53,6 +53,7 @@ import frc.robot.commands.macro.timed.SetHumanPlayerTimed;
 import frc.robot.commands.macro.timed.SetLowTimed;
 import frc.robot.commands.macro.timed.SwerveDriveCmdTimed;
 import frc.robot.commands.macro.SetHumanPlayer;
+import frc.robot.commands.macro.SetLowConeStanding;
 import frc.robot.commands.persistent.Elevate;
 import frc.robot.commands.persistent.MoveArmJoystick;
 import frc.robot.commands.persistent.MoveWristManual;
@@ -148,7 +149,8 @@ public final class RobotContainer {
 		new JoystickButton(operator, 3).whenHeld(new SetHome(elevator, arm, wrist));
 		new JoystickButton(operator, 4).whenHeld(new SetHigh(elevator, arm, wrist));
 		new JoystickButton(operator, 5).whenHeld(new SetLowCube(elevator, arm, wrist));
-		new JoystickButton(operator, 6).whenHeld(new SetLowCone(elevator, arm, wrist));
+		new JoystickButton(operator, 6).whenHeld(new SetLowConeTilted(elevator, arm, wrist));
+		new JoystickButton(operator, 9).whenHeld(new SetLowConeStanding(elevator, arm, wrist));
 		new JoystickButton(operator, 10).whenHeld(new DeportArm(elevator, arm, wrist));
 
 		/* 
