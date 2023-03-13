@@ -22,6 +22,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class SwerveDrive extends SubsystemBase {
     Timer timer;
     double last = 0.0;
+    SwerveModuleState[] states = {
+        new SwerveModuleState(0, new Rotation2d(0)),
+        new SwerveModuleState(0, new Rotation2d(0)),
+        new SwerveModuleState(0, new Rotation2d(0)),
+        new SwerveModuleState(0, new Rotation2d(0))
+    };
 
     // Init Swerve Modules 
     private final SwerveModule frontLeft = new SwerveModule(
@@ -161,16 +167,7 @@ public class SwerveDrive extends SubsystemBase {
 
     // Set module speeds/angles
     public void setModuleStates(SwerveModuleState[] desiredStates) {
-        timer.start();
-
-        double time = Math.round(timer.get() * 10) / 10.0;
-        // System.out.println(time);
-        if (time - (int) (time) != last) {
-            last = time - (int) (time);
-
-            System.out.println("AutonLog: " + desiredStates[0].speedMetersPerSecond + " " + desiredStates[1].speedMetersPerSecond + " " + desiredStates[2].speedMetersPerSecond + " " + desiredStates[3].speedMetersPerSecond+ " " 
-                + desiredStates[0].angle.getRadians() + " " + desiredStates[1].angle.getRadians() + " " + desiredStates[2].angle.getRadians() + " " + desiredStates[3].angle.getRadians());
-        }
+        states = desiredStates;
         
         frontLeft.setDesiredState(desiredStates[0]);
         frontRight.setDesiredState(desiredStates[1]);
@@ -203,6 +200,10 @@ public class SwerveDrive extends SubsystemBase {
 
     public double getFrontLeftTicks() {
         return frontLeft.getDrivePosition();
+    }
+
+    public SwerveModuleState[] getDesiredStates() {
+        return states;
     }
 
     

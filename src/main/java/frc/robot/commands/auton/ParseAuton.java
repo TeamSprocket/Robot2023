@@ -9,8 +9,18 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+// import frc.robot.Constants.Elevator;
+import frc.robot.commands.macro.SetHigh;
+import frc.robot.commands.macro.SetHome;
+import frc.robot.commands.macro.SetLow;
+import frc.robot.commands.macro.timed.DeportArm;
+import frc.robot.commands.macro.timed.RollClawTimed;
+import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Claw;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.SwerveDrive;
 import frc.robot.subsystems.SwerveModule;
+import frc.robot.subsystems.Wrist;
 
 public class ParseAuton extends CommandBase {
   /** Creates a new ParseAuton. */
@@ -21,11 +31,20 @@ public class ParseAuton extends CommandBase {
   Timer timer;
   double last = 0.0;
   SwerveDrive swerveDrive;
+  Elevator elevator;
+  Arm arm;
+  Wrist wrist;
+  Claw claw;
 
-  public ParseAuton(SwerveDrive swerveDrive) {
+  public ParseAuton(SwerveDrive swerveDrive, Elevator elevator, Arm arm, Wrist wrist, Claw claw) {
     this.swerveDrive = swerveDrive;
     cur = 0;
     timer = new Timer();
+
+    this.elevator = elevator;
+    this.arm = arm;
+    this.wrist = wrist;
+    this.claw = claw;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -53,6 +72,26 @@ public class ParseAuton extends CommandBase {
         };
 
         swerveDrive.setModuleStates(states);
+
+        if (auton[cur][8] == 1.0) {
+          new DeportArm(elevator, arm, wrist);
+        } 
+        else if (auton[cur][9] == 1.0) {
+          new SetHigh(elevator, arm, wrist);
+        }
+        else if (auton[cur][10] == 1.0) {
+          new SetLow(elevator, arm, wrist);
+        }
+        else if (auton[cur][11] == 1.0) {
+          new SetHome(elevator, arm, wrist);
+        }
+
+        if (auton[cur][12] != 0.0) {
+          new RollClawTimed(claw, 0.1);
+        }
+        
+
+
         cur++;
     }
 
