@@ -10,6 +10,7 @@ import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
@@ -19,6 +20,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -79,6 +81,10 @@ import frc.robot.Constants;
  * commands, and button mappings) should be declared here.
  */
 public final class RobotContainer {
+	Timer timer;
+	double last = 0.0;
+	double[] desiredStates = new double[13];
+
 	//Controllers
 	private final XboxController driver = new XboxController(0);
 	private final XboxController operator = new XboxController(1);
@@ -98,8 +104,10 @@ public final class RobotContainer {
 
 	public RobotContainer() {	
 		// chooser.setDefaultOption("Swerve Auton Test", swerveAutonTest); 
+		this.timer = new Timer();
 		
 		SmartDashboard.putData(chooser);
+		timer.reset();
 	}	
 
 	public SwerveDrive getSwerveDrive() {
@@ -289,8 +297,8 @@ public final class RobotContainer {
 
 		// Macro Recorder Test
 		return (Command) (new SequentialCommandGroup(
-			new ParseAuton(swerveDrive),
-			new PIDTurnTimed(swerveDrive, Math.PI, 3),
+			new ParseAuton(swerveDrive, elevator, arm, wrist, claw),
+			// new PIDTurnTimed(swerveDrive, Math.PI, 3),
 			new BalanceOnChargeStation(swerveDrive, 0.035)
 		));
 
@@ -355,6 +363,63 @@ public final class RobotContainer {
 
 	public double headingOffset() {
 		return Math.abs(swerveDrive.getHeadingRad() - Math.PI);
+	}
+
+	public double booleanToDouble(boolean value) {
+		if (value) {
+			return 1.0;
+		}
+		return 0.0;
+	}
+
+	public void outputAutonLog() {
+		timer.start();
+
+		if (swerveDrive.getDesiredStates() != null) {
+			desiredStates[0] = swerveDrive.getDesiredStates()[0].speedMetersPerSecond;
+			desiredStates[1] = swerveDrive.getDesiredStates()[1].speedMetersPerSecond;
+			desiredStates[2] = swerveDrive.getDesiredStates()[2].speedMetersPerSecond;
+			desiredStates[3] = swerveDrive.getDesiredStates()[3].speedMetersPerSecond;
+
+			desiredStates[4] = swerveDrive.getDesiredStates()[0].angle.getRadians();
+			desiredStates[5] = swerveDrive.getDesiredStates()[1].angle.getRadians();
+			desiredStates[6] = swerveDrive.getDesiredStates()[2].angle.getRadians();
+			desiredStates[7] = swerveDrive.getDesiredStates()[3].angle.getRadians();
+		} else {
+			desiredStates[0] = 0;
+			desiredStates[1] = 0;
+			desiredStates[2] = 0;
+			desiredStates[3] = 0;
+
+			desiredStates[4] = 0;
+			desiredStates[5] = 0;
+			desiredStates[6] = 0;
+			desiredStates[7] = 0;
+		}
+
+		desiredStates[8] = booleanToDouble(operator.getRightBumper());
+		desiredStates[9] = booleanToDouble(operator.getAButton());
+		desiredStates[10] = booleanToDouble(operator.getYButton());
+		desiredStates[11] = booleanToDouble(operator.getXButton());
+
+		desiredStates[12] = (driver.getRightTriggerAxis() - driver.getLeftTriggerAxis());
+
+		
+
+
+		
+		
+        double time = Math.round(timer.get() * 10) / 10.0;
+        // System.out.println(time);
+        if (time - (int) (time) != last) {
+            last = time - (int) (time);
+
+            System.out.print("AutonLog: ");
+			for (double num : desiredStates) {
+				System.out.print(num + " ");
+			}
+			System.out.println();
+        }
 	}
 
 	// 	// Create Trajectory Speed/Settings

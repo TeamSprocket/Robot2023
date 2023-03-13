@@ -25,7 +25,7 @@ import frc.robot.subsystems.SwerveDrive;
  * directory.
  */
 public class Robot extends TimedRobot {
-    Timer timer;
+    // Timer timer;
     Command auton;
     // ADIS16470_IMU gyro;
 
@@ -119,12 +119,16 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().cancelAll();
 
         robotContainer.getSwerveDrive().zeroDrive();
+
+        // timer.reset();
     }
     
     /** This function is called periodically during teleoperated mode. */
     @Override
     public void teleopPeriodic() {
         SmartDashboard.putNumber("Offset", robotContainer.headingOffset());
+
+        robotContainer.outputAutonLog();
     }
 
     @Override
