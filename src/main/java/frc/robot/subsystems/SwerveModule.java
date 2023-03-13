@@ -74,6 +74,10 @@ public class SwerveModule extends SubsystemBase {
     public void setTurnDefaultMode(NeutralMode mode) {
       turnMotor.setNeutralMode(mode);
     }
+  public void clearStickyFaults() {
+    turnMotor.clearStickyFaults();
+    driveMotor.clearStickyFaults();
+  }
 
 
     public double getDrivePosition() {
@@ -186,6 +190,5 @@ public class SwerveModule extends SubsystemBase {
 
 
   }
-
 
 

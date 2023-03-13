@@ -37,14 +37,14 @@ import frc.robot.commands.auton.PIDTurnTimed;
 import frc.robot.commands.auton.ParseAuton;
 // import frc.robot.commands.auton.SwerveAutonTest;
 import frc.robot.commands.auton.WaitTimed;
-import frc.robot.commands.instant.ToggleClaw;
-import frc.robot.commands.instant.ToggleCompressor;
+
 import frc.robot.commands.macro.ElevatePosition;
 import frc.robot.commands.macro.MoveArmPosition;
 import frc.robot.commands.macro.MoveWristAngle;
 import frc.robot.commands.macro.SetHigh;
 import frc.robot.commands.macro.SetHome;
-import frc.robot.commands.macro.SetLow;
+import frc.robot.commands.macro.SetLowConeTilted;
+import frc.robot.commands.macro.SetLowCube;
 import frc.robot.commands.macro.SetMid;
 import frc.robot.commands.macro.ShootClaw;
 import frc.robot.commands.macro.SwerveDriveCmdPrecise;
@@ -57,14 +57,14 @@ import frc.robot.commands.macro.timed.SetHumanPlayerTimed;
 import frc.robot.commands.macro.timed.SetLowTimed;
 import frc.robot.commands.macro.timed.SwerveDriveCmdTimed;
 import frc.robot.commands.macro.SetHumanPlayer;
+import frc.robot.commands.macro.SetLowConeStanding;
 import frc.robot.commands.persistent.Elevate;
 import frc.robot.commands.persistent.MoveArmJoystick;
 import frc.robot.commands.persistent.MoveWristManual;
 import frc.robot.commands.persistent.RollClaw;
 // import frc.robot.commands.auton.SwerveAutonTest;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.PCH;
-import frc.robot.subsystems.PDH;
+
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.SwerveDrive;
@@ -85,8 +85,7 @@ public final class RobotContainer {
 
 	//Smartdashboard
 	//Subsystems
-	private final PCH pch = new PCH();
-	private final PDH pdh = new PDH();
+
 	private final SwerveDrive swerveDrive = new SwerveDrive();
 	private final Elevator elevator = new Elevator();
 	private final Arm arm = new Arm();
@@ -107,6 +106,10 @@ public final class RobotContainer {
 		return swerveDrive;
 	}
 
+	// public void calibrateGyro() {
+	// 	swerveDrive.calibrateGyro();
+	// }
+
 	/**
 	 * Use this method to define your button->command mappings.  Buttons can be
 	 * created by instantiating a {@link GenericHID} or one of its subclasses
@@ -114,6 +117,7 @@ public final class RobotContainer {
 	 * then passing it to a
 	 * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
 	 */
+	
 	public void configureButtonBindings() {
 		swerveDrive.setDefaultCommand(new SwerveDriveCmd(
 			swerveDrive, 
@@ -123,8 +127,10 @@ public final class RobotContainer {
 			() -> driver.getLeftX(), 
 			// T
 			() -> -driver.getRightX()));
-
+		// claw.setDefaultCommand(new RollClaw(claw, () -> (driver.getRightTriggerAxis() - driver.getLeftTriggerAxis())));
+		claw.setDefaultCommand(new RollClaw(claw, driver));
 		
+	
 
 		// Elevator
 		//TODO CHECK THE POSITIONS OF THE ELEVATOR
@@ -132,27 +138,37 @@ public final class RobotContainer {
 		elevator.setDefaultCommand(new Elevate(elevator, operator));
 		arm.setDefaultCommand(new MoveArmJoystick(arm, operator));
 		wrist.setDefaultCommand(new MoveWristManual(wrist, operator));
-		claw.setDefaultCommand(new RollClaw(claw, driver));
+		
 
 		// Swerve Drive (instant command reset heading)
 		new JoystickButton(driver,
 		 	RobotMap.Controller.RESET_GYRO_HEADING_BUTTON_ID).whenPressed(() -> swerveDrive.zeroHeading());
-		new JoystickButton(driver, 3).whenPressed(() -> swerveDrive.zeroTalonsABS());
-		new JoystickButton(driver, 2).whenPressed(() -> swerveDrive.zeroTalons());
-		
-		new JoystickButton(driver, 4).whenPressed(new ToggleCompressor(pch, driver));
-		new JoystickButton(driver, 5).whenPressed(new ToggleClaw(claw));
+		// new JoystickButton(driver, 2).whenPressed(() -> swerveDrive.zeroTalons());
 		// new JoystickButton(driver, 3).whenHeld(new ShootClaw(10));
 		
 		// new JoystickButton(driver, 7).whenPressed(() -> swerveDrive.zeroTalons());
 
-		new JoystickButton(operator, 1).whenHeld(new SetLow(elevator, arm, wrist));
+		new JoystickButton(operator, 1).whenHeld(new SetMid(elevator, arm, wrist));
+		new JoystickButton(operator, 2).whenHeld(new SetHumanPlayer(elevator, arm, wrist));
+		new JoystickButton(operator, 3).whenHeld(new SetHome(elevator, arm, wrist));
+		new JoystickButton(operator, 4).whenHeld(new SetHigh(elevator, arm, wrist));
+		new JoystickButton(operator, 5).whenHeld(new SetLowCube(elevator, arm, wrist));
+		new JoystickButton(operator, 6).whenHeld(new SetLowConeTilted(elevator, arm, wrist));
+		new JoystickButton(operator, 9).whenHeld(new SetLowConeStanding(elevator, arm, wrist));
+		new JoystickButton(operator, 10).whenHeld(new DeportArm(elevator, arm, wrist));
+
+		/* 
+		new JoystickButton(operator, 1).whenHeld(new SetLowCone(elevator, arm, wrist));
 		new JoystickButton(operator, 2).whenHeld(new SetHumanPlayer(elevator, arm, wrist));
 		new JoystickButton(operator, 3).whenHeld(new SetHome(elevator, arm, wrist));
 		new JoystickButton(operator, 4).whenHeld(new SetHigh(elevator, arm, wrist));
 		new JoystickButton(operator, 5).whenHeld(new SetMid(elevator, arm, wrist));
 		new JoystickButton(operator, 6).whenHeld(new DeportArm(elevator, arm, wrist));
+
+		new JoystickButton(operator, 7).whenHeld(new MoveWristAngle(wrist, 10));
+		*/
 		
+
 		// new POVButton(driver, 90).whenHeld(new SwerveDriveCmdPrecise(swerveDrive, 1, 0));
 		// new POVButton(driver, 270).whenHeld(new SwerveDriveCmdPrecise(swerveDrive, -1, 0));
 		// new POVButton(driver, 0).whenHeld(new SwerveDriveCmdPrecise(swerveDrive, 0, 1));
@@ -171,14 +187,13 @@ public final class RobotContainer {
 
 	public void autonInit() {
 		swerveDrive.zeroTalons();
+
+		swerveDrive.calibrateGyro();
 		swerveDrive.zeroHeading();	
-		pdh.clearStickyFaults();
-		
 	}
 
 	public void clearStickyFaults() {
-		pdh.clearStickyFaults();
-		pch.clearStickyFaults();
+
 	}
 
 
