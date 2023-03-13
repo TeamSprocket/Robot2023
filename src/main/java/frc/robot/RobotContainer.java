@@ -152,17 +152,6 @@ public final class RobotContainer {
 		new JoystickButton(operator, 6).whenHeld(new SetLowConeTilted(elevator, arm, wrist));
 		new JoystickButton(operator, 9).whenHeld(new SetLowConeStanding(elevator, arm, wrist));
 		new JoystickButton(operator, 10).whenHeld(new DeportArm(elevator, arm, wrist));
-
-		/* 
-		new JoystickButton(operator, 1).whenHeld(new SetLowCone(elevator, arm, wrist));
-		new JoystickButton(operator, 2).whenHeld(new SetHumanPlayer(elevator, arm, wrist));
-		new JoystickButton(operator, 3).whenHeld(new SetHome(elevator, arm, wrist));
-		new JoystickButton(operator, 4).whenHeld(new SetHigh(elevator, arm, wrist));
-		new JoystickButton(operator, 5).whenHeld(new SetMid(elevator, arm, wrist));
-		new JoystickButton(operator, 6).whenHeld(new DeportArm(elevator, arm, wrist));
-
-		new JoystickButton(operator, 7).whenHeld(new MoveWristAngle(wrist, 10));
-		*/
 		
 
 		// new POVButton(driver, 90).whenHeld(new SwerveDriveCmdPrecise(swerveDrive, 1, 0));
