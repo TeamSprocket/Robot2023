@@ -210,6 +210,7 @@ public final class RobotContainer {
 		// velocity of 4 m/s and a max acceleration of 3 m/s^2
 		// PathPlannerTrajectory testPath = PathPlanner.loadPath("Test Path", new PathConstraints(4, 3));
 		PathPlannerTrajectory straight = PathPlanner.loadPath("Straight", new PathConstraints(0.05, 0.05));
+		// PathPlannerTrajectory outAndBack = PathPlanner.loadPath("Out And Back", new PathConstraints(0.05, 0.05)); // OVER HERE THIS IS THE PATH THAT JASON WANTS TESTED
 		// PathPlannerTrajectory pathAndEvent = PathPlanner.loadPath("Event Tests", new PathConstraints(4, 3));
 		
 		// List<PathPlannerTrajectory> pathGroupTest1 = PathPlanner.loadPathGroup("Event Tests", new PathConstraints(4, 3));
@@ -236,6 +237,7 @@ public final class RobotContainer {
 		// followTrajectoryCommand parameters are PathPlannerTrajectory name and boolean isFirstPath
 		// return swerveDrive.followTrajectoryCommand(testPath, true);
 		auton = swerveDrive.followTrajectoryCommand(straight, true); // this one only goes straight
+		// auton = swerveDrive.followTrajectoryCommand(outAndBack, true); // u alr kno what it does 
 		
 		
 		
