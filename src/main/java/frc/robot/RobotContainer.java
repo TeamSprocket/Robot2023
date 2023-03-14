@@ -250,7 +250,7 @@ public final class RobotContainer {
 		// followTrajectoryCommand parameters are PathPlannerTrajectory name and boolean isFirstPath
 		// return swerveDrive.followTrajectoryCommand(testPath, true);
 		// auton = swerveDrive.followTrajectoryCommand(straight, true); // this one only goes straight
-		auton = swerveDrive.followTrajectoryCommand(startReverse, true); //TODO: test this (should start in reverse)
+		auton = swerveDrive.followTrajectoryCommand(startReverse, true, swerveDrive); //TODO: test this (should start in reverse)
 		// auton = swerveDrive.followTrajectoryCommand(forwardThenReverse, true); // TODO: test this if start in reverse isn't working
 		// auton = swerveDrive.followT	rajectoryCommand(outAndBack, true); // u alr kno what it does 
 		//    auton = pathGroupTest;

@@ -210,7 +210,7 @@ public class SwerveDrive extends SubsystemBase {
     // Assuming this method is part of a drivetrain subsystem that provides the
     // necessary methods
     
-    public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath) {
+    public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath, SwerveDrive swerveDrive) {
 
 
         return new SequentialCommandGroup(
@@ -235,7 +235,8 @@ public class SwerveDrive extends SubsystemBase {
                                                     // them 0 will only use feedforwards.
                         // new PIDController(0, 0, 0),
                         this::setModuleStates, // Module states consumer
-                        this // Requires this drive subsystem
+                        swerveDrive // Requires this drive subsystem
+                        // ^ originally set to 'this' which idk if that refers to 'SwerveDrive' but i just made a new parameter which asks for SwerveDrive object
                 ));
     }
 
