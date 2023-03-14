@@ -12,7 +12,7 @@ import frc.robot.Constants;
 // import frc.robot.Constants.Elevator;
 import frc.robot.commands.macro.SetHigh;
 import frc.robot.commands.macro.SetHome;
-import frc.robot.commands.macro.SetLow;
+import frc.robot.commands.macro.SetLowCube;
 import frc.robot.commands.macro.timed.DeportArm;
 import frc.robot.commands.macro.timed.RollClawTimed;
 import frc.robot.commands.macro.timed.SetHighTimed;
@@ -76,7 +76,18 @@ public class ParseAuton extends CommandBase {
 
         swerveDrive.setModuleStates(states);
 
-        // if (auton[cur][8] == 1.0) {
+        if (auton[cur][8] == 1.0) {
+          new DeportArm(elevator, arm, wrist);
+        } 
+        else if (auton[cur][9] == 1.0) {
+          new SetHigh(elevator, arm, wrist);
+        }
+        else if (auton[cur][10] == 1.0) {
+          new SetLowCube(elevator, arm, wrist);
+        }
+        else if (auton[cur][11] == 1.0) {
+          new SetHome(elevator, arm, wrist);
+        }
 
           System.out.println(auton[cur][8]*2);
           elevator.moveElevator(auton[cur][8]*2);

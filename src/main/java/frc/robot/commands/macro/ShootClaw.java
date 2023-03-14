@@ -19,16 +19,16 @@ public class ShootClaw extends CommandBase {
   /** Creates a new ShootClaw. */
   double speed;
   PIDController pidController;
-  WPI_TalonFX talonLeft, talonRight; 
+  WPI_TalonFX talon; 
   double currentRPS, output;
 
   public ShootClaw(double speed) {
     this.speed = speed;
     this.pidController = new PIDController(Constants.Claw.kPShooter, Constants.Claw.kIShooter, Constants.Claw.kDShooter);
-    talonLeft = new WPI_TalonFX(RobotMap.Claw.CLAW_LEFT);
-    talonRight = new WPI_TalonFX(RobotMap.Claw.CLAW_RIGHT);
+    talon = new WPI_TalonFX(RobotMap.Claw.CLAW);
 
-    talonLeft.setInverted(true);
+
+    talon.setInverted(true);
 
     // talonRight.follow(talonLeft);
     
@@ -44,10 +44,10 @@ public class ShootClaw extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    currentRPS = talonLeft.getSelectedSensorVelocity() * 10.0 / 2048.0 / 2.0;
+    currentRPS = talon.getSelectedSensorVelocity() * 10.0 / 2048.0 / 2.0;
     output = pidController.calculate(currentRPS / 3.5041, speed);
-    talonLeft.set(ControlMode.PercentOutput, output);
-    talonRight.set(ControlMode.PercentOutput, output);
+    talon.set(ControlMode.PercentOutput, output);
+    talon.set(ControlMode.PercentOutput, output);
     System.out.println(output);
 
     SmartDashboard.putNumber("Shooter RPS", currentRPS);

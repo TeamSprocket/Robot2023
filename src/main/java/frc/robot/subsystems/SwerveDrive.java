@@ -101,6 +101,7 @@ public class SwerveDrive extends SubsystemBase {
         new Thread(() -> {
             try {
                 Thread.sleep(Constants.Drivetrain.GYRO_DELAY_MS);
+                
                 zeroHeading();
                 // zeroTalonsABS();
                 zeroTalons();
@@ -118,6 +119,10 @@ public class SwerveDrive extends SubsystemBase {
         frontRight.setTurnDefaultMode(mode);
         backLeft.setTurnDefaultMode(mode);
         backRight.setTurnDefaultMode(mode);
+    }
+    
+    public void calibrateGyro() {
+        gyro.calibrate();
     }
 
     public double getDrivePosition() {
@@ -173,6 +178,12 @@ public class SwerveDrive extends SubsystemBase {
         frontRight.setDesiredState(desiredStates[1]);
         backLeft.setDesiredState(desiredStates[2]);
         backRight.setDesiredState(desiredStates[3]);
+
+        frontLeft.clearStickyFaults();
+        frontRight.clearStickyFaults();
+        backLeft.clearStickyFaults();
+        backRight.clearStickyFaults();
+
 
 
         // Debug

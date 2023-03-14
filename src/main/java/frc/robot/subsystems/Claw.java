@@ -2,65 +2,53 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 import frc.robot.Constants;
 
-
 public class Claw extends SubsystemBase{
+    double output = 0;
+    private final WPI_TalonFX claw = new WPI_TalonFX(RobotMap.Claw.CLAW);
 
-    private double output = 0;
-
-    private final WPI_TalonFX leftClaw = new WPI_TalonFX(RobotMap.Claw.CLAW_LEFT);
-    private final WPI_TalonFX rightClaw = new WPI_TalonFX(RobotMap.Claw.CLAW_RIGHT);
-
-    private final DoubleSolenoid clawSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, RobotMap.Claw.PISTON_LEFT, RobotMap.Claw.PISTON_RIGHT);
-   
+    
     public Claw() {
-        leftClaw.setInverted(false);
-        rightClaw.setInverted(true);
-        
-        leftClaw.setNeutralMode(NeutralMode.Coast);
-        rightClaw.setNeutralMode(NeutralMode.Coast);
+        claw.setInverted(false);
+        claw.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true,30,30,1.0));
+        claw.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true,30,30,1.0));
 
-        rightClaw.follow(leftClaw);
+
+
+        claw.setNeutralMode(NeutralMode.Brake);
+
     }
 
     public void moveClaw(double output){
-        leftClaw.set(output * 0.2);
-        rightClaw.set(output * 0.2);
-        
+        //claw.set(output * 0.2);
         this.output = output;
-        // rightClaw.set(ControlMode.PercentOutput, output);
+
+        claw.set(ControlMode.PercentOutput, output);
+        //percent output ouputs as a percentange from -1 to 1 with 0 stopping the motor
+        //other modes are current mode, where the output is in amps,
+        //position mode, where the output is in encoder ticks or analog values
+        //and follower mode, where the output is the interger device ID (idk what this is)
     }
 
     public double getOutput() {
         return output;
     }
 
-    public void actuateClaw(boolean out) {
-        if (out){
-            clawSolenoid.set(Value.kForward);
-        }
-        else{
-            clawSolenoid.set(Value.kReverse);
-        }
-    }
 
-    public boolean isActuated() {   
-        if(clawSolenoid.get() == Value.kReverse) {
-            return true;
-        }
-        return false;
+
+    public double getVelocity() {
+        return claw.getSelectedSensorVelocity();
     }
 
     @Override
     public void periodic() {
-        // SmartDashboard.putBoolean("[Intake] isActuated", isActuated());
+        SmartDashboard.putNumber("[Claw] RPM", getVelocity());
     }
 }
