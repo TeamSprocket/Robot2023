@@ -296,10 +296,14 @@ public final class RobotContainer {
 
 
 		// Macro Recorder Test
-		return (Command) (new SequentialCommandGroup(
-			new ParseAuton(swerveDrive, elevator, arm, wrist, claw)
+		// return (Command) (new SequentialCommandGroup(
+			// new ParseAuton(swerveDrive, elevator, arm, wrist, claw)
 			// new PIDTurnTimed(swerveDrive, Math.PI, 3),
 			// new BalanceOnChargeStation(swerveDrive, 0.035)
+		// ));
+
+		return (Command) (new SequentialCommandGroup(
+			new OneMeterForward(swerveDrive)
 		));
 
 
@@ -394,11 +398,11 @@ public final class RobotContainer {
         if (time - (int) (time) != last) {
             last = time - (int) (time);
 
-            //System.out.print("AutonLog: ");
+            System.out.print("AutonLog: ");
 			for (double num : desiredStates) {
-				//System.out.print(num + " ");
+				System.out.print(num + " ");
 			}
-			//System.out.println();
+			System.out.println();
         }
 	}
 

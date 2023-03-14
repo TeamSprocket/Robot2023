@@ -23,7 +23,7 @@ public class OneMeterForward extends CommandBase {
     this.swerveDrive = swerveDrive;
 
     this.controller = new PIDController(Constants.Auton.kPBalance, Constants.Auton.kIBalance, Constants.Auton.kDBalance);
-    
+    controller.setSetpoint(1); 
   }
 
   // Called when the command is initially scheduled.
@@ -36,14 +36,19 @@ public class OneMeterForward extends CommandBase {
   @Override
   public void execute() {
     double angle = 0;
-    double output = controller.calculate(swerveDrive.getDrivePosition(), 1);
-    SmartDashboard.putNumber("Drive Position Output PID", output);
+    double output = controller.calculate(swerveDrive.getDrivePosition());
+    
     // if (output >= 0.02) {
       // output = 0.02;
     // }
     // if (output <= -0.02) {
       // output = -0.02;
     // }
+
+    if (swerveDrive.getDrivePosition() > 1.0) {
+      // output = -output;
+      System.out.println("NEGATIVE");
+    }
 
     ChassisSpeeds chassisSpeeds;
     if (Constants.Drivetrain.IS_FIELD_ORIENTED) {
@@ -60,20 +65,23 @@ public class OneMeterForward extends CommandBase {
     // Apply to modules
     swerveDrive.setModuleStates(moduleStates);
 
-    
+    SmartDashboard.putNumber("Drive Position", swerveDrive.getDrivePosition());
+    SmartDashboard.putNumber("Drive Position Output PID", output);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    swerveDrive.stopModules();
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    double offset = Math.abs(1 - swerveDrive.getDrivePosition());
-    if (offset < 0.1) {
-      return true;
-    }
+    // double offset = Math.abs(1 - swerveDrive.getDrivePosition());
+    // if (offset < 0.01) {
+    //   return true;
+    // }
     return false;
   }
 }
