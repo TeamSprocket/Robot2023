@@ -316,20 +316,6 @@ public final class RobotContainer {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 		//////////////////////////////////////////
 
 
@@ -414,11 +400,11 @@ public final class RobotContainer {
         if (time - (int) (time) != last) {
             last = time - (int) (time);
 
-            System.out.print("AutonLog: ");
+            //System.out.print("AutonLog: ");
 			for (double num : desiredStates) {
-				System.out.print(num + " ");
+				//System.out.print(num + " ");
 			}
-			System.out.println();
+			//System.out.println();
         }
 	}
 
