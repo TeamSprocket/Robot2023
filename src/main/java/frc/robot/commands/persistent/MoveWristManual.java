@@ -43,6 +43,12 @@ public class MoveWristManual extends PersistentCommand {
 
             if (wrist.getWristAngle() < 50 && wrist.getWristAngle() > 0) {
                 output -= 0.05;
+                if (wrist.getWristAngle() < 40) {
+                    output -= 0.05;
+                }
+            }
+            if (wrist.getWristAngle() < 0) {
+                output += 0.05;
             }
             wrist.moveWrist(output);
         }
