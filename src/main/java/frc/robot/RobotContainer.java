@@ -209,7 +209,7 @@ public final class RobotContainer {
 		// ^ i changed it to "Test Path" so it should load "Test Path.path"
 		// velocity of 4 m/s and a max acceleration of 3 m/s^2
 		// PathPlannerTrajectory testPath = PathPlanner.loadPath("Test Path", new PathConstraints(4, 3));
-		PathPlannerTrajectory straight = PathPlanner.loadPath("Straight", new PathConstraints(4, 3));
+		PathPlannerTrajectory straight = PathPlanner.loadPath("Straight", new PathConstraints(0.05, 0.05));
 		PathPlannerTrajectory pathAndEvent = PathPlanner.loadPath("Event Tests", new PathConstraints(4, 3));
 		
 		List<PathPlannerTrajectory> pathGroupTest1 = PathPlanner.loadPathGroup("Event Tests", new PathConstraints(4, 3));
