@@ -210,23 +210,23 @@ public final class RobotContainer {
 		// velocity of 4 m/s and a max acceleration of 3 m/s^2
 		// PathPlannerTrajectory testPath = PathPlanner.loadPath("Test Path", new PathConstraints(4, 3));
 		PathPlannerTrajectory straight = PathPlanner.loadPath("Straight", new PathConstraints(0.05, 0.05));
-		PathPlannerTrajectory pathAndEvent = PathPlanner.loadPath("Event Tests", new PathConstraints(4, 3));
+		// PathPlannerTrajectory pathAndEvent = PathPlanner.loadPath("Event Tests", new PathConstraints(4, 3));
 		
-		List<PathPlannerTrajectory> pathGroupTest1 = PathPlanner.loadPathGroup("Event Tests", new PathConstraints(4, 3));
-		List<PathPlannerTrajectory> pathGroupTest2 = PathPlanner.loadPathGroup(
-			"Event Tests", 
-			new PathConstraints(4, 3), 
-			new PathConstraints(1, 1),
-			new PathConstraints(2, 2));
+		// List<PathPlannerTrajectory> pathGroupTest1 = PathPlanner.loadPathGroup("Event Tests", new PathConstraints(4, 3));
+		// List<PathPlannerTrajectory> pathGroupTest2 = PathPlanner.loadPathGroup(
+		// 	"Event Tests", 
+		// 	new PathConstraints(4, 3), 
+		// 	new PathConstraints(1, 1),
+		// 	new PathConstraints(2, 2));
 
-		HashMap<String, Command> eventMap = new HashMap<>();
-		eventMap.put("Marker 1", new PrintCommand("Passed Marker 1"));
-		eventMap.put("Deport Arm", new DeportArm(elevator, arm, wrist)); // TODO: check to make sure of wat deport arm does
+		// HashMap<String, Command> eventMap = new HashMap<>();
+		// eventMap.put("Marker 1", new PrintCommand("Passed Marker 1"));
+		// eventMap.put("Deport Arm", new DeportArm(elevator, arm, wrist)); // TODO: check to make sure of wat deport arm does
  
-		FollowPathWithEvents command = new FollowPathWithEvents(
-			swerveDrive.followTrajectoryCommand(pathAndEvent, true), 
-			pathAndEvent.getMarkers(), 
-			eventMap);
+		// FollowPathWithEvents command = new FollowPathWithEvents(
+		// 	swerveDrive.followTrajectoryCommand(pathAndEvent, true), 
+		// 	pathAndEvent.getMarkers(), 
+		// 	eventMap);
 
 		// auton = command;
 		
