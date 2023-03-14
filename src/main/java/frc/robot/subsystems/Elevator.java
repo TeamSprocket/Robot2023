@@ -14,6 +14,8 @@ import frc.robot.RobotMap;
 
 public class Elevator extends SubsystemBase{
     
+    private double output = 0;
+
     private CANSparkMax elevatorLeft = new CANSparkMax(RobotMap.Elevator.ELEVATOR_LEFT, MotorType.kBrushless);
     private CANSparkMax elevatorRight = new CANSparkMax(RobotMap.Elevator.ELEVATOR_RIGHT, MotorType.kBrushless);
 
@@ -49,7 +51,14 @@ public class Elevator extends SubsystemBase{
     
     public void moveElevator(double output){
         elevatorLeft.set(output);
+        this.output = output;
     }
+
+    public double getOutput() {
+        return output;
+    }
+
+
 
     public void setElevatorPosition(double currentPosition, double setpoint){
         double output = elevatorPIDController.calculate(currentPosition, setpoint);

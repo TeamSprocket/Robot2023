@@ -14,6 +14,8 @@ import frc.robot.Constants;
 
 public class Claw extends SubsystemBase{
 
+    private double output = 0;
+
     private final WPI_TalonFX leftClaw = new WPI_TalonFX(RobotMap.Claw.CLAW_LEFT);
     private final WPI_TalonFX rightClaw = new WPI_TalonFX(RobotMap.Claw.CLAW_RIGHT);
 
@@ -32,7 +34,13 @@ public class Claw extends SubsystemBase{
     public void moveClaw(double output){
         leftClaw.set(output * 0.2);
         rightClaw.set(output * 0.2);
+        
+        this.output = output;
         // rightClaw.set(ControlMode.PercentOutput, output);
+    }
+
+    public double getOutput() {
+        return output;
     }
 
     public void actuateClaw(boolean out) {

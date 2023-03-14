@@ -15,6 +15,9 @@ import frc.robot.commands.macro.SetHome;
 import frc.robot.commands.macro.SetLow;
 import frc.robot.commands.macro.timed.DeportArm;
 import frc.robot.commands.macro.timed.RollClawTimed;
+import frc.robot.commands.macro.timed.SetHighTimed;
+import frc.robot.commands.macro.timed.SetHomeTimed;
+import frc.robot.commands.macro.timed.SetLowTimed;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Elevator;
@@ -73,22 +76,30 @@ public class ParseAuton extends CommandBase {
 
         swerveDrive.setModuleStates(states);
 
-        if (auton[cur][8] == 1.0) {
-          new DeportArm(elevator, arm, wrist);
-        } 
-        else if (auton[cur][9] == 1.0) {
-          new SetHigh(elevator, arm, wrist);
-        }
-        else if (auton[cur][10] == 1.0) {
-          new SetLow(elevator, arm, wrist);
-        }
-        else if (auton[cur][11] == 1.0) {
-          new SetHome(elevator, arm, wrist);
-        }
+        // if (auton[cur][8] == 1.0) {
 
-        if (auton[cur][12] != 0.0) {
-          new RollClawTimed(claw, 0.1);
-        }
+          System.out.println(auton[cur][8]*2);
+          elevator.moveElevator(auton[cur][8]*2);
+          // System.out.println("RUNNING SET LOCATION COMMAND");
+        // } 
+        // else if (auton[cur][9] == 1.0) {
+          arm.moveArm(auton[cur][9] * 2);
+          // System.out.println("RUNNING SET LOCATION COMMAND");
+        // }
+        // else if (auton[cur][10] == 1.0) {
+          wrist.moveWrist(auton[cur][10]);
+          // System.out.println("RUNNING SET LOCATION COMMAND");
+        // }
+        // else if (auton[cur][11] == 1.0) {
+          claw.moveClaw(auton[cur][11]);
+          // System.out.println("RUNNING SET LOCATION COMMAND");
+        // }
+
+
+        // if (auton[cur][12] != 0.0) {
+          // new RollClawTimed(claw, auton[cur][12], 0.09);
+          // System.out.println("RUNNING SET LOCATION COMMAND");
+        // }
         
 
 
