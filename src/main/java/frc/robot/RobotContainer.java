@@ -78,10 +78,11 @@ import java.time.Instant;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
+import com.pathplanner.lib.commands.FollowPathWithEvents;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
-
+// import com.pathplanner.lib.getPathFollowingCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 
 /**
@@ -200,20 +201,45 @@ public final class RobotContainer {
 	// AUTON
 	// public Command getAutonomousCommand() {
 	public Command getAutonomousCommand() {
+		
+		Command auton; // just makin da variable
 
+		PathConstraints pathConstraints = new PathConstraints(4, 3);
 		// This will load the file "Example Path.path" and generate it with a max
 		// ^ i changed it to "Test Path" so it should load "Test Path.path"
 		// velocity of 4 m/s and a max acceleration of 3 m/s^2
 		// PathPlannerTrajectory testPath = PathPlanner.loadPath("Test Path", new PathConstraints(4, 3));
-		// PathPlannerTrajectory straight = PathPlanner.loadPath("Straight", new PathConstraints(0.05, 0.05));
-		PathPlannerTrajectory straight = PathPlanner.loadPath("Straight", new PathConstraints(0.05, 0.05));
+		PathPlannerTrajectory straight = PathPlanner.loadPath("Straight", pathConstraints);
+		PathPlannerTrajectory pathAndEvent = PathPlanner.loadPath("Event Tests", pathConstraints);
 		
+		List<PathPlannerTrajectory> pathGroupTest1 = PathPlanner.loadPathGroup("Event Tests", pathConstraints);
+		List<PathPlannerTrajectory> pathGroupTest2 = PathPlanner.loadPathGroup(
+			"Event Tests", 
+			new PathConstraints(4, 3), 
+			new PathConstraints(1, 1),
+			new PathConstraints(2, 2));
 
+		HashMap<String, Command> eventMap = new HashMap<>();
+		eventMap.put("Marker 1", new PrintCommand("Passed Marker 1"));
+		eventMap.put("Deport Arm", new DeportArm(elevator, arm, wrist)); // TODO: check to make sure of wat deport arm does
+ 
+		FollowPathWithEvents command = new FollowPathWithEvents(
+			swerveDrive.followTrajectoryCommand(pathAndEvent, true), 
+			pathAndEvent.getMarkers(), 
+			eventMap);
+
+
+		
+		
 		// This trajectory can then be passed to a path follower such as a
 		// PPSwerveControllerCommand
 		// followTrajectoryCommand parameters are PathPlannerTrajectory name and boolean isFirstPath
 		// return swerveDrive.followTrajectoryCommand(testPath, true);
-		return swerveDrive.followTrajectoryCommand(straight, true);
+		auton = swerveDrive.followTrajectoryCommand(straight, true); // this one only goes straight
+		
+		
+		
+		return auton;
 
 		// Or the path can be sampled at a given point in time for custom path following
 
