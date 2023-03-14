@@ -26,6 +26,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.SwerveDriveCmd;
@@ -213,27 +214,33 @@ public final class RobotContainer {
 		PathPlannerTrajectory startReverse = PathPlanner.loadPath("Start Reverse", new PathConstraints(0.05, 0.05));
 		PathPlannerTrajectory forwardThenReverse = PathPlanner.loadPath("Forward Then Reverse", new PathConstraints(0.05, 0.05));
 		PathPlannerTrajectory outAndBack = PathPlanner.loadPath("Out And Back", new PathConstraints(0.05, 0.05)); // OVER HERE THIS IS THE PATH THAT JASON WANTS TESTED 
-		// BUT MAKE OUT AND BACK START REVERSE
 		PathPlannerTrajectory pathAndEvent = PathPlanner.loadPath("Event Tests", new PathConstraints(4, 3));
 		
-		// // List<PathPlannerTrajectory> pathGroupTest1 = PathPlanner.loadPathGroup("Event Tests", new PathConstraints(4, 3));
-		// List<PathPlannerTrajectory> pathGroupTest = PathPlanner.loadPathGroup(
-		// 	"Event Tests", 
-		// 	new PathConstraints(4, 3), 
-		// 	new PathConstraints(1, 1),
-		// 	new PathConstraints(2, 2));
-
+		// Path Group maybe not needed?
+		//
+		// List<PathPlannerTrajectory> pathGroupTest1 = PathPlanner.loadPathGroup("Event Tests", new PathConstraints(4, 3));
+		List<PathPlannerTrajectory> autoPath = PathPlanner.loadPathGroup(
+			"Event Tests", 
+			new PathConstraints(0.05, 0.05));
 
 		// auton = pathGroupTest;
 
-		// HashMap<String, Command> eventMap = new HashMap<>();
-		// eventMap.put("Marker 1", new PrintCommand("Passed Marker 1"));
+		HashMap<String, Command> eventMap = new HashMap<>();
+		eventMap.put("Marker 1", new PrintCommand("Passed Marker 1"));
+		eventMap.put("Marker 2", new PrintCommand("Passed Marker 2"));
 		// // eventMap.put("Deport Arm", new DeportArm(elevator, arm, wrist)); // TODO: check to make sure of wat deport arm does
- 
-		// FollowPathWithEvents command = new FollowPathWithEvents(
-		// 	swerveDrive.followTrajectoryCommand(pathAndEvent, true), 
-		// 	pathAndEvent.getMarkers(), 
-		// 	eventMap);
+
+		Command pathGroupTest = 
+			new SequentialCommandGroup(
+				new FollowPathWithEvents(
+					swerveDrive.followTrajectoryCommand(autoPath.get(0), true),
+					autoPath.get(0).getMarkers(),eventMap),
+				new WaitCommand(5),
+				new FollowPathWithEvents(
+					swerveDrive.followTrajectoryCommand(autoPath.get(1), false),
+					autoPath.get(1).getMarkers(),eventMap)
+				);
+
 
 		// auton = command;
 		

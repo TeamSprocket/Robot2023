@@ -28,7 +28,7 @@
         "y": 4.5
       },
       "prevControl": {
-        "x": 12.354926478862005,
+        "x": 15.645073521137995,
         "y": 4.5
       },
       "nextControl": null,
@@ -39,7 +39,7 @@
       "isStopPoint": false,
       "stopEvent": {
         "names": [],
-        "executionBehavior": "parallel",
+        "executionBehavior": "sequential",
         "waitBehavior": "none",
         "waitTime": 0
       }
