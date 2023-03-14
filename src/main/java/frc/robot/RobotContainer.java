@@ -209,37 +209,37 @@ public final class RobotContainer {
 		// This will load the file "Example Path.path" and generate it with a max
 		// ^ i changed it to "Test Path" so it should load "Test Path.path"
 		// velocity of 4 m/s and a max acceleration of 3 m/s^2
-		PathPlannerTrajectory testPath = PathPlanner.loadPath("Test Path", new PathConstraints(4, 3));
-		PathPlannerTrajectory straight = PathPlanner.loadPath("Straight", new PathConstraints(0.05, 0.05));
-		PathPlannerTrajectory startReverse = PathPlanner.loadPath("Start Reverse", new PathConstraints(0.025, 0.025));
-		PathPlannerTrajectory forwardThenReverse = PathPlanner.loadPath("Forward Then Reverse", new PathConstraints(0.015, 0.015));
-		PathPlannerTrajectory outAndBack = PathPlanner.loadPath("Out And Back", new PathConstraints(0.025, 0.025)); // OVER HERE THIS IS THE PATH THAT JASON WANTS TESTED 
-		PathPlannerTrajectory pathAndEvent = PathPlanner.loadPath("Event Tests", new PathConstraints(4, 3));
+		// PathPlannerTrajectory testPath = PathPlanner.loadPath("Test Path", new PathConstraints(4, 3));
+		// PathPlannerTrajectory straight = PathPlanner.loadPath("Straight", new PathConstraints(0.05, 0.05));
+		PathPlannerTrajectory startReverse = PathPlanner.loadPath("Start Reverse", new PathConstraints(0.015, 0.015), true);
+		// PathPlannerTrajectory forwardThenReverse = PathPlanner.loadPath("Forward Then Reverse", new PathConstraints(0.015, 0.015));
+		// PathPlannerTrajectory outAndBack = PathPlanner.loadPath("Out And Back", new PathConstraints(0.025, 0.025)); // OVER HERE THIS IS THE PATH THAT JASON WANTS TESTED 
+		// PathPlannerTrajectory pathAndEvent = PathPlanner.loadPath("Event Tests", new PathConstraints(0.025, 0.025));
 		
 		// Path Group maybe not needed?
 		//
 		// List<PathPlannerTrajectory> pathGroupTest1 = PathPlanner.loadPathGroup("Event Tests", new PathConstraints(4, 3));
-		List<PathPlannerTrajectory> autoPath = PathPlanner.loadPathGroup(
-			"Event Tests", 
-			new PathConstraints(0.05, 0.05));
+		// List<PathPlannerTrajectory> autoPath = PathPlanner.loadPathGroup(
+		// 	"Event Tests", 
+		// 	new PathConstraints(0.025, 0.025));
 
 		// auton = pathGroupTest;
 
-		HashMap<String, Command> eventMap = new HashMap<>();
-		eventMap.put("Marker 1", new PrintCommand("Passed Marker 1"));
-		eventMap.put("Marker 2", new PrintCommand("Passed Marker 2"));
-		// // eventMap.put("Deport Arm", new DeportArm(elevator, arm, wrist)); // TODO: check to make sure of wat deport arm does
+		// HashMap<String, Command> eventMap = new HashMap<>();
+		// eventMap.put("Marker 1", new PrintCommand("Passed Marker 1"));
+		// eventMap.put("Marker 2", new PrintCommand("Passed Marker 2"));
+		// // // eventMap.put("Deport Arm", new DeportArm(elevator, arm, wrist)); // TODO: check to make sure of wat deport arm does
 
-		Command pathGroupTest = 
-			new SequentialCommandGroup(
-				new FollowPathWithEvents(
-					swerveDrive.followTrajectoryCommand(autoPath.get(0), true),
-					autoPath.get(0).getMarkers(),eventMap),
-				new WaitCommand(5),
-				new FollowPathWithEvents(
-					swerveDrive.followTrajectoryCommand(autoPath.get(1), false),
-					autoPath.get(1).getMarkers(),eventMap)
-				);
+		// Command pathGroupTest = 
+		// 	new SequentialCommandGroup(
+		// 		new FollowPathWithEvents(
+		// 			swerveDrive.followTrajectoryCommand(autoPath.get(0), true),
+		// 			autoPath.get(0).getMarkers(),eventMap),
+		// 		new WaitCommand(5),
+		// 		new FollowPathWithEvents(
+		// 			swerveDrive.followTrajectoryCommand(autoPath.get(1), false),
+		// 			autoPath.get(1).getMarkers(),eventMap)
+		// 		);
 
 
 		// auton = command;
@@ -250,10 +250,10 @@ public final class RobotContainer {
 		// followTrajectoryCommand parameters are PathPlannerTrajectory name and boolean isFirstPath
 		// return swerveDrive.followTrajectoryCommand(testPath, true);
 		// auton = swerveDrive.followTrajectoryCommand(straight, true); // this one only goes straight
-		// auton = swerveDrive.followTrajectoryCommand(startReverse, false); //TODO: test this (should start in reverse)
-		auton = swerveDrive.followTrajectoryCommand(forwardThenReverse, true); // TODO: test this if start in reverse isn't working
-		// auton = swerveDrive.followTrajectoryCommand(outAndBack, true); // u alr kno what it does 
-		
+		auton = swerveDrive.followTrajectoryCommand(startReverse, true); //TODO: test this (should start in reverse)
+		// auton = swerveDrive.followTrajectoryCommand(forwardThenReverse, true); // TODO: test this if start in reverse isn't working
+		// auton = swerveDrive.followT	rajectoryCommand(outAndBack, true); // u alr kno what it does 
+		//    auton = pathGroupTest;
 		
 		
 		return auton;
