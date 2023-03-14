@@ -228,7 +228,7 @@ public final class RobotContainer {
 			pathAndEvent.getMarkers(), 
 			eventMap);
 
-
+		// auton = command;
 		
 		
 		// This trajectory can then be passed to a path follower such as a
