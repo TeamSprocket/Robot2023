@@ -213,16 +213,19 @@ public final class RobotContainer {
 		// PathPlannerTrajectory outAndBack = PathPlanner.loadPath("Out And Back", new PathConstraints(0.05, 0.05)); // OVER HERE THIS IS THE PATH THAT JASON WANTS TESTED
 		// PathPlannerTrajectory pathAndEvent = PathPlanner.loadPath("Event Tests", new PathConstraints(4, 3));
 		
-		// List<PathPlannerTrajectory> pathGroupTest1 = PathPlanner.loadPathGroup("Event Tests", new PathConstraints(4, 3));
-		// List<PathPlannerTrajectory> pathGroupTest2 = PathPlanner.loadPathGroup(
+		// // List<PathPlannerTrajectory> pathGroupTest1 = PathPlanner.loadPathGroup("Event Tests", new PathConstraints(4, 3));
+		// List<PathPlannerTrajectory> pathGroupTest = PathPlanner.loadPathGroup(
 		// 	"Event Tests", 
 		// 	new PathConstraints(4, 3), 
 		// 	new PathConstraints(1, 1),
 		// 	new PathConstraints(2, 2));
 
+
+		// auton = pathGroupTest;
+
 		// HashMap<String, Command> eventMap = new HashMap<>();
 		// eventMap.put("Marker 1", new PrintCommand("Passed Marker 1"));
-		// eventMap.put("Deport Arm", new DeportArm(elevator, arm, wrist)); // TODO: check to make sure of wat deport arm does
+		// // eventMap.put("Deport Arm", new DeportArm(elevator, arm, wrist)); // TODO: check to make sure of wat deport arm does
  
 		// FollowPathWithEvents command = new FollowPathWithEvents(
 		// 	swerveDrive.followTrajectoryCommand(pathAndEvent, true), 
