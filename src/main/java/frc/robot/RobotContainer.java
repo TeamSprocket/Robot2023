@@ -211,6 +211,7 @@ public final class RobotContainer {
 		PathPlannerTrajectory testPath = PathPlanner.loadPath("Test Path", new PathConstraints(4, 3));
 		PathPlannerTrajectory straight = PathPlanner.loadPath("Straight", new PathConstraints(0.05, 0.05));
 		PathPlannerTrajectory startReverse = PathPlanner.loadPath("Start Reverse", new PathConstraints(0.05, 0.05));
+		PathPlannerTrajectory forwardThenReverse = PathPlanner.loadPath("Forward Then Reverse", new PathConstraints(0.05, 0.05));
 		PathPlannerTrajectory outAndBack = PathPlanner.loadPath("Out And Back", new PathConstraints(0.05, 0.05)); // OVER HERE THIS IS THE PATH THAT JASON WANTS TESTED 
 		// BUT MAKE OUT AND BACK START REVERSE
 		PathPlannerTrajectory pathAndEvent = PathPlanner.loadPath("Event Tests", new PathConstraints(4, 3));
@@ -242,7 +243,8 @@ public final class RobotContainer {
 		// followTrajectoryCommand parameters are PathPlannerTrajectory name and boolean isFirstPath
 		// return swerveDrive.followTrajectoryCommand(testPath, true);
 		// auton = swerveDrive.followTrajectoryCommand(straight, true); // this one only goes straight
-		auton = swerveDrive.followTrajectoryCommand(startReverse, true);
+		auton = swerveDrive.followTrajectoryCommand(startReverse, true); //TODO: test this (should start in reverse)
+		// auton = swerveDrive.followTrajectoryCommand(forwardThenReverse, true); // TODO: test this if start in reverse isn't working
 		// auton = swerveDrive.followTrajectoryCommand(outAndBack, true); // u alr kno what it does 
 		
 		
