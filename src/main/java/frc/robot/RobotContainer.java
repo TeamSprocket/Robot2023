@@ -83,7 +83,7 @@ import frc.robot.Constants;
 public final class RobotContainer {
 	Timer timer;
 	double last = 0.0;
-	double[] desiredStates = new double[13];
+	double[] desiredStates = new double[12];
 
 	//Controllers
 	private final XboxController driver = new XboxController(0);
@@ -297,9 +297,9 @@ public final class RobotContainer {
 
 		// Macro Recorder Test
 		return (Command) (new SequentialCommandGroup(
-			new ParseAuton(swerveDrive, elevator, arm, wrist, claw),
+			new ParseAuton(swerveDrive, elevator, arm, wrist, claw)
 			// new PIDTurnTimed(swerveDrive, Math.PI, 3),
-			new BalanceOnChargeStation(swerveDrive, 0.035)
+			// new BalanceOnChargeStation(swerveDrive, 0.035)
 		));
 
 
@@ -383,16 +383,10 @@ public final class RobotContainer {
 			desiredStates[7] = 0;
 		}
 
-		desiredStates[8] = booleanToDouble(operator.getRightBumper());
-		desiredStates[9] = booleanToDouble(operator.getAButton());
-		desiredStates[10] = booleanToDouble(operator.getYButton());
-		desiredStates[11] = booleanToDouble(operator.getXButton());
-
-		desiredStates[12] = (driver.getRightTriggerAxis() - driver.getLeftTriggerAxis());
-
-		
-
-
+		desiredStates[8] = elevator.getOutput();
+		desiredStates[9] = arm.getOutput();
+		desiredStates[10] = wrist.getOutput();
+		desiredStates[11] = claw.getOutput();
 		
 		
         double time = Math.round(timer.get() * 10) / 10.0;
