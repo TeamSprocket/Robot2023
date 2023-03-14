@@ -41,6 +41,7 @@ import frc.robot.commands.auton.ParseAuton;
 import frc.robot.commands.auton.WaitTimed;
 
 import frc.robot.commands.macro.ElevatePosition;
+import frc.robot.commands.macro.LimelightAlign;
 import frc.robot.commands.macro.MoveArmPosition;
 import frc.robot.commands.macro.MoveWristAngle;
 import frc.robot.commands.macro.SetHigh;
@@ -151,6 +152,7 @@ public final class RobotContainer {
 		// Swerve Drive (instant command reset heading)
 		new JoystickButton(driver,
 		 	RobotMap.Controller.RESET_GYRO_HEADING_BUTTON_ID).whenPressed(() -> swerveDrive.zeroHeading());
+		new JoystickButton(driver, 2).whenPressed(new LimelightAlign(swerveDrive, 1));
 		// new JoystickButton(driver, 2).whenPressed(() -> swerveDrive.zeroTalons());
 		// new JoystickButton(driver, 3).whenHeld(new ShootClaw(10));
 		

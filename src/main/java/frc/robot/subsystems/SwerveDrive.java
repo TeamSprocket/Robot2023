@@ -142,7 +142,7 @@ public class SwerveDrive extends SubsystemBase {
     
     }
 
-    // Get gyro angle from -360 to 360
+    // Get gyro angle from 0 to 360
     public double getHeading() {
         double angle = gyro.getAngle() % 360.0;
         if (angle < 0) {
