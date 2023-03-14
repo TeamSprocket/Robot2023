@@ -228,14 +228,13 @@ public class SwerveDrive extends SubsystemBase {
                         // this.driveKinematics, // SwerveDriveKinematics
                         // TODO: FOR ALL PIDController CHANGE THE VALUES ACCORDINGLY
                         // NEED TESTING
-                        new PIDController(0.00000000000000000000001, 0, 0), // X controller. Tune these values for your robot. Leaving them 0
+                        new PIDController(0, 0, 0), // X controller. Tune these values for your robot. Leaving them 0
                                                     // will only use feedforwards.
-                        new PIDController(0.00000000000000000000001, 0, 0), // Y controller (usually the same values as X controller)
+                        new PIDController(0, 0, 0), // Y controller (usually the same values as X controller)
                         new PIDController(Constants.Drivetrain.kPTurn, Constants.Drivetrain.kITurn, Constants.Drivetrain.kDTurn), // Rotation controller. Tune these values for your robot. Leaving
                                                     // them 0 will only use feedforwards.
+                        // new PIDController(0, 0, 0),
                         this::setModuleStates, // Module states consumer
-                        true, // Should the path be automatically mirrored depending on alliance color.
-                              // Optional, defaults to true
                         this // Requires this drive subsystem
                 ));
     }
