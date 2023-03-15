@@ -16,8 +16,6 @@ import frc.robot.Constants;
 
 public class Wrist extends SubsystemBase {
 
-    private double output = 0;
-
     private final CANSparkMax wrist = new CANSparkMax(RobotMap.Wrist.WRIST, MotorType.kBrushless);
     
     private PIDController wristPIDController = new PIDController(Constants.Wrist.P, Constants.Wrist.I, Constants.Wrist.D);
@@ -42,11 +40,6 @@ public class Wrist extends SubsystemBase {
 
     public void moveWrist(double output) {
         wrist.set(output); 
-        this.output = output;
-    }
-
-    public double getOutput() {
-        return output;
     }
 
     public void setWristAngle(double currentAngle, double setpoint){

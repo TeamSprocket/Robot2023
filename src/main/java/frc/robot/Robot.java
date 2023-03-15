@@ -41,6 +41,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
+        robotContainer.setSwerveDriveCurrentLimitTurn(Constants.Drivetrain.CURRENT_LIMIT_TURN);
     }
 
     /**

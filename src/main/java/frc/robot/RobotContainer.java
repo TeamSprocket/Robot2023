@@ -33,11 +33,11 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.SwerveDriveCmd;
 import frc.robot.commands.auton.BalanceOnChargeStation;
-import frc.robot.commands.auton.DeportArmTimed;
+// import frc.robot.commands.auton.DeportArmTimed;
 // import frc.robot.commands.auton.BalanceOnChargeStationVertical;
 import frc.robot.commands.auton.PIDDriveTimed;
 import frc.robot.commands.auton.PIDTurnTimed;
-import frc.robot.commands.auton.ParseAuton;
+// import frc.robot.commands.auton.ParseAuton;
 // import frc.robot.commands.auton.SwerveAutonTest;
 import frc.robot.commands.auton.WaitTimed;
 
@@ -86,7 +86,7 @@ import frc.robot.Constants;
 public final class RobotContainer {
 	Timer timer;
 	double last = 0.0;
-	double[] desiredStates = new double[12];
+	double[] desiredStates = new double[13];
 
 	//Controllers
 	private final XboxController driver = new XboxController(0);
@@ -208,6 +208,14 @@ public final class RobotContainer {
 
 	}
 
+	public void setSwerveDriveCurrentLimitTurn(double currentLimit) {
+		swerveDrive.setCurrentLimitTurn(currentLimit);
+	}
+
+	public void setSwerveDriveCurrentLimitDrive(double currentLimit) {
+		swerveDrive.setCurrentLimitDrive(currentLimit);
+	}
+
 
 	// AUTON
 	// public Command getAutonomousCommand() {
@@ -220,8 +228,8 @@ public final class RobotContainer {
 		// )); 
 
 		// Do nothing (0)
-		return (Command) (new SequentialCommandGroup(
-		));
+		// return (Command) (new SequentialCommandGroup(
+		// ));
 
 		// Move back (4)
 		// return (Command) (new SequentialCommandGroup(
@@ -373,6 +381,11 @@ public final class RobotContainer {
 			// new PIDDriveTimed(swerveDrive, -2, 0,5)
 		
 		// ));
+		return (Command) (new SequentialCommandGroup(
+			// new ParseAuton(swerveDrive, elevator, arm, wrist, claw),
+			// // new PIDTurnTimed(swerveDrive, Math.PI, 3),
+			// new BalanceOnChargeStation(swerveDrive, 0.035)
+		));
 
 
 		
@@ -455,10 +468,16 @@ public final class RobotContainer {
 			desiredStates[7] = 0;
 		}
 
-		desiredStates[8] = elevator.getOutput();
-		desiredStates[9] = arm.getOutput();
-		desiredStates[10] = wrist.getOutput();
-		desiredStates[11] = claw.getOutput();
+		desiredStates[8] = booleanToDouble(operator.getRightBumper());
+		desiredStates[9] = booleanToDouble(operator.getAButton());
+		desiredStates[10] = booleanToDouble(operator.getYButton());
+		desiredStates[11] = booleanToDouble(operator.getXButton());
+
+		desiredStates[12] = (driver.getRightTriggerAxis() - driver.getLeftTriggerAxis());
+
+		
+
+
 		
 		
         double time = Math.round(timer.get() * 10) / 10.0;

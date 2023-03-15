@@ -12,8 +12,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Arm extends SubsystemBase {
     
-    private double output = 0;
-
     private final CANSparkMax armLeft = new CANSparkMax(RobotMap.Arm.ARM_LEFT,MotorType.kBrushless);
     private final CANSparkMax armRight = new CANSparkMax(RobotMap.Arm.ARM_RIGHT, MotorType.kBrushless);
 
@@ -41,11 +39,6 @@ public class Arm extends SubsystemBase {
 
     public void moveArm(double output){
         armLeft.set(output);
-        this.output = output;
-    }
-
-    public double getOutput() {
-        return output;
     }
 
     public void setArmAngleManual(double currentAngle, double setpoint){

@@ -93,6 +93,20 @@ public class SwerveDrive extends SubsystemBase {
         backRight.zeroDrive();
     }
 
+    public void setCurrentLimitTurn(double currentLimit) {
+        frontLeft.setCurrentLimitTurn(currentLimit);
+        frontRight.setCurrentLimitTurn(currentLimit);
+        backLeft.setCurrentLimitTurn(currentLimit);
+        backRight.setCurrentLimitTurn(currentLimit);
+    }
+
+    public void setCurrentLimitDrive(double currentLimit) {
+        frontLeft.setCurrentLimitDrive(currentLimit);
+        frontRight.setCurrentLimitDrive(currentLimit);
+        backLeft.setCurrentLimitDrive(currentLimit);
+        backRight.setCurrentLimitDrive(currentLimit);
+    }
+
     public SwerveDrive() {
         this.timer = new Timer();
         timer.reset();
