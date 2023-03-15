@@ -154,7 +154,7 @@ public final class RobotContainer {
 		// Swerve Drive (instant command reset heading)
 		new JoystickButton(driver,
 		 	RobotMap.Controller.RESET_GYRO_HEADING_BUTTON_ID).whenPressed(() -> swerveDrive.zeroHeading());
-		new JoystickButton(driver, 2).whenHeld(new LimelightAlign(swerveDrive));
+		// new JoystickButton(driver, 2).whenHeld(new LimelightAlign(swerveDrive));
 		// new JoystickButton(driver, 2).whenPressed(() -> swerveDrive.zeroTalons());
 		// new JoystickButton(driver, 3).whenHeld(new ShootClaw(10));
 		
@@ -220,8 +220,8 @@ public final class RobotContainer {
 		// )); 
 
 		// Do nothing (0)
-		// return (Command) (new SequentialCommandGroup(
-		// ));
+		return (Command) (new SequentialCommandGroup(
+		));
 
 		// Move back (4)
 		// return (Command) (new SequentialCommandGroup(
@@ -310,24 +310,24 @@ public final class RobotContainer {
 		// 	new PIDDriveTimed(swerveDrive, 1)
 		// ));
 
-		return (Command) (new SequentialCommandGroup(
-			new ParallelCommandGroup(
-				new SequentialCommandGroup(
-					new DeportArm(elevator, arm, wrist, 1),
-					new ParallelCommandGroup(
-						new SetHighTimed(elevator, arm, wrist, 2),
-						new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.5, new Rotation2d(0.0)), 2)
-					)
-				),
-				new RollClawTimed(claw, 1, 5)
-			),
-			new RollClawTimed(claw, -1, 0.5),
-			new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.5, new Rotation2d(0.0)), 2),
-			new SetHomeTimed(elevator, arm, wrist, 2),
-			new PIDTurnTimed(swerveDrive, Math.PI, 1),
-			new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.75, new Rotation2d(0.0)), 2)
+		// return (Command) (new SequentialCommandGroup(
+		// 	new ParallelCommandGroup(
+		// 		new SequentialCommandGroup(
+		// 			new DeportArm(elevator, arm, wrist, 1),
+		// 			new ParallelCommandGroup(
+		// 				new SetHighTimed(elevator, arm, wrist, 2),
+		// 				new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.5, new Rotation2d(0.0)), 2)
+		// 			)
+		// 		),
+		// 		new RollClawTimed(claw, 1, 5)
+		// 	),
+		// 	new RollClawTimed(claw, -1, 0.5),
+		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.5, new Rotation2d(0.0)), 2),
+		// 	new SetHomeTimed(elevator, arm, wrist, 2),
+		// 	new PIDTurnTimed(swerveDrive, Math.PI, 1),
+		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.75, new Rotation2d(0.0)), 2)
 
-		));
+		// ));
 		// 	new OneMeterForward(swerveDrive)
 		// ));
 

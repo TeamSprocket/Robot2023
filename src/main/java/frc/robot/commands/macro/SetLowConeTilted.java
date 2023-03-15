@@ -34,7 +34,7 @@ public class SetLowConeTilted extends MacroCommand{
         if (timer.get() > 0.1 && timer.get() < 0.5){
             wrist.setWristAngle(wrist.getWristAngle(), 22.5);
             arm.setArmAngle(arm.getArmAngle(), -20);
-            elevator.setElevatorPositionSpeed(elevator.getElevatorHeight(), 30, 0.45);
+            elevator.setElevatorPositionSpeed(elevator.getElevatorHeight(), 30, 0.4);
         }
         else{
             wrist.setWristAngle(wrist.getWristAngle(), 22.5);

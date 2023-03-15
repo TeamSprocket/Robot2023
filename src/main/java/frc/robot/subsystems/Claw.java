@@ -17,8 +17,8 @@ public class Claw extends SubsystemBase{
     
     public Claw() {
         claw.setInverted(false);
-        claw.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true,30,30,1.0));
-        claw.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true,30,30,1.0));
+        claw.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true,25,25,1.0));
+        claw.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true,25,25,1.0));
 
 
 

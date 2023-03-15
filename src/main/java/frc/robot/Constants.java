@@ -130,8 +130,8 @@ public class Constants {
         public static final double kMaxSpeedMetersPerSecond = 0.2;
         public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 1;
         
-        public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 0.3;
-        public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 0.75;
+        public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 0.4;
+        public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 1.25;
 
         public static final double kPhysicalMaxSpeedMetersPerSecond = kMaxSpeedMetersPerSecond;
         public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond;
@@ -145,7 +145,7 @@ public class Constants {
 
 		public static boolean JOYSTICK_DRIVING_ENABLED = true;
 
-        public static final double kLimelightP = 0.0015;
+        public static final double kLimelightP = 0.003;
         public static final double kLimelightI = 0.0;
         public static final double kLimelightD = 0.0;
 
