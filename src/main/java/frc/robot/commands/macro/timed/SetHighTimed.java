@@ -1,4 +1,5 @@
 package frc.robot.commands.macro.timed;
+
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -23,7 +24,8 @@ public class SetHighTimed extends MacroCommand{
         this.elevator = elevator;
         this.arm = arm;
         this.wrist = wrist;
-        this.duration = duration; 
+        this.duration = duration;
+
         timer = new Timer();
 
         addRequirements(elevator, arm, wrist);
@@ -32,26 +34,24 @@ public class SetHighTimed extends MacroCommand{
 
 
     public void initialize(){
-        wrist.moveWrist(-0.1115);
-        startTime = System.currentTimeMillis();
         timer.reset();
     }
 
     @Override
     public void execute() {
-      //new SequentialCommandGroup(
         timer.start();
         
-        if (timer.get() > 0.1 && timer.get() < 1){
-            elevator.setElevatorPosition(elevator.getElevatorHeight(), -17.13);
-        }
-        else if(timer.get()> 1 && timer.get() < 2){
-            arm.setArmAngle(arm.getArmAngle(), -80);
+        if (timer.get() > 0 && timer.get() < 2){
+            wrist.setWristAngle(wrist.getWristAngle(), 17.5);
+            arm.setArmAngleSpeed(arm.getArmAngle(), -75, 0.35);
+            elevator.setElevatorPositionSpeed(0, -15, 0.6);
         }
         else{
-            elevator.setElevatorPosition(elevator.getElevatorHeight(), -17.13);
-            arm.setArmAngle(arm.getArmAngle(), -80);
+            wrist.setWristAngle(wrist.getWristAngle(), 17.5);
+            arm.setArmAngleSpeed(arm.getArmAngle(), -75, 0.35);
+            elevator.setElevatorPositionSpeed(0, -15, 0.15);
         }
+        
         
     }
 
@@ -64,7 +64,8 @@ public class SetHighTimed extends MacroCommand{
 
     @Override
     public void end(boolean interrupted){
-        elevator.setElevatorPosition(elevator.getElevatorHeight(), -17.13);
-        arm.setArmAngle(arm.getArmAngle(), -80);
+        wrist.setWristAngle(wrist.getWristAngle(), 17.5);
+        arm.setArmAngleSpeed(arm.getArmAngle(), -75, 0.35);
+        elevator.setElevatorPositionSpeed(0, -15, 0.15);
     }
 }

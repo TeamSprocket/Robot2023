@@ -9,7 +9,7 @@ import frc.robot.commands.macro.MoveArmPosition;
 import frc.robot.subsystems.*;
 import frc.util.commands.MacroCommand;
 
-public class SetHumanPlayerTimed extends MacroCommand{
+public class SetLowConeStandingTimed extends MacroCommand{
     
     private final Elevator elevator;
     private final Arm arm;
@@ -19,7 +19,7 @@ public class SetHumanPlayerTimed extends MacroCommand{
     
     private double startTime;
 
-    public SetHumanPlayerTimed (Elevator elevator, Arm arm, Wrist wrist, double duration) {
+    public SetLowConeStandingTimed (Elevator elevator, Arm arm, Wrist wrist, double duration) {
         this.elevator = elevator;
         this.arm = arm;
         this.wrist = wrist;
@@ -38,32 +38,32 @@ public class SetHumanPlayerTimed extends MacroCommand{
     @Override
     public void execute() {
         timer.start();
-
-        if (timer.get() > 0 && timer.get() < 2){
-            wrist.setWristAngle(wrist.getWristAngle(), 27.5);
-            arm.setArmAngleSpeed(arm.getArmAngle(), -80, 0.35);
-            elevator.setElevatorPositionSpeed(0, -13, 0.6);
+        
+        if (timer.get() > 0.1 && timer.get() < 0.5){
+            wrist.setWristAngle(wrist.getWristAngle(), 25);
+            arm.setArmAngle(arm.getArmAngle(), -25);
+            elevator.setElevatorPositionSpeed(elevator.getElevatorHeight(), 30, 0.45);
         }
         else{
-            wrist.setWristAngle(wrist.getWristAngle(), 27.5);
-            arm.setArmAngleSpeed(arm.getArmAngle(), -80, 0.35);
-            elevator.setElevatorPositionSpeed(0, -13, 0.15);
+            wrist.setWristAngle(wrist.getWristAngle(), 22.5);
+            arm.setArmAngle(arm.getArmAngle(), -20);
+            elevator.setElevatorPositionSpeed(elevator.getElevatorHeight(), 30, 0.2);
         }
         
-        
+      
     }
 
     public boolean isFinished(){
-      if (timer.get() >= duration) {
-        return true;
-      }
-      return false;
+        if (timer.get() >= duration) {
+            return true;
+          }
+          return false;
     }
 
     @Override
     public void end(boolean interrupted){
-        wrist.setWristAngle(wrist.getWristAngle(), 27.5);
-        arm.setArmAngleSpeed(arm.getArmAngle(), -80, 0.35);
-        elevator.setElevatorPositionSpeed(0, -13, 0.15);
+        wrist.setWristAngle(wrist.getWristAngle(), 22.5);
+        arm.setArmAngle(arm.getArmAngle(), -20);
+        elevator.setElevatorPositionSpeed(elevator.getElevatorHeight(), 30, 0.2);
     }
 }

@@ -82,7 +82,7 @@ public class SwerveDriveCmd extends CommandBase {
     ChassisSpeeds chassisSpeeds;
     // Field Oriented
     if (Constants.Drivetrain.IS_FIELD_ORIENTED) {
-      double headingRad = Math.toRadians(swerveDrive.getHeading());
+      double headingRad = Math.toRadians(-swerveDrive.getHeading());
       
       if (Constants.Auton.FACING_DRIVERS) {
         headingRad += Math.PI;
