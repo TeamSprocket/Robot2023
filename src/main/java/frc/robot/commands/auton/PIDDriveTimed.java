@@ -5,38 +5,58 @@
 package frc.robot.commands.auton;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.SwerveDrive;
 
-public class OneMeterForward extends CommandBase {
+public class PIDDriveTimed extends CommandBase {
   /** Creates a new OneMeterForward. */
   SwerveDrive swerveDrive;
   PIDController controller;
-  
-  public OneMeterForward(SwerveDrive swerveDrive) {
-    this.swerveDrive = swerveDrive;
+  double duration, distanceV, distanceH;
+  Timer timer;
+  // SlewRateLimiter slewLimiter;
 
-    this.controller = new PIDController(Constants.Auton.kPBalance, Constants.Auton.kIBalance, Constants.Auton.kDBalance);
-    controller.setSetpoint(1); 
+  double sign;
+  
+  public PIDDriveTimed(SwerveDrive swerveDrive, double distanceV, double distanceH, double duration) {
+    this.swerveDrive = swerveDrive;
+    this.duration = duration;
+    this.distanceV = distanceV;
+    // this.distanceH = -distanceH;
+    // double sign = (Math.abs(this.distanceV) / (this.distanceV + 0.000001));
+
+    this.timer = new Timer();
+
+    // this.slewLimiter = new SlewRateLimiter(0.01);
+
+    this.controller = new PIDController(0.02, 0, 0.00);
+    // this.controller = new PIDController(0.0, Constants.Auton.kIBalance, Constants.Auton.kDBalance);
+    controller.setSetpoint(this.distanceV); 
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
+    timer.reset();
+    swerveDrive.zeroDrive();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double angle = 0;
+    timer.start();
+
     double output = controller.calculate(swerveDrive.getDrivePosition());
+    // output = slewLimiter.calculate(output);
+    System.out.println(output);
     
     // if (output >= 0.02) {
       // output = 0.02;
@@ -44,11 +64,6 @@ public class OneMeterForward extends CommandBase {
     // if (output <= -0.02) {
       // output = -0.02;
     // }
-
-    if (swerveDrive.getDrivePosition() > 1.0) {
-      // output = -output;
-      System.out.println("NEGATIVE");
-    }
 
     ChassisSpeeds chassisSpeeds;
     if (Constants.Drivetrain.IS_FIELD_ORIENTED) {
@@ -78,10 +93,11 @@ public class OneMeterForward extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    return timer.get() > duration;
     // double offset = Math.abs(1 - swerveDrive.getDrivePosition());
     // if (offset < 0.01) {
     //   return true;
     // }
-    return false;
+    // return false;
   }
 }

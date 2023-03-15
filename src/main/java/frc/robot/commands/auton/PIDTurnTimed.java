@@ -32,7 +32,7 @@ public class PIDTurnTimed extends CommandBase {
     this.target = target;
     this.isFinished = false;
 
-    this.controller = new PIDController(0.1, 0, 0.00);
+    this.controller = new PIDController(0.15, 0, 0.015);
     controller.enableContinuousInput(0, 2 * Math.PI);
     
     // Use addRequirements() here to declare subsystem dependencies.
@@ -77,13 +77,15 @@ public class PIDTurnTimed extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    System.out.println("FINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\nFINISHED\n");
+    swerveDrive.stopModules();  
   } 
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    System.out.println();
+    if (timer.get() >= duration - 0.2) {
+      swerveDrive.stopModules();
+      }
     return (timer.get() >= duration);
   }
 }

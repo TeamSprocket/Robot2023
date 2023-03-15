@@ -143,7 +143,9 @@ public class Constants {
 
         public static boolean SWERVE_IS_SLOW = false;
 
-        public static final double kLimelightP = 0.01;
+		public static boolean JOYSTICK_DRIVING_ENABLED = true;
+
+        public static final double kLimelightP = 0.0015;
         public static final double kLimelightI = 0.0;
         public static final double kLimelightD = 0.0;
 
@@ -152,9 +154,9 @@ public class Constants {
     public static final class Auton { 
         public static final boolean FACING_DRIVERS = true;
 
-        public static final double kPBalance = 0.1; //0.08
-        public static final double kIBalance = 0;
-        public static final double kDBalance = 0.00;
+        // public static final double kPBalance = 0.08; //0.08
+        // public static final double kIBalance = 0;
+        // public static final double kDBalance = 0.00;
 
         public static final double CENTER_OF_MASS_FROMT_BACK_Y_METERS = 0.3898;
         public static final double BUMPER_THICKNESS_Y_METERS = Units.inchesToMeters(3);

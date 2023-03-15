@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.macro;
+package frc.robot.commands.macro.timed;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -18,7 +18,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 
-public class LimelightAlign extends CommandBase {
+public class LimelightAlignTimed extends CommandBase {
   NetworkTable table;
   double tValid = 1;
   double tXOffset;
@@ -27,7 +27,7 @@ public class LimelightAlign extends CommandBase {
   PIDController pidController;
   // NetworkTableEntry tValid, tXOffset, tYOffset, tArea;
   /** Creates a new LimelightAlign. */
-  public LimelightAlign(SwerveDrive swerveDrive) {
+  public LimelightAlignTimed(SwerveDrive swerveDrive, double duration) {
     this.timer = new Timer();
     this.swerveDrive = swerveDrive;
     // this.duration = duration;

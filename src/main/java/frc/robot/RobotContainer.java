@@ -33,8 +33,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.SwerveDriveCmd;
 import frc.robot.commands.auton.BalanceOnChargeStation;
-import frc.robot.commands.auton.BalanceOnChargeStationVertical;
-import frc.robot.commands.auton.OneMeterForward;
+// import frc.robot.commands.auton.BalanceOnChargeStationVertical;
+import frc.robot.commands.auton.PIDDriveTimed;
 import frc.robot.commands.auton.PIDTurnTimed;
 import frc.robot.commands.auton.ParseAuton;
 // import frc.robot.commands.auton.SwerveAutonTest;
@@ -152,7 +152,7 @@ public final class RobotContainer {
 		// Swerve Drive (instant command reset heading)
 		new JoystickButton(driver,
 		 	RobotMap.Controller.RESET_GYRO_HEADING_BUTTON_ID).whenPressed(() -> swerveDrive.zeroHeading());
-		new JoystickButton(driver, 2).whenPressed(new LimelightAlign(swerveDrive, 1));
+		new JoystickButton(driver, 2).whenHeld(new LimelightAlign(swerveDrive));
 		// new JoystickButton(driver, 2).whenPressed(() -> swerveDrive.zeroTalons());
 		// new JoystickButton(driver, 3).whenHeld(new ShootClaw(10));
 		
@@ -304,9 +304,30 @@ public final class RobotContainer {
 			// new BalanceOnChargeStation(swerveDrive, 0.035)
 		// ));
 
+		// return (Command) (new SequentialCommandGroup(
+		// 	new PIDDriveTimed(swerveDrive, 1)
+		// ));
+
 		return (Command) (new SequentialCommandGroup(
-			new OneMeterForward(swerveDrive)
+			new DeportArm(elevator, arm, wrist),
+			new SetHighTimed(elevator, arm, wrist, 2),
+			new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.2, new Rotation2d(0.0)), 1),
+			new RollClawTimed(claw, 0.5),
+			new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.2, new Rotation2d(0.0)), 2),
+			new SetHomeTimed(elevator, arm, wrist, 2),
+			new PIDTurnTimed(swerveDrive, 0, 1),
+			new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.2, new Rotation2d(0.0)), 2)
+
 		));
+
+
+		// return (Command) (new SequentialCommandGroup(
+			// new PIDTurnTimed(swerveDrive, Math.PI, 3),
+			// new PIDDriveTimed(swerveDrive, 2, 0, 5),
+			// new PIDTurnTimed(swerveDrive, Math.PI, 3),
+			// new PIDDriveTimed(swerveDrive, -2, 0,5)
+		
+		// ));
 
 
 		

@@ -174,16 +174,16 @@ public class SwerveDrive extends SubsystemBase {
     public void setModuleStates(SwerveModuleState[] desiredStates) {
         states = desiredStates;
         
-        frontLeft.setDesiredState(desiredStates[0]);
-        frontRight.setDesiredState(desiredStates[1]);
-        backLeft.setDesiredState(desiredStates[2]);
-        backRight.setDesiredState(desiredStates[3]);
+        
+            frontLeft.setDesiredState(desiredStates[0]);
+            frontRight.setDesiredState(desiredStates[1]);
+            backLeft.setDesiredState(desiredStates[2]);
+            backRight.setDesiredState(desiredStates[3]);
 
-        frontLeft.clearStickyFaults();
-        frontRight.clearStickyFaults();
-        backLeft.clearStickyFaults();
-        backRight.clearStickyFaults();
-
+            frontLeft.clearStickyFaults();
+            frontRight.clearStickyFaults();
+            backLeft.clearStickyFaults();
+            backRight.clearStickyFaults();
 
 
         // Debug
