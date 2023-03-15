@@ -81,6 +81,9 @@ public class SwerveModule extends SubsystemBase {
     driveMotor.clearStickyFaults();
   }
 
+    
+  
+
   public void setCurrentLimitTurn(double currentLimit) {
     turnMotor.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, currentLimit, currentLimit, 1.0));
     turnMotor.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, currentLimit, 1.0));
@@ -159,6 +162,8 @@ public class SwerveModule extends SubsystemBase {
 
 
     public void setDesiredState(SwerveModuleState swerveState) {
+      SmartDashboard.putNumber("Turn Stator Current", turnMotor.getStatorCurrent());
+      SmartDashboard.putNumber("Turn Supply Current", turnMotor.getSupplyCurrent());
       // absEncoder.clearStickyFaults();
       // driveMotor.clearStickyFaults();
       // turnMotor.clearStickyFaults();

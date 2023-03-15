@@ -149,7 +149,7 @@ public class Constants {
         public static final double kLimelightI = 0.0;
         public static final double kLimelightD = 0.0;
 
-        public static final double CURRENT_LIMIT_TURN = 10;
+        public static final double CURRENT_LIMIT_TURN = 100;
 
     }
 
