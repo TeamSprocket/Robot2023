@@ -33,7 +33,7 @@ public class LimelightAlign extends CommandBase {
     // this.duration = duration;
 
     this.pidController = new PIDController(Constants.Drivetrain.kLimelightP, Constants.Drivetrain.kLimelightI, Constants.Drivetrain.kLimelightD);
-    this.pidController.setSetpoint(16.2);
+    this.pidController.setSetpoint(0);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

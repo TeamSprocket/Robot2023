@@ -43,12 +43,12 @@ public class SetHighTimed extends MacroCommand{
         
         if (timer.get() > 0 && timer.get() < 2){
             wrist.setWristAngle(wrist.getWristAngle(), 17.5);
-            arm.setArmAngleSpeed(arm.getArmAngle(), -75, 0.35);
+            arm.setArmAngleSpeed(arm.getArmAngle(), -80, 0.35);
             elevator.setElevatorPositionSpeed(0, -15, 0.6);
         }
         else{
             wrist.setWristAngle(wrist.getWristAngle(), 17.5);
-            arm.setArmAngleSpeed(arm.getArmAngle(), -75, 0.35);
+            arm.setArmAngleSpeed(arm.getArmAngle(), -80, 0.35);
             elevator.setElevatorPositionSpeed(0, -15, 0.15);
         }
         
@@ -65,7 +65,7 @@ public class SetHighTimed extends MacroCommand{
     @Override
     public void end(boolean interrupted){
         wrist.setWristAngle(wrist.getWristAngle(), 17.5);
-        arm.setArmAngleSpeed(arm.getArmAngle(), -75, 0.35);
+        arm.setArmAngleSpeed(arm.getArmAngle(), -80, 0.35);
         elevator.setElevatorPositionSpeed(0, -15, 0.15);
     }
 }

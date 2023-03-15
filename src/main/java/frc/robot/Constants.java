@@ -43,7 +43,7 @@ public class Constants {
         
         public static double kP = 0.05;
         public static double kI = 0;
-        public static double kD = 0.0004;
+        public static double kD = 0.0003;
         public static double FF = 0;
 
     }
@@ -145,9 +145,9 @@ public class Constants {
 
 		public static boolean JOYSTICK_DRIVING_ENABLED = true;
 
-        public static final double kLimelightP = 0.003;
+        public static final double kLimelightP = 0.0075;
         public static final double kLimelightI = 0.0;
-        public static final double kLimelightD = 0.0;
+        public static final double kLimelightD = 0.00015;
 
         public static final double CURRENT_LIMIT_TURN = 100;
 

@@ -76,6 +76,7 @@ public class Robot extends TimedRobot {
     /** This function is run once each time the robot enters autonomous mode. */
     @Override
     public void autonomousInit() {
+        Constants.Drivetrain.JOYSTICK_DRIVING_ENABLED = false;
         robotContainer.setTurnDefaultMode(NeutralMode.Brake);
 
         robotContainer.autonInit();
@@ -113,6 +114,7 @@ public class Robot extends TimedRobot {
     /** This function is called once each time the robot enters teleoperated mode. */ 
     @Override
     public void teleopInit() {
+        Constants.Drivetrain.JOYSTICK_DRIVING_ENABLED = true;
         robotContainer.setTurnDefaultMode(NeutralMode.Brake);
 
         System.out.println("TELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\n");
