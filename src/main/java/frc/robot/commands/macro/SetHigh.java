@@ -25,7 +25,6 @@ public class SetHigh extends MacroCommand{
 
 
     public void initialize(){
-        // wrist.moveWrist(-0.114);
         timer.reset();
     }
 
