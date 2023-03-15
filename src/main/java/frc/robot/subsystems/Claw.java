@@ -11,7 +11,7 @@ import frc.robot.RobotMap;
 import frc.robot.Constants;
 
 public class Claw extends SubsystemBase{
-    double output = 0;
+
     private final WPI_TalonFX claw = new WPI_TalonFX(RobotMap.Claw.CLAW);
 
     
@@ -28,7 +28,6 @@ public class Claw extends SubsystemBase{
 
     public void moveClaw(double output){
         //claw.set(output * 0.2);
-        this.output = output;
 
         claw.set(ControlMode.PercentOutput, output);
         //percent output ouputs as a percentange from -1 to 1 with 0 stopping the motor
@@ -36,11 +35,6 @@ public class Claw extends SubsystemBase{
         //position mode, where the output is in encoder ticks or analog values
         //and follower mode, where the output is the interger device ID (idk what this is)
     }
-
-    public double getOutput() {
-        return output;
-    }
-
 
 
     public double getVelocity() {
