@@ -43,7 +43,7 @@ public class Constants {
         
         public static double kP = 0.05;
         public static double kI = 0;
-        public static double kD = 0.00075;
+        public static double kD = 0.0004;
         public static double FF = 0;
 
     }

@@ -29,6 +29,8 @@ public class Wrist extends SubsystemBase {
 
         wrist.setInverted(false);
 
+        wrist.setSmartCurrentLimit(105);
+
     }
 
     public double getWristPosition(){
@@ -66,6 +68,7 @@ public class Wrist extends SubsystemBase {
     @Override
     public void periodic(){
         SmartDashboard.putNumber("[Wrist] Position", wristEncoder.getPosition()); 
+        SmartDashboard.putNumber("[Wrist] current", wrist.getOutputCurrent()); 
 
     }
 }

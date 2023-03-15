@@ -40,12 +40,12 @@ public class SetLowConeStandingTimed extends MacroCommand{
         timer.start();
         
         if (timer.get() > 0.1 && timer.get() < 0.5){
-            wrist.setWristAngle(wrist.getWristAngle(), 25);
+            wrist.setWristAngle(wrist.getWristAngle(), 6);
             arm.setArmAngle(arm.getArmAngle(), -25);
             elevator.setElevatorPositionSpeed(elevator.getElevatorHeight(), 30, 0.45);
         }
         else{
-            wrist.setWristAngle(wrist.getWristAngle(), 22.5);
+            wrist.setWristAngle(wrist.getWristAngle(), 6);
             arm.setArmAngle(arm.getArmAngle(), -20);
             elevator.setElevatorPositionSpeed(elevator.getElevatorHeight(), 30, 0.2);
         }
@@ -62,7 +62,7 @@ public class SetLowConeStandingTimed extends MacroCommand{
 
     @Override
     public void end(boolean interrupted){
-        wrist.setWristAngle(wrist.getWristAngle(), 22.5);
+        wrist.setWristAngle(wrist.getWristAngle(), 6);
         arm.setArmAngle(arm.getArmAngle(), -20);
         elevator.setElevatorPositionSpeed(elevator.getElevatorHeight(), 30, 0.2);
     }

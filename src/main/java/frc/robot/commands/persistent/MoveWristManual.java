@@ -27,37 +27,37 @@ public class MoveWristManual extends PersistentCommand {
       double wristInput = Util.deadband(0.1, input);
     //   System.out.println("ANGLE: " + wrist.getWristAngle() + "WRIST INPUT: " + wristInput);
       //System.out.println("WRIST ANGLE: " + wrist.getWristAngle());
-      if (wristInput == 0) {
-        double output = wristInput;
+    //   if (wristInput == 0) {
+    //     double output = wristInput;
 
-        if (wrist.getWristAngle() == 0) {
-            // -= goes down
-            // += goes up
-            output = 0.00379241 * wrist.getWristAngle() - 0.492261;
+    //     if (wrist.getWristAngle() == 0) {
+    //         // -= goes down
+    //         // += goes up
+    //         output = 0.00379241 * wrist.getWristAngle() - 0.492261;
 
-            //44.57   -0.289
-           //25.247  -0.375
-           //5.298   -0.469
-            //62.649    -0.25
-            //37.403 -0.414
+    //         //44.57   -0.289
+    //        //25.247  -0.375
+    //        //5.298   -0.469
+    //         //62.649    -0.25
+    //         //37.403 -0.414
 
-            if (wrist.getWristAngle() < 50 && wrist.getWristAngle() > 0) {
-                output -= 0.05;
-                if (wrist.getWristAngle() < 40) {
-                    output -= 0.05;
-                }
-            }
-            if (wrist.getWristAngle() < 0) {
-                output += 0.05;
-            }
-            wrist.moveWrist(output);
-        }
+    //         if (wrist.getWristAngle() < 50 && wrist.getWristAngle() > 0) {
+    //             output -= 0.05;
+    //             if (wrist.getWristAngle() < 40) {
+    //                 output -= 0.05;
+    //             }
+    //         }
+    //         if (wrist.getWristAngle() < 0) {
+    //             output += 0.05;
+    //         }
+    //         wrist.moveWrist(output);
+    //     }
 
         
-        }
-    else {
+    //     }
+    // else {
         wrist.moveWrist(wristInput * 0.2);
-    }
+    // }
     }
   
     @Override
