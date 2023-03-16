@@ -40,16 +40,20 @@ public class Wrist extends SubsystemBase {
         return angle;
     }
 
+    public void resetWristEncoder(){
+        wristEncoder.setPosition(0);
+    }
+
     public void moveWrist(double output) {
         wrist.set(output); 
     }
 
     public void setWristAngle(double currentAngle, double setpoint){
         double output = wristPIDController.calculate(currentAngle, setpoint);
-        if (output < -0.3){
-            output = -0.3;
-        } else if (output > 0.3) {
-            output = 0.3;
+        if (output < -0.275){
+            output = -0.275;
+        } else if (output > 0.275) {
+            output = 0.275;
         }
         wrist.set(output);
     }

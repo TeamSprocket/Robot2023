@@ -36,22 +36,22 @@ public class SetHome extends MacroCommand{
         }
         else if (timer.get() > 0.7 && timer.get() < 1.05){
             wrist.setWristAngle(wrist.getWristAngle(), 0);
-            arm.moveArm(0.3);
+            arm.moveArm(0.325);
             elevator.setElevatorPositionSpeed(0, -15, 0.5);
         }
         else if (timer.get() > 1.05 && timer.get() < 1.2){
             wrist.setWristAngle(wrist.getWristAngle(), 0);
-            arm.moveArm(0.15);
+            arm.moveArm(0.225);
             elevator.setElevatorPositionSpeed(0, -15, 0.4);
         }
         else if (timer.get() > 1.2 && timer.get() < 1.5){
             wrist.setWristAngle(wrist.getWristAngle(), 0);
-            arm.moveArm(0.1);
+            arm.moveArm(0.175);
             elevator.setElevatorPositionSpeed(0, -15, 0.2);
         }
         else{
             wrist.setWristAngle(wrist.getWristAngle(), 0);
-            arm.moveArm(0.05);
+            arm.moveArm(0.125);
             elevator.setElevatorPositionSpeed(0, 0, 0.1);
         }
 

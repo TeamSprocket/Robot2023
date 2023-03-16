@@ -45,6 +45,7 @@ import frc.robot.commands.macro.ElevatePosition;
 import frc.robot.commands.macro.LimelightAlign;
 import frc.robot.commands.macro.MoveArmPosition;
 import frc.robot.commands.macro.MoveWristAngle;
+import frc.robot.commands.macro.ResetWristEncoder;
 import frc.robot.commands.macro.SetDeport;
 import frc.robot.commands.macro.SetHigh;
 import frc.robot.commands.macro.SetHome;
@@ -165,6 +166,7 @@ public final class RobotContainer {
 		new JoystickButton(operator, 4).whenHeld(new SetHigh(elevator, arm, wrist));
 		new JoystickButton(operator, 5).whenHeld(new SetLowCube(elevator, arm, wrist));
 		new JoystickButton(operator, 6).whenHeld(new SetLowConeTilted(elevator, arm, wrist));
+		new JoystickButton(operator, 7).whenHeld(new ResetWristEncoder(wrist));
 		new JoystickButton(operator, 9).whenHeld(new SetLowConeStanding(elevator, arm, wrist));
 		new JoystickButton(operator, 10).whenHeld(new SetDeport(elevator, arm, wrist));
 
@@ -220,8 +222,8 @@ public final class RobotContainer {
 	// public Command getAutonomousCommand() {
 	public Command getAutonomousCommand() {
 		// Do nothing (0)
-		return (Command) (new SequentialCommandGroup(
-		));
+		// return (Command) (new SequentialCommandGroup(
+		// ));
 
 		// Move back (4)
 		// return (Command) (new SequentialCommandGroup(
@@ -310,27 +312,24 @@ public final class RobotContainer {
 		// 	new PIDDriveTimed(swerveDrive, 1)
 		// ));
 
-		// return (Command) (new SequentialCommandGroup(
-		// 	new ParallelCommandGroup(
-		// 		new SequentialCommandGroup(
-		// 			new DeportArm(elevator, arm, wrist, 1),
-		// 			new ParallelCommandGroup(
-		// 				new SetHighTimed(elevator, arm, wrist, 2),
-		// 				new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.5, new Rotation2d(0.0)), 4)
-		// 			)
-		// 		),
-		// 		new RollClawTimed(claw, 1, 4)
-		// 	),
-		// 	new RollClawTimed(claw, -1, 0.5),
-		// 	new ParallelCommandGroup(
-		// 				new SetHighTimed(elevator, arm, wrist, 2),
-		// 				new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.5, new Rotation2d(0.0)), 2)
-		// 	),
-		// 	new SetHomeTimed(elevator, arm, wrist, 2),
-		// 	new PIDTurnTimed(swerveDrive, Math.PI, 1),
-		// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.75, new Rotation2d(0.0)), 2)
-
-		// ));
+		return (Command) (new SequentialCommandGroup(
+			new ParallelCommandGroup(
+				new SequentialCommandGroup(
+					new DeportArm(elevator, arm, wrist, 1),
+					new ParallelCommandGroup(
+						new SetHighTimed(elevator, arm, wrist, 2),
+						new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.35, new Rotation2d(0.0)), 1.15)
+					)
+				),
+			new RollClawTimed(claw, 1, 2.5)
+			),
+			new RollClawTimed(claw, -1, 0.5),
+			new ParallelCommandGroup(
+						new SetHighTimed(elevator, arm, wrist, 2),
+						new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.5, new Rotation2d(0.0)), 3.75)
+			),
+			new SetHomeTimed(elevator, arm, wrist, 2)
+		));
 		// 	new OneMeterForward(swerveDrive)
 		// ));
 

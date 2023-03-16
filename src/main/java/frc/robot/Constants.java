@@ -19,7 +19,7 @@ public class Constants {
 
         public static double kP = 0.175;
         public static double kI = 0;
-        public static double kD = 0.0075;
+        public static double kD = 0.00675;
         public static double FF = 0;
         
         //Max/min heights in inches;

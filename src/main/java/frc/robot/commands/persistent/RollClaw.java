@@ -29,7 +29,7 @@ public class RollClaw extends CommandBase {
     public void execute() { 
         double input = controller.getRightTriggerAxis() - controller.getLeftTriggerAxis();
         double deadbandcedInput = Util.deadband(0.1, input);
-        input /= 3.0;
+        input /= 8.5;
         
         // if (input > 1.0) {
         //     input = 1;
