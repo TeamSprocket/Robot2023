@@ -64,7 +64,8 @@
 	import frc.robot.commands.macro.timed.SwerveDriveCmdTimed;
 	import frc.robot.commands.macro.SetHumanPlayer;
 	import frc.robot.commands.macro.SetLowConeStanding;
-	import frc.robot.commands.persistent.Elevate;
+import frc.robot.commands.persistent.BlingBling;
+import frc.robot.commands.persistent.Elevate;
 	import frc.robot.commands.persistent.MoveArmJoystick;
 	import frc.robot.commands.persistent.MoveWristManual;
 	import frc.robot.commands.persistent.RollClaw;
@@ -76,6 +77,7 @@
 	import frc.robot.subsystems.SwerveDrive;
 	import frc.robot.subsystems.Wrist;
 	import frc.robot.Constants;
+import frc.robot.RobotMap.LEDStrip;
 
 	/**
 	 * This class is where the bulk of the robot should be declared. Since
@@ -101,6 +103,8 @@
 		private final Arm arm = new Arm();
 		private final Wrist wrist = new Wrist();
 		private final Claw claw = new Claw();
+
+		private final LEDStrip ledStrip = new LEDStrip();
 
 		// Manual Autons
 		SendableChooser<Command> chooser = new SendableChooser<>();  
@@ -150,6 +154,7 @@
 			elevator.setDefaultCommand(new Elevate(elevator, operator));
 			arm.setDefaultCommand(new MoveArmJoystick(arm, operator));
 			wrist.setDefaultCommand(new MoveWristManual(wrist, operator));
+			// ledStrip.setDefaultCommand(new BlingBling(ledStrip, elevator));
 			
 
 			// Swerve Drive (instant command reset heading)
@@ -212,7 +217,7 @@
 		// public Command getAutonomousCommand() {
 		public Command getAutonomousCommand() {
 			// Do nothing (0)
-			// return (Command) (new SequentialCommandGroup());
+			return (Command) (new SequentialCommandGroup());
 
 			// Move back (4)
 			// return (Command) (new SequentialCommandGroup(
@@ -347,33 +352,33 @@
 			// ));
 
 
-			return (Command) (new SequentialCommandGroup(
-				new DeportArm(elevator, arm, wrist, 1),
-				new ParallelCommandGroup(
-					new SetHighTimed(elevator, arm, wrist, 2), //2
-					new RollClawTimed(claw, 0.5, 1.5), //1
-					new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.25, new Rotation2d(0.0)), 2)
-				),
-				new RollClawTimed(claw, 0.5, 1), //1
-				new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.25, new Rotation2d(0.0)), 1),
-				new ParallelCommandGroup(
-					new SetHomeTimed(elevator, arm, wrist, 2),
-					new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.25, new Rotation2d(0.0)), 1)
-				)
-				// new PIDTurnTimed(swerveDrive, Math.PI, 1),
-				// new DeportArm(elevator, arm, wrist, 1),
-				// new ParallelCommandGroup(
-				// 	new SetLowCube(elevator, arm, wrist),
-				// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.3, new Rotation2d(0.0)), 1.5),
-				// 	new RollClawTimed(claw, 0.5, 1)
-				// ),
-				// new PIDTurnTimed(swerveDrive, Math.PI, 1)
-				// new ParallelCommandGroup(
-				// 	new SetMid(elevator, arm, wrist),
-				// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.3, new Rotation2d(0.0)), 3.5)
-				// ),
-				// new RollClawTimed(claw, 1)
-			));
+			// return (Command) (new SequentialCommandGroup(
+			// 	new DeportArm(elevator, arm, wrist, 1),
+			// 	new ParallelCommandGroup(
+			// 		new SetHighTimed(elevator, arm, wrist, 2), //2
+			// 		new RollClawTimed(claw, 0.5, 1.5), //1
+			// 		new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.25, new Rotation2d(0.0)), 2)
+			// 	),
+			// 	new RollClawTimed(claw, 0.5, 1), //1
+			// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.25, new Rotation2d(0.0)), 1),
+			// 	new ParallelCommandGroup(
+			// 		new SetHomeTimed(elevator, arm, wrist, 2),
+			// 		new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.25, new Rotation2d(0.0)), 1)
+			// 	)
+			// 	// new PIDTurnTimed(swerveDrive, Math.PI, 1),
+			// 	// new DeportArm(elevator, arm, wrist, 1),
+			// 	// new ParallelCommandGroup(
+			// 	// 	new SetLowCube(elevator, arm, wrist),
+			// 	// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.3, new Rotation2d(0.0)), 1.5),
+			// 	// 	new RollClawTimed(claw, 0.5, 1)
+			// 	// ),
+			// 	// new PIDTurnTimed(swerveDrive, Math.PI, 1)
+			// 	// new ParallelCommandGroup(
+			// 	// 	new SetMid(elevator, arm, wrist),
+			// 	// 	new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.3, new Rotation2d(0.0)), 3.5)
+			// 	// ),
+			// 	// new RollClawTimed(claw, 1)
+			// ));
 
 				
 			// 	// new WaitTimed(0.5),
