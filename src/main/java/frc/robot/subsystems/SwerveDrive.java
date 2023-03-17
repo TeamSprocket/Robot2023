@@ -93,6 +93,13 @@ public class SwerveDrive extends SubsystemBase {
         backRight.zeroDrive();
     }
 
+    public void clearStickyFaults() {
+        frontLeft.clearStickyFaults();
+        frontRight.clearStickyFaults();
+        backLeft.clearStickyFaults();
+        backRight.clearStickyFaults();
+    }
+
     public void setCurrentLimitTurn(double currentLimit) {
         frontLeft.setCurrentLimitTurn(currentLimit);
         frontRight.setCurrentLimitTurn(currentLimit);

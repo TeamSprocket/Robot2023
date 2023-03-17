@@ -9,7 +9,7 @@ import frc.robot.commands.macro.MoveArmPosition;
 import frc.robot.subsystems.*;
 import frc.util.commands.MacroCommand;
 
-public class DeportArm extends MacroCommand{
+public class DeportArmTimed extends MacroCommand{
     
     private final Elevator elevator;
     private final Arm arm;
@@ -17,9 +17,9 @@ public class DeportArm extends MacroCommand{
     private final double duration;
     private final Timer timer;
     
-    private double startTime;
+    // private double startTime;
 
-    public DeportArm (Elevator elevator, Arm arm, Wrist wrist, double duration) {
+    public DeportArmTimed (Elevator elevator, Arm arm, Wrist wrist, double duration) {
         this.elevator = elevator;
         this.arm = arm;
         this.wrist = wrist;

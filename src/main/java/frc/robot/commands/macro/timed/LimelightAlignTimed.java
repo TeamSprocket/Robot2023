@@ -23,6 +23,7 @@ public class LimelightAlignTimed extends CommandBase {
   double tValid = 1;
   double tXOffset;
   // Timer timer;
+  double verticalSpeed;
   SwerveDrive swerveDrive;
   PIDController pidController;
   double duration;
@@ -33,6 +34,20 @@ public class LimelightAlignTimed extends CommandBase {
     this.timer = new Timer();
     this.swerveDrive = swerveDrive;
     this.duration = duration;
+    this.verticalSpeed = 0.0;
+    // this.duration = duration;
+
+    timer = new Timer();
+    this.pidController = new PIDController(Constants.Drivetrain.kLimelightP, Constants.Drivetrain.kLimelightI, Constants.Drivetrain.kLimelightD);
+    this.pidController.setSetpoint(0);
+    // Use addRequirements() here to declare subsystem dependencies.
+  }
+
+  public LimelightAlignTimed(SwerveDrive swerveDrive, double verticalSpeed, double duration) {
+    this.timer = new Timer();
+    this.swerveDrive = swerveDrive;
+    this.duration = duration;
+    this.verticalSpeed = verticalSpeed;
     // this.duration = duration;
 
     timer = new Timer();
@@ -72,9 +87,9 @@ public class LimelightAlignTimed extends CommandBase {
     if (Constants.Drivetrain.IS_FIELD_ORIENTED) {
       double headingRad = Math.toRadians(swerveDrive.getHeading());
       chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-          0, output, 0, new Rotation2d(headingRad));
+          verticalSpeed, output, 0, new Rotation2d(headingRad));
     } else { 
-      chassisSpeeds = new ChassisSpeeds(0, output, 0);
+      chassisSpeeds = new ChassisSpeeds(verticalSpeed, output, 0);
     }
 
     // Calculate module states per module

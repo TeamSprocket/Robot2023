@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
-import frc.robot.commands.SwerveDriveCmd;
+import frc.robot.commands.persistent.SwerveDriveCmd;
 import frc.robot.subsystems.SwerveDrive;
 import frc.util.commands.MacroCommand;
 

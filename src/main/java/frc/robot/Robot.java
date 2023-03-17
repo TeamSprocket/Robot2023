@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.SwerveDriveCmd;
+import frc.robot.commands.persistent.SwerveDriveCmd;
 import frc.robot.subsystems.SwerveDrive;
 
 
@@ -55,9 +55,6 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
         robotContainer.clearStickyFaults();
-        SmartDashboard.putNumber("Drive Position Meters", robotContainer.getSwerveDrive().getDrivePosition());
-        
-        // SmartDashboard.putNumber("Robot Wheel Position Meters", robotContainer.getSwerveDrive().getDrivePosition());
     }
 
     /**
@@ -78,24 +75,14 @@ public class Robot extends TimedRobot {
     public void autonomousInit() {
         Constants.Drivetrain.JOYSTICK_DRIVING_ENABLED = false;
         robotContainer.setTurnDefaultMode(NeutralMode.Brake);
-
         robotContainer.autonInit();
-
         this.auton = robotContainer.getAutonomousCommand();
-        // new SwerveDriveCmdTimed(swerveDrive, new Pose2d(-0.25, 0.0, new Rotation2d(0.0)), 1);
-        // timer.start();
 
         if(auton!=null) {
             auton.schedule();
         } else {
             System.out.println("AUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\n");
         }
-
-        
-        
-        // timer = new Timer();
-        // timer.start();
-        
     }
 
     /**
@@ -104,42 +91,21 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
 
-        // double time = timer.get();
-        // if (time < 1) {
-        //     new SwerveDriveCmd(swerveDrive, 0.0, 0.0, 0.0));
-        // }
- 
     }
 
     /** This function is called once each time the robot enters teleoperated mode. */ 
     @Override
     public void teleopInit() {
         Constants.Drivetrain.JOYSTICK_DRIVING_ENABLED = true;
-        robotContainer.setTurnDefaultMode(NeutralMode.Brake);
-
-        System.out.println("TELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\n");
-        robotContainer.configureButtonBindings();
         CommandScheduler.getInstance().cancelAll();
-
+        robotContainer.setTurnDefaultMode(NeutralMode.Brake);
+        robotContainer.configureButtonBindings();
         robotContainer.getSwerveDrive().zeroDrive();
-
-        // timer.reset();
     }
     
     /** This function is called periodically during teleoperated mode. */
     @Override
     public void teleopPeriodic() {
-        SmartDashboard.putNumber("Offset", robotContainer.headingOffset());
-
-        robotContainer.outputAutonLog();
+        // robotContainer.outputAutonLog();
     }
-
-    @Override
-    public void testInit() {
-        CommandScheduler.getInstance().cancelAll();
-    }
-
-    /**
-     * This function is called periodically during test mode.
-     */
 }

@@ -1,4 +1,4 @@
-package frc.robot.commands.auton;
+package frc.robot.commands.macro.timed;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
