@@ -22,24 +22,29 @@ public class LimelightAlignTimed extends CommandBase {
   NetworkTable table;
   double tValid = 1;
   double tXOffset;
-  Timer timer;
+  // Timer timer;
   SwerveDrive swerveDrive;
   PIDController pidController;
+  double duration;
+  Timer timer;
   // NetworkTableEntry tValid, tXOffset, tYOffset, tArea;
   /** Creates a new LimelightAlign. */
   public LimelightAlignTimed(SwerveDrive swerveDrive, double duration) {
     this.timer = new Timer();
     this.swerveDrive = swerveDrive;
+    this.duration = duration;
     // this.duration = duration;
 
+    timer = new Timer();
     this.pidController = new PIDController(Constants.Drivetrain.kLimelightP, Constants.Drivetrain.kLimelightI, Constants.Drivetrain.kLimelightD);
-    this.pidController.setSetpoint(16.2);
+    this.pidController.setSetpoint(0);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    timer.reset();
     // timer.reset();
     Constants.Drivetrain.JOYSTICK_DRIVING_ENABLED = false;
   }
@@ -47,7 +52,7 @@ public class LimelightAlignTimed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // timer.start();
+    timer.start();
     System.out.println("ALIGNING");
 
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
@@ -89,7 +94,7 @@ public class LimelightAlignTimed extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return tValid == 0.0;
+    return timer.get() > duration;
     // return true;
   }
 

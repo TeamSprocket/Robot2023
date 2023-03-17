@@ -37,6 +37,11 @@ public class Arm extends SubsystemBase {
         return angle;
     }
 
+    public void resetArmEncoder(){
+        armLeft.getEncoder().setPosition(0);
+        armRight.getEncoder().setPosition(0);
+    }
+
     public void moveArm(double output){
         armLeft.set(output);
     }

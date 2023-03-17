@@ -1,19 +1,27 @@
 package frc.robot.commands.macro;
 
+import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Wrist;
 import frc.util.commands.MacroCommand;
 
-public class ResetWristEncoder extends MacroCommand {
+public class ResetEncoders extends MacroCommand {
     private final Wrist wrist;
+    private final Arm arm;
+    private final Elevator elevator;
   
-    public ResetWristEncoder (Wrist wrist) {
+    public ResetEncoders (Elevator elevator, Arm arm, Wrist wrist) {
       this.wrist = wrist;
+      this.arm = arm;
+      this.elevator = elevator;
   
       addRequirements(wrist);
     }
 
     public void initialize(){
         wrist.resetWristEncoder();
+        arm.resetArmEncoder();
+        elevator.resetElevatorEncoder();
     }
 
     @Override
