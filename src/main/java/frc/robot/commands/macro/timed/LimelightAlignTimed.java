@@ -47,7 +47,7 @@ public class LimelightAlignTimed extends CommandBase {
     this.timer = new Timer();
     this.swerveDrive = swerveDrive;
     this.duration = duration;
-    this.verticalSpeed = -verticalSpeed;
+    this.verticalSpeed = -1.0 * verticalSpeed;
     // this.duration = duration;
 
     timer = new Timer();
