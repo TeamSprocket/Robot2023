@@ -21,6 +21,8 @@ public class BalanceOnChargeStation extends CommandBase {
   boolean onRamp = false;
   Timer timer;
   double waitTime = 2.3;
+
+  double onRampAngle = 10;
   // PIDController controller;
    
   /**
@@ -28,10 +30,15 @@ public class BalanceOnChargeStation extends CommandBase {
    * @param swerveDrive swerveDrive object
    * @param speedInitial initiall speed to approach charging station at, reduced to 0.05 if it surpasses it
    */
-  public BalanceOnChargeStation(SwerveDrive swerveDrive, double speedInitial) {
+  public BalanceOnChargeStation(SwerveDrive swerveDrive, double speedInitial, boolean climbFromBackOfBot) {
     this.swerveDrive = swerveDrive;
     this.timer = new Timer();
     this.speedInitial = -1.0 * speedInitial;
+
+    if (!climbFromBackOfBot) {
+      this.speedInitial *= -1;
+      this.onRampAngle *= -1;
+    }
 
     if (this.speedInitial >= 0.05) {
       this.speedInitial = 0.05;
@@ -61,7 +68,7 @@ public class BalanceOnChargeStation extends CommandBase {
     double angle = swerveDrive.getPitchDeg();
     double speed = speedInitial;
 
-    if (angle > 10) {
+    if (angle > onRampAngle) {
       onRamp = true;
     }
 
