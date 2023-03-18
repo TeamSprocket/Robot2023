@@ -9,8 +9,10 @@ import edu.wpi.first.wpilibj.Timer;
 	import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 	import edu.wpi.first.wpilibj2.command.Command;
 	import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-	import frc.robot.commands.auton.AutonDoNothing;
-	import frc.robot.commands.macro.LimelightAlign;
+import frc.robot.commands.auton.AutonConeBalance;
+import frc.robot.commands.auton.AutonDoNothing;
+import frc.robot.commands.auton.AutonLimelightTest;
+import frc.robot.commands.macro.LimelightAlign;
 	import frc.robot.commands.macro.ResetEncoders;
 	import frc.robot.commands.macro.SetDeport;
 	import frc.robot.commands.macro.SetHigh;
@@ -66,6 +68,9 @@ import edu.wpi.first.wpilibj.Timer;
 		// --------------------=Auton Selection=--------------------
 public Command getAutonomousCommand() {
 	return new AutonDoNothing();
+	// return new AutonLimelightTest(swerveDrive);
+	// return new AutonConeBalance(swerveDrive, elevator, arm, wrist, claw);
+	// return new AutonConeBalance(swerveDrive, elevator, arm, wrist);
 }
 		
 		public void configureButtonBindings() {

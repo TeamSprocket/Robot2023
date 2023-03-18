@@ -20,7 +20,7 @@ public class BalanceOnChargeStation extends CommandBase {
   double speedInitial;
   boolean onRamp = false;
   Timer timer;
-  double waitTime = 2.3;
+  double waitTime = 3;
 
   double onRampAngle = 10;
   // PIDController controller;
@@ -40,11 +40,11 @@ public class BalanceOnChargeStation extends CommandBase {
       this.onRampAngle *= -1;
     }
 
-    if (this.speedInitial >= 0.05) {
-      this.speedInitial = 0.05;
+    if (this.speedInitial >= 0.1) {
+      this.speedInitial = 0.1;
     }
-    if (this.speedInitial <= -0.05) {
-      this.speedInitial = -0.05;
+    if (this.speedInitial <= -0.1) {
+      this.speedInitial = -0.1;
     }
     // this.gyro = new ADIS16470_IMU();
     
@@ -79,16 +79,7 @@ public class BalanceOnChargeStation extends CommandBase {
     }
 
     if (onRamp && timer.get() < waitTime) {
-      speed = Constants.Auton.SPEED_ON_RAMP * (Math.abs(speedInitial) / speedInitial);
-    }
-
-    if (timer.get() > waitTime) {
-      speed = 0;
-      lockWheels();
-    }
-
-    if (timer.get() > waitTime + 0.25) {
-      isFinished = true;
+      speed = Constants.Auton.SPEED_ON_RAMP * (Math.abs(speed) / speed);
     }
     
 
@@ -128,14 +119,14 @@ public class BalanceOnChargeStation extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     swerveDrive.stopModules();
+    System.out.println("BALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nsBALANCED\nBALANCED\nBALANCED");
+    // lockWheels();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (isFinished) {
-      return true;
-    }
-    return false;
+    return timer.get() > waitTime;
+    
   }
 }

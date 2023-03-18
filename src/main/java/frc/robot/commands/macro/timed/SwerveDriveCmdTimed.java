@@ -53,7 +53,7 @@ public class SwerveDriveCmdTimed extends MacroCommand {
     this.swerveDrive = swerveDrive;
     this.xTarget = -1.0 * target.getY();
     this.yTarget = target.getX();
-    this.tTarget = (target.getRotation().getRadians() / 10);
+    this.tTarget = (target.getRotation().getRadians() / 10.0);
     this.timer = new Timer();
     this.duration = duration;
     talonFL = new WPI_TalonFX(RobotMap.Drivetrain.FRONT_LEFT_TALON_D);
