@@ -52,7 +52,7 @@ public class SwerveDriveCmdTimed extends MacroCommand {
   public SwerveDriveCmdTimed(SwerveDrive swerveDrive, Pose2d target, double duration) {
     this.swerveDrive = swerveDrive;
     this.xTarget = -1.0 * target.getY();
-    this.yTarget = target.getX();
+    this.yTarget = -1.0 * target.getX();
     this.tTarget = (target.getRotation().getRadians() / 10.0);
     this.timer = new Timer();
     this.duration = duration;

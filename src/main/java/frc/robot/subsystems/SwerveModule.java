@@ -76,6 +76,10 @@ public class SwerveModule extends SubsystemBase {
     public void setTurnDefaultMode(NeutralMode mode) {
       turnMotor.setNeutralMode(mode);
     }
+    public void setDriveDefaultMode(NeutralMode mode) {
+      driveMotor.setNeutralMode(mode);
+    }
+
   public void clearStickyFaults() {
     turnMotor.clearStickyFaults();
     driveMotor.clearStickyFaults();
@@ -138,7 +142,13 @@ public class SwerveModule extends SubsystemBase {
       // double tunedAbsEncoderRad = -getAbsEncoderRad();
       //   turnMotor.setSelectedSensorPosition(tunedAbsEncoderRad / (2.0 * Math.PI)
       //          * 2048.0 * Constants.Drivetrain.kTurningMotorGearRatio);
-      turnMotor.setSelectedSensorPosition((getAbsEncoderRad() / (2 * Math.PI)) * 2048 * Constants.Drivetrain.kTurningMotorGearRatio);
+      // turnMotor.setSelectedSensorPosition((getAbsEncoderRad() / (2 * Math.PI)) * 2048 * Constants.Drivetrain.kTurningMotorGearRatio);
+      double absAngle = absEncoder.getAbsolutePosition() % 360.0;
+      double absPercent = absAngle / 360.0;
+      double absPercentWithRatio = absPercent * Constants.Drivetrain.kTurningMotorGearRatio;
+      double encoderPos = absPercentWithRatio * 2048.0;
+      turnMotor.setSelectedSensorPosition(encoderPos);
+      System.out.println(absAngle);
 
     }
 
@@ -161,7 +171,7 @@ public class SwerveModule extends SubsystemBase {
     }
 
 
-    public void setDesiredState(SwerveModuleState swerveState) {
+    public void setDesiredState(SwerveModuleState swerveState, boolean isPrecise) {
       SmartDashboard.putNumber("Turn Stator Current", turnMotor.getStatorCurrent());
       SmartDashboard.putNumber("Turn Supply Current", turnMotor.getSupplyCurrent());
       // absEncoder.clearStickyFaults();
@@ -176,7 +186,12 @@ public class SwerveModule extends SubsystemBase {
           fullTargetAngle += (Math.PI * 2.0);
         }
       double driveSpd = state.speedMetersPerSecond / Constants.Drivetrain.kMaxSpeedMetersPerSecond;
+        if (isPrecise) {
+          // System.out.println("PRECISEPRECISE\nPRECISE\nPRECISE\nPRECISE\nPRECISE\nPRECISE\nPRECISE\nPRECISE\nPRECISE\nPRECISE\n\n");
+          driveSpd *= Constants.Drivetrain.PRECISE_DRIVE_SPEED_PERCENT;
+        }
 
+      
       if (Math.abs(state.speedMetersPerSecond /  Constants.Drivetrain.kMaxSpeedMetersPerSecond) < 0.01) {
         stop();
         return;

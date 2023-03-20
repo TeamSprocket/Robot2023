@@ -32,7 +32,7 @@ public class PIDTurnTimed extends CommandBase {
     this.target = target;
     this.isFinished = false;
 
-    this.controller = new PIDController(0.15, 0, 0.015);
+    this.controller = new PIDController(0.2, 0, 0.0015);
     controller.enableContinuousInput(0, 2 * Math.PI);
     
     // Use addRequirements() here to declare subsystem dependencies.

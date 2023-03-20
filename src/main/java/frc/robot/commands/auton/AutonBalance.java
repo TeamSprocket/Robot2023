@@ -16,8 +16,8 @@ import frc.robot.commands.macro.timed.WaitTimed;
 import frc.robot.commands.persistent.RollClaw;
 import frc.robot.subsystems.SwerveDrive;
 
-public class AutonConeBalance extends SequentialCommandGroup {
-  public AutonConeBalance(SwerveDrive swerveDrive, Elevator elevator, Arm arm, Wrist wrist, Claw claw) {
+public class AutonBalance extends SequentialCommandGroup {
+  public AutonBalance(SwerveDrive swerveDrive, Elevator elevator, Arm arm, Wrist wrist, Claw claw) {
     // public AutonConeBalance(SwerveDrive swerveDrive, Elevator elevator, Arm arm, Wrist wrist) {
     
     addCommands(
@@ -33,8 +33,8 @@ public class AutonConeBalance extends SequentialCommandGroup {
         // new RollClawTimed(claw, -0.5, 1),
         // new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.5, new Rotation2d(0.0)), 2),
         // new BalanceOnChargeStation(swerveDrive, 0.5, true)
-
-        new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.7, new Rotation2d(0.0)), 4),
+        new RollClawTimed(claw, 0.25, 1),
+        new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.7, new Rotation2d(0.0)), 4.25),
         new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.5, new Rotation2d(0.0)), 0.25),
         new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.3, new Rotation2d(0.0)), 0.25),
         new WaitTimed(0.5),

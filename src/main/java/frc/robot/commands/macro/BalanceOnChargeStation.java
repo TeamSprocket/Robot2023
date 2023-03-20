@@ -4,6 +4,8 @@
 
 package frc.robot.commands.macro;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -20,7 +22,7 @@ public class BalanceOnChargeStation extends CommandBase {
   double speedInitial;
   boolean onRamp = false;
   Timer timer;
-  double waitTime = 3;
+  double waitTime = 2;
 
   double onRampAngle = 10;
   // PIDController controller;
@@ -60,6 +62,7 @@ public class BalanceOnChargeStation extends CommandBase {
   @Override
   public void initialize() {
     timer.reset();
+    // swerveDrive.zeroPitch();
   }
   
   // Called every time the scheduler runs while the command is scheduled.
@@ -67,6 +70,8 @@ public class BalanceOnChargeStation extends CommandBase {
   public void execute() {
     double angle = swerveDrive.getPitchDeg();
     double speed = speedInitial;
+
+    double turn = 0;
 
     if (angle > onRampAngle) {
       onRamp = true;
@@ -78,35 +83,30 @@ public class BalanceOnChargeStation extends CommandBase {
       // speed = 0.01;
     }
 
-    if (onRamp && timer.get() < waitTime) {
+    if (onRamp && timer.get() < waitTime + Constants.Auton.CHARGING_STATION_WAIT_OFFSET) {
       speed = Constants.Auton.SPEED_ON_RAMP * (Math.abs(speed) / speed);
+    }
+    if (onRamp && timer.get() < Constants.Auton.CHARGING_STATION_WAIT_OFFSET) {
+      speed = 0;
+      turn = 0.01;
+      swerveDrive.setDriveDefaultMode(NeutralMode.Brake);
+
     }
     
 
-    setSpeeds(speed);
+    setSpeeds(speed, turn);
     
   }
 
-  public void setSpeeds(double output) {
+  public void setSpeeds(double output, double turn) {
     ChassisSpeeds chassisSpeeds;
     if (Constants.Drivetrain.IS_FIELD_ORIENTED) {
       double headingRad = Math.toRadians(swerveDrive.getHeading());
       chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-          output, 0, 0, new Rotation2d(headingRad));
+          output, 0, turn, new Rotation2d(headingRad));
     } else { 
-      chassisSpeeds = new ChassisSpeeds(output, 0, 0);
+      chassisSpeeds = new ChassisSpeeds(output, 0, turn);
     }
-
-    // Calculate module states per module
-    SwerveModuleState[] moduleStates = Constants.Drivetrain.driveKinematics.toSwerveModuleStates(chassisSpeeds);
-  
-    // Apply to modules
-    swerveDrive.setModuleStates(moduleStates);
-  }
-
-  public void lockWheels() {
-    ChassisSpeeds chassisSpeeds;
-    chassisSpeeds = new ChassisSpeeds(0, 0.0001, 0);
 
     // Calculate module states per module
     SwerveModuleState[] moduleStates = Constants.Drivetrain.driveKinematics.toSwerveModuleStates(chassisSpeeds);
@@ -126,7 +126,7 @@ public class BalanceOnChargeStation extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return timer.get() > waitTime;
+    return timer.get() > (waitTime + Constants.Auton.CHARGING_STATION_WAIT_OFFSET);
     
   }
 }

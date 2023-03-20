@@ -64,6 +64,7 @@ public class Robot extends TimedRobot {
     public void disabledInit() {
         CommandScheduler.getInstance().cancelAll();
         robotContainer.setTurnDefaultMode(NeutralMode.Coast);
+        robotContainer.setDriveDefaultMode(NeutralMode.Coast);
     }
 
     @Override
@@ -75,6 +76,7 @@ public class Robot extends TimedRobot {
     public void autonomousInit() {
         Constants.Drivetrain.JOYSTICK_DRIVING_ENABLED = false;
         robotContainer.setTurnDefaultMode(NeutralMode.Brake);
+        robotContainer.setDriveDefaultMode(NeutralMode.Brake);
         robotContainer.autonInit();
         this.auton = robotContainer.getAutonomousCommand();
 
@@ -99,13 +101,19 @@ public class Robot extends TimedRobot {
         Constants.Drivetrain.JOYSTICK_DRIVING_ENABLED = true;
         CommandScheduler.getInstance().cancelAll();
         robotContainer.setTurnDefaultMode(NeutralMode.Brake);
+        robotContainer.setDriveDefaultMode(NeutralMode.Brake);
         robotContainer.configureButtonBindings();
         robotContainer.getSwerveDrive().zeroDrive();
+        
     }
     
     /** This function is called periodically during teleoperated mode. */
     @Override
     public void teleopPeriodic() {
+        robotContainer.initRumbleTimer();
         // robotContainer.outputAutonLog();
     }
+
+
+
 }

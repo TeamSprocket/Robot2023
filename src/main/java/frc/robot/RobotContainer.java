@@ -5,13 +5,17 @@
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.Timer;
 	import edu.wpi.first.wpilibj.XboxController;
-	import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 	import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 	import edu.wpi.first.wpilibj2.command.Command;
 	import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.auton.AutonConeBalance;
+import frc.robot.commands.auton.AutonBalance;
 import frc.robot.commands.auton.AutonDoNothing;
+import frc.robot.commands.auton.AutonHalfTurn;
 import frc.robot.commands.auton.AutonLimelightTest;
+import frc.robot.commands.auton.AutonOneCube;
+import frc.robot.commands.auton.AutonTwoCube;
 import frc.robot.commands.macro.LimelightAlign;
 	import frc.robot.commands.macro.ResetEncoders;
 	import frc.robot.commands.macro.SetDeport;
@@ -20,14 +24,16 @@ import frc.robot.commands.macro.LimelightAlign;
 	import frc.robot.commands.macro.SetLowConeTilted;
 	import frc.robot.commands.macro.SetLowCube;
 	import frc.robot.commands.macro.SetMid;
-	import frc.robot.commands.macro.SetHumanPlayer;
+import frc.robot.commands.macro.timed.PIDTurnTimed;
+import frc.robot.commands.macro.SetHumanPlayer;
 	import frc.robot.commands.macro.SetLowConeStanding;
 	import frc.robot.commands.persistent.Elevate;
 	import frc.robot.commands.persistent.MoveArmJoystick;
 	import frc.robot.commands.persistent.MoveWristManual;
 	import frc.robot.commands.persistent.RollClaw;
 	import frc.robot.commands.persistent.SwerveDriveCmd;
-	import frc.robot.subsystems.Elevator;
+// import frc.robot.commands.persistent.VibrateControllerTimed;
+import frc.robot.subsystems.Elevator;
 	import frc.robot.subsystems.Arm;
 	import frc.robot.subsystems.Claw;
 	import frc.robot.subsystems.SwerveDrive;
@@ -48,6 +54,7 @@ import frc.robot.commands.macro.LimelightAlign;
 		//Controllers
 		private final XboxController driver = new XboxController(0);
 		private final XboxController operator = new XboxController(1);
+		XboxController[] controllers = {driver, operator};
 
 		//Smartdashboard
 		//Subsystems
@@ -62,17 +69,21 @@ import frc.robot.commands.macro.LimelightAlign;
 		
 		public RobotContainer() {	
 			this.timer = new Timer();
-			timer.reset();
+			timer.reset(); 
 		}	
 
 		// --------------------=Auton Selection=--------------------
 public Command getAutonomousCommand() {
-	return new AutonDoNothing();
+	// return new AutonDoNothing();
 	// return new AutonLimelightTest(swerveDrive);
-	// return new AutonConeBalance(swerveDrive, elevator, arm, wrist, claw);
-	// return new AutonConeBalance(swerveDrive, elevator, arm, wrist);
+	// return new AutonBalance(swerveDrive, elevator, arm, wrist, claw);
+	return new AutonTwoCube	(swerveDrive, elevator, arm, wrist, claw);
+	// return new AutonOneCube(swerveDrive, elevator, arm, wrist, claw);
+	// return new AutonHalfTurn(swerveDrive);
 }
 		
+
+
 		public void configureButtonBindings() {
 			// --------------------=Driver=--------------------
 			swerveDrive.setDefaultCommand(new SwerveDriveCmd(
@@ -86,6 +97,9 @@ public Command getAutonomousCommand() {
 			claw.setDefaultCommand(new RollClaw(claw, driver));
 			new JoystickButton(driver,
 				RobotMap.Controller.RESET_GYRO_HEADING_BUTTON_ID).whenPressed(() -> swerveDrive.zeroHeading());
+			new JoystickButton(driver, 8).whenPressed(() -> swerveDrive.togglePrecise());
+				// new JoystickButton(driver,
+			// 	3).whenPressed(() -> swerveDrive.zeroTalonsABS());
 			new JoystickButton(driver, 2).whenHeld(new LimelightAlign(swerveDrive));
 
 
@@ -102,6 +116,45 @@ public Command getAutonomousCommand() {
 			new JoystickButton(operator, 7).whenHeld(new ResetEncoders(elevator, arm, wrist));
 			new JoystickButton(operator, 9).whenHeld(new SetLowConeStanding(elevator, arm, wrist));
 			new JoystickButton(operator, 10).whenHeld(new SetDeport(elevator, arm, wrist));
+		}
+
+		public void rumbleControllers(double rumbleValue) {
+			for (XboxController controller : controllers) {
+				controller.setRumble(RumbleType.kBothRumble, rumbleValue);
+			}
+		}
+
+		public void initRumbleTimer() {
+			timer.start();
+			// System.out.println("TELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\n");
+			// new VibrateControllerTimed(controllers, 10, 1);
+			double time = timer.get();
+
+			if (time > 105 && time < 106) {
+				rumbleControllers(1);
+			}
+			else if (time > 115 && time < 116) {
+				rumbleControllers(1);
+			} 
+			else if (time > 125 && time < 127) {
+				rumbleControllers(1);
+			}  
+			else {
+				rumbleControllers(0);
+			}
+
+			// 30 sec warning
+			// new VibrateControllerTimed(controllers, 135 - 30, 0.25);
+			// new VibrateControllerTimed(controllers, 135 - 30 - 0.5, 0.25);
+			// new VibrateControllerTimed(controllers, 135 - 30 - 0.5 - 0.5, 0.25);
+
+			// // 20 sec warning
+			// new VibrateControllerTimed(controllers, 135 - 20, 0.25);
+			// new VibrateControllerTimed(controllers, 135 - 20 - 0.5, 0.25);
+			
+			// // 10 sec warning
+			// new VibrateControllerTimed(controllers, 135 - 10, 1);
+			
 		}
 
 
@@ -132,6 +185,10 @@ public Command getAutonomousCommand() {
 
 		public void setTurnDefaultMode(NeutralMode mode) {
 			swerveDrive.setTurnDefaultMode(mode);
+		}
+
+		public void setDriveDefaultMode(NeutralMode mode) {
+			swerveDrive.setDriveDefaultMode(mode);
 		}
 
 		public double headingOffset() {
