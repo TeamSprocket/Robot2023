@@ -1,7 +1,11 @@
 	package frc.robot;
 
 	import com.ctre.phoenix.motorcontrol.*;
-	import edu.wpi.first.wpilibj.GenericHID;
+
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.CameraServerCvJNI;
+import edu.wpi.first.cscore.CvSink;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.Timer;
 	import edu.wpi.first.wpilibj.XboxController;
@@ -114,6 +118,11 @@ public Command getAutonomousCommand() {
 			new JoystickButton(operator, 9).whenHeld(new SetLowConeStanding(elevator, arm, wrist));
 			new JoystickButton(operator, 10).whenHeld(new SetDeport(elevator, arm, wrist));
 		}
+
+		public CvSink getCameraFeed() {
+			return CameraServer.getVideo();
+		}
+		
 
 		public void rumbleControllers(double rumbleValue) {
 			for (XboxController controller : controllers) {

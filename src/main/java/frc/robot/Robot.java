@@ -55,6 +55,7 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
         robotContainer.clearStickyFaults();
+        // SmartDashboard.put robotContainer.getCameraFeed();
     }
 
     /**

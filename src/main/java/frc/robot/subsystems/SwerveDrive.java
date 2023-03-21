@@ -80,6 +80,10 @@ public class SwerveDrive extends SubsystemBase {
         frontRight.zeroTalon();
         backLeft.zeroTalon();
         backRight.zeroTalon();
+        frontLeft.zeroDrive();
+        frontRight.zeroDrive();
+        backLeft.zeroDrive();
+        backRight.zeroDrive();
     }
     public void zeroTalonsABS() {
         frontLeft.resetEncoderPos();
@@ -114,6 +118,16 @@ public class SwerveDrive extends SubsystemBase {
         frontRight.setCurrentLimitDrive(currentLimit);
         backLeft.setCurrentLimitDrive(currentLimit);
         backRight.setCurrentLimitDrive(currentLimit);
+    }
+
+    public SwerveModulePosition[] getSwerveModulePositions() {
+        SwerveModulePosition[] swerveModulePositions = {
+            new SwerveModulePosition(frontLeft.getDrivePosition(), new Rotation2d(frontLeft.getTurnPosition())),
+            new SwerveModulePosition(frontRight.getDrivePosition(), new Rotation2d(frontRight.getTurnPosition())),
+            new SwerveModulePosition(backLeft.getDrivePosition(), new Rotation2d(backLeft.getTurnPosition())),
+            new SwerveModulePosition(backRight.getDrivePosition(), new Rotation2d(backRight.getTurnPosition()))
+        };
+        return swerveModulePositions;
     }
 
     public void togglePrecise() {
@@ -163,7 +177,7 @@ public class SwerveDrive extends SubsystemBase {
         return (frontLeft.getDrivePosition() + frontRight.getDrivePosition() + backLeft.getDrivePosition() + backRight.getDrivePosition()) / 4;
     }
 
-    public double getPitchDeg() {
+    public double getPitchDegFiltered() {
         double deg = gyro.getYComplementaryAngle();
         deg -= 360;
         deg %= 360;
@@ -172,6 +186,17 @@ public class SwerveDrive extends SubsystemBase {
         if (deg > 180) { 
             deg = 0;
         }
+        return deg;
+    
+    }
+
+    public double getPitchDeg() {
+        double deg = gyro.getYComplementaryAngle();
+        deg %= 360;
+        if (deg >= 180) {
+            deg -= 360;
+        }
+
         return deg;
     
     }
@@ -238,7 +263,6 @@ public class SwerveDrive extends SubsystemBase {
 
         SmartDashboard.putNumber("Gyro", getHeading());
 
-        SmartDashboard.putNumber("Pitch Angle", getPitchDeg());
         
 
     }
