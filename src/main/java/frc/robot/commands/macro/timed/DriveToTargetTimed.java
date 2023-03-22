@@ -88,6 +88,16 @@ public class DriveToTargetTimed extends CommandBase {
     double ySpeed = ySpeedIn;
     double tSpeed = tSpeedIn;
 
+    if (Math.abs(xSpeed) > 0.05) {
+      xSpeed = 0.05 * (Math.abs(xSpeed + 0.00000001) / (0.00000001 + xSpeed));
+    } 
+    if (Math.abs(ySpeed) > 0.05) {
+      ySpeed = 0.05 * (Math.abs(ySpeed + 0.00000001) / (0.00000001 + ySpeed));
+    } 
+    if (Math.abs(tSpeed) > 0.05) {
+      tSpeed = 0.05 * (Math.abs(tSpeed + 0.00000001) / (0.00000001 + tSpeed));
+    } 
+
     if (time <= 0.5) {
       xSpeed *= (time * 2);
       ySpeed *= (time * 2);

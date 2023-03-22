@@ -24,7 +24,7 @@ public class BalanceOnChargeStationGyro extends CommandBase {
   boolean onRamp = false;
   Timer timer;
   double waitTime = 2;
-  Timer endTimer;
+  Timer endTimer, onRampTimer;
 
   double onRampAngle = 10;
 
@@ -42,6 +42,7 @@ public class BalanceOnChargeStationGyro extends CommandBase {
     this.swerveDrive = swerveDrive;
     this.timer = new Timer();
     this.endTimer = new Timer();
+    this.onRampTimer = new Timer();
     this.speedInitial = -1.0 * speedInitial;
     this.duration = duration;
 
@@ -72,6 +73,7 @@ public class BalanceOnChargeStationGyro extends CommandBase {
     timer.reset();
     endTimer.reset();
     endTimer.start();
+    onRampTimer.reset();
     // swerveDrive.zeroPitch();
   }
   
@@ -88,6 +90,22 @@ public class BalanceOnChargeStationGyro extends CommandBase {
 
     if (onRamp) {
       speed = controller.calculate(swerveDrive.getPitchDeg());
+      onRampTimer.start();
+      
+      if (onRampTimer.get() >= 2) {
+        if (speed > 0.02) {
+          speed = 0.02;
+        } else if (speed < -0.03) {
+          speed = -0.02;
+        }
+      } else {
+        if (speed > 0.05) {
+          speed = 0.05;
+        } else if (speed < -0.05) {
+          speed = -0.05;
+        }
+      }
+      
     }
 
     if (onRamp && Math.abs(swerveDrive.getPitchDeg()) <= 5) {
@@ -95,6 +113,8 @@ public class BalanceOnChargeStationGyro extends CommandBase {
     } else {
       endTimer.stop();
     }
+
+    
 
     setSpeeds(speed);
     

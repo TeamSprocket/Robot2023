@@ -14,8 +14,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 	import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 	import edu.wpi.first.wpilibj2.command.Command;
 	import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-// import frc.robot.commands.auton.AutonBalance;
-import frc.robot.commands.auton.AutonDoNothing;
 import frc.robot.commands.macro.LimelightAlign;
 	import frc.robot.commands.macro.ResetEncoders;
 	import frc.robot.commands.macro.SetDeport;
@@ -32,7 +30,8 @@ import frc.robot.commands.macro.SetHumanPlayer;
 	import frc.robot.commands.persistent.MoveWristManual;
 	import frc.robot.commands.persistent.RollClaw;
 	import frc.robot.commands.persistent.SwerveDriveCmd;
-	import frc.robot.commands.auton.*;
+// import frc.robot.commands.auton.AutonBalance;
+import frc.robot.commands.auton.*;
 // import frc.robot.commands.persistent.VibrateControllerTimed;
 import frc.robot.subsystems.Elevator;
 	import frc.robot.subsystems.Arm;
@@ -78,9 +77,13 @@ public Command getAutonomousCommand() {
 	// return new AutonDoNothing();
 	// return new AutonLimelightTest(swerveDrive);
 	// return new AutonBalance(swerveDrive, elevator, arm, wrist, claw);
-	return new AutonTwoCube	(swerveDrive, elevator, arm, wrist, claw);
+	// return new AutonTwoCube(swerveDrive, elevator, arm, wrist, claw);
 	// return new AutonOneCube(swerveDrive, elevator, arm, wrist, claw);
 	// return new AutonHalfTurn(swerveDrive);
+	// return new AutonBalanceGyro(swerveDrive, elevator, arm, wrist, claw);
+	// return new AutonOneMeterSpin(swerveDrive, elevator, arm, wrist, claw);
+	return new AutonTwoCubeBalance(swerveDrive, elevator, arm, wrist, claw);
+
 }
 		
 
@@ -208,55 +211,56 @@ public Command getAutonomousCommand() {
 			return 0.0;
 		}
 
-		// public void outputAutonLog() {
-		// 	timer.start();
+		public void outputAutonLog() {
+			timer.start();
 
-		// 	if (swerveDrive.getDesiredStates() != null) {
-		// 		desiredStates[0] = swerveDrive.getDesiredStates()[0].speedMetersPerSecond;
-		// 		desiredStates[1] = swerveDrive.getDesiredStates()[1].speedMetersPerSecond;
-		// 		desiredStates[2] = swerveDrive.getDesiredStates()[2].speedMetersPerSecond;
-		// 		desiredStates[3] = swerveDrive.getDesiredStates()[3].speedMetersPerSecond;
+			if (swerveDrive.getDesiredStates() != null) {
+				desiredStates[0] = swerveDrive.getDesiredStates()[0].speedMetersPerSecond;
+				desiredStates[1] = swerveDrive.getDesiredStates()[1].speedMetersPerSecond;
+				desiredStates[2] = swerveDrive.getDesiredStates()[2].speedMetersPerSecond;
+				desiredStates[3] = swerveDrive.getDesiredStates()[3].speedMetersPerSecond;
 
-		// 		desiredStates[4] = swerveDrive.getDesiredStates()[0].angle.getRadians();
-		// 		desiredStates[5] = swerveDrive.getDesiredStates()[1].angle.getRadians();
-		// 		desiredStates[6] = swerveDrive.getDesiredStates()[2].angle.getRadians();
-		// 		desiredStates[7] = swerveDrive.getDesiredStates()[3].angle.getRadians();
-		// 	} else {
-		// 		desiredStates[0] = 0;
-		// 		desiredStates[1] = 0;
-		// 		desiredStates[2] = 0;
-		// 		desiredStates[3] = 0;
+				desiredStates[4] = swerveDrive.getDesiredStates()[0].angle.getRadians();
+				desiredStates[5] = swerveDrive.getDesiredStates()[1].angle.getRadians();
+				desiredStates[6] = swerveDrive.getDesiredStates()[2].angle.getRadians();
+				desiredStates[7] = swerveDrive.getDesiredStates()[3].angle.getRadians();
+			} else {
+				desiredStates[0] = 0;
+				desiredStates[1] = 0;
+				desiredStates[2] = 0;
+				desiredStates[3] = 0;
 
-		// 		desiredStates[4] = 0;
-		// 		desiredStates[5] = 0;
-		// 		desiredStates[6] = 0;
-		// 		desiredStates[7] = 0;
-		// 	}
+				desiredStates[4] = 0;
+				desiredStates[5] = 0;
+				desiredStates[6] = 0;
+				desiredStates[7] = 0;
+			}
 
-		// 	desiredStates[8] = booleanToDouble(operator.getRightBumper());
-		// 	desiredStates[9] = booleanToDouble(operator.getAButton());
-		// 	desiredStates[10] = booleanToDouble(operator.getYButton());
-		// 	desiredStates[11] = booleanToDouble(operator.getXButton());
+			// desiredStates[8] = booleanToDouble(operator.getRightBumper());
+			// desiredStates[9] = booleanToDouble(operator.getAButton());
+			// desiredStates[10] = booleanToDouble(operator.getYButton());
+			// desiredStates[11] = booleanToDouble(operator.getXButton());
 
-		// 	desiredStates[12] = (driver.getRightTriggerAxis() - driver.getLeftTriggerAxis());
+			// desiredStates[12] = (driver.getRightTriggerAxis() - driver.getLeftTriggerAxis());
+
+				double time = Math.round(timer.get() * 10) / 10.0;
+				// System.out.println(time);
+				if (time - (int) (time) != last) {
+					last = time - (int) (time);
+
+					System.out.print("AutonLog: ");
+					for (double num : desiredStates) {
+						System.out.print(num + " ");
+					}
+					System.out.println();
+				}
+			}
+
+
 
 			
-
-
 			
-			
-		// 	double time = Math.round(timer.get() * 10) / 10.0;
-		// 	// System.out.println(time);
-		// 	if (time - (int) (time) != last) {
-		// 		last = time - (int) (time);
-
-		// 		System.out.print("AutonLog: ");
-		// 		for (double num : desiredStates) {
-		// 			System.out.print(num + " ");
-		// 		}
-		// 		System.out.println();
-		// 	}
-		// }
+		
 
 		// 	// Create Trajectory Speed/Settings
 		// 	TrajectoryConfig trajectoryConfig = new TrajectoryConfig(

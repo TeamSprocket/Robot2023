@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.SwerveDrive;
 
-public class PIDTurnTimed extends CommandBase {
+public class PIDTurnTimedOnlyI extends CommandBase {
   /** Creates a new PIDTurnTimed. */
   // ADIS16470_IMU imu;
   SwerveDrive swerveDrive;
@@ -24,7 +24,7 @@ public class PIDTurnTimed extends CommandBase {
   boolean isFinished = false;
   PIDController controller;
 
-  public PIDTurnTimed(SwerveDrive swerveDrive, double target, double duration) {
+  public PIDTurnTimedOnlyI(SwerveDrive swerveDrive, double target, double duration) {
     // this.imu = imu;
     this.swerveDrive = swerveDrive;
     this.timer = new Timer();
@@ -32,7 +32,7 @@ public class PIDTurnTimed extends CommandBase {
     this.target = target;
     this.isFinished = false;
 
-    this.controller = new PIDController(Constants.Auton.kPTurn, Constants.Auton.kITurn, Constants.Auton.kDTurn);
+    this.controller = new PIDController(0, 0.01, 0);
     controller.enableContinuousInput(0, 2 * Math.PI);
     
     // Use addRequirements() here to declare subsystem dependencies.
