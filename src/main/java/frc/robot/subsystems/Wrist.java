@@ -27,6 +27,8 @@ public class Wrist extends SubsystemBase {
 
         wrist.setInverted(false);
 
+        wrist.setSmartCurrentLimit(105);
+
     }
 
     public double getWristPosition(){
@@ -38,16 +40,20 @@ public class Wrist extends SubsystemBase {
         return angle;
     }
 
+    public void resetWristEncoder(){
+        wrist.getEncoder().setPosition(0);
+    }
+
     public void moveWrist(double output) {
         wrist.set(output); 
     }
 
     public void setWristAngle(double currentAngle, double setpoint){
         double output = wristPIDController.calculate(currentAngle, setpoint);
-        if (output < -0.3){
-            output = -0.3;
-        } else if (output > 0.3) {
-            output = 0.3;
+        if (output < -0.275){
+            output = -0.275;
+        } else if (output > 0.275) {
+            output = 0.275;
         }
         wrist.set(output);
     }
@@ -59,6 +65,7 @@ public class Wrist extends SubsystemBase {
     @Override
     public void periodic(){
         SmartDashboard.putNumber("[Wrist] Position", wristEncoder.getPosition()); 
+        SmartDashboard.putNumber("[Wrist] current", wrist.getOutputCurrent()); 
 
     }
 }

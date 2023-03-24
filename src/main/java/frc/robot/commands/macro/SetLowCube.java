@@ -31,18 +31,17 @@ public class SetLowCube extends MacroCommand{
     public void execute() {
         timer.start();
         
-        if (timer.get() > 0.1 && timer.get() < 0.5){
+        if (timer.get() > 0.1 && timer.get() < 0.75){
             wrist.setWristAngle(wrist.getWristAngle(), 2.5);
-            arm.setArmAngle(arm.getArmAngle(), -25);
-            elevator.setElevatorPositionSpeed(elevator.getElevatorHeight(), 30, 0.45);
+            arm.setArmAngle(arm.getArmAngle(), -22.5);
+            elevator.setElevatorPositionSpeed(elevator.getElevatorHeight(), 30, 0.6);
         }
         else{
             wrist.setWristAngle(wrist.getWristAngle(), 2.5);
-            arm.setArmAngle(arm.getArmAngle(), -25);
+            arm.setArmAngle(arm.getArmAngle(), -22.5);
             elevator.setElevatorPositionSpeed(elevator.getElevatorHeight(), 30, 0.2);
         }
         
-      
     }
 
     public boolean isFinished(){
@@ -52,7 +51,7 @@ public class SetLowCube extends MacroCommand{
     @Override
     public void end(boolean interrupted){
         wrist.setWristAngle(wrist.getWristAngle(), 2.5);
-        arm.setArmAngle(arm.getArmAngle(), -25);
+        arm.setArmAngle(arm.getArmAngle(), -22.5);
         elevator.setElevatorPositionSpeed(elevator.getElevatorHeight(), 30, 0.2);
     }
 }

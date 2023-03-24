@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class SwerveDrive extends SubsystemBase {
     Timer timer;
     double last = 0.0;
+    boolean isPrecise = false;
     SwerveModuleState[] states = {
         new SwerveModuleState(0, new Rotation2d(0)),
         new SwerveModuleState(0, new Rotation2d(0)),
@@ -73,11 +74,16 @@ public class SwerveDrive extends SubsystemBase {
         gyro.reset();
         // gyro.setYawAxis(null)
     }
+
     public void zeroTalons() {
         frontLeft.zeroTalon();
         frontRight.zeroTalon();
         backLeft.zeroTalon();
         backRight.zeroTalon();
+        frontLeft.zeroDrive();
+        frontRight.zeroDrive();
+        backLeft.zeroDrive();
+        backRight.zeroDrive();
     }
     public void zeroTalonsABS() {
         frontLeft.resetEncoderPos();
@@ -93,6 +99,41 @@ public class SwerveDrive extends SubsystemBase {
         backRight.zeroDrive();
     }
 
+    public void clearStickyFaults() {
+        frontLeft.clearStickyFaults();
+        frontRight.clearStickyFaults();
+        backLeft.clearStickyFaults();
+        backRight.clearStickyFaults();
+    }
+
+    public void setCurrentLimitTurn(double currentLimit) {
+        frontLeft.setCurrentLimitTurn(currentLimit);
+        frontRight.setCurrentLimitTurn(currentLimit);
+        backLeft.setCurrentLimitTurn(currentLimit);
+        backRight.setCurrentLimitTurn(currentLimit);
+    }
+
+    public void setCurrentLimitDrive(double currentLimit) {
+        frontLeft.setCurrentLimitDrive(currentLimit);
+        frontRight.setCurrentLimitDrive(currentLimit);
+        backLeft.setCurrentLimitDrive(currentLimit);
+        backRight.setCurrentLimitDrive(currentLimit);
+    }
+
+    public SwerveModulePosition[] getSwerveModulePositions() {
+        SwerveModulePosition[] swerveModulePositions = {
+            new SwerveModulePosition(frontLeft.getDrivePosition(), new Rotation2d(frontLeft.getTurnPosition())),
+            new SwerveModulePosition(frontRight.getDrivePosition(), new Rotation2d(frontRight.getTurnPosition())),
+            new SwerveModulePosition(backLeft.getDrivePosition(), new Rotation2d(backLeft.getTurnPosition())),
+            new SwerveModulePosition(backRight.getDrivePosition(), new Rotation2d(backRight.getTurnPosition()))
+        };
+        return swerveModulePositions;
+    }
+
+    public void togglePrecise() {
+        isPrecise = !isPrecise;
+    }
+    
     public SwerveDrive() {
         this.timer = new Timer();
         timer.reset();
@@ -101,8 +142,8 @@ public class SwerveDrive extends SubsystemBase {
         new Thread(() -> {
             try {
                 Thread.sleep(Constants.Drivetrain.GYRO_DELAY_MS);
-                
                 zeroHeading();
+                calibrateGyro();
                 // zeroTalonsABS();
                 zeroTalons();
             }
@@ -120,6 +161,13 @@ public class SwerveDrive extends SubsystemBase {
         backLeft.setTurnDefaultMode(mode);
         backRight.setTurnDefaultMode(mode);
     }
+
+    public void setDriveDefaultMode(NeutralMode mode) {
+        frontLeft.setDriveDefaultMode(mode);
+        frontRight.setDriveDefaultMode(mode);
+        backLeft.setDriveDefaultMode(mode);
+        backRight.setDriveDefaultMode(mode);
+    }
     
     public void calibrateGyro() {
         gyro.calibrate();
@@ -129,7 +177,7 @@ public class SwerveDrive extends SubsystemBase {
         return (frontLeft.getDrivePosition() + frontRight.getDrivePosition() + backLeft.getDrivePosition() + backRight.getDrivePosition()) / 4;
     }
 
-    public double getPitchDeg() {
+    public double getPitchDegFiltered() {
         double deg = gyro.getYComplementaryAngle();
         deg -= 360;
         deg %= 360;
@@ -142,7 +190,18 @@ public class SwerveDrive extends SubsystemBase {
     
     }
 
-    // Get gyro angle from -360 to 360
+    public double getPitchDeg() {
+        double deg = gyro.getYComplementaryAngle();
+        deg %= 360;
+        if (deg >= 180) {
+            deg -= 360;
+        }
+
+        return deg;
+    
+    }
+
+    // Get gyro angle from 0 to 360
     public double getHeading() {
         double angle = gyro.getAngle() % 360.0;
         if (angle < 0) {
@@ -174,16 +233,16 @@ public class SwerveDrive extends SubsystemBase {
     public void setModuleStates(SwerveModuleState[] desiredStates) {
         states = desiredStates;
         
-        frontLeft.setDesiredState(desiredStates[0]);
-        frontRight.setDesiredState(desiredStates[1]);
-        backLeft.setDesiredState(desiredStates[2]);
-        backRight.setDesiredState(desiredStates[3]);
+        
+        frontLeft.setDesiredState(desiredStates[0], isPrecise);
+        frontRight.setDesiredState(desiredStates[1], isPrecise);
+        backLeft.setDesiredState(desiredStates[2], isPrecise);
+        backRight.setDesiredState(desiredStates[3], isPrecise);
 
         frontLeft.clearStickyFaults();
         frontRight.clearStickyFaults();
         backLeft.clearStickyFaults();
         backRight.clearStickyFaults();
-
 
 
         // Debug
@@ -204,7 +263,6 @@ public class SwerveDrive extends SubsystemBase {
 
         SmartDashboard.putNumber("Gyro", getHeading());
 
-        SmartDashboard.putNumber("Pitch Angle", getPitchDeg());
         
 
     }

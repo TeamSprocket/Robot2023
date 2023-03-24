@@ -13,8 +13,13 @@ import frc.robot.Constants;
 import frc.robot.commands.macro.SetHigh;
 import frc.robot.commands.macro.SetHome;
 import frc.robot.commands.macro.SetLowCube;
-import frc.robot.commands.macro.timed.DeportArm;
+import frc.robot.commands.macro.SetLowConeStanding;
+import frc.robot.commands.macro.SetLowConeTilted;
+// import frc.robot.commands.macro.timed.DeportArm;
 import frc.robot.commands.macro.timed.RollClawTimed;
+import frc.robot.commands.macro.timed.SetHighTimed;
+import frc.robot.commands.macro.timed.SetHomeTimed;
+import frc.robot.commands.macro.timed.SetLowCubeTimed;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Elevator;
@@ -72,24 +77,6 @@ public class ParseAuton extends CommandBase {
         };
 
         swerveDrive.setModuleStates(states);
-
-        if (auton[cur][8] == 1.0) {
-          new DeportArm(elevator, arm, wrist);
-        } 
-        else if (auton[cur][9] == 1.0) {
-          new SetHigh(elevator, arm, wrist);
-        }
-        else if (auton[cur][10] == 1.0) {
-          new SetLowCube(elevator, arm, wrist);
-        }
-        else if (auton[cur][11] == 1.0) {
-          new SetHome(elevator, arm, wrist);
-        }
-
-        if (auton[cur][12] != 0.0) {
-          new RollClawTimed(claw, 0.1);
-        }
-        
 
 
         cur++;

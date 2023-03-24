@@ -74,6 +74,9 @@ public final class RobotMap {
     //public static final int PISTON_RIGHT = 15;
 
   }
+  public static final class LEDStrip {
+    public static final int LED = 9;
+  }
 
   public static final class PCH {
     //public static final int PCH_CAN = 1;

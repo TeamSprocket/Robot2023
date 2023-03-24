@@ -17,8 +17,8 @@ public class Claw extends SubsystemBase{
     
     public Claw() {
         claw.setInverted(false);
-        claw.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true,30,30,1.0));
-        claw.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true,30,30,1.0));
+        claw.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true,50,50,1.0));
+        claw.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true,50,50,1.0));
 
 
 
@@ -27,7 +27,6 @@ public class Claw extends SubsystemBase{
     }
 
     public void moveClaw(double output){
-        //claw.set(output * 0.2);
 
         claw.set(ControlMode.PercentOutput, output);
         //percent output ouputs as a percentange from -1 to 1 with 0 stopping the motor
@@ -35,6 +34,12 @@ public class Claw extends SubsystemBase{
         //position mode, where the output is in encoder ticks or analog values
         //and follower mode, where the output is the interger device ID (idk what this is)
     }
+
+    public void shootClaw(double output){
+
+        claw.set(ControlMode.PercentOutput, output);
+    }
+
 
 
     public double getVelocity() {

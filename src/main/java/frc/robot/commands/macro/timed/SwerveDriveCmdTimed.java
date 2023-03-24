@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
-import frc.robot.commands.SwerveDriveCmd;
+import frc.robot.commands.persistent.SwerveDriveCmd;
 import frc.robot.subsystems.SwerveDrive;
 import frc.util.commands.MacroCommand;
 
@@ -51,9 +51,9 @@ public class SwerveDriveCmdTimed extends MacroCommand {
    */
   public SwerveDriveCmdTimed(SwerveDrive swerveDrive, Pose2d target, double duration) {
     this.swerveDrive = swerveDrive;
-    this.xTarget = target.getY();
-    this.yTarget = target.getX();
-    this.tTarget = (target.getRotation().getRadians() / 10);
+    this.xTarget = -1.0 * target.getY();
+    this.yTarget = -1.0 * target.getX();
+    this.tTarget = (target.getRotation().getRadians() / 10.0);
     this.timer = new Timer();
     this.duration = duration;
     talonFL = new WPI_TalonFX(RobotMap.Drivetrain.FRONT_LEFT_TALON_D);

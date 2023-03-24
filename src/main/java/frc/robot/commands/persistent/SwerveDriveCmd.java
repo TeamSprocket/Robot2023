@@ -1,5 +1,5 @@
 
-package frc.robot.commands;
+package frc.robot.commands.persistent;
 
 import java.util.function.Supplier;
 
@@ -82,7 +82,7 @@ public class SwerveDriveCmd extends CommandBase {
     ChassisSpeeds chassisSpeeds;
     // Field Oriented
     if (Constants.Drivetrain.IS_FIELD_ORIENTED) {
-      double headingRad = Math.toRadians(swerveDrive.getHeading());
+      double headingRad = Math.toRadians(-swerveDrive.getHeading());
       
       if (Constants.Auton.FACING_DRIVERS) {
         headingRad += Math.PI;
@@ -104,7 +104,9 @@ public class SwerveDriveCmd extends CommandBase {
     SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.Drivetrain.kMaxSpeedMetersPerSecond);
 
     // Apply to modules
-    swerveDrive.setModuleStates(moduleStates);
+    if (Constants.Drivetrain.JOYSTICK_DRIVING_ENABLED) {
+      swerveDrive.setModuleStates(moduleStates);
+    }
     SmartDashboard.putString("Module States Desaturated", moduleStates[2].toString());
 
   }
