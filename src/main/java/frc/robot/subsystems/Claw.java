@@ -27,7 +27,6 @@ public class Claw extends SubsystemBase{
     }
 
     public void moveClaw(double output){
-        //claw.set(output * 0.2);
 
         claw.set(ControlMode.PercentOutput, output);
         //percent output ouputs as a percentange from -1 to 1 with 0 stopping the motor
@@ -35,6 +34,12 @@ public class Claw extends SubsystemBase{
         //position mode, where the output is in encoder ticks or analog values
         //and follower mode, where the output is the interger device ID (idk what this is)
     }
+
+    public void shootClaw(double output){
+
+        claw.set(ControlMode.PercentOutput, output);
+    }
+
 
 
     public double getVelocity() {

@@ -18,10 +18,12 @@ import frc.robot.commands.macro.LimelightAlign;
 	import frc.robot.commands.macro.ResetEncoders;
 	import frc.robot.commands.macro.SetDeport;
 	import frc.robot.commands.macro.SetHigh;
-	import frc.robot.commands.macro.SetHome;
+import frc.robot.commands.macro.SetHighCube;
+import frc.robot.commands.macro.SetHome;
 	import frc.robot.commands.macro.SetLowConeTilted;
 	import frc.robot.commands.macro.SetLowCube;
 	import frc.robot.commands.macro.SetMid;
+import frc.robot.commands.macro.SetMidCube;
 import frc.robot.commands.macro.timed.PIDTurnTimed;
 import frc.robot.commands.macro.SetHumanPlayer;
 	import frc.robot.commands.macro.SetLowConeStanding;
@@ -74,15 +76,14 @@ import frc.robot.subsystems.Elevator;
 
 		// --------------------=Auton Selection=--------------------
 public Command getAutonomousCommand() {
-	// return new AutonDoNothing();
-	// return new AutonLimelightTest(swerveDrive);
+	return new AutonDoNothing();
 	// return new AutonBalance(swerveDrive, elevator, arm, wrist, claw);
 	// return new AutonTwoCube(swerveDrive, elevator, arm, wrist, claw);
 	// return new AutonOneCube(swerveDrive, elevator, arm, wrist, claw);
-	// return new AutonHalfTurn(swerveDrive);
 	// return new AutonBalanceGyro(swerveDrive, elevator, arm, wrist, claw);
 	// return new AutonOneMeterSpin(swerveDrive, elevator, arm, wrist, claw);
-	return new AutonTwoCubeBalance(swerveDrive, elevator, arm, wrist, claw);
+	// return new AutonTwoCubeBalance(swerveDrive, elevator, arm, wrist, claw);
+	// return new AutonOneHighCubeBalance(swerveDrive, elevator, arm, wrist, claw);
 
 }
 		
@@ -107,17 +108,18 @@ public Command getAutonomousCommand() {
 			new JoystickButton(driver, 2).whenHeld(new LimelightAlign(swerveDrive));
 
 
-			// --------------------=Operator=--------------------
+			// --------------------=Operator=-------------------- ,
 			elevator.setDefaultCommand(new Elevate(elevator, operator));
 			arm.setDefaultCommand(new MoveArmJoystick(arm, operator));
 			wrist.setDefaultCommand(new MoveWristManual(wrist, operator));
 			new JoystickButton(operator, 1).whenHeld(new SetMid(elevator, arm, wrist));
-			new JoystickButton(operator, 2).whenHeld(new SetHumanPlayer(elevator, arm, wrist));
+			new JoystickButton(operator, 2).whenHeld(new SetHighCube(elevator, arm, wrist));
 			new JoystickButton(operator, 3).whenHeld(new SetHome(elevator, arm, wrist));
 			new JoystickButton(operator, 4).whenHeld(new SetHigh(elevator, arm, wrist));
 			new JoystickButton(operator, 5).whenHeld(new SetLowCube(elevator, arm, wrist));
 			new JoystickButton(operator, 6).whenHeld(new SetLowConeTilted(elevator, arm, wrist));
 			new JoystickButton(operator, 7).whenHeld(new ResetEncoders(elevator, arm, wrist));
+			new JoystickButton(operator, 8).whenHeld(new SetMidCube(elevator, arm, wrist));
 			new JoystickButton(operator, 9).whenHeld(new SetLowConeStanding(elevator, arm, wrist));
 			new JoystickButton(operator, 10).whenHeld(new SetDeport(elevator, arm, wrist));
 		}
