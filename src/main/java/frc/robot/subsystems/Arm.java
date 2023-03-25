@@ -21,7 +21,7 @@ public class Arm extends SubsystemBase {
     private RelativeEncoder armLeftEncoder = armLeft.getEncoder();
     private RelativeEncoder armRightEncoder = armRight.getEncoder(); 
 
-    // private SlewRateLimiter slewLimiter;
+    private SlewRateLimiter slewLimiter;
 
 
     public Arm(){
@@ -33,7 +33,7 @@ public class Arm extends SubsystemBase {
 
         armRight.follow(armLeft);
 
-        // slewLimiter = new SlewRateLimiter(0.01);
+        slewLimiter = new SlewRateLimiter(0.01);
 
     }
 

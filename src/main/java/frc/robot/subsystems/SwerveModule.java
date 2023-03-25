@@ -194,6 +194,9 @@ public class SwerveModule extends SubsystemBase {
           driveSpd *= Constants.Drivetrain.PRECISE_DRIVE_SPEED_PERCENT;
         }
 
+        if (Constants.isTeleop) {
+          driveSpd *= Constants.kTeleopMultiplier;
+        }
         
         
 
