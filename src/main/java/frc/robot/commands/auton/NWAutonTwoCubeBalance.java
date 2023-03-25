@@ -12,7 +12,7 @@ import frc.robot.commands.macro.timed.LimelightAlignTimed;
 import frc.robot.commands.macro.timed.PIDTurnTimed;
 import frc.robot.commands.macro.timed.PIDTurnTimedOnlyI;
 import frc.robot.commands.macro.timed.RollClawTimed;
-import frc.robot.commands.macro.timed.SetHighTimed;
+import frc.robot.commands.macro.timed.SetHighTimedCube;
 import frc.robot.commands.macro.timed.SetHomeTimed;
 import frc.robot.commands.macro.timed.SetLowCubeTimed;
 import frc.robot.commands.macro.timed.SwerveDriveCmdTimed;
@@ -20,8 +20,8 @@ import frc.robot.commands.macro.timed.WaitTimed;
 import frc.robot.commands.persistent.RollClaw;
 import frc.robot.subsystems.SwerveDrive;
 
-public class AutonTwoCubeBalance extends SequentialCommandGroup {
-  public AutonTwoCubeBalance(SwerveDrive swerveDrive, Elevator elevator, Arm arm, Wrist wrist, Claw claw) {
+public class NWAutonTwoCubeBalance extends SequentialCommandGroup {
+  public NWAutonTwoCubeBalance(SwerveDrive swerveDrive, Elevator elevator, Arm arm, Wrist wrist, Claw claw) {
     // public AutonConeBalance(SwerveDrive swerveDrive, Elevator elevator, Arm arm, Wrist wrist) {
     
     addCommands(
@@ -30,7 +30,7 @@ public class AutonTwoCubeBalance extends SequentialCommandGroup {
 
         // Put cube 
         new ParallelCommandGroup(
-          new SetHighTimed(elevator, arm, wrist, 1),
+          new SetHighTimedCube(elevator, arm, wrist, 1),
           new RollClawTimed(claw, -0.25, 1),
           new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.45, new Rotation2d(0.0)), 1)
         ),
@@ -38,7 +38,7 @@ public class AutonTwoCubeBalance extends SequentialCommandGroup {
       // Score cube
         new ParallelCommandGroup(
           new RollClawTimed(claw, 0.25, 0.5),
-          new SetHighTimed(elevator, arm, wrist, 0.5)
+          new SetHighTimedCube(elevator, arm, wrist, 0.5)
         ),
 
         new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.75, new Rotation2d(0.0)), 0.25),

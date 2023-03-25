@@ -66,7 +66,7 @@ import frc.robot.subsystems.Elevator;
 		private final Wrist wrist = new Wrist();
 		private final Claw claw = new Claw();
 		private final PowerDistribution pdh = new PowerDistribution();
-		private final LEDStrip ledStrip = new LEDStrip();
+		// private final LEDStrip ledStrip = new LEDStrip();
 
 		
 		public RobotContainer() {	
@@ -76,14 +76,24 @@ import frc.robot.subsystems.Elevator;
 
 		// --------------------=Auton Selection=--------------------
 public Command getAutonomousCommand() {
-	return new AutonDoNothing();
-	// return new AutonBalance(swerveDrive, elevator, arm, wrist, claw);
-	// return new AutonTwoCube(swerveDrive, elevator, arm, wrist, claw);
+	// return new AutonOneCubeOnly(swerveDrive, elevator, arm, wrist, claw);
+
+	/////////////// Universal 
+	// return new AutonDoNothing();
 	// return new AutonOneCube(swerveDrive, elevator, arm, wrist, claw);
-	// return new AutonBalanceGyro(swerveDrive, elevator, arm, wrist, claw);
-	// return new AutonOneMeterSpin(swerveDrive, elevator, arm, wrist, claw);
-	// return new AutonTwoCubeBalance(swerveDrive, elevator, arm, wrist, claw);
+	return new AutonTwoCube(swerveDrive, elevator, arm, wrist, claw);
+
+	/////////////// Middle (location bot starts from POV of drivers)
+	// return new AutonBloopBalance(swerveDrive, elevator, arm, wrist, claw);
 	// return new AutonOneHighCubeBalance(swerveDrive, elevator, arm, wrist, claw);
+
+	/////////////// Right (location bot starts from POV of drivers)
+	// return new AutonOneHighCubeBalanceLeft(swerveDrive, elevator, arm, wrist, claw);
+
+	/////////////// Left (location bot starts from POV of drivers)
+	// return new AutonOneHighCubeBalanceRight(swerveDrive, elevator, arm, wrist, claw);
+
+
 
 }
 		
@@ -182,7 +192,7 @@ public Command getAutonomousCommand() {
 
 		public void clearStickyFaults() {
 			pdh.clearStickyFaults();
-			swerveDrive.clearStickyFaults();
+			// swerveDrive.clearStickyFaults();
 		}
 
 		public void setSwerveDriveCurrentLimitTurn(double currentLimit) {

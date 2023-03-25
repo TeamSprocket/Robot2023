@@ -63,6 +63,8 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void disabledInit() {
+        Constants.isTeleop = false;
+
         CommandScheduler.getInstance().cancelAll();
         robotContainer.setTurnDefaultMode(NeutralMode.Coast);
         robotContainer.setDriveDefaultMode(NeutralMode.Coast);
@@ -75,6 +77,7 @@ public class Robot extends TimedRobot {
     /** This function is run once each time the robot enters autonomous mode. */
     @Override
     public void autonomousInit() {
+        Constants.isTeleop = false;
         Constants.Drivetrain.JOYSTICK_DRIVING_ENABLED = false;
         robotContainer.setTurnDefaultMode(NeutralMode.Brake);
         robotContainer.setDriveDefaultMode(NeutralMode.Brake);
@@ -99,6 +102,7 @@ public class Robot extends TimedRobot {
     /** This function is called once each time the robot enters teleoperated mode. */ 
     @Override
     public void teleopInit() {
+        Constants.isTeleop = true;
         Constants.Drivetrain.JOYSTICK_DRIVING_ENABLED = true;
         CommandScheduler.getInstance().cancelAll();
         robotContainer.setTurnDefaultMode(NeutralMode.Brake);

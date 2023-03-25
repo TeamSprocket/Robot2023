@@ -21,12 +21,14 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.util.sendable.SendableRegistry;
+import edu.wpi.first.wpilibj.RuntimeType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Robot;
 
 public class SwerveModule extends SubsystemBase {
 
@@ -186,10 +188,14 @@ public class SwerveModule extends SubsystemBase {
           fullTargetAngle += (Math.PI * 2.0);
         }
       double driveSpd = state.speedMetersPerSecond / Constants.Drivetrain.kMaxSpeedMetersPerSecond;
+
         if (isPrecise) {
           // System.out.println("PRECISEPRECISE\nPRECISE\nPRECISE\nPRECISE\nPRECISE\nPRECISE\nPRECISE\nPRECISE\nPRECISE\nPRECISE\n\n");
           driveSpd *= Constants.Drivetrain.PRECISE_DRIVE_SPEED_PERCENT;
         }
+
+        
+        
 
       
       if (Math.abs(state.speedMetersPerSecond /  Constants.Drivetrain.kMaxSpeedMetersPerSecond) < 0.01) {

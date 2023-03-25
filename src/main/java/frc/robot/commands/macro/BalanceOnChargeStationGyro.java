@@ -108,7 +108,7 @@ public class BalanceOnChargeStationGyro extends CommandBase {
       
     }
 
-    if (onRamp && Math.abs(swerveDrive.getPitchDeg()) <= 5) {
+    if (onRamp && Math.abs(swerveDrive.getPitchDeg()) <= Constants.Auton.BALANCE_END_ANGLE_THRESHOLD) {
       endTimer.start();
     } else {
       endTimer.stop();

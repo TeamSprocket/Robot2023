@@ -10,7 +10,7 @@ import frc.robot.commands.macro.MoveArmPosition;
 import frc.robot.subsystems.*;
 import frc.util.commands.MacroCommand;
 
-public class SetHighTimed extends MacroCommand{
+public class SetHighTimedCube extends MacroCommand{
     
     private final Elevator elevator;
     private final Arm arm;
@@ -20,7 +20,7 @@ public class SetHighTimed extends MacroCommand{
     
     private double startTime;
 
-    public SetHighTimed (Elevator elevator, Arm arm, Wrist wrist, double duration) {
+    public SetHighTimedCube (Elevator elevator, Arm arm, Wrist wrist, double duration) {
         this.elevator = elevator;
         this.arm = arm;
         this.wrist = wrist;
@@ -41,15 +41,15 @@ public class SetHighTimed extends MacroCommand{
     public void execute() {
         timer.start();
         
-        if (timer.get() > 0.01 && timer.get() < 1.75){
-            wrist.setWristAngle(wrist.getWristAngle(), 5);
-            arm.setArmAngleSpeed(arm.getArmAngle(), -78, 0.45);
-            elevator.setElevatorPositionSpeed(0, -15, 0.6);
+        if (timer.get() > 0 && timer.get() < 2){
+            wrist.setWristAngle(wrist.getWristAngle(), -22.5);
+            arm.setArmAngleSpeed(arm.getArmAngle(), -80, 0.4);
+            elevator.setElevatorPositionSpeed(0, 5, 0.6);
         }
         else{
-            wrist.setWristAngle(wrist.getWristAngle(), 5);
-            arm.setArmAngleSpeed(arm.getArmAngle(), -78, 0.35);
-            elevator.setElevatorPositionSpeed(0, -15, 0.3);
+            wrist.setWristAngle(wrist.getWristAngle(), -22.5);
+            arm.setArmAngleSpeed(arm.getArmAngle(), -80, 0.2);
+            elevator.setElevatorPositionSpeed(0, 5, 0.2);
         }
         
         
@@ -64,10 +64,8 @@ public class SetHighTimed extends MacroCommand{
 
     @Override
     public void end(boolean interrupted){
-        wrist.setWristAngle(wrist.getWristAngle(), 5);
+        wrist.setWristAngle(wrist.getWristAngle(), -22.5);
         arm.setArmAngleSpeed(arm.getArmAngle(), -80, 0.2);
         elevator.setElevatorPositionSpeed(0, 5, 0.2);
     }
 }
-
-

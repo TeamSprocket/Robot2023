@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -20,6 +21,8 @@ public class Arm extends SubsystemBase {
     private RelativeEncoder armLeftEncoder = armLeft.getEncoder();
     private RelativeEncoder armRightEncoder = armRight.getEncoder(); 
 
+    // private SlewRateLimiter slewLimiter;
+
 
     public Arm(){
         armLeft.restoreFactoryDefaults();
@@ -29,6 +32,8 @@ public class Arm extends SubsystemBase {
         armRight.setInverted(false);
 
         armRight.follow(armLeft);
+
+        // slewLimiter = new SlewRateLimiter(0.01);
 
     }
 
