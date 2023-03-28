@@ -48,18 +48,19 @@ public class AutonTwoCube extends SequentialCommandGroup {
         
         // Home
         new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.8, new Rotation2d(0.0)), 0.5),
-        new SetHomeTimed(elevator, arm, wrist, 2),
+        new SetHomeTimed(elevator, arm, wrist, 1.5),
 
         // Align
         new PIDTurnTimed(swerveDrive, Math.PI, 2.0),
 
         
-        new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.8, new Rotation2d(0.0)), 1.3),
+        new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.8, new Rotation2d(0.0)), 1.2),
 
         new DeportArmTimed(elevator, arm, wrist, 1),
+        new SetLowCubeTimed(elevator, arm, wrist, 0.75),
         new ParallelCommandGroup(
           new SetLowCubeTimed(elevator, arm, wrist, 1.5),
-          new RollClawTimed(claw, -1, 1.5),
+          new RollClawTimed(claw, -0.5, 1.5),
           new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.33, new Rotation2d(0.0)), 1.5)
         ),
         new SetHomeTimed(elevator, arm, wrist, 2)

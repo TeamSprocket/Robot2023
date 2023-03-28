@@ -83,8 +83,9 @@ public Command getAutonomousCommand() {
 	// return new AutonOneCube(swerveDrive, elevator, arm, wrist, claw);
 	return new AutonTwoCube(swerveDrive, elevator, arm, wrist, claw);
 
-	/////////////// Middle (location bot starts from POV of drivers)
+	/////////////// Middle (locbvb  ation bot starts from POV of drivers)
 	// return new AutonBloopBalance(swerveDrive, elevator, arm, wrist, claw);
+	// return new AutonBloopBalanceReverse(swerveDrive, elevator, arm, wrist, claw);
 	// return new AutonOneHighCubeBalance(swerveDrive, elevator, arm, wrist, claw);
 
 	/////////////// Right (location bot starts from POV of drivers)
@@ -182,7 +183,7 @@ public Command getAutonomousCommand() {
 		// Methods
 		public void autonInit() {
 			swerveDrive.zeroTalons();
-			swerveDrive.calibrateGyro();
+			// swerveDrive.calibrateGyro();
 			swerveDrive.zeroHeading();	
 		}
 
@@ -330,6 +331,10 @@ public Command getAutonomousCommand() {
 
 
 
+		public void outputPitch() {
+			// System.out.println(Math.abs(swerveDrive.getPitchDeg()));
+			SmartDashboard.putNumber("Pitch Angle Balance", swerveDrive.getPitchDeg());
+		}
 
 
 

@@ -72,6 +72,7 @@ public class SwerveDrive extends SubsystemBase {
     
     public void zeroHeading() {
         gyro.reset();
+        
         // gyro.setYawAxis(null)
     }
 
@@ -85,12 +86,12 @@ public class SwerveDrive extends SubsystemBase {
         backLeft.zeroDrive();
         backRight.zeroDrive();
     }
-    public void zeroTalonsABS() {
-        frontLeft.resetEncoderPos();
-        frontRight.resetEncoderPos();
-        backLeft.resetEncoderPos();
-        backRight.resetEncoderPos();
-    }
+    // public void zeroTalonsABS() {
+    //     frontLeft.resetEncoderPos();
+    //     frontRight.resetEncoderPos();
+    //     backLeft.resetEncoderPos();
+    //     backRight.resetEncoderPos();
+    // }
 
     public void zeroDrive() {
         frontLeft.zeroDrive();
@@ -197,6 +198,9 @@ public class SwerveDrive extends SubsystemBase {
             deg -= 360;
         }
 
+        double defaultOffset = -1.8;
+        deg -= defaultOffset;
+
         return deg;
     
     }
@@ -251,10 +255,10 @@ public class SwerveDrive extends SubsystemBase {
         SmartDashboard.putNumber("BackLeftAngleTarget", desiredStates[2].angle.getDegrees());
         SmartDashboard.putNumber("BackRightAngleTarget", desiredStates[3].angle.getDegrees());
 
-        SmartDashboard.putNumber("FrontLeftAngleABS", Math.toDegrees(frontLeft.getAbsEncoderRad()));
-        SmartDashboard.putNumber("FrontRightAngleABS", Math.toDegrees(frontRight.getAbsEncoderRad()));
-        SmartDashboard.putNumber("BackLeftAngleABS", Math.toDegrees(backLeft.getAbsEncoderRad()));
-        SmartDashboard.putNumber("BackRightAngleABS", Math.toDegrees(backRight.getAbsEncoderRad()));
+        // SmartDashboard.putNumber("FrontLeftAngleABS", Math.toDegrees(frontLeft.getAbsEncoderRad()));
+        // SmartDashboard.putNumber("FrontRightAngleABS", Math.toDegrees(frontRight.getAbsEncoderRad()));
+        // SmartDashboard.putNumber("BackLeftAngleABS", Math.toDegrees(backLeft.getAbsEncoderRad()));
+        // SmartDashboard.putNumber("BackRightAngleABS", Math.toDegrees(backRight.getAbsEncoderRad()));
 
         SmartDashboard.putNumber("FrontLeftAngleTalonEncoder", Math.toDegrees(frontLeft.getTurnPosition()));
         SmartDashboard.putNumber("FrontRightAngleTalonEncoder", Math.toDegrees(frontRight.getTurnPosition()));

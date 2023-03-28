@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.*;
 import frc.robot.commands.macro.BalanceOnChargeStation;
 import frc.robot.commands.macro.BalanceOnChargeStationGyro;
+import frc.robot.commands.macro.BalanceOnChargeStationGyroReverse;
 import frc.robot.commands.macro.timed.DeportArmTimed;
 import frc.robot.commands.macro.timed.LimelightAlignTimed;
 import frc.robot.commands.macro.timed.PIDTurnTimed;
@@ -49,20 +50,18 @@ public class AutonOneHighCubeBalance extends SequentialCommandGroup {
         ),
         
         // Home
-        new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.8, new Rotation2d(0.0)), 0.5),
-        
-        new SetHomeTimed(elevator, arm, wrist, 2),
-        
-        new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 1, new Rotation2d(0.0)), 2.0),
-        new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.8, new Rotation2d(0.0)), 0.1),
-        new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.6, new Rotation2d(0.0)), 0.1),
+        new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.1, new Rotation2d(0.0)), 0.1),
+        new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.25, new Rotation2d(0.0)), 0.1),
         new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.4, new Rotation2d(0.0)), 0.1),
-        new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.2, new Rotation2d(0.0)), 0.1),
-        new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.0, new Rotation2d(0.0)), 0.1),
+        new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.55, new Rotation2d(0.0)), 0.4),
+        
+        new SetHomeTimed(elevator, arm, wrist, 1.5),
 
-        new PIDTurnTimed(swerveDrive, Math.PI, 1),
+        // new PIDTurnTimed(swerveDrive, Math.PI, 1),
 
-        new BalanceOnChargeStationGyro(swerveDrive, 0.06, true, 5),
+        // new BalanceOnChargeStationGyro(swerveDrive, 0.08, true, 7),
+        new BalanceOnChargeStationGyroReverse(swerveDrive, 0.08, true, 8),
+
         new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.0, new Rotation2d(0.1)), 0.5)        
 
       ));

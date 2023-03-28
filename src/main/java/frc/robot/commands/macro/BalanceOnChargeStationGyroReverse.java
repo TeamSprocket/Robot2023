@@ -12,11 +12,12 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.SwerveDrive;
 
-public class BalanceOnChargeStationGyro extends CommandBase {
+public class BalanceOnChargeStationGyroReverse extends CommandBase {
   SwerveDrive swerveDrive;
   // ADIS16470_IMU gyro;
   boolean isFinished = false;
@@ -38,7 +39,7 @@ public class BalanceOnChargeStationGyro extends CommandBase {
    * @param swerveDrive swerveDrive object
    * @param speedInitial initiall speed to approach charging station at, reduced to 0.05 if it surpasses it
    */
-  public BalanceOnChargeStationGyro(SwerveDrive swerveDrive, double speedInitial, boolean climbFromBackOfBot, double duration) {
+  public BalanceOnChargeStationGyroReverse(SwerveDrive swerveDrive, double speedInitial, boolean climbFromBackOfBot, double duration) {
     this.swerveDrive = swerveDrive;
     this.timer = new Timer();
     this.endTimer = new Timer();
@@ -47,7 +48,6 @@ public class BalanceOnChargeStationGyro extends CommandBase {
     this.duration = duration;
 
     if (!climbFromBackOfBot) {
-      this.speedInitial *= -1;
       this.onRampAngle *= -1;
     }
 
@@ -94,10 +94,10 @@ public class BalanceOnChargeStationGyro extends CommandBase {
 
 
     if (onRamp) {
-      speed = controller.calculate(-swerveDrive.getPitchDeg());
+      speed = controller.calculate(swerveDrive.getPitchDeg());
       onRampTimer.start();
       
-      if (onRampTimer.get() >= (2 + 3)) {
+      if (onRampTimer.get() >= (2 + 1)) {
         if (speed > 0.02) {
           speed = 0.02;
         } else if (speed < -0.02) {
@@ -113,17 +113,19 @@ public class BalanceOnChargeStationGyro extends CommandBase {
       
     }
 
-    if (onRamp && onRampTimer.get() <= 3 && onRampTimer.get() >= 1) {
+    if (onRamp && onRampTimer.get() <= 2 && onRampTimer.get() >= 1) {
       speed = 0;
       turn = 0.01;
     }
 
     if (onRamp && Math.abs(swerveDrive.getPitchDeg()) <= Constants.Auton.BALANCE_END_ANGLE_THRESHOLD && onRampTimer.get() >= (2 + 1)) {
       endTimer.start();
+      
     } else {
       endTimer.stop();
     }
-
+    SmartDashboard.putBoolean("At Balance Threshold", (onRamp && Math.abs(swerveDrive.getPitchDeg()) <= Constants.Auton.BALANCE_END_ANGLE_THRESHOLD && onRampTimer.get() >= (2 + 1)));
+    System.out.println("End timer: " + endTimer.get());
     
 
     setSpeeds(speed, turn);

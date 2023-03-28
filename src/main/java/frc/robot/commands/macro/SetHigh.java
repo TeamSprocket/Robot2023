@@ -34,7 +34,7 @@ public class SetHigh extends MacroCommand{
         
         if (timer.get() > 0.01 && timer.get() < 1.75){
             wrist.setWristAngle(wrist.getWristAngle(), 17.5);
-            arm.setArmAngleSpeed(arm.getArmAngle(), -78, 0.45);
+            arm.setArmAngleSpeed(arm.getArmAngle(), -78, 0.5);
             elevator.setElevatorPositionSpeed(0, -15, 0.6);
         }
         else{

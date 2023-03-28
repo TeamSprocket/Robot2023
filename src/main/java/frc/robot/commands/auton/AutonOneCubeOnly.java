@@ -27,7 +27,10 @@ public class AutonOneCubeOnly extends SequentialCommandGroup {
     
     addCommands(
       new SequentialCommandGroup(
-        new DeportArmTimed(elevator, arm, wrist, 1),
+        new ParallelCommandGroup(
+          new DeportArmTimed(elevator, arm, wrist, 1),
+          new RollClawTimed(claw, -0.2, 1)
+        ), 
 
         // Put cube 
         new ParallelCommandGroup(

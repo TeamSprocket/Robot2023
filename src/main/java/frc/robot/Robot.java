@@ -55,6 +55,8 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
         robotContainer.clearStickyFaults();
+        robotContainer.outputPitch();
+        
         // SmartDashboard.put robotContainer.getCameraFeed();
     }
 
@@ -116,7 +118,8 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         robotContainer.initRumbleTimer();
-        robotContainer.outputAutonLog();
+
+        // robotContainer.outputAutonLog();
         // robotContainer.outputAutonLog();
     }
 

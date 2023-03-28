@@ -8,7 +8,7 @@ import edu.wpi.first.math.util.Units;
 public class Constants {
 
     public static boolean isTeleop = false;
-    public static double kTeleopMultiplier = 1.25;
+    public static double kTeleopMultiplier = 1.1;
 
     //TODO Edit PID values, tune speeds
     public static final class Elevator {
@@ -168,8 +168,8 @@ public class Constants {
         public static final double kPBalance = 0.003; //0.08
         public static final double kIBalance = 0;
         public static final double kDBalance = 0.001;
-        public static final double BALANCE_END_TIME_THRESHOLD = 2;
-        public static final double BALANCE_END_ANGLE_THRESHOLD = 5;
+        public static final double BALANCE_END_TIME_THRESHOLD = 0.25; // 0.5
+        public static final double BALANCE_END_ANGLE_THRESHOLD = 5; 
         
 
         public static final double SPEED_ON_RAMP = 0.0365; // 0.019

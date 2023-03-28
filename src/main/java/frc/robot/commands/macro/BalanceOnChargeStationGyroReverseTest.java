@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.SwerveDrive;
 
-public class BalanceOnChargeStationGyro extends CommandBase {
+public class BalanceOnChargeStationGyroReverseTest extends CommandBase {
   SwerveDrive swerveDrive;
   // ADIS16470_IMU gyro;
   boolean isFinished = false;
@@ -38,7 +38,7 @@ public class BalanceOnChargeStationGyro extends CommandBase {
    * @param swerveDrive swerveDrive object
    * @param speedInitial initiall speed to approach charging station at, reduced to 0.05 if it surpasses it
    */
-  public BalanceOnChargeStationGyro(SwerveDrive swerveDrive, double speedInitial, boolean climbFromBackOfBot, double duration) {
+  public BalanceOnChargeStationGyroReverseTest(SwerveDrive swerveDrive, double speedInitial, boolean climbFromBackOfBot, double duration) {
     this.swerveDrive = swerveDrive;
     this.timer = new Timer();
     this.endTimer = new Timer();
@@ -47,7 +47,6 @@ public class BalanceOnChargeStationGyro extends CommandBase {
     this.duration = duration;
 
     if (!climbFromBackOfBot) {
-      this.speedInitial *= -1;
       this.onRampAngle *= -1;
     }
 
@@ -94,10 +93,10 @@ public class BalanceOnChargeStationGyro extends CommandBase {
 
 
     if (onRamp) {
-      speed = controller.calculate(-swerveDrive.getPitchDeg());
+      speed = controller.calculate(swerveDrive.getPitchDeg());
       onRampTimer.start();
       
-      if (onRampTimer.get() >= (2 + 3)) {
+      if (onRampTimer.get() >= (2 + 1)) {
         if (speed > 0.02) {
           speed = 0.02;
         } else if (speed < -0.02) {
@@ -113,7 +112,7 @@ public class BalanceOnChargeStationGyro extends CommandBase {
       
     }
 
-    if (onRamp && onRampTimer.get() <= 3 && onRampTimer.get() >= 1) {
+    if (onRamp && onRampTimer.get() <= 2 && onRampTimer.get() >= 1) {
       speed = 0;
       turn = 0.01;
     }
