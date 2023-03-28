@@ -1,9 +1,9 @@
 # Rapid React 2023 - Moonlight
-FRC Team Sprocket 3473 Robot Code for the 2023 Charged Up Season
-Technical Binder - 
+FRC Team Sprocket 3473 Robot Code for the 2023 Charged Up Season  
+Technical Binder -  
 Programming Binder - 
 
-##Team Members
+## Team Members
 - **Jason Kim**
 - Alexander Kuo
 - Corey Zhong
