@@ -2,22 +2,16 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.auton;
+package frc.robot.commands.macro;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-// import frc.robot.Constants.Elevator;
-import frc.robot.commands.macro.SetHigh;
-import frc.robot.commands.macro.SetHome;
-import frc.robot.commands.macro.SetLowCube;
-import frc.robot.commands.macro.SetLowConeStanding;
-import frc.robot.commands.macro.SetLowConeTilted;
 // import frc.robot.commands.macro.timed.DeportArm;
 import frc.robot.commands.macro.timed.RollClawTimed;
-import frc.robot.commands.macro.timed.SetHighTimed;
+import frc.robot.commands.macro.timed.SetHighTimedCube;
 import frc.robot.commands.macro.timed.SetHomeTimed;
 import frc.robot.commands.macro.timed.SetLowCubeTimed;
 import frc.robot.subsystems.Arm;

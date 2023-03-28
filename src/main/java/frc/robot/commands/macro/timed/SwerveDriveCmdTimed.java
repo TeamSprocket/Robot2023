@@ -141,7 +141,7 @@ public class SwerveDriveCmdTimed extends MacroCommand {
     // ySpeed = ySlewLimit.calculate(ySpeed) * Constants.Drivetrain.kMaxSpeedMetersPerSecond;
     // tSpeed = tSlewLimit.calculate(tSpeed) * Constants.Drivetrain.kTeleDriveMaxAngularSpeedRadiansPerSecond;
     
-      System.out.println("SLEWWWW: " + xSpeed);
+      // System.out.println("SLEWWWW: " + xSpeed);
 
     // System.out.println("X CURRENT: " + xSpeed);
     
