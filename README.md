@@ -13,7 +13,7 @@ Programming Binder -
 - Eric Wang
 
 Special Thanks to
-- Vanessa Diaz (7157)
+- Veronica Diaz (7157)
 - Dustin (968)
 
 ## Subsystems
