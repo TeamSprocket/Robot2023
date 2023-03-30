@@ -14,7 +14,7 @@ Programming Binder -
 
 Special Thanks to
 - Veronica Diaz (7157)
-- Dustin (968)
+- Dustin Lieu (968)
 
 ## Subsystems
 - Swerve Drive (MK4I L2)
