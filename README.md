@@ -29,3 +29,5 @@ Special Thanks to
 - Limelight Strafe Alignment
 - Auton Gyro-Based Charging Station Balancing
 - Auton High Cube + Cube Pickup
+
+![Moonlight](https://user-images.githubusercontent.com/73210729/229272133-be59249b-0b4f-4a58-8eab-261f24e87d8e.png)
