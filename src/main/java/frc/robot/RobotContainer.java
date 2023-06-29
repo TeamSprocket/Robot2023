@@ -193,6 +193,10 @@ public Command getAutonomousCommand() {
 
 		public void clearStickyFaults() {
 			pdh.clearStickyFaults();
+			elevator.clearStickyFaults();
+			arm.clearStickyFaults();
+			wrist.clearStickyFaults();
+			claw.clearStickyFaults();
 			// swerveDrive.clearStickyFaults();
 		}
 

@@ -37,6 +37,11 @@ public class Arm extends SubsystemBase {
 
     }
 
+    public void clearStickyFaults() {
+        armLeft.clearFaults();
+        armRight.clearFaults();
+    }
+
     public double getArmAngle(){
         double angle = armLeftEncoder.getPosition() * Constants.Arm.angleConversionFactor;
         return angle;

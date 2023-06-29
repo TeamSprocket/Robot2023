@@ -38,6 +38,11 @@ public class Elevator extends SubsystemBase{
 
     }
 
+    public void clearStickyFaults() {
+        elevatorLeft.clearFaults();
+        elevatorRight.clearFaults();
+    }
+
 
 ////////////////////////////////////////////////////////////////
     public double getElevatorHeight(){

@@ -62,6 +62,10 @@ public class Wrist extends SubsystemBase {
         wrist.stopMotor();
     }
 
+    public void clearStickyFaults() {
+        wrist.clearFaults();
+    }
+
     @Override
     public void periodic(){
         SmartDashboard.putNumber("[Wrist] Position", wristEncoder.getPosition()); 

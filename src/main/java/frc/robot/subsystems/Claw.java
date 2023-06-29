@@ -35,6 +35,10 @@ public class Claw extends SubsystemBase{
         //and follower mode, where the output is the interger device ID (idk what this is)
     }
 
+    public void clearStickyFaults() {
+        claw.clearStickyFaults();
+    }
+
     public void shootClaw(double output){
 
         claw.set(ControlMode.PercentOutput, output);
