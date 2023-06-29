@@ -1,4 +1,4 @@
-package frc.robot.commands.jason_fillername;
+package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -6,21 +6,19 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.*;
 import frc.util.commands.MacroCommand;
 
-public class DeportArmTimed extends MacroCommand{
+public class SetDeport extends MacroCommand{
     
     private final Elevator elevator;
     private final Arm arm;
     private final Wrist wrist;
-    private final double duration;
     private final Timer timer;
     
-    // private double startTime;
+    private double startTime;
 
-    public DeportArmTimed (Elevator elevator, Arm arm, Wrist wrist, double duration) {
+    public SetDeport (Elevator elevator, Arm arm, Wrist wrist) {
         this.elevator = elevator;
         this.arm = arm;
         this.wrist = wrist;
-        this.duration = duration;
 
         timer = new Timer();
 
@@ -56,7 +54,7 @@ public class DeportArmTimed extends MacroCommand{
 
     @Override
     public boolean isFinished(){
-        if (timer.get() >= duration) {
+        if (timer.get() >= 1) {
             return true;
           }
           return false;

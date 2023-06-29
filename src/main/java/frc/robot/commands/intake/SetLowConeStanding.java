@@ -1,11 +1,11 @@
-package frc.robot.commands.jason_fillername;
+package frc.robot.commands.intake;
 
 import frc.util.commands.MacroCommand;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.subsystems.*;
 
 
-public class SetLowConeTilted extends MacroCommand{
+public class SetLowConeStanding extends MacroCommand{
     
     private final Elevator elevator;
     private final Arm arm;
@@ -14,7 +14,7 @@ public class SetLowConeTilted extends MacroCommand{
     
     private double startTime;
 
-    public SetLowConeTilted (Elevator elevator, Arm arm, Wrist wrist) {
+    public SetLowConeStanding (Elevator elevator, Arm arm, Wrist wrist) {
         this.elevator = elevator;
         this.arm = arm;
         this.wrist = wrist;
@@ -32,14 +32,14 @@ public class SetLowConeTilted extends MacroCommand{
         timer.start();
         
         if (timer.get() > 0.1 && timer.get() < 0.5){
-            wrist.setWristAngle(wrist.getWristAngle(), 25.5);
-            arm.setArmAngle(arm.getArmAngle(), -24);
-            elevator.setElevatorPositionSpeed(elevator.getElevatorHeight(), 30, 0.6);
+            wrist.setWristAngle(wrist.getWristAngle(), 43);
+            arm.setArmAngle(arm.getArmAngle(), -52.5);
+            elevator.setElevatorPositionSpeed(elevator.getElevatorHeight(), 23, 0.6);
         }
         else{
-            wrist.setWristAngle(wrist.getWristAngle(), 25.5);
-            arm.setArmAngle(arm.getArmAngle(), -24);
-            elevator.setElevatorPositionSpeed(elevator.getElevatorHeight(), 30, 0.2);
+            wrist.setWristAngle(wrist.getWristAngle(), 43);
+            arm.setArmAngle(arm.getArmAngle(), -52.5);
+            elevator.setElevatorPositionSpeed(elevator.getElevatorHeight(), 23, 0.2);
         }
         
       
@@ -51,8 +51,8 @@ public class SetLowConeTilted extends MacroCommand{
 
     @Override
     public void end(boolean interrupted){
-        wrist.setWristAngle(wrist.getWristAngle(), 25.5);
-        arm.setArmAngle(arm.getArmAngle(), -24);
-        elevator.setElevatorPositionSpeed(elevator.getElevatorHeight(), 30, 0.2);
+        wrist.setWristAngle(wrist.getWristAngle(), 43);
+        arm.setArmAngle(arm.getArmAngle(), -52.5);
+        elevator.setElevatorPositionSpeed(elevator.getElevatorHeight(), 23, 0.2);
     }
 }

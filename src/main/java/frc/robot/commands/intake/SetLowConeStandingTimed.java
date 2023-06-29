@@ -1,5 +1,4 @@
-package frc.robot.commands.jason_fillername;
-
+package frc.robot.commands.intake;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -10,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.*;
 import frc.util.commands.MacroCommand;
 
-public class SetHighTimed extends MacroCommand{
+public class SetLowConeStandingTimed extends MacroCommand{
     
     private final Elevator elevator;
     private final Arm arm;
@@ -20,12 +19,11 @@ public class SetHighTimed extends MacroCommand{
     
     private double startTime;
 
-    public SetHighTimed (Elevator elevator, Arm arm, Wrist wrist, double duration) {
+    public SetLowConeStandingTimed (Elevator elevator, Arm arm, Wrist wrist, double duration) {
         this.elevator = elevator;
         this.arm = arm;
         this.wrist = wrist;
         this.duration = duration;
-
         timer = new Timer();
 
         addRequirements(elevator, arm, wrist);
@@ -41,18 +39,18 @@ public class SetHighTimed extends MacroCommand{
     public void execute() {
         timer.start();
         
-        if (timer.get() > 0.01 && timer.get() < 1.75){
-            wrist.setWristAngle(wrist.getWristAngle(), 5);
-            arm.setArmAngleSpeed(arm.getArmAngle(), -78, 0.45);
-            elevator.setElevatorPositionSpeed(0, -15, 0.6);
+        if (timer.get() > 0.1 && timer.get() < 0.5){
+            wrist.setWristAngle(wrist.getWristAngle(), 35);
+            arm.setArmAngle(arm.getArmAngle(), -50);
+            elevator.setElevatorPositionSpeed(elevator.getElevatorHeight(), 30, 0.6);
         }
         else{
-            wrist.setWristAngle(wrist.getWristAngle(), 5);
-            arm.setArmAngleSpeed(arm.getArmAngle(), -78, 0.35);
-            elevator.setElevatorPositionSpeed(0, -15, 0.3);
+            wrist.setWristAngle(wrist.getWristAngle(), 35);
+            arm.setArmAngle(arm.getArmAngle(), -50);
+            elevator.setElevatorPositionSpeed(elevator.getElevatorHeight(), 30, 0.2);
         }
         
-        
+      
     }
 
     public boolean isFinished(){
@@ -64,10 +62,8 @@ public class SetHighTimed extends MacroCommand{
 
     @Override
     public void end(boolean interrupted){
-        wrist.setWristAngle(wrist.getWristAngle(), 5);
-        arm.setArmAngleSpeed(arm.getArmAngle(), -80, 0.2);
-        elevator.setElevatorPositionSpeed(0, 5, 0.2);
+        wrist.setWristAngle(wrist.getWristAngle(), 35);
+        arm.setArmAngle(arm.getArmAngle(), -50);
+        elevator.setElevatorPositionSpeed(elevator.getElevatorHeight(), 30, 0.2);
     }
 }
-
-

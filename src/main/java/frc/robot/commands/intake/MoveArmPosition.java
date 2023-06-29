@@ -1,18 +1,17 @@
-package frc.robot.commands.jason_fillername;
+package frc.robot.commands.intake;
 
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Wrist;
 import frc.util.commands.MacroCommand;
 
-public class MoveWristAngle extends MacroCommand {
-    private final Wrist wrist;
+public class MoveArmPosition extends MacroCommand {
+    private final Arm arm;
     private final double angle;
   
-    public MoveWristAngle (Wrist wrist, double angle) {
-      this.wrist = wrist;
+    public MoveArmPosition (Arm arm, double angle) {
+      this.arm = arm;
       this.angle = angle;
   
-      addRequirements(wrist);
+      addRequirements(arm);
     }
 
     public void initialize(){
@@ -21,11 +20,12 @@ public class MoveWristAngle extends MacroCommand {
 
     @Override
     public void execute() {
-      wrist.setWristAngle(wrist.getWristAngle(), angle);
+      arm.setArmAngle(arm.getArmAngle(), angle);
     }
 
     public boolean isFinished(){
       return false;
+      
     }
 
     @Override

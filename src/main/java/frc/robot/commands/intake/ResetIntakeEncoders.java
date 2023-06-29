@@ -1,16 +1,16 @@
-package frc.robot.commands.jason_fillername;
+package frc.robot.commands.intake;
 
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Wrist;
 import frc.util.commands.MacroCommand;
 
-public class ResetJasonEncoders extends MacroCommand {
+public class ResetIntakeEncoders extends MacroCommand {
     private final Wrist wrist;
     private final Arm arm;
     private final Elevator elevator;
   
-    public ResetJasonEncoders (Elevator elevator, Arm arm, Wrist wrist) {
+    public ResetIntakeEncoders (Elevator elevator, Arm arm, Wrist wrist) {
       this.wrist = wrist;
       this.arm = arm;
       this.elevator = elevator;

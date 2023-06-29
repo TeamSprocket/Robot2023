@@ -18,7 +18,7 @@ public class Wrist extends SubsystemBase {
 
     private final CANSparkMax wrist = new CANSparkMax(RobotMap.Wrist.WRIST, MotorType.kBrushless);
     
-    private PIDController wristPIDController = new PIDController(Constants.Wrist.P, Constants.Wrist.I, Constants.Wrist.D);
+    private PIDController wristPIDController = new PIDController(Constants.Wrist.kP, Constants.Wrist.kI, Constants.Wrist.kD);
     
     private RelativeEncoder wristEncoder = wrist.getEncoder();
     
@@ -36,7 +36,7 @@ public class Wrist extends SubsystemBase {
     }
 
     public double getWristAngle(){
-        double angle = wristEncoder.getPosition() * Constants.Wrist.angleConversionFactor;
+        double angle = wristEncoder.getPosition() * Constants.Wrist.kAngleConversionFactor;
         return angle;
     }
 

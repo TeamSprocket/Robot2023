@@ -38,7 +38,7 @@ public class Arm extends SubsystemBase {
     }
 
     public double getArmAngle(){
-        double angle = armLeftEncoder.getPosition() * Constants.Arm.angleConversionFactor;
+        double angle = armLeftEncoder.getPosition() * Constants.Arm.kAngleConversionFactor;
         return angle;
     }
 
