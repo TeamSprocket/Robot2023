@@ -243,10 +243,10 @@ public class SwerveDrive extends SubsystemBase {
         backLeft.setDesiredState(desiredStates[2], isPrecise);
         backRight.setDesiredState(desiredStates[3], isPrecise);
 
-        frontLeft.clearStickyFaults();
-        frontRight.clearStickyFaults();
-        backLeft.clearStickyFaults();
-        backRight.clearStickyFaults();
+        // frontLeft.clearStickyFaults();
+        // frontRight.clearStickyFaults();
+        // backLeft.clearStickyFaults();
+        // backRight.clearStickyFaults();
 
 
         // Debug
