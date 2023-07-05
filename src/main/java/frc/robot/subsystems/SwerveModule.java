@@ -126,15 +126,32 @@ public class SwerveModule extends SubsystemBase {
     
     // public double getAbsEncoderRad() {
     //   double angle = absEncoder.getAbsolutePosition();
-    //   return Math.toRadians(angle);
+    //   angle = Math.toRadians(angle);
+    //   // angle = Math.toRadians(angle);
+    //   // angle -= absEncoderOffsetRad;
+    //   // double rad = Math.abs(angle % (Math.PI * 2.0));
+    //   // if (rad > Math.PI) {
+    //   //   rad = -1.0 * (2.0 * Math.PI - rad);
+    //   // }
+
+    //   // angle -= absEncoderOffsetRad;
+    //   // return rad;
+    //   return angle;
+
     // }
-  
-    // public void zeroMotorABS() {
-    //   double absRad = getAbsEncoderRad();
-    //   double absPercent = absRad / (Math.PI * 2);
-    //   double absPercentWithGearRatio = absPercent / Constants.Measurements.kTurnMotorGearRatio;
-    //   double encoderPos = absPercentWithGearRatio * 2048.0;
+
+    // public void resetEncoderPos() {
+    //   // double tunedAbsEncoderRad = -getAbsEncoderRad();
+    //   //   turnMotor.setSelectedSensorPosition(tunedAbsEncoderRad / (2.0 * Math.PI)
+    //   //          * 2048.0 * Constants.Drivetrain.kTurningMotorGearRatio);
+    //   // turnMotor.setSelectedSensorPosition((getAbsEncoderRad() / (2 * Math.PI)) * 2048 * Constants.Drivetrain.kTurningMotorGearRatio);
+    //   double absAngle = absEncoder.getAbsolutePosition() % 360.0;
+    //   double absPercent = absAngle / 360.0;
+    //   double absPercentWithRatio = absPercent * Constants.Drivetrain.kTurningMotorGearRatio;
+    //   double encoderPos = absPercentWithRatio * 2048.0;
     //   turnMotor.setSelectedSensorPosition(encoderPos);
+    //   System.out.println(absAngle);
+
     // }
 
     public void zeroTalon() { 

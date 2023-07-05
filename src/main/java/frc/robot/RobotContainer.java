@@ -197,7 +197,7 @@ public Command getAutonomousCommand() {
 			arm.clearStickyFaults();
 			wrist.clearStickyFaults();
 			claw.clearStickyFaults();
-			swerveDrive.clearStickyFaults();
+			// swerveDrive.clearStickyFaults();
 		}
 
 		public void setSwerveDriveCurrentLimitTurn(double currentLimit) {
