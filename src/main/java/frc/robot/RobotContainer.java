@@ -80,8 +80,8 @@ public final class RobotContainer {
 			.onTrue(new ZeroHeading(swerveDrive));
 		new JoystickButton(driver, InputMap.Primary.TOGGLE_SWERVE_PRECISE_BUTTON_ID)
 			.onTrue(new TogglePrecise(swerveDrive));
-		new JoystickButton(driver, InputMap.Primary.LIMELIGHT_ALIGN_BUTTON_ID)
-			.whileTrue(new LimelightAlign(swerveDrive));
+		// new JoystickButton(driver, InputMap.Primary.LIMELIGHT_ALIGN_BUTTON_ID)
+			// .whileTrue(new LimelightAlign(swerveDrive));
 		// new JoystickButton(driver, InputMap.Primary.RESET_TURN_ENCODER_BUTTON_ID)
 			// .onTrue(new ResetTurnEncoders(swerveDrive));
 
