@@ -36,8 +36,8 @@ public class SwerveDrive extends SubsystemBase {
         RobotMap.Drivetrain.FRONT_LEFT_TALON_T,
         Constants.Drivetrain.FRONT_LEFT_D_IS_REVERSED,
         Constants.Drivetrain.FRONT_LEFT_T_IS_REVERSED,
-        RobotMap.Drivetrain.FRONT_RIGHT_ABS_ENCODER_ID,
-        Constants.Drivetrain.FRONT_RIGHT_ABS_ENCODER_OFFSET_RAD,
+        RobotMap.Drivetrain.FRONT_LEFT_ABS_ENCODER_ID,
+        Constants.Drivetrain.FRONT_LEFT_ABS_ENCODER_OFFSET_RAD,
         true);
 
     private final SwerveModule frontRight = new SwerveModule(
@@ -45,8 +45,8 @@ public class SwerveDrive extends SubsystemBase {
         RobotMap.Drivetrain.FRONT_RIGHT_TALON_T,
         Constants.Drivetrain.FRONT_RIGHT_D_IS_REVERSED,
         Constants.Drivetrain.FRONT_RIGHT_T_IS_REVERSED,
-        RobotMap.Drivetrain.BACK_RIGHT_ABS_ENCODER_ID,
-        Constants.Drivetrain.BACK_RIGHT_ABS_ENCODER_OFFSET_RAD,
+        RobotMap.Drivetrain.FRONT_RIGHT_ABS_ENCODER_ID,
+        Constants.Drivetrain.FRONT_RIGHT_ABS_ENCODER_OFFSET_RAD,
         false);
 
     private final SwerveModule backLeft = new SwerveModule(
@@ -54,8 +54,8 @@ public class SwerveDrive extends SubsystemBase {
         RobotMap.Drivetrain.BACK_LEFT_TALON_T,
         Constants.Drivetrain.BACK_LEFT_D_IS_REVERSED,
         Constants.Drivetrain.BACK_LEFT_T_IS_REVERSED,
-        RobotMap.Drivetrain.FRONT_LEFT_ABS_ENCODER_ID,
-        Constants.Drivetrain.FRONT_LEFT_ABS_ENCODER_OFFSET_RAD,
+        RobotMap.Drivetrain.BACK_LEFT_ABS_ENCODER_ID,
+        Constants.Drivetrain.BACK_LEFT_ABS_ENCODER_OFFSET_RAD,
         false);
 
     private final SwerveModule backRight = new SwerveModule(
@@ -63,8 +63,8 @@ public class SwerveDrive extends SubsystemBase {
         RobotMap.Drivetrain.BACK_RIGHT_TALON_T,
         Constants.Drivetrain.BACK_RIGHT_D_IS_REVERSED,
         Constants.Drivetrain.BACK_RIGHT_T_IS_REVERSED,
-        RobotMap.Drivetrain.BACK_LEFT_ABS_ENCODER_ID,
-        Constants.Drivetrain.BACK_LEFT_ABS_ENCODER_OFFSET_RAD,
+        RobotMap.Drivetrain.BACK_RIGHT_ABS_ENCODER_ID,
+        Constants.Drivetrain.BACK_RIGHT_ABS_ENCODER_OFFSET_RAD,
         true);
 
     // Init gyro
@@ -86,12 +86,12 @@ public class SwerveDrive extends SubsystemBase {
         backLeft.zeroDrive();
         backRight.zeroDrive();
     }
-    // public void zeroTalonsABS() {
-    //     frontLeft.resetEncoderPos();
-    //     frontRight.resetEncoderPos();
-    //     backLeft.resetEncoderPos();
-    //     backRight.resetEncoderPos();
-    // }
+    public void zeroTalonsABS() {
+        frontLeft.resetEncoderPos();
+        frontRight.resetEncoderPos();
+        backLeft.resetEncoderPos();
+        backRight.resetEncoderPos();
+    }
 
     public void zeroDrive() {
         frontLeft.zeroDrive();
@@ -255,10 +255,10 @@ public class SwerveDrive extends SubsystemBase {
         SmartDashboard.putNumber("BackLeftAngleTarget", desiredStates[2].angle.getDegrees());
         SmartDashboard.putNumber("BackRightAngleTarget", desiredStates[3].angle.getDegrees());
 
-        // SmartDashboard.putNumber("FrontLeftAngleABS", Math.toDegrees(frontLeft.getAbsEncoderRad()));
-        // SmartDashboard.putNumber("FrontRightAngleABS", Math.toDegrees(frontRight.getAbsEncoderRad()));
-        // SmartDashboard.putNumber("BackLeftAngleABS", Math.toDegrees(backLeft.getAbsEncoderRad()));
-        // SmartDashboard.putNumber("BackRightAngleABS", Math.toDegrees(backRight.getAbsEncoderRad()));
+        SmartDashboard.putNumber("FrontLeftAngleABS", Math.toDegrees(frontLeft.getAbsEncoderRad()));
+        SmartDashboard.putNumber("FrontRightAngleABS", Math.toDegrees(frontRight.getAbsEncoderRad()));
+        SmartDashboard.putNumber("BackLeftAngleABS", Math.toDegrees(backLeft.getAbsEncoderRad()));
+        SmartDashboard.putNumber("BackRightAngleABS", Math.toDegrees(backRight.getAbsEncoderRad()));
 
         SmartDashboard.putNumber("FrontLeftAngleTalonEncoder", Math.toDegrees(frontLeft.getTurnPosition()));
         SmartDashboard.putNumber("FrontRightAngleTalonEncoder", Math.toDegrees(frontRight.getTurnPosition()));

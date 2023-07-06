@@ -79,9 +79,9 @@ public Command getAutonomousCommand() {
 	// return new AutonOneCubeOnly(swerveDrive, elevator, arm, wrist, claw);
 
 	/////////////// Universal 
-	// return new AutonDoNothing();
+	return new AutonDoNothing();
 	// return new AutonOneCube(swerveDrive, elevator, arm, wrist, claw);
-	return new AutonTwoCube(swerveDrive, elevator, arm, wrist, claw);
+	// return new AutonTwoCube(swerveDrive, elevator, arm, wrist, claw);
 
 	/////////////// Middle (locbvb  ation bot starts from POV of drivers)
 	// return new AutonBloopBalance(swerveDrive, elevator, arm, wrist, claw);
@@ -114,8 +114,8 @@ public Command getAutonomousCommand() {
 			new JoystickButton(driver,
 				RobotMap.Controller.RESET_GYRO_HEADING_BUTTON_ID).whenPressed(() -> swerveDrive.zeroHeading());
 			new JoystickButton(driver, 8).whenPressed(() -> swerveDrive.togglePrecise());
-				// new JoystickButton(driver,
-			// 	3).whenPressed(() -> swerveDrive.zeroTalonsABS());
+			new JoystickButton(driver,
+				3).whenPressed(() -> swerveDrive.zeroTalonsABS());
 			new JoystickButton(driver, 2).whenHeld(new LimelightAlign(swerveDrive));
 
 
