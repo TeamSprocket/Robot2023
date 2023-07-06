@@ -37,7 +37,7 @@ public class SwerveModule extends SubsystemBase {
   
   private final PIDController turnPIDController; 
 
-  private final CANCoder absEncoder;
+  // private final CANCoder absEncoder;
   private final double absEncoderOffsetRad;
   
   private final boolean isTurnedReverse;
@@ -46,7 +46,7 @@ public class SwerveModule extends SubsystemBase {
   public SwerveModule(int driveMotorID, int turnMotorID, boolean driveMotorIsReversed, boolean turnMotorIsReversed, 
   int absEncoderID, double absEncoderOffsetRad, boolean isTurnedReverse) {
     this.absEncoderOffsetRad = absEncoderOffsetRad;
-    absEncoder = new CANCoder(absEncoderID); 
+    // absEncoder = new CANCoder(absEncoderID); 
 
     driveMotor = new WPI_TalonFX(driveMotorID);
     turnMotor = new WPI_TalonFX(turnMotorID);
@@ -65,9 +65,9 @@ public class SwerveModule extends SubsystemBase {
 
     turnPIDController.enableContinuousInput(0, (2.0 * Math.PI));
 
-    absEncoder.configMagnetOffset(Math.toDegrees(absEncoderOffsetRad));
+    // absEncoder.configMagnetOffset(Math.toDegrees(absEncoderOffsetRad));
     // absEncoder.configMagnetOffset(-Math.toDegrees(absEncoderOffsetRad));
-    absEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
+    // absEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
 
     
 
@@ -124,26 +124,35 @@ public class SwerveModule extends SubsystemBase {
       return pos;
     }
     
-    public double getAbsEncoderRad() {
-      double angle = absEncoder.getAbsolutePosition();
-      angle = Math.toRadians(angle);
-      return angle;
+    // public double getAbsEncoderRad() {
+    //   double angle = absEncoder.getAbsolutePosition();
+    //   angle = Math.toRadians(angle);
+    //   // angle = Math.toRadians(angle);
+    //   // angle -= absEncoderOffsetRad;
+    //   // double rad = Math.abs(angle % (Math.PI * 2.0));
+    //   // if (rad > Math.PI) {
+    //   //   rad = -1.0 * (2.0 * Math.PI - rad);
+    //   // }
 
-    }
+    //   // angle -= absEncoderOffsetRad;
+    //   // return rad;
+    //   return angle;
 
-    public void resetEncoderPos() {
-      double absPercent = absEncoder.getAbsolutePosition() / 360.0; // 0 to 360
-      double absPercentWithRatio = absPercent * Constants.Drivetrain.kTurningMotorGearRatio; 
-      double absPercentWithRatioTicks = absPercentWithRatio * 2048.0;
-      turnMotor.setSelectedSensorPosition(absPercentWithRatioTicks);
-    }
+    // }
 
-    public double getDebugData() {
-      double absPercent = absEncoder.getAbsolutePosition() / 360.0; // 0 to 360
-      double absPercentWithRatio = absPercent * Constants.Drivetrain.kTurningMotorGearRatio; 
-      double absPercentWithRatioTicks = absPercentWithRatio * 2048.0;
-      return absPercentWithRatioTicks;
-    }
+    // public void resetEncoderPos() {
+    //   // double tunedAbsEncoderRad = -getAbsEncoderRad();
+    //   //   turnMotor.setSelectedSensorPosition(tunedAbsEncoderRad / (2.0 * Math.PI)
+    //   //          * 2048.0 * Constants.Drivetrain.kTurningMotorGearRatio);
+    //   // turnMotor.setSelectedSensorPosition((getAbsEncoderRad() / (2 * Math.PI)) * 2048 * Constants.Drivetrain.kTurningMotorGearRatio);
+    //   double absAngle = absEncoder.getAbsolutePosition() % 360.0;
+    //   double absPercent = absAngle / 360.0;
+    //   double absPercentWithRatio = absPercent * Constants.Drivetrain.kTurningMotorGearRatio;
+    //   double encoderPos = absPercentWithRatio * 2048.0;
+    //   turnMotor.setSelectedSensorPosition(encoderPos);
+    //   System.out.println(absAngle);
+
+    // }
 
     public void zeroTalon() { 
       driveMotor.setSelectedSensorPosition(0);
@@ -165,8 +174,6 @@ public class SwerveModule extends SubsystemBase {
 
 
     public void setDesiredState(SwerveModuleState swerveState, boolean isPrecise) {
-      SmartDashboard.putNumber("Joseph", getDebugData());
-
       SmartDashboard.putNumber("Turn Stator Current", turnMotor.getStatorCurrent());
       SmartDashboard.putNumber("Turn Supply Current", turnMotor.getSupplyCurrent());
       // absEncoder.clearStickyFaults();
