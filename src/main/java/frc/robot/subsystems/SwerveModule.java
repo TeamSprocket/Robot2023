@@ -116,13 +116,6 @@ public class SwerveModule extends SubsystemBase {
 
     }
 
-    public double getTurnPositionTicks() {
-      double pos =  turnMotor.getSelectedSensorPosition() / Constants.Drivetrain.kTurningMotorGearRatio % 2048 / 2048 * Math.PI * 2;
-      if (pos < 0) {
-        pos += Math.PI * 2;
-      }
-      return pos;
-    }
     
     // public double getAbsEncoderRad() {
     //   double angle = absEncoder.getAbsolutePosition();
@@ -165,8 +158,13 @@ public class SwerveModule extends SubsystemBase {
 
     public SwerveModuleState optimizeState(SwerveModuleState swerveState) {
       double currentRad = getTurnPosition();
-      if (currentRad > Math.PI) {
-        currentRad -= (Math.PI * 2); 
+      // if (currentRad > Math.PI) {
+      //   currentRad -= (Math.PI * 2); 
+      // }
+
+      currentRad %= (Math.PI * 2);
+      if (currentRad < 0) {
+        currentRad += (Math.PI * 2); 
       }
       
       return SwerveModuleState.optimize(swerveState, new Rotation2d(currentRad));

@@ -153,6 +153,7 @@ public class Constants {
         public static final double kLimelightD = 0.00015;
 
         public static final double CURRENT_LIMIT_TURN = 100;
+        public static final double CURRENT_LIMIT_DRIVE = 100;
 
         public static final double PRECISE_DRIVE_SPEED_PERCENT = 0.25;
 
@@ -190,3 +191,12 @@ public class Constants {
 
 
 }
+
+
+
+
+
+
+
+
+

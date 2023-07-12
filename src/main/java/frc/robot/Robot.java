@@ -42,6 +42,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         robotContainer.setSwerveDriveCurrentLimitTurn(Constants.Drivetrain.CURRENT_LIMIT_TURN);
+        robotContainer.setSwerveDriveCurrentLimitDrive(Constants.Drivetrain.CURRENT_LIMIT_DRIVE);
     }
 
     /**
@@ -107,8 +108,8 @@ public class Robot extends TimedRobot {
         Constants.isTeleop = true;
         Constants.Drivetrain.JOYSTICK_DRIVING_ENABLED = true;
         CommandScheduler.getInstance().cancelAll();
-        robotContainer.setTurnDefaultMode(NeutralMode.Brake);
-        robotContainer.setDriveDefaultMode(NeutralMode.Brake);
+        robotContainer.setTurnDefaultMode(NeutralMode.Coast);
+        robotContainer.setDriveDefaultMode(NeutralMode.Coast);
         robotContainer.configureButtonBindings();
         robotContainer.getSwerveDrive().zeroDrive();
         

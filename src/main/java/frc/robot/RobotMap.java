@@ -91,3 +91,42 @@ public final class RobotMap {
     public static final int RESET_GYRO_HEADING_BUTTON_ID = 1;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// -=All=-
+// DEPORT = RIGHT JOYSTICK
+// HOME = X
+// RESET = Funny Button
+
+// -=CONES=-
+// HIGH = Y
+// MID = A
+// LOW = LEFT JOYSTICK
+// FLOOR = RIGHT BUMPER
+
+// -=CUBES=-
+// HIGH = B
+// MID = Chair
+// LOW = LEFT BUMPER
+
+
+
+
+
+
+
