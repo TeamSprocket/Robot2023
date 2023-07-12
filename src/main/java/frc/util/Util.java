@@ -41,4 +41,35 @@ public final class Util {
     double normalizedVal = (val - fromLow) / (fromHigh - fromLow);
     return normalizedVal * (toHigh - toLow) + toLow;
   }
+
+  public static double From360To180(double deg) {
+    if ((deg % 360.0) > 180.0) {
+      return (deg % 360.0) - 360.0;
+    }
+    return (deg % 360.0);
+  }
+
+  public static double From180To360(double deg) {
+    if ((deg % 360.0) < 0.0) {
+      return (deg % 360.0) + 360.0;
+    }
+    return (deg % 360.0);
+  }
+
+  public static double From2PiToPi(double deg) {
+    if ((deg % (2 * Math.PI)) > Math.PI) {
+      return (deg % (2 * Math.PI)) - (2 * Math.PI);
+    }
+    return (deg % (2 * Math.PI));
+  }
+
+  public static double FromPiTo2Pi(double deg) {
+    if ((deg % (2 * Math.PI)) < 0.0) {
+      return (deg % (2 * Math.PI)) + (2 * Math.PI);
+    }
+    return (deg % (2 * Math.PI));
+  }
+
+
+
 }

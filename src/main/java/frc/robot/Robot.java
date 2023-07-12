@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.persistent.SwerveDriveCmd;
 import frc.robot.subsystems.SwerveDrive;
 
 
@@ -56,9 +55,6 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
         robotContainer.clearStickyFaults();
-        robotContainer.outputPitch();
-        
-        // SmartDashboard.put robotContainer.getCameraFeed();
     }
 
     /**
@@ -66,22 +62,20 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void disabledInit() {
-        Constants.isTeleop = false;
-
+        Constants.isEnabled = false;
         CommandScheduler.getInstance().cancelAll();
         robotContainer.setTurnDefaultMode(NeutralMode.Coast);
         robotContainer.setDriveDefaultMode(NeutralMode.Coast);
     }
 
     @Override
-    public void disabledPeriodic() {
-    }
+    public void disabledPeriodic() {}
 
     /** This function is run once each time the robot enters autonomous mode. */
     @Override
     public void autonomousInit() {
-        Constants.isTeleop = false;
-        Constants.Drivetrain.JOYSTICK_DRIVING_ENABLED = false;
+        Constants.isEnabled = false;
+        Constants.isEnabled = false;
         robotContainer.setTurnDefaultMode(NeutralMode.Brake);
         robotContainer.setDriveDefaultMode(NeutralMode.Brake);
         robotContainer.autonInit();
@@ -90,39 +84,25 @@ public class Robot extends TimedRobot {
         if(auton!=null) {
             auton.schedule();
         } else {
-            System.out.println("AUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\n");
+            System.out.println("AUTON IS NULL");
         }
     }
 
-    /**
-     * This function is called periodically during autonomous.
-     */
     @Override
-    public void autonomousPeriodic() {
+    public void autonomousPeriodic() {}
 
-    }
-
-    /** This function is called once each time the robot enters teleoperated mode. */ 
     @Override
     public void teleopInit() {
-        Constants.isTeleop = true;
-        Constants.Drivetrain.JOYSTICK_DRIVING_ENABLED = true;
+        Constants.isEnabled = true;
+        Constants.isEnabled = true;
         CommandScheduler.getInstance().cancelAll();
-        robotContainer.setTurnDefaultMode(NeutralMode.Coast);
+        robotContainer.setTurnDefaultMode(NeutralMode.Coast); // TODO: Change back to brake 
         robotContainer.setDriveDefaultMode(NeutralMode.Coast);
         robotContainer.configureButtonBindings();
-        robotContainer.getSwerveDrive().zeroDrive();
-        
     }
     
-    /** This function is called periodically during teleoperated mode. */
     @Override
-    public void teleopPeriodic() {
-        robotContainer.initRumbleTimer();
-
-        // robotContainer.outputAutonLog();
-        // robotContainer.outputAutonLog();
-    }
+    public void teleopPeriodic() {}
 
 
 
