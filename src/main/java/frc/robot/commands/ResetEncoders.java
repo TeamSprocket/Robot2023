@@ -1,4 +1,4 @@
-package frc.robot.commands.macro;
+package frc.robot.commands;
 
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Elevator;
@@ -19,9 +19,9 @@ public class ResetEncoders extends MacroCommand {
     }
 
     public void initialize(){
-        wrist.resetWristEncoder();
-        arm.resetArmEncoder();
-        elevator.resetElevatorEncoder();
+        wrist.resetEncoders();
+        arm.resetEncoders();
+        elevator.resetEncoders();
     }
 
     @Override

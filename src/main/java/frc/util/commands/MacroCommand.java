@@ -26,8 +26,7 @@ public abstract class MacroCommand extends CommandBase {
   /**
    * Creates a new MacroCommand.
    */
-  public MacroCommand() {
-  }
+  public MacroCommand() {}
 
   // Called when the command is initially scheduled
   // Subclasses are required to override this method.

@@ -2,40 +2,25 @@
 
 	import com.ctre.phoenix.motorcontrol.*;
 
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.cscore.CameraServerCvJNI;
-import edu.wpi.first.cscore.CvSink;
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.PowerDistribution;
-import edu.wpi.first.wpilibj.Timer;
+	import edu.wpi.first.cameraserver.CameraServer;
+	import edu.wpi.first.cscore.CameraServerCvJNI;
+	import edu.wpi.first.cscore.CvSink;
+	import edu.wpi.first.wpilibj.GenericHID;
+	import edu.wpi.first.wpilibj.PowerDistribution;
+	import edu.wpi.first.wpilibj.Timer;
 	import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+	import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+	import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 	import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 	import edu.wpi.first.wpilibj2.command.Command;
 	import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.macro.LimelightAlign;
-	import frc.robot.commands.macro.ResetEncoders;
-	import frc.robot.commands.macro.SetDeport;
-	import frc.robot.commands.macro.SetHigh;
-import frc.robot.commands.macro.SetHighCube;
-import frc.robot.commands.macro.SetHome;
-	import frc.robot.commands.macro.SetLowConeTilted;
-	import frc.robot.commands.macro.SetLowCube;
-	import frc.robot.commands.macro.SetMid;
-import frc.robot.commands.macro.SetMidCube;
-import frc.robot.commands.macro.timed.PIDTurnTimed;
-import frc.robot.commands.macro.SetHumanPlayer;
-	import frc.robot.commands.macro.SetLowConeStanding;
-	import frc.robot.commands.persistent.Elevate;
-	import frc.robot.commands.persistent.MoveArmJoystick;
-	import frc.robot.commands.persistent.MoveWristManual;
 	import frc.robot.commands.persistent.RollClaw;
 	import frc.robot.commands.persistent.SwerveDriveCmd;
-// import frc.robot.commands.auton.AutonBalance;
-import frc.robot.commands.auton.*;
-// import frc.robot.commands.persistent.VibrateControllerTimed;
-import frc.robot.subsystems.Elevator;
+
+	import frc.robot.commands.*;
+
+	import frc.robot.commands.auton.*;
+	import frc.robot.subsystems.Elevator;
 	import frc.robot.subsystems.Arm;
 	import frc.robot.subsystems.Claw;
 	import frc.robot.subsystems.SwerveDrive;
@@ -116,23 +101,22 @@ public Command getAutonomousCommand() {
 			new JoystickButton(driver, 8).whenPressed(() -> swerveDrive.togglePrecise());
 				// new JoystickButton(driver,
 			// 	3).whenPressed(() -> swerveDrive.zeroTalonsABS());
-			new JoystickButton(driver, 2).whenHeld(new LimelightAlign(swerveDrive));
 
 
-			// --------------------=Operator=-------------------- ,
-			elevator.setDefaultCommand(new Elevate(elevator, operator));
-			arm.setDefaultCommand(new MoveArmJoystick(arm, operator));
-			wrist.setDefaultCommand(new MoveWristManual(wrist, operator));
-			new JoystickButton(operator, 1).whenHeld(new SetMid(elevator, arm, wrist));
-			new JoystickButton(operator, 2).whenHeld(new SetHighCube(elevator, arm, wrist));
-			new JoystickButton(operator, 3).whenHeld(new SetHome(elevator, arm, wrist));
-			new JoystickButton(operator, 4).whenHeld(new SetHigh(elevator, arm, wrist));
-			new JoystickButton(operator, 5).whenHeld(new SetLowCube(elevator, arm, wrist));
-			new JoystickButton(operator, 6).whenHeld(new SetLowConeTilted(elevator, arm, wrist));
-			new JoystickButton(operator, 7).whenHeld(new ResetEncoders(elevator, arm, wrist));
-			new JoystickButton(operator, 8).whenHeld(new SetMidCube(elevator, arm, wrist));
-			new JoystickButton(operator, 9).whenHeld(new SetLowConeStanding(elevator, arm, wrist));
-			new JoystickButton(operator, 10).whenHeld(new SetDeport(elevator, arm, wrist));
+			// --------------------=Operator=-------------------- 
+			// Home, Low/mid/high cone, low/mid cube, cube/conefloor/conestanding
+			new JoystickButton(operator, 1).whenHeld(new SetHome(elevator, arm, wrist));
+
+			new JoystickButton(operator, 2).whenHeld(new SetLowCone(elevator, arm, wrist));
+			new JoystickButton(operator,3).whenHeld(new SetMidCone(elevator, arm, wrist));
+			new JoystickButton(operator, 4).whenHeld(new SetHighCone(elevator, arm, wrist));
+
+			new JoystickButton(operator, 5).whenHeld(new SetMidCube(elevator, arm, wrist));
+			new JoystickButton(operator, 6).whenHeld(new SetHighCube(elevator, arm, wrist));
+
+			new JoystickButton(operator, 8).whenHeld(new SetInCube(elevator, arm, wrist));
+			new JoystickButton(operator, 9).whenHeld(new SetInConeStanding(elevator, arm, wrist));
+			new JoystickButton(operator, 10).whenHeld(new SetInConeFloor(elevator, arm, wrist));
 		}
 
 		public CvSink getCameraFeed() {

@@ -1,30 +1,49 @@
 package frc.robot.subsystems;
 
+import org.apache.commons.lang3.Conversion;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
+
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.filter.SlewRateLimiter;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.util.Conversions;
+import frc.util.PIDPlus;
 
 
-public class Arm extends SubsystemBase {
+public class Arm extends SubsystemBase{
+
+    public ArmStates state = ArmStates.HOME;
+    public enum ArmStates {
+        HOME, 
+        LOW_CONE, 
+        MID_CONE, 
+        HIGH_CONE, 
+        LOW_CUBE,
+        MID_CUBE,
+        HIGH_CUBE,
+        IN_CUBE,
+        IN_CONE_STANDING,
+        IN_CONE_FLOOR,
+        MANUAL,
+        OFF
+    }
     
-    private final CANSparkMax armLeft = new CANSparkMax(RobotMap.Arm.ARM_LEFT,MotorType.kBrushless);
-    private final CANSparkMax armRight = new CANSparkMax(RobotMap.Arm.ARM_RIGHT, MotorType.kBrushless);
+    private CANSparkMax armLeft = new CANSparkMax(RobotMap.Arm.ARM_LEFT, MotorType.kBrushless);
+    private CANSparkMax armRight = new CANSparkMax(RobotMap.Arm.ARM_RIGHT, MotorType.kBrushless);
 
-    private PIDController armPIDController = new PIDController(Constants.Arm.kP, Constants.Arm.kI, Constants.Arm.kD);   
-    
     private RelativeEncoder armLeftEncoder = armLeft.getEncoder();
-    private RelativeEncoder armRightEncoder = armRight.getEncoder(); 
+    private RelativeEncoder armRightEncoder = armRight.getEncoder();
 
-    private SlewRateLimiter slewLimiter;
+    private final PIDPlus pidController = new PIDPlus(Constants.Arm.kP, Constants.Arm.kI, Constants.Arm.kD);
+    
 
-
-    public Arm(){
+    public Arm() {
         armLeft.restoreFactoryDefaults();
         armRight.restoreFactoryDefaults();
         
@@ -33,64 +52,94 @@ public class Arm extends SubsystemBase {
 
         armRight.follow(armLeft);
 
-        slewLimiter = new SlewRateLimiter(0.01);
+        pidController.setSetpoint(Constants.SuperstructureSetpoints.kArmHOME);
+        pidController.setMinMax(-Constants.Arm.kMaxSpeed, Constants.Arm.kMaxSpeed);
+    }
 
+
+    @Override
+    public void periodic(){
+        switch (state) {
+            // no manual/off yet :(
+            case HOME:
+                pidController.setSetpoint(Constants.SuperstructureSetpoints.kArmHOME);
+            case LOW_CONE:
+                pidController.setSetpoint(Constants.SuperstructureSetpoints.kArmLOW_CONE);
+            case MID_CONE:
+                pidController.setSetpoint(Constants.SuperstructureSetpoints.kArmMID_CONE);
+            case HIGH_CONE:
+                pidController.setSetpoint(Constants.SuperstructureSetpoints.kArmHIGH_CONE);
+            case LOW_CUBE:
+                pidController.setSetpoint(Constants.SuperstructureSetpoints.kArmLOW_CUBE);
+            case MID_CUBE:
+                pidController.setSetpoint(Constants.SuperstructureSetpoints.kArmMID_CUBE);
+            case HIGH_CUBE:
+                pidController.setSetpoint(Constants.SuperstructureSetpoints.kArmHIGH_CUBE);
+            case IN_CUBE:
+                pidController.setSetpoint(Constants.SuperstructureSetpoints.kArmIN_CUBE);
+            case IN_CONE_STANDING:
+                pidController.setSetpoint(Constants.SuperstructureSetpoints.kArmIN_CONE_STANDING);
+            case IN_CONE_FLOOR:
+                pidController.setSetpoint(Constants.SuperstructureSetpoints.kArmIN_CONE_FLOOR);
+            
+            case MANUAL:
+                // idk
+            case OFF:
+                // idk
+        }
+
+        if (getIsInBounds() && state != ArmStates.OFF)
+            armLeft.set(pidController.calculate(getArmDegrees()));
+
+        logDebugInfo();
+    }
+
+
+    public void setState(ArmStates state) {
+        this.state = state;
+    }
+
+    public void setPercentOutput(double percent) {
+        armLeft.set(percent);
+    }
+
+    public ArmStates getState() {
+        return state;
+    }
+
+    public boolean reachedStatePos() {
+        return Math.abs(getArmDegrees() - pidController.getSetpoint()) < Constants.Arm.reachedStatePosTolerance;
+    }
+
+    /**
+     * @return Current height of arm in meters
+     */
+    public double getArmDegrees() {
+        double angle = Conversions.RotationsToDegrees(armLeftEncoder.getPosition(), Constants.Arm.kArmGearRatio);
+        return angle;
+    }
+
+    public boolean getIsInBounds() {
+        return (getArmDegrees() >= Constants.Arm.MIN_ANGLE && getArmDegrees() <= Constants.Arm.MAX_ANGLE);
+    }
+
+    public void resetEncoders() {
+        armLeft.getEncoder().setPosition(0);
+        armRight.getEncoder().setPosition(0);
     }
 
     public void clearStickyFaults() {
         armLeft.clearFaults();
         armRight.clearFaults();
     }
-
-    public double getArmAngle(){
-        double angle = armLeftEncoder.getPosition() * Constants.Arm.angleConversionFactor;
-        return angle;
-    }
-
-    public void resetArmEncoder(){
-        armLeft.getEncoder().setPosition(0);
-        armRight.getEncoder().setPosition(0);
-    }
-
-    public void moveArm(double output){
-        armLeft.set(output);
-    }
-
-    public void setArmAngleManual(double currentAngle, double setpoint){
-        double output = armPIDController.calculate(currentAngle, setpoint);
-        armLeft.set(output);
-    }
-
-    public void setArmAngle(double currentAngle, double setpoint){
-        double output = armPIDController.calculate(currentAngle, setpoint);
-        if (output < -0.15){
-            output = -0.15;
-        } else if (output > 0.15) {
-            output = 0.15;
-        }
-        armLeft.set(output);
-    }
-
-    public void setArmAngleSpeed(double currentAngle, double setpoint, double limit){
-        double output = armPIDController.calculate(currentAngle, setpoint);
-        if (output < -limit){
-            output = -limit;
-        } else if (output > limit) {
-            output = limit;
-        }
-        armLeft.set(output);
-    }
-
+    
     public void stop() {
         armLeft.stopMotor();
         armRight.stopMotor();
     }
 
-    @Override
-    public void periodic(){
-        SmartDashboard.putNumber("[Arm] Left Encoder Position", armLeftEncoder.getPosition()); 
-        SmartDashboard.putNumber("[Arm] Right Encoder Position", armRightEncoder.getPosition());
-
+    public void logDebugInfo() {
+        SmartDashboard.putString("Arm State", state.toString());
     }
-}
 
+}

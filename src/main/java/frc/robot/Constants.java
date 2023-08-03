@@ -4,82 +4,135 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
+import frc.util.Conversions;
 
 public class Constants {
 
     public static boolean isTeleop = false;
     public static double kTeleopMultiplier = 1.1;
 
-    //TODO Edit PID values, tune speeds
+    public static final class SuperstructureSetpoints {
+        // Scoring positions
+
+        // Meters
+        public static final double kElevatorCLEAR = 0;  // TODO 
+
+        public static final double kElevatorHOME = 0;  // TODO 
+
+        public static final double kElevatorLOW_CONE = 0;  // TODO 
+        public static final double kElevatorMID_CONE = 0;  // TODO 
+        public static final double kElevatorHIGH_CONE = 0;  // TODO 
+
+        public static final double kElevatorLOW_CUBE = 0;  // TODO 
+        public static final double kElevatorMID_CUBE = 0;  // TODO 
+        public static final double kElevatorHIGH_CUBE = 0;  // TODO 
+        
+
+        // Degrees, 0 straight down and 90 horizontal
+        public static final double kArmHOME = 0;  // TODO 
+
+        public static final double kArmLOW_CONE = 0;  // TODO 
+        public static final double kArmMID_CONE = 0;  // TODO 
+        public static final double kArmHIGH_CONE = 0;  // TODO 
+
+        public static final double kArmLOW_CUBE = 0;  // TODO 
+        public static final double kArmMID_CUBE = 0;  // TODO 
+        public static final double kArmHIGH_CUBE = 0;  // TODO 
+        
+
+        // Degrees, 0 straight down, 90 horizontal, 180 vertical
+        public static final double kWristHOME = 0;  // TODO 
+
+        public static final double kWristLOW_CONE = 0;  // TODO 
+        public static final double kWristMID_CONE = 0;  // TODO 
+        public static final double kWristHIGH_CONE = 0;  // TODO 
+
+        public static final double kWristLOW_CUBE = 0;  // TODO 
+        public static final double kWristMID_CUBE = 0;  // TODO 
+        public static final double kWristHIGH_CUBE = 0;  // TODO 
+        
+
+
+        // Intake positions
+        // Cone standing, cone down, cube
+        // Meters
+        public static final double kElevatorIN_CONE_STANDING = 0;  // TODO 
+        public static final double kElevatorIN_CONE_FLOOR = 0;  // TODO 
+        public static final double kElevatorIN_CUBE = 0;  // TODO 
+        
+        // Degrees, 0 straight down and 90 horizontal
+        public static final double kArmIN_CONE_STANDING = 0;  // TODO 
+        public static final double kArmIN_CONE_FLOOR = 0;  // TODO 
+        public static final double kArmIN_CUBE = 0;  // TODO 
+
+        // Degrees, 0 straight down, 90 horizontal, 180 vertical
+        public static final double kWristIN_CONE_STANDING = 0;  // TODO 
+        public static final double kWristIN_CONE_FLOOR = 0;  // TODO 
+        public static final double kWristIN_CUBE = 0;  // TODO 
+         
+    }
+
     public static final class Elevator {
+        public static final double kMaxSpeed = 0.01;  // TODO 
+        public static final double homeOffset = 0;  // TODO 
+
+        public static final double reachedStatePosTolerance = 0.02;
+
+        public static final double clearHeight = 0.3;   // TODO 
+
+        // Meters
+        public static final double MAX_HEIGHT = 0.334;  // TODO 
+        public static final double MIN_HEIGHT = 0.864;  // TODO 
     
         //check sprocket radius in inches
-        public static double kSprocketRadius = 2.938;
+        public static double kSprocketRadius = Conversions.InchesToMeters(2.938);
         public static double kElevatorGearRatio = 9;
 
-        //height between base & starting config
-        public static double offset = 33.638;
-
-        public static double kP = 0.175;
+        public static double kP = 0.175;   // TODO 
         public static double kI = 0;
-        public static double kD = 0.00675;
-        public static double FF = 0;
-        
-        //Max/min heights in inches;
-        public static double MAX_HEIGHT = -13.12711;
-        public static double MIN_HEIGHT = 34.45866374;
-        public static double TOTAL_HEIGHT = MAX_HEIGHT - MIN_HEIGHT; 
-
-        public static int CURRENT_STALL_LIMIT = 30;
-        public static int CURRENT_FREE_LIMIT = 30;
+        public static double kD = 0.00675;  // TODO 
     }
 
     public static final class Arm{
-        
+        public static final double kMaxSpeed = 0.01;  // TODO 
+        public static final double homeOffset = 10;  // TODO 
+
+        public static final double reachedStatePosTolerance = 1;
+
+        // Degrees
+        public static double MAX_ANGLE = 90; 
+        public static double MIN_ANGLE = 0;
+
         public static double kArmGearRatio = 31.5;
-
-        public static double angleConversionFactor = 360.0 / kArmGearRatio;
-
-        public static double maxAngle = -80;
-        public static double groundAngle = -22;
-        public static double startingAngle = -6;
         
         public static double kP = 0.05;
         public static double kI = 0;
         public static double kD = 0.0003;
-        public static double FF = 0;
-
     }
 
     public static final class Wrist {
+        public static final double kMaxSpeed = 0.01;  // TODO 
+        public static final double homeOffset = 150;  // TODO 
+
+        public static final double reachedStatePosTolerance = 1;
+
+        // Degrees
+        public static double MAX_ANGLE = 180;
+        public static double MIN_ANGLE = 0;
+
+
+        public static double kWristGearRatio = 2.75 * 10; 
         
-        public static double kWristGearRatio = 2.75;
-
-        public static double angleConversionFactor = 360.0 / (kWristGearRatio * 10);
-        
-        public static double P = 0.0175;
-        public static double I = 0;
-        public static double D = 0.0007;
-        public static double FF = 0;
-
-        public static double maxAngle;
-        public static double minAngle;
-        public static double angleRange;
-
+        public static double kP = 0.0175;
+        public static double kI = 0;
+        public static double kD = 0.0007;
     }
 
     public static final class Claw {
-        public static double revSetpoint = 400;
-
         public static double kPShooter = 0.03;
         public static double kIShooter = 0;
         public static double kDShooter = 0.00;
         
-    }
-
-    public static final class PCH {
-        public static double MIN_PSI = 80;
-        public static double MAX_PSI = 100;
     }
 
     public static final class Drivetrain {
