@@ -1,8 +1,6 @@
 
 package frc.robot.subsystems;
 
-import org.apache.commons.lang3.Conversion;
-
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
@@ -47,7 +45,7 @@ public class Wrist extends SubsystemBase{
         wristMotor.setInverted(false);
         
         pidController.setSetpoint(Constants.SuperstructureSetpoints.kWristHOME);
-        pidController.setMinMax(-Constants.Wrist.kMaxSpeed, Constants.Wrist.kMaxSpeed);
+        // pidController.setMinMax(-Constants.Wrist.kMaxSpeed, Constants.Wrist.kMaxSpeed);
         
         setEncoderHomeOffset();
     }
@@ -84,8 +82,8 @@ public class Wrist extends SubsystemBase{
                 // idk
         }
 
-        if (getIsInBounds() && state != WristStates.OFF)
-            wristMotor.set(pidController.calculate(getWristDegrees()));
+        // if (getIsInBounds() && state != WristStates.OFF)
+            // wristMotor.set(pidController.calculate(getWristDegrees()));
 
         logDebugInfo();
     }
@@ -117,7 +115,7 @@ public class Wrist extends SubsystemBase{
      */
     public double getWristDegrees() {
         double angle = Conversions.RotationsToDegrees(wristEncoder.getPosition(), Constants.Wrist.kWristGearRatio);
-        return angle;
+        return -1 * angle;
     }
 
     public boolean getIsInBounds() {
@@ -138,6 +136,8 @@ public class Wrist extends SubsystemBase{
 
     public void logDebugInfo() {
         SmartDashboard.putString("Wrist State", state.toString());
+        SmartDashboard.putString("Wrist Angle (degrees)", "" + getWristDegrees());
+        SmartDashboard.putString("Wrist Pos", "" + wristEncoder.getPosition());
     }
 
 }

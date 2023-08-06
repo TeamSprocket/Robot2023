@@ -1,7 +1,5 @@
 package frc.robot.subsystems;
 
-import org.apache.commons.lang3.Conversion;
-
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
@@ -18,7 +16,7 @@ import frc.util.PIDPlus;
 
 public class Elevator extends SubsystemBase{
 
-    public ElevatorStates state = ElevatorStates.HOME;
+    public ElevatorStates state = ElevatorStates.OFF;  // TODO: Change back to HOME
     public enum ElevatorStates {
         CLEAR,
         HOME, 
@@ -41,7 +39,8 @@ public class Elevator extends SubsystemBase{
     private RelativeEncoder elevatorLeftEncoder = elevatorLeft.getEncoder();
     private RelativeEncoder elevatorRightEncoder = elevatorRight.getEncoder();
 
-    private final PIDPlus pidController = new PIDPlus(Constants.Elevator.kP, Constants.Elevator.kI, Constants.Elevator.kD);
+    // private final PIDPlus pidController = new PIDPlus(Constants.Elevator.kP, Constants.Elevator.kI, Constants.Elevator.kD);
+    private final PIDController pidController = new PIDController(Constants.Elevator.kP, Constants.Elevator.kI, Constants.Elevator.kD);
     
 
     public Elevator() {
@@ -57,7 +56,9 @@ public class Elevator extends SubsystemBase{
         elevatorRight.enableVoltageCompensation(8);
 
         pidController.setSetpoint(Constants.SuperstructureSetpoints.kElevatorHOME);
-        pidController.setMinMax(-Constants.Elevator.kMaxSpeed, Constants.Elevator.kMaxSpeed);
+        // pidController.setMinMax(-Constants.Elevator.kMaxSpeed, Constants.Elevator.kMaxSpeed);
+
+        setEncoderHomeOffset();
     }
 
 
@@ -94,8 +95,11 @@ public class Elevator extends SubsystemBase{
                 // idk
         }
 
-        if (getIsInBounds() && state != ElevatorStates.OFF)
-            elevatorLeft.set(pidController.calculate(getElevatorHeight()));
+        double val = pidController.calculate(getElevatorHeight());
+
+        if (state != ElevatorStates.OFF) //((getIsOutOfBoundsMin() && val > 0) || (getIsOutOfBoundsMax() && val < 0)) && 
+            setPercentOutput(val);
+            System.out.println(pidController.getSetpoint());
 
         logDebugInfo();
     }
@@ -106,6 +110,7 @@ public class Elevator extends SubsystemBase{
     }
 
     public void setPercentOutput(double percent) {
+        SmartDashboard.putNumber("Elevator Percent Output", percent);
         elevatorLeft.set(percent);
     }
 
@@ -125,15 +130,24 @@ public class Elevator extends SubsystemBase{
      * @return Current height of elevator in meters
      */
     public double getElevatorHeight() {
-        double height = Conversions.TicksToMeters(
-            elevatorLeftEncoder.getPosition() * 2048,
+        double height = Conversions.RotationsToMeters(
+            elevatorLeftEncoder.getPosition(),
             Constants.Elevator.kElevatorGearRatio,
             Constants.Elevator.kSprocketRadius);
-        return height;
+        // height -= Constants.Elevator.homeOffset;
+        return -1 * height;
     }
 
-    public boolean getIsInBounds() {
-        return (getElevatorHeight() >= Constants.Elevator.MIN_HEIGHT && getElevatorHeight() <= Constants.Elevator.MAX_HEIGHT);
+    public void setEncoderHomeOffset() {
+        elevatorLeftEncoder.setPosition(Constants.Elevator.homeOffset);
+    }
+
+    public boolean getIsOutOfBoundsMin() {
+        return getElevatorHeight() >= Constants.Elevator.MAX_HEIGHT;
+    }
+
+    public boolean getIsOutOfBoundsMax() {
+        return getElevatorHeight() <= Constants.Elevator.MIN_HEIGHT;
     }
 
     public void resetEncoders() {
@@ -153,6 +167,9 @@ public class Elevator extends SubsystemBase{
 
     public void logDebugInfo() {
         SmartDashboard.putString("Elevator State", state.toString());
+        SmartDashboard.putString("Elevator Height (m)", "" + getElevatorHeight());
+        SmartDashboard.putString("Elevator Pos", "" + elevatorLeftEncoder.getPosition());
+        
     }
 
 }

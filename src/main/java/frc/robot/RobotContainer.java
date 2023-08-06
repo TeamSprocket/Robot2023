@@ -321,7 +321,7 @@ public Command getAutonomousCommand() {
 
 		public void outputPitch() {
 			// System.out.println(Math.abs(swerveDrive.getPitchDeg()));
-			SmartDashboard.putNumber("Pitch Angle Balance", swerveDrive.getPitchDeg());
+			// SmartDashboard.putNumber("Pitch Angle Balance", swerveDrive.getPitchDeg());
 		}
 
 

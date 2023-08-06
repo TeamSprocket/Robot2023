@@ -12,23 +12,23 @@ public class Constants {
     public static double kTeleopMultiplier = 1.1;
 
     public static final class SuperstructureSetpoints {
-        // Scoring positions
+        // Scoring positions 
 
         // Meters
-        public static final double kElevatorCLEAR = 0;  // TODO 
+        public static final double kElevatorCLEAR = 0.131;  // TODO 
 
-        public static final double kElevatorHOME = 0;  // TODO 
+        public static final double kElevatorHOME = 0.0;  // TODO 
 
-        public static final double kElevatorLOW_CONE = 0;  // TODO 
+        public static final double kElevatorLOW_CONE = -0.185;  // TODO 
         public static final double kElevatorMID_CONE = 0;  // TODO 
-        public static final double kElevatorHIGH_CONE = 0;  // TODO 
+        public static final double kElevatorHIGH_CONE = 0.131;  // TODO 
 
-        public static final double kElevatorLOW_CUBE = 0;  // TODO 
+        public static final double kElevatorLOW_CUBE = -0.185;  // TODO 
         public static final double kElevatorMID_CUBE = 0;  // TODO 
-        public static final double kElevatorHIGH_CUBE = 0;  // TODO 
+        public static final double kElevatorHIGH_CUBE = 0.131;  // TODO 
         
 
-        // Degrees, 0 straight down and 90 horizontal
+        // Degrees, 90 straight down and 0 horizontal
         public static final double kArmHOME = 0;  // TODO 
 
         public static final double kArmLOW_CONE = 0;  // TODO 
@@ -73,29 +73,29 @@ public class Constants {
     }
 
     public static final class Elevator {
-        public static final double kMaxSpeed = 0.01;  // TODO 
-        public static final double homeOffset = 0;  // TODO 
+        public static final double kMaxSpeed = 0.5;  // TODO 
+        public static final double homeOffset = 0;
 
         public static final double reachedStatePosTolerance = 0.02;
 
-        public static final double clearHeight = 0.3;   // TODO 
+        public static final double clearHeight = Conversions.InchesToMeters(5);   // TODO 
 
         // Meters
-        public static final double MAX_HEIGHT = 0.334;  // TODO 
+        public static final double MAX_HEIGHT = -0.200;  // TODO 
         public static final double MIN_HEIGHT = 0.864;  // TODO 
     
         //check sprocket radius in inches
-        public static double kSprocketRadius = Conversions.InchesToMeters(2.938);
-        public static double kElevatorGearRatio = 9;
+        public static double kSprocketRadius = Conversions.InchesToMeters(1.989/2);
+        public static double kElevatorGearRatio = 9 * (1.989/1.625) * 1.11;
 
-        public static double kP = 0.175;   // TODO 
+        public static double kP = 0.1;   // TODO 
         public static double kI = 0;
-        public static double kD = 0.00675;  // TODO 
+        public static double kD = 0;  // TODO 
     }
 
     public static final class Arm{
         public static final double kMaxSpeed = 0.01;  // TODO 
-        public static final double homeOffset = 10;  // TODO 
+        public static final double homeOffset = 0.8225;  // TODO 
 
         public static final double reachedStatePosTolerance = 1;
 
@@ -112,7 +112,7 @@ public class Constants {
 
     public static final class Wrist {
         public static final double kMaxSpeed = 0.01;  // TODO 
-        public static final double homeOffset = 150;  // TODO 
+        public static final double homeOffset = -3.095;  // TODO 
 
         public static final double reachedStatePosTolerance = 1;
 
@@ -121,7 +121,7 @@ public class Constants {
         public static double MIN_ANGLE = 0;
 
 
-        public static double kWristGearRatio = 2.75 * 10; 
+        public static double kWristGearRatio = 17.1; 
         
         public static double kP = 0.0175;
         public static double kI = 0;

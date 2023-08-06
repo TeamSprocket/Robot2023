@@ -9,8 +9,10 @@ import edu.wpi.first.math.controller.PIDController;
 public class PIDPlus {
   PIDController controller;
   double ff;
-  double min, max;
+  double min = Double.MIN_VALUE;
+  double max = Double.MAX_VALUE;
   double minValueDeadband, maxValueDeadband;
+  boolean hasDeadband;
 
   public PIDPlus(double p, double i, double d) {
     controller = new PIDController(p, i, d);
@@ -35,42 +37,49 @@ public class PIDPlus {
     controller.setSetpoint(setpoint);
   }
 
-  public void setDeadband(double minValueDeadband, double maxValueDeadband) {
-    this.minValueDeadband = minValueDeadband;
-    this.maxValueDeadband = maxValueDeadband;
-  }
+  // public void setDeadband(double minValueDeadband, double maxValueDeadband) {
+  //   this.minValueDeadband = minValueDeadband;
+  //   this.maxValueDeadband = maxValueDeadband;
+  //   this.hasDeadband = true;
+  // }
 
-  public void setMin(double min) {
-      this.min = min;
-  }
+  // public void setMin(double min) {
+  //     this.min = min;
+  // }
 
-  public void setMax(double max) {
-      this.max = max;
-  }  
+  // public void setMax(double max) {
+  //     this.max = max;
+  // }  
 
-  public void setMinMax(double min, double max) {
-    this.min = min;
-    this.max = max;
-  }
+  // public void setMinMax(double min, double max) {
+  //   this.min = min;
+  //   this.max = max;
+  // }
 
   public double calculate(double current, double setpoint) {
     double value = controller.calculate(current, setpoint);
 
     value += ff;
     
-    if (value >= minValueDeadband || value <= maxValueDeadband) 
-      value = 0;
+    // if (hasDeadband && value > minValueDeadband && value < maxValueDeadband) 
+    //   value = 0;
 
-    if (value > max)
-      value = max;
-    if (value < min)
-      value = min;
+    // if (value > max) {
+    //   value = max;
+    // }
+    // if (value < min) {
+    //   value = min;
+    // }
     
     return value;
   } 
 
   public double calculate(double current) {
     return calculate(current, controller.getSetpoint());
+  }
+
+  public double calculateNormal(double current) {
+    return controller.calculate(current);
   }
 
 

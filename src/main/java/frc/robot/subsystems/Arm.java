@@ -1,7 +1,5 @@
 package frc.robot.subsystems;
 
-import org.apache.commons.lang3.Conversion;
-
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
@@ -53,7 +51,9 @@ public class Arm extends SubsystemBase{
         armRight.follow(armLeft);
 
         pidController.setSetpoint(Constants.SuperstructureSetpoints.kArmHOME);
-        pidController.setMinMax(-Constants.Arm.kMaxSpeed, Constants.Arm.kMaxSpeed);
+        // pidController.setMinMax(-Constants.Arm.kMaxSpeed, Constants.Arm.kMaxSpeed);
+
+        setEncoderHomeOffset();
     }
 
 
@@ -88,8 +88,8 @@ public class Arm extends SubsystemBase{
                 // idk
         }
 
-        if (getIsInBounds() && state != ArmStates.OFF)
-            armLeft.set(pidController.calculate(getArmDegrees()));
+        // if (getIsInBounds() && state != ArmStates.OFF)
+            // armLeft.set(pidController.calculate(getArmDegrees()));
 
         logDebugInfo();
     }
@@ -111,12 +111,16 @@ public class Arm extends SubsystemBase{
         return Math.abs(getArmDegrees() - pidController.getSetpoint()) < Constants.Arm.reachedStatePosTolerance;
     }
 
+    public void setEncoderHomeOffset() {
+        armLeftEncoder.setPosition(Constants.Arm.homeOffset);
+    }
+
     /**
      * @return Current height of arm in meters
      */
     public double getArmDegrees() {
         double angle = Conversions.RotationsToDegrees(armLeftEncoder.getPosition(), Constants.Arm.kArmGearRatio);
-        return angle;
+        return 90 - (angle);
     }
 
     public boolean getIsInBounds() {
@@ -140,6 +144,7 @@ public class Arm extends SubsystemBase{
 
     public void logDebugInfo() {
         SmartDashboard.putString("Arm State", state.toString());
+        SmartDashboard.putString("Arm Angle (degrees)", "" + getArmDegrees());
     }
 
 }

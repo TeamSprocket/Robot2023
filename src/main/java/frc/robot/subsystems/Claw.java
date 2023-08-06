@@ -52,6 +52,5 @@ public class Claw extends SubsystemBase{
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("[Claw] RPM", getVelocity());
     }
 }

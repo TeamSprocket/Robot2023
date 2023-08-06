@@ -3,12 +3,19 @@ package frc.util;
 public class Conversions {
 
     public static double InchesToMeters(double inches) {
-        double meters = inches * 0.0254;
+        double meters = inches / 39.37;
         return meters;
     }
 
     public static double TicksToMeters(double ticks, double gearRatio, double radius) {
-        double pos = ticks / gearRatio;
+        double pos = ticks / 2048.0 / gearRatio;
+        double circum = 2 * Math.PI * radius;
+        double meters = pos * circum;
+        return meters;
+    }
+
+    public static double RotationsToMeters(double rotations, double gearRatio, double radius) {
+        double pos = rotations / gearRatio;
         double circum = 2 * Math.PI * radius;
         double meters = pos * circum;
         return meters;
