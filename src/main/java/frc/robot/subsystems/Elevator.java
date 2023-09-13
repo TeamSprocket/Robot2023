@@ -16,8 +16,8 @@ import frc.util.PIDPlus;
 
 public class Elevator extends SubsystemBase{
 
-    public ElevatorStates state = ElevatorStates.OFF;  // TODO: Change back to HOME
-    public enum ElevatorStates {
+    public ElevatorState state = ElevatorState.OFF;  // TODO: Change back to HOME
+    public enum ElevatorState {
         CLEAR,
         HOME, 
         LOW_CONE, 
@@ -26,9 +26,9 @@ public class Elevator extends SubsystemBase{
         LOW_CUBE,
         MID_CUBE,
         HIGH_CUBE,
-        IN_CUBE,
-        IN_CONE_STANDING,
-        IN_CONE_FLOOR,
+        INTAKE_CUBE,
+        INTAKE_CONE,
+        INTAKE_FLOOR_CONE,
         MANUAL,
         OFF
     }
@@ -47,8 +47,8 @@ public class Elevator extends SubsystemBase{
         elevatorLeft.restoreFactoryDefaults();
         elevatorRight.restoreFactoryDefaults();
 
-        elevatorLeft.setInverted(true);
-        elevatorRight.setInverted(false);
+        elevatorLeft.setInverted(false);
+        elevatorRight.setInverted(true);
 
         elevatorRight.follow(elevatorLeft, true); 
         
@@ -63,49 +63,73 @@ public class Elevator extends SubsystemBase{
 
 
     @Override
-    public void periodic(){
+    public void periodic() {
+        // System.out.println(state.toString());
+
         switch (state) {
+            
             // no manual/off yet :(
             case CLEAR:
+                // System.out.println("Going to clear height");
                 pidController.setSetpoint(Constants.SuperstructureSetpoints.kElevatorCLEAR);
+                break;
             case HOME:
+                System.out.println("Going to home height");
                 pidController.setSetpoint(Constants.SuperstructureSetpoints.kElevatorHOME);
+                break;
             case LOW_CONE:
                 pidController.setSetpoint(Constants.SuperstructureSetpoints.kElevatorLOW_CONE);
+                break;
             case MID_CONE:
                 pidController.setSetpoint(Constants.SuperstructureSetpoints.kElevatorMID_CONE);
+                break;
             case HIGH_CONE:
                 pidController.setSetpoint(Constants.SuperstructureSetpoints.kElevatorHIGH_CONE);
+                break;
             case LOW_CUBE:
                 pidController.setSetpoint(Constants.SuperstructureSetpoints.kElevatorLOW_CUBE);
+                break;
             case MID_CUBE:
                 pidController.setSetpoint(Constants.SuperstructureSetpoints.kElevatorMID_CUBE);
+                break;
             case HIGH_CUBE:
                 pidController.setSetpoint(Constants.SuperstructureSetpoints.kElevatorHIGH_CUBE);
-            case IN_CUBE:
-                pidController.setSetpoint(Constants.SuperstructureSetpoints.kElevatorIN_CUBE);
-            case IN_CONE_STANDING:
-                pidController.setSetpoint(Constants.SuperstructureSetpoints.kElevatorIN_CONE_STANDING);
-            case IN_CONE_FLOOR:
-                pidController.setSetpoint(Constants.SuperstructureSetpoints.kElevatorIN_CONE_FLOOR);
+                break;
+            case INTAKE_CUBE:
+                pidController.setSetpoint(Constants.SuperstructureSetpoints.kElevatorINTAKE_CUBE);
+                break;
+            case INTAKE_CONE:
+                pidController.setSetpoint(Constants.SuperstructureSetpoints.kElevatorINTAKE_CONE);
+                break;
+            case INTAKE_FLOOR_CONE:
+                pidController.setSetpoint(Constants.SuperstructureSetpoints.kElevatorINTAKE_FLOOR_CONE);
+                break;
 
             case MANUAL:
                 // idk
+                break;
             case OFF:
                 // idk
+                break;
         }
 
-        double val = pidController.calculate(getElevatorHeight());
+        double val = pidController.calculate(getElevatorHeight(), pidController.getSetpoint());
+        // SmartDashboard.putNumber("Elevator PID Output", getElevatorHeight() - pidController.getSetpoint());
 
-        if (state != ElevatorStates.OFF) //((getIsOutOfBoundsMin() && val > 0) || (getIsOutOfBoundsMax() && val < 0)) && 
-            setPercentOutput(val);
-            System.out.println(pidController.getSetpoint());
+        if (state == ElevatorState.OFF) {
+            val = 0;
+        } //((getIsOutOfBoundsMin() && val > 0) || (getIsOutOfBoundsMax() && val < 0)) && 
+
+        
+        setPercentOutput(val);
+        System.out.println(val);
+            // System.out.println(pidController.getSetpoint());
 
         logDebugInfo();
     }
 
 
-    public void setState(ElevatorStates state) {
+    public void setState(ElevatorState state) {
         this.state = state;
     }
 
@@ -114,11 +138,12 @@ public class Elevator extends SubsystemBase{
         elevatorLeft.set(percent);
     }
 
-    public ElevatorStates getState() {
+    public ElevatorState getState() {
         return state;
     }
 
     public boolean reachedStatePos() {
+        SmartDashboard.putNumber("Elevator diff height", pidController.getSetpoint());
         return Math.abs(getElevatorHeight() - pidController.getSetpoint()) < Constants.Elevator.reachedStatePosTolerance;
     }
 
@@ -135,7 +160,7 @@ public class Elevator extends SubsystemBase{
             Constants.Elevator.kElevatorGearRatio,
             Constants.Elevator.kSprocketRadius);
         // height -= Constants.Elevator.homeOffset;
-        return -1 * height;
+        return height;
     }
 
     public void setEncoderHomeOffset() {

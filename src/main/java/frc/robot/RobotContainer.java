@@ -18,14 +18,16 @@
 	import frc.robot.commands.persistent.SwerveDriveCmd;
 
 	import frc.robot.commands.*;
+	import frc.robot.commands.superstructure.*;
 
 	import frc.robot.commands.auton.*;
 	import frc.robot.subsystems.Elevator;
 	import frc.robot.subsystems.Arm;
-	import frc.robot.subsystems.Claw;
+	import frc.robot.subsystems.Intake;
 	import frc.robot.subsystems.SwerveDrive;
 	import frc.robot.subsystems.Wrist;
 	import frc.robot.subsystems.LEDStrip;
+import frc.robot.subsystems.Superstructure;
 	/**
 	 * This class is where the bulk of the robot should be declared. Since
 	 * Command-based is a "declarative" paradigm, very little robot logic should
@@ -34,9 +36,6 @@
 	 * commands, and button mappings) should be declared here.
 	 */
 	public final class RobotContainer {
-		Timer timer;
-		double last = 0.0;
-		double[] desiredStates = new double[13];
 
 		//Controllers
 		private final XboxController driver = new XboxController(0);
@@ -46,18 +45,13 @@
 		//Smartdashboard
 		//Subsystems
 		private final SwerveDrive swerveDrive = new SwerveDrive();
-		private final Elevator elevator = new Elevator();
-		private final Arm arm = new Arm();
-		private final Wrist wrist = new Wrist();
-		private final Claw claw = new Claw();
 		private final PowerDistribution pdh = new PowerDistribution();
+
+		Superstructure superstructure = new Superstructure();
 		// private final LEDStrip ledStrip = new LEDStrip();
 
 		
-		public RobotContainer() {	
-			this.timer = new Timer();
-			timer.reset(); 
-		}	
+		public RobotContainer() {}	
 
 		// --------------------=Auton Selection=--------------------
 public Command getAutonomousCommand() {
@@ -95,7 +89,7 @@ public Command getAutonomousCommand() {
 				() -> driver.getLeftX(), 
 				// T
 				() -> -driver.getRightX()));
-			claw.setDefaultCommand(new RollClaw(claw, driver));
+			superstructure.tempFunctGetIntake().setDefaultCommand(new RollClaw(superstructure.tempFunctGetIntake(), driver));
 			new JoystickButton(driver,
 				RobotMap.Controller.RESET_GYRO_HEADING_BUTTON_ID).whenPressed(() -> swerveDrive.zeroHeading());
 			new JoystickButton(driver, 8).whenPressed(() -> swerveDrive.togglePrecise());
@@ -104,19 +98,19 @@ public Command getAutonomousCommand() {
 
 
 			// --------------------=Operator=-------------------- 
-			// Home, Low/mid/high cone, low/mid cube, cube/conefloor/conestanding
-			new JoystickButton(operator, 1).whenHeld(new SetHome(elevator, arm, wrist));
+			new JoystickButton(operator, 1).onTrue(new SetHome(superstructure));
 
-			new JoystickButton(operator, 2).whenHeld(new SetLowCone(elevator, arm, wrist));
-			new JoystickButton(operator,3).whenHeld(new SetMidCone(elevator, arm, wrist));
-			new JoystickButton(operator, 4).whenHeld(new SetHighCone(elevator, arm, wrist));
+			new JoystickButton(operator, 2).onTrue(new SetMidCone(superstructure));
+			new JoystickButton(operator,3).onTrue(new SetMidCube(superstructure));
+			new JoystickButton(operator, 4).onTrue(new SetHighCone(superstructure));
+			new JoystickButton(operator, 5).onTrue(new SetHighCube(superstructure));
 
-			new JoystickButton(operator, 5).whenHeld(new SetMidCube(elevator, arm, wrist));
-			new JoystickButton(operator, 6).whenHeld(new SetHighCube(elevator, arm, wrist));
+			new JoystickButton(operator, 6).onTrue(new SetIntakeCone(superstructure));
+			new JoystickButton(operator, 7).onTrue(new SetIntakeFloorCone(superstructure));
+			new JoystickButton(operator, 8).onTrue(new SetIntakeCube(superstructure));
 
-			new JoystickButton(operator, 8).whenHeld(new SetInCube(elevator, arm, wrist));
-			new JoystickButton(operator, 9).whenHeld(new SetInConeStanding(elevator, arm, wrist));
-			new JoystickButton(operator, 10).whenHeld(new SetInConeFloor(elevator, arm, wrist));
+			new JoystickButton(operator, 9).onTrue(new SetManual(superstructure));
+			new JoystickButton(operator, 10).onTrue(new SetOff(superstructure));
 		}
 
 		public CvSink getCameraFeed() {
@@ -131,24 +125,6 @@ public Command getAutonomousCommand() {
 		}
 
 		public void initRumbleTimer() {
-			timer.start();
-			// System.out.println("TELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\nTELEOPINIT\n");
-			// new VibrateControllerTimed(controllers, 10, 1);
-			double time = timer.get();
-
-			if (time > 105 && time < 106) {
-				rumbleControllers(1);
-			}
-			else if (time > 115 && time < 116) {
-				rumbleControllers(1);
-			} 
-			else if (time > 125 && time < 127) {
-				rumbleControllers(1);
-			}  
-			else {
-				rumbleControllers(0);
-			}
-
 			// 30 sec warning
 			// new VibrateControllerTimed(controllers, 135 - 30, 0.25);
 			// new VibrateControllerTimed(controllers, 135 - 30 - 0.5, 0.25);
@@ -177,10 +153,7 @@ public Command getAutonomousCommand() {
 
 		public void clearStickyFaults() {
 			pdh.clearStickyFaults();
-			elevator.clearStickyFaults();
-			arm.clearStickyFaults();
-			wrist.clearStickyFaults();
-			claw.clearStickyFaults();
+			superstructure.clearStickyFaults();
 			// swerveDrive.clearStickyFaults();
 		}
 
@@ -212,50 +185,6 @@ public Command getAutonomousCommand() {
 			return 0.0;
 		}
 
-		public void outputAutonLog() {
-			timer.start();
-
-			if (swerveDrive.getDesiredStates() != null) {
-				desiredStates[0] = swerveDrive.getDesiredStates()[0].speedMetersPerSecond;
-				desiredStates[1] = swerveDrive.getDesiredStates()[1].speedMetersPerSecond;
-				desiredStates[2] = swerveDrive.getDesiredStates()[2].speedMetersPerSecond;
-				desiredStates[3] = swerveDrive.getDesiredStates()[3].speedMetersPerSecond;
-
-				desiredStates[4] = swerveDrive.getDesiredStates()[0].angle.getRadians();
-				desiredStates[5] = swerveDrive.getDesiredStates()[1].angle.getRadians();
-				desiredStates[6] = swerveDrive.getDesiredStates()[2].angle.getRadians();
-				desiredStates[7] = swerveDrive.getDesiredStates()[3].angle.getRadians();
-			} else {
-				desiredStates[0] = 0;
-				desiredStates[1] = 0;
-				desiredStates[2] = 0;
-				desiredStates[3] = 0;
-
-				desiredStates[4] = 0;
-				desiredStates[5] = 0;
-				desiredStates[6] = 0;
-				desiredStates[7] = 0;
-			}
-
-			// desiredStates[8] = booleanToDouble(operator.getRightBumper());
-			// desiredStates[9] = booleanToDouble(operator.getAButton());
-			// desiredStates[10] = booleanToDouble(operator.getYButton());
-			// desiredStates[11] = booleanToDouble(operator.getXButton());
-
-			// desiredStates[12] = (driver.getRightTriggerAxis() - driver.getLeftTriggerAxis());
-
-				double time = Math.round(timer.get() * 10) / 10.0;
-				// System.out.println(time);
-				if (time - (int) (time) != last) {
-					last = time - (int) (time);
-
-					System.out.print("AutonLog: ");
-					for (double num : desiredStates) {
-						System.out.print(num + " ");
-					}
-					System.out.println();
-				}
-			}
 
 
 

@@ -17,8 +17,8 @@ import frc.util.PIDPlus;
 
 public class Wrist extends SubsystemBase{
 
-    public WristStates state = WristStates.HOME;
-    public enum WristStates {
+    public WristState state = WristState.HOME;
+    public enum WristState {
         HOME, 
         LOW_CONE, 
         MID_CONE, 
@@ -26,9 +26,9 @@ public class Wrist extends SubsystemBase{
         LOW_CUBE,
         MID_CUBE,
         HIGH_CUBE,
-        IN_CUBE,
-        IN_CONE_STANDING,
-        IN_CONE_FLOOR,
+        INTAKE_CUBE,
+        INTAKE_CONE,
+        INTAKE_FLOOR_CONE,
         MANUAL,
         OFF
     }
@@ -57,39 +57,51 @@ public class Wrist extends SubsystemBase{
             // no manual/off yet :(
             case HOME:
                 pidController.setSetpoint(Constants.SuperstructureSetpoints.kWristHOME);
+                break;
             case LOW_CONE:
                 pidController.setSetpoint(Constants.SuperstructureSetpoints.kWristLOW_CONE);
+                break;
             case MID_CONE:
                 pidController.setSetpoint(Constants.SuperstructureSetpoints.kWristMID_CONE);
+                break;
             case HIGH_CONE:
                 pidController.setSetpoint(Constants.SuperstructureSetpoints.kWristHIGH_CONE);
+                break;
             case LOW_CUBE:
                 pidController.setSetpoint(Constants.SuperstructureSetpoints.kWristLOW_CUBE);
+                break;
             case MID_CUBE:
                 pidController.setSetpoint(Constants.SuperstructureSetpoints.kWristMID_CUBE);
+                break;
             case HIGH_CUBE:
                 pidController.setSetpoint(Constants.SuperstructureSetpoints.kWristHIGH_CUBE);
-            case IN_CUBE:
-                pidController.setSetpoint(Constants.SuperstructureSetpoints.kWristIN_CUBE);
-            case IN_CONE_STANDING:
-                pidController.setSetpoint(Constants.SuperstructureSetpoints.kWristIN_CONE_STANDING);
-            case IN_CONE_FLOOR:
-                pidController.setSetpoint(Constants.SuperstructureSetpoints.kWristIN_CONE_FLOOR);
+                break;
+            case INTAKE_CUBE:
+                pidController.setSetpoint(Constants.SuperstructureSetpoints.kWristINTAKE_CUBE);
+                break;
+            case INTAKE_CONE:
+                pidController.setSetpoint(Constants.SuperstructureSetpoints.kWristINTAKE_CONE);
+                break;
+            case INTAKE_FLOOR_CONE:
+                pidController.setSetpoint(Constants.SuperstructureSetpoints.kWristINTAKE_FLOOR_CONE);
+                break;
             
             case MANUAL:
                 // idk
+                break;
             case OFF:
                 // idk
+                break;
         }
 
-        // if (getIsInBounds() && state != WristStates.OFF)
+        // if (getIsInBounds() && state != WristState.OFF)
             // wristMotor.set(pidController.calculate(getWristDegrees()));
 
         logDebugInfo();
     }
 
 
-    public void setState(WristStates state) {
+    public void setState(WristState state) {
         this.state = state;
     }
 
@@ -97,7 +109,7 @@ public class Wrist extends SubsystemBase{
         wristMotor.set(percent);
     }
 
-    public WristStates getState() {
+    public WristState getState() {
         return state;
     }
 

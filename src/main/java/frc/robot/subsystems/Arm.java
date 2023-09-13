@@ -16,8 +16,8 @@ import frc.util.PIDPlus;
 
 public class Arm extends SubsystemBase{
 
-    public ArmStates state = ArmStates.HOME;
-    public enum ArmStates {
+    public ArmState state = ArmState.HOME;
+    public enum ArmState {
         HOME, 
         LOW_CONE, 
         MID_CONE, 
@@ -25,9 +25,9 @@ public class Arm extends SubsystemBase{
         LOW_CUBE,
         MID_CUBE,
         HIGH_CUBE,
-        IN_CUBE,
-        IN_CONE_STANDING,
-        IN_CONE_FLOOR,
+        INTAKE_CUBE,
+        INTAKE_CONE,
+        INTAKE_FLOOR_CONE,
         MANUAL,
         OFF
     }
@@ -63,39 +63,51 @@ public class Arm extends SubsystemBase{
             // no manual/off yet :(
             case HOME:
                 pidController.setSetpoint(Constants.SuperstructureSetpoints.kArmHOME);
+                break;
             case LOW_CONE:
                 pidController.setSetpoint(Constants.SuperstructureSetpoints.kArmLOW_CONE);
+                break;
             case MID_CONE:
                 pidController.setSetpoint(Constants.SuperstructureSetpoints.kArmMID_CONE);
+                break;
             case HIGH_CONE:
                 pidController.setSetpoint(Constants.SuperstructureSetpoints.kArmHIGH_CONE);
+                break;
             case LOW_CUBE:
                 pidController.setSetpoint(Constants.SuperstructureSetpoints.kArmLOW_CUBE);
+                break;
             case MID_CUBE:
                 pidController.setSetpoint(Constants.SuperstructureSetpoints.kArmMID_CUBE);
+                break;
             case HIGH_CUBE:
                 pidController.setSetpoint(Constants.SuperstructureSetpoints.kArmHIGH_CUBE);
-            case IN_CUBE:
-                pidController.setSetpoint(Constants.SuperstructureSetpoints.kArmIN_CUBE);
-            case IN_CONE_STANDING:
-                pidController.setSetpoint(Constants.SuperstructureSetpoints.kArmIN_CONE_STANDING);
-            case IN_CONE_FLOOR:
-                pidController.setSetpoint(Constants.SuperstructureSetpoints.kArmIN_CONE_FLOOR);
+                break;
+            case INTAKE_CUBE:
+                pidController.setSetpoint(Constants.SuperstructureSetpoints.kArmINTAKE_CUBE);
+                break;
+            case INTAKE_CONE:
+                pidController.setSetpoint(Constants.SuperstructureSetpoints.kArmINTAKE_CONE);
+                break;
+            case INTAKE_FLOOR_CONE:
+                pidController.setSetpoint(Constants.SuperstructureSetpoints.kArmINTAKE_FLOOR_CONE);
+                break;
             
             case MANUAL:
                 // idk
+                break;
             case OFF:
                 // idk
+                break;
         }
 
-        // if (getIsInBounds() && state != ArmStates.OFF)
+        // if (getIsInBounds() && state != ArmState.OFF)
             // armLeft.set(pidController.calculate(getArmDegrees()));
 
         logDebugInfo();
     }
 
 
-    public void setState(ArmStates state) {
+    public void setState(ArmState state) {
         this.state = state;
     }
 
@@ -103,7 +115,7 @@ public class Arm extends SubsystemBase{
         armLeft.set(percent);
     }
 
-    public ArmStates getState() {
+    public ArmState getState() {
         return state;
     }
 

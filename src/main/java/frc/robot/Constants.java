@@ -15,9 +15,9 @@ public class Constants {
         // Scoring positions 
 
         // Meters
-        public static final double kElevatorCLEAR = 0.131;  // TODO 
+        public static final double kElevatorCLEAR = 0.133;  // TODO 
 
-        public static final double kElevatorHOME = 0.0;  // TODO 
+        public static final double kElevatorHOME = 0.02;  // TODO 
 
         public static final double kElevatorLOW_CONE = -0.185;  // TODO 
         public static final double kElevatorMID_CONE = 0;  // TODO 
@@ -36,7 +36,7 @@ public class Constants {
         public static final double kArmHIGH_CONE = 0;  // TODO 
 
         public static final double kArmLOW_CUBE = 0;  // TODO 
-        public static final double kArmMID_CUBE = 0;  // TODO 
+        public static final double kArmMID_CUBE = 147;  // TODO 
         public static final double kArmHIGH_CUBE = 0;  // TODO 
         
 
@@ -48,7 +48,7 @@ public class Constants {
         public static final double kWristHIGH_CONE = 0;  // TODO 
 
         public static final double kWristLOW_CUBE = 0;  // TODO 
-        public static final double kWristMID_CUBE = 0;  // TODO 
+        public static final double kWristMID_CUBE = 90;  // TODO 
         public static final double kWristHIGH_CUBE = 0;  // TODO 
         
 
@@ -56,27 +56,30 @@ public class Constants {
         // Intake positions
         // Cone standing, cone down, cube
         // Meters
-        public static final double kElevatorIN_CONE_STANDING = 0;  // TODO 
-        public static final double kElevatorIN_CONE_FLOOR = 0;  // TODO 
-        public static final double kElevatorIN_CUBE = 0;  // TODO 
+        public static final double kElevatorINTAKE_CONE = 0;  // TODO 
+        public static final double kElevatorINTAKE_FLOOR_CONE = 0;  // TODO 
+        public static final double kElevatorINTAKE_CUBE = 0;  // TODO 
         
         // Degrees, 0 straight down and 90 horizontal
-        public static final double kArmIN_CONE_STANDING = 0;  // TODO 
-        public static final double kArmIN_CONE_FLOOR = 0;  // TODO 
-        public static final double kArmIN_CUBE = 0;  // TODO 
+        public static final double kArmINTAKE_CONE = 0;  // TODO 
+        public static final double kArmINTAKE_FLOOR_CONE = 0;  // TODO 
+        public static final double kArmINTAKE_CUBE = 0;  // TODO 
 
         // Degrees, 0 straight down, 90 horizontal, 180 vertical
-        public static final double kWristIN_CONE_STANDING = 0;  // TODO 
-        public static final double kWristIN_CONE_FLOOR = 0;  // TODO 
-        public static final double kWristIN_CUBE = 0;  // TODO 
-         
+        public static final double kWristINTAKE_CONE = 0;  // TODO 
+        public static final double kWristINTAKE_FLOOR_CONE = 0;  // TODO 
+        public static final double kWristINTAKE_CUBE = 0;  // TODO
+        
+        
+
+       
     }
 
     public static final class Elevator {
         public static final double kMaxSpeed = 0.5;  // TODO 
         public static final double homeOffset = 0;
 
-        public static final double reachedStatePosTolerance = 0.02;
+        public static final double reachedStatePosTolerance = 0.01;
 
         public static final double clearHeight = Conversions.InchesToMeters(5);   // TODO 
 
@@ -88,7 +91,7 @@ public class Constants {
         public static double kSprocketRadius = Conversions.InchesToMeters(1.989/2);
         public static double kElevatorGearRatio = 9 * (1.989/1.625) * 1.11;
 
-        public static double kP = 0.1;   // TODO 
+        public static double kP = 20;   // TODO 
         public static double kI = 0;
         public static double kD = 0;  // TODO 
     }
@@ -105,9 +108,9 @@ public class Constants {
 
         public static double kArmGearRatio = 31.5;
         
-        public static double kP = 0.05;
+        public static double kP = 10;
         public static double kI = 0;
-        public static double kD = 0.0003;
+        public static double kD = 0.000;
     }
 
     public static final class Wrist {
@@ -123,16 +126,15 @@ public class Constants {
 
         public static double kWristGearRatio = 17.1; 
         
-        public static double kP = 0.0175;
+        public static double kP = 0.5;
         public static double kI = 0;
-        public static double kD = 0.0007;
+        public static double kD = 0.000;
     }
 
-    public static final class Claw {
-        public static double kPShooter = 0.03;
-        public static double kIShooter = 0;
-        public static double kDShooter = 0.00;
-        
+    public static final class Intake {
+         // Intake
+         public static final double kIdleIntakeSpeed = 0.05;
+         public static final double kActiveIntakeSpeed = 0.5;
     }
 
     public static final class Drivetrain {
