@@ -11,14 +11,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
-import frc.util.Conversions;
-import frc.util.PIDPlus;
+import frc.util.*;
 
 
 public class Wrist extends SubsystemBase{
 
     public WristState state = WristState.HOME;
     public enum WristState {
+        CLEAR,
         HOME, 
         LOW_CONE, 
         MID_CONE, 
@@ -37,7 +37,7 @@ public class Wrist extends SubsystemBase{
 
     private RelativeEncoder wristEncoder = wristMotor.getEncoder();
 
-    private final PIDPlus pidController = new PIDPlus(Constants.Wrist.kP, Constants.Wrist.kI, Constants.Wrist.kD);
+    private final PIDController pidController = new PIDController(Constants.Wrist.kP, Constants.Wrist.kI, Constants.Wrist.kD);
     
 
     public Wrist() {
@@ -55,6 +55,9 @@ public class Wrist extends SubsystemBase{
     public void periodic(){
         switch (state) {
             // no manual/off yet :(
+            case CLEAR:
+                pidController.setSetpoint(Constants.SuperstructureSetpoints.kWristCLEAR);
+                break;
             case HOME:
                 pidController.setSetpoint(Constants.SuperstructureSetpoints.kWristHOME);
                 break;

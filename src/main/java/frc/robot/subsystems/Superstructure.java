@@ -1,13 +1,18 @@
 package frc.robot.subsystems;
 
 
+import java.util.ResourceBundle.Control;
+
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.*;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Elevator.ElevatorState;
 import frc.robot.subsystems.Arm.ArmState;
 import frc.robot.subsystems.Wrist.WristState;
+// import frc.util.GamePieces;
 import frc.util.GamePieces;
 
 
@@ -25,7 +30,6 @@ public class Superstructure extends SubsystemBase {
     INTAKE_CUBE,
 
     HOME,
-    HOMING_CLEAR,
     MANUAL,
     OFF
   }
@@ -64,11 +68,12 @@ public class Superstructure extends SubsystemBase {
     // SmartDashboard.putBoolean("Deporting", elevator.getElevatorHeight() < Constants.SuperstructureSetpoints.kElevatorCLEAR);
 
     switch (state) {
-      case HOMING_CLEAR:
-        // setElementStates(ElevatorState.HOMING_CLEAR, ArmState.HOMING_CLEAR, WristState.HOMING_CLEAR);
-
       case HOME:
-        setElementStatesEnsureDeport(ElevatorState.HOME, ArmState.HOME, WristState.HOME);
+        if (reachedHomingClear()) {
+          setElementStates(ElevatorState.HOME, ArmState.HOME, WristState.HOME);
+        } else {
+          setElementStates(ElevatorState.CLEAR, ArmState.CLEAR, WristState.CLEAR);
+        }
         if (reachedState()) { //TODO: Currently overriding return to home with deport 
           state = SuperStructureState.OFF;
         }
@@ -122,8 +127,8 @@ public class Superstructure extends SubsystemBase {
 
 
   public boolean ensureDeported() {
-    if (elevator.getElevatorHeight() < Constants.SuperstructureSetpoints.kElevatorCLEAR) {
-      elevator.setState(ElevatorState.CLEAR);
+    if (Math.abs(arm.getArmDegrees() - Constants.SuperstructureSetpoints.kArmCLEAR) > Constants.SuperstructureSetpoints.kArmClearTolerance) {
+      arm.setState(ArmState.CLEAR);
       // System.out.println("Deporting...");
       return false;
     }
@@ -146,8 +151,18 @@ public class Superstructure extends SubsystemBase {
 
   public boolean reachedState() {
     SmartDashboard.putBoolean("Reached State", elevator.reachedStatePos());
-    // return (elevator.reachedStatePos() && arm.reachedStatePos() && wrist.reachedStatePos());
-    return false;
+    return (elevator.reachedStatePos() && arm.reachedStatePos() && wrist.reachedStatePos());
+    // return false;
+  }
+
+  public boolean reachedHomingClear() {
+    SmartDashboard.putBoolean("Reached State", elevator.reachedStatePos());
+    return (
+      Math.abs(elevator.getElevatorHeight() - Constants.SuperstructureSetpoints.kElevatorCLEAR) < Constants.SuperstructureSetpoints.kElevatorClearTolerance &&
+      Math.abs(arm.getArmDegrees() - Constants.SuperstructureSetpoints.kArmCLEAR) < Constants.SuperstructureSetpoints.kArmClearTolerance &&
+      Math.abs(wrist.getWristDegrees() - Constants.SuperstructureSetpoints.kWristCLEAR) < Constants.SuperstructureSetpoints.kWristClearTolerance
+      );
+    // return false;
   }
 
   public void clearStickyFaults() {

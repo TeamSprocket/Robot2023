@@ -12,6 +12,10 @@ public class Constants {
     public static double kTeleopMultiplier = 1.1;
 
     public static final class SuperstructureSetpoints {
+        public static final double kElevatorClearTolerance = 0.005;
+        public static final double kArmClearTolerance = 1;
+        public static final double kWristClearTolerance = 1;
+
         // Scoring positions 
 
         // Meters
@@ -29,6 +33,8 @@ public class Constants {
         
 
         // Degrees, 90 straight down and 0 horizontal
+        public static final double kArmCLEAR = 0;  // TODO
+
         public static final double kArmHOME = 0;  // TODO 
 
         public static final double kArmLOW_CONE = 0;  // TODO 
@@ -41,6 +47,8 @@ public class Constants {
         
 
         // Degrees, 0 straight down, 90 horizontal, 180 vertical
+        public static final double kWristCLEAR = 0;  // TODO
+
         public static final double kWristHOME = 0;  // TODO 
 
         public static final double kWristLOW_CONE = 0;  // TODO 

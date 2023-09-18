@@ -18,7 +18,12 @@
 	import frc.robot.commands.persistent.SwerveDriveCmd;
 
 	import frc.robot.commands.*;
+	import frc.robot.commands.auton.*;
+	import frc.robot.commands.persistent.*;
 	import frc.robot.commands.superstructure.*;
+
+
+	import frc.robot.subsystems.*;
 
 	import frc.robot.commands.auton.*;
 	import frc.robot.subsystems.Elevator;

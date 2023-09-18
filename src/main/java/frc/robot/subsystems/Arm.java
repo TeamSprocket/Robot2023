@@ -11,13 +11,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 import frc.util.Conversions;
-import frc.util.PIDPlus;
+// import frc.util.PIDPlus;
 
 
 public class Arm extends SubsystemBase{
 
     public ArmState state = ArmState.HOME;
     public enum ArmState {
+        CLEAR,
         HOME, 
         LOW_CONE, 
         MID_CONE, 
@@ -38,7 +39,7 @@ public class Arm extends SubsystemBase{
     private RelativeEncoder armLeftEncoder = armLeft.getEncoder();
     private RelativeEncoder armRightEncoder = armRight.getEncoder();
 
-    private final PIDPlus pidController = new PIDPlus(Constants.Arm.kP, Constants.Arm.kI, Constants.Arm.kD);
+    private final PIDController pidController = new PIDController(Constants.Arm.kP, Constants.Arm.kI, Constants.Arm.kD);
     
 
     public Arm() {
@@ -61,6 +62,9 @@ public class Arm extends SubsystemBase{
     public void periodic(){
         switch (state) {
             // no manual/off yet :(
+            case CLEAR:
+                pidController.setSetpoint(Constants.SuperstructureSetpoints.kArmCLEAR);
+                break;
             case HOME:
                 pidController.setSetpoint(Constants.SuperstructureSetpoints.kArmHOME);
                 break;
