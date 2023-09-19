@@ -81,7 +81,7 @@ public class SwerveDriveCmd extends CommandBase {
 
     // Apply to modules
     if (Constants.Drivetrain.JOYSTICK_DRIVING_ENABLED) {
-      swerveDrive.setModuleStates(xSpeed, ySpeed, tSpeed);
+      swerveDrive.setModuleSpeeds(xSpeed, ySpeed, tSpeed);
     }
     // SmartDashboard.putString("Module States Desaturated", moduleStates[2].toString());
 
