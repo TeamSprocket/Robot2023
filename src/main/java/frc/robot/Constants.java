@@ -129,6 +129,10 @@ public class Constants {
         public static final double kPTurn = 0.6; //0.6
         public static final double kITurn = 0.0000;
         public static final double kDTurn = 0.0015; 
+
+        public static final double kPHeading = 0.1; //0.6
+        public static final double kIHeading = 0.0000;
+        public static final double kDHeading = 0.0015; 
         
         public static final double kMaxSpeedMetersPerSecond = 0.2; //0.2
         public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 1;
