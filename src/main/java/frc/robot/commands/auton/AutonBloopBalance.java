@@ -6,8 +6,8 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.*;
+// import frc.robot.commands.macro.BalanceOnChargeStation;
 import frc.robot.commands.macro.BalanceOnChargeStation;
-import frc.robot.commands.macro.BalanceOnChargeStationGyro;
 import frc.robot.commands.macro.timed.DeportArmTimed;
 import frc.robot.commands.macro.timed.LimelightAlignTimed;
 import frc.robot.commands.macro.timed.PIDTurnTimed;
@@ -28,7 +28,7 @@ public class AutonBloopBalance extends SequentialCommandGroup {
         new RollClawTimed(claw, -1, 0.25),
         new RollClawTimed(claw, 1, 0.25),
         new PIDTurnTimed(swerveDrive, Math.PI, 1.5),
-        new BalanceOnChargeStationGyro(swerveDrive, 0.08, true, 12),
+        new BalanceOnChargeStation(swerveDrive, 0.08, true, 12),
         new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.0, new Rotation2d(0.1)), 0.5)
       )
     );

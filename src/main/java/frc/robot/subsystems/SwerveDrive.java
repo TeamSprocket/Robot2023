@@ -271,6 +271,8 @@ public class SwerveDrive extends SubsystemBase {
         last = timer.get();
         
         this.targetHeading += tSpeed;
+        this.targetHeading = (targetHeading % 360.0);
+        this.targetHeading = (targetHeading < 0) ? targetHeading + 360.0 : targetHeading;
         headingController.setSetpoint(targetHeading);
         double tSpeedPID = headingController.calculate(getHeading());
 
