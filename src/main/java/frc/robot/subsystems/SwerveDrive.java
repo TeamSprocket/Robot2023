@@ -153,6 +153,8 @@ public class SwerveDrive extends SubsystemBase {
         this.timer = new Timer();
         timer.reset();
 
+        headingController.enableContinuousInput(0, 360);
+
         // Init gyro with delay
         new Thread(() -> {
             try {
