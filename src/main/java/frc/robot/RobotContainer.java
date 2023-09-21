@@ -40,8 +40,7 @@ import frc.robot.subsystems.Elevator;
 	import frc.robot.subsystems.Claw;
 	import frc.robot.subsystems.SwerveDrive;
 	import frc.robot.subsystems.Wrist;
-import frc.robot.subsystems.SwerveDrive.Direction;
-import frc.robot.subsystems.LEDStrip;
+	import frc.robot.subsystems.LEDStrip;
 	/**
 	 * This class is where the bulk of the robot should be declared. Since
 	 * Command-based is a "declarative" paradigm, very little robot logic should
@@ -112,15 +111,12 @@ public Command getAutonomousCommand() {
 				// T
 				() -> -driver.getRightX()));
 			claw.setDefaultCommand(new RollClaw(claw, driver));
-			new JoystickButton(driver, RobotMap.Controller.RB).whenPressed(() -> swerveDrive.zeroHeading());
-			new JoystickButton(driver, RobotMap.Controller.LB).whenPressed(() -> swerveDrive.togglePrecise());
-			new JoystickButton(driver, RobotMap.Controller.Y).whenPressed(() -> swerveDrive.updateHeading(Direction.FRONT));
-			new JoystickButton(driver, RobotMap.Controller.X).whenPressed(() -> swerveDrive.updateHeading(Direction.LEFT));
-			new JoystickButton(driver, RobotMap.Controller.B).whenPressed(() -> swerveDrive.updateHeading(Direction.RIGHT));
-			new JoystickButton(driver, RobotMap.Controller.A).whenPressed(() -> swerveDrive.updateHeading(Direction.BACK));
+			new JoystickButton(driver,
+				RobotMap.Controller.RESET_GYRO_HEADING_BUTTON_ID).whenPressed(() -> swerveDrive.zeroHeading());
+			new JoystickButton(driver, 8).whenPressed(() -> swerveDrive.togglePrecise());
 				// new JoystickButton(driver,
 			// 	3).whenPressed(() -> swerveDrive.zeroTalonsABS());
-			// new JoystickButton(driver, 2).whenHeld(new LimelightAlign(swerveDrive));
+			new JoystickButton(driver, 2).whenHeld(new LimelightAlign(swerveDrive));
 
 
 			// --------------------=Operator=-------------------- ,

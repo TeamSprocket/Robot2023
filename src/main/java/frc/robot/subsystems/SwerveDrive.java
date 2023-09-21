@@ -27,14 +27,6 @@ public class SwerveDrive extends SubsystemBase {
     boolean isPrecise = false;
     double targetHeading;
     PIDController headingController = new PIDController(Constants.Drivetrain.kPHeading, Constants.Drivetrain.kIHeading, Constants.Drivetrain.kDHeading);
-    double xSpeed, ySpeed, tSpeed;
-
-    public enum Direction {
-        FRONT, 
-        LEFT, 
-        RIGHT,
-        BACK
-    }
 
     SwerveModuleState[] states = {
         new SwerveModuleState(0, new Rotation2d(0)),
@@ -85,7 +77,6 @@ public class SwerveDrive extends SubsystemBase {
     
     public void zeroHeading() {
         gyro.reset();
-        this.targetHeading = 0;
         
         // gyro.setYawAxis(null)
     }
@@ -247,47 +238,34 @@ public class SwerveDrive extends SubsystemBase {
         backRight.stop();
     }
 
-    public void updateHeading(Direction direction) {
-        switch (direction) {
-            case FRONT: 
-                targetHeading = 0;
-                break;
-            case LEFT: 
-                targetHeading = 270;
-                break;
-            case RIGHT: 
-                targetHeading = 90;
-                break;
-            case BACK: 
-                targetHeading = 180;
-                break;
-        }
-    }
-
-
     // Set module speeds/angles
-    public void setModuleSpeeds(double xSpeed, double ySpeed, double tSpeed) {
+    public void setModuleStates(double xSpeed, double ySpeed, double tSpeed) {
         double diff = Math.abs(timer.get() - last); // Adjust for exec time for consistent turning 
         last = timer.get();
         
         this.targetHeading += tSpeed;
         headingController.setSetpoint(targetHeading);
         double tSpeedPID = headingController.calculate(getHeading());
+            
+        double headingRad = Math.toRadians(-getHeading());
+        if (Constants.Auton.FACING_DRIVERS) {
+            headingRad += Math.PI;
+        }
 
-        this.xSpeed = xSpeed;
-        this.ySpeed = ySpeed;
-        this.tSpeed = tSpeedPID;
-    }
+        ChassisSpeeds chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+            xSpeed, ySpeed, tSpeedPID, new Rotation2d(headingRad));
 
 
-    public void setModuleStates(SwerveModuleState[] desiredStates) {
-        states = desiredStates;
+        // Calculate module states per module
+        SwerveModuleState[] moduleStates = Constants.Drivetrain.driveKinematics.toSwerveModuleStates(chassisSpeeds);
+
+        // Normalize speeds
+        SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.Drivetrain.kMaxSpeedMetersPerSecond);
         
-        
-        frontLeft.setDesiredState(desiredStates[0], isPrecise);
-        frontRight.setDesiredState(desiredStates[1], isPrecise);
-        backLeft.setDesiredState(desiredStates[2], isPrecise);
-        backRight.setDesiredState(desiredStates[3], isPrecise);
+        frontLeft.setDesiredState(moduleStates[0], isPrecise);
+        frontRight.setDesiredState(moduleStates[1], isPrecise);
+        backLeft.setDesiredState(moduleStates[2], isPrecise);
+        backRight.setDesiredState(moduleStates[3], isPrecise);
 
         frontLeft.clearStickyFaults();
         frontRight.clearStickyFaults();
@@ -296,10 +274,10 @@ public class SwerveDrive extends SubsystemBase {
 
 
         // Debug
-        SmartDashboard.putNumber("FrontLeftAngleTarget", desiredStates[0].angle.getDegrees());
-        SmartDashboard.putNumber("FrontRightAngleTarget", desiredStates[1].angle.getDegrees());
-        SmartDashboard.putNumber("BackLeftAngleTarget", desiredStates[2].angle.getDegrees());
-        SmartDashboard.putNumber("BackRightAngleTarget", desiredStates[3].angle.getDegrees());
+        // SmartDashboard.putNumber("FrontLeftAngleTarget", desiredStates[0].angle.getDegrees());
+        // SmartDashboard.putNumber("FrontRightAngleTarget", desiredStates[1].angle.getDegrees());
+        // SmartDashboard.putNumber("BackLeftAngleTarget", desiredStates[2].angle.getDegrees());
+        // SmartDashboard.putNumber("BackRightAngleTarget", desiredStates[3].angle.getDegrees());
 
         // SmartDashboard.putNumber("FrontLeftAngleABS", Math.toDegrees(frontLeft.getAbsEncoderRad()));
         // SmartDashboard.putNumber("FrontRightAngleABS", Math.toDegrees(frontRight.getAbsEncoderRad()));
@@ -316,35 +294,6 @@ public class SwerveDrive extends SubsystemBase {
         
 
     }
-
-    @Override
-    public void periodic() {
-        clearStickyFaults();
-
-        if (Constants.Drivetrain.JOYSTICK_DRIVING_ENABLED) {
-            double headingRad = Math.toRadians(-getHeading());
-            if (Constants.Auton.FACING_DRIVERS) {
-                headingRad += Math.PI;
-            }
-
-            ChassisSpeeds chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-            xSpeed, ySpeed, tSpeed, new Rotation2d(headingRad));
-
-            // Calculate module states per module
-            SwerveModuleState[] moduleStates = Constants.Drivetrain.driveKinematics.toSwerveModuleStates(chassisSpeeds);
-
-            // Normalize speeds
-            SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.Drivetrain.kMaxSpeedMetersPerSecond);
-            
-            frontLeft.setDesiredState(moduleStates[0], isPrecise);
-            frontRight.setDesiredState(moduleStates[1], isPrecise);
-            backLeft.setDesiredState(moduleStates[2], isPrecise);
-            backRight.setDesiredState(moduleStates[3], isPrecise);
-        }
-    }
-
-
-
 
     public double getFrontLeftTicks() {
         return frontLeft.getDrivePosition();
