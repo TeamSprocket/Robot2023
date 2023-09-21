@@ -79,11 +79,35 @@ public class SwerveDriveCmd extends CommandBase {
     SmartDashboard.putNumber("SLEW ySpeed", ySpeed);
     SmartDashboard.putNumber("SLEW tSpeed", tSpeed);
 
+    ChassisSpeeds chassisSpeeds;
+    // Field Oriented
+    if (Constants.Drivetrain.IS_FIELD_ORIENTED) {
+      double headingRad = Math.toRadians(-swerveDrive.getHeading());
+      
+      if (Constants.Auton.FACING_DRIVERS) {
+        headingRad += Math.PI;
+      }
+
+      chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+          xSpeed, ySpeed, tSpeed, new Rotation2d(headingRad));
+    } else { // Robot oriented
+      chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, tSpeed);
+      SmartDashboard.putString("Chassis Speed", chassisSpeeds.toString());
+
+    }
+
+    // Calculate module states per module
+    SwerveModuleState[] moduleStates = Constants.Drivetrain.driveKinematics.toSwerveModuleStates(chassisSpeeds);
+    SmartDashboard.putString("Module States", moduleStates[2].toString());
+
+    // Normalize speeds
+    SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.Drivetrain.kMaxSpeedMetersPerSecond);
+
     // Apply to modules
     if (Constants.Drivetrain.JOYSTICK_DRIVING_ENABLED) {
-      swerveDrive.setModuleStates(xSpeed, ySpeed, tSpeed);
+      swerveDrive.setModuleStates(moduleStates);
     }
-    // SmartDashboard.putString("Module States Desaturated", moduleStates[2].toString());
+    SmartDashboard.putString("Module States Desaturated", moduleStates[2].toString());
 
   }
 
