@@ -38,10 +38,10 @@ public class SwerveDriveCmd extends CommandBase {
         this.xSPDFunct = xSPDFunct;
         this.ySPDFunct = ySPDFunct;
         this.tSPDFunct = tSPDFunct;
-        this.fieldOrientedFunct = () -> Constants.Drivetrain.kIsFieldOriented;
-        this.xSlewLimit = new SlewRateLimiter(Constants.Drivetrain.kMaxAccel);
-        this.ySlewLimit = new SlewRateLimiter(Constants.Drivetrain.kMaxAccel);
-        this.tSlewLimit = new SlewRateLimiter(Constants.Drivetrain.kMaxTurnAccel);
+        this.fieldOrientedFunct = () -> Constants.Drivetrain.IS_FIELD_ORIENTED;
+        this.xSlewLimit = new SlewRateLimiter(Constants.Drivetrain.kTeleDriveMaxAccelerationUnitsPerSecond);
+        this.ySlewLimit = new SlewRateLimiter(Constants.Drivetrain.kTeleDriveMaxAccelerationUnitsPerSecond);
+        this.tSlewLimit = new SlewRateLimiter(Constants.Drivetrain.kTeleDriveMaxAngularAccelerationUnitsPerSecond);
         
         addRequirements(swerveDrive);
 
@@ -71,17 +71,17 @@ public class SwerveDriveCmd extends CommandBase {
     SmartDashboard.putNumber("tSpeed", tSpeed);
 
     // Slew limit (accel)
-    xSpeed = xSlewLimit.calculate(xSpeed) * Constants.Drivetrain.kMaxSpeed;
-    ySpeed = ySlewLimit.calculate(ySpeed) * Constants.Drivetrain.kMaxSpeed;
-    tSpeed = tSlewLimit.calculate(tSpeed) * Constants.Drivetrain.kMaxTurnSpeed;
+    xSpeed = xSlewLimit.calculate(xSpeed) * Constants.Drivetrain.kMaxSpeedMetersPerSecond;
+    ySpeed = ySlewLimit.calculate(ySpeed) * Constants.Drivetrain.kMaxSpeedMetersPerSecond;
+    tSpeed = tSlewLimit.calculate(tSpeed) * Constants.Drivetrain.kTeleDriveMaxAngularSpeedRadiansPerSecond;
     
     SmartDashboard.putNumber("SLEW xSpeed", xSpeed);
     SmartDashboard.putNumber("SLEW ySpeed", ySpeed);
     SmartDashboard.putNumber("SLEW tSpeed", tSpeed);
 
     // Apply to modules
-    if (Constants.isEnabled) {
-      swerveDrive.setModuleSpeeds(xSpeed, ySpeed, tSpeed);
+    if (Constants.Drivetrain.JOYSTICK_DRIVING_ENABLED) {
+      swerveDrive.setModuleStates(xSpeed, ySpeed, tSpeed);
     }
     // SmartDashboard.putString("Module States Desaturated", moduleStates[2].toString());
 
