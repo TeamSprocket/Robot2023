@@ -130,15 +130,15 @@ public class Constants {
         public static final double kITurn = 0.0000;
         public static final double kDTurn = 0.0015; 
 
-        public static final double kPHeading = 0.1; //0.6
+        public static final double kPHeading = 0.012; //0.6
         public static final double kIHeading = 0.0000;
-        public static final double kDHeading = 0.0015; 
+        public static final double kDHeading = 0.001; 
         
         public static final double kMaxSpeedMetersPerSecond = 0.2; //0.2
         public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 1;
         
-        public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 0.4;
-        public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 1.25;
+        public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 10;
+        public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 1.5;
 
         public static final double kPhysicalMaxSpeedMetersPerSecond = kMaxSpeedMetersPerSecond;
         public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond;

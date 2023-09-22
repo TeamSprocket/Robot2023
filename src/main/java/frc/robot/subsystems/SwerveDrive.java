@@ -4,6 +4,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
+import frc.util.ShuffleboardPIDTuner;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
@@ -83,6 +84,36 @@ public class SwerveDrive extends SubsystemBase {
     // Init gyro
     private final ADIS16470_IMU gyro = new ADIS16470_IMU();
     
+
+    public SwerveDrive() {
+        this.timer = new Timer();
+        timer.reset();
+
+        headingController.enableContinuousInput(0, 360);
+        ShuffleboardPIDTuner.addSlider("kPSwerveDriveHeading", 0, 0.05, Constants.Drivetrain.kPHeading);
+        ShuffleboardPIDTuner.addSlider("kISwerveDriveHeading", 0, 0.05, Constants.Drivetrain.kIHeading);
+        ShuffleboardPIDTuner.addSlider("kDSwerveDriveHeading", 0, 0.05, Constants.Drivetrain.kDHeading);
+
+        // Init gyro with delay
+        new Thread(() -> {
+            try {
+                Thread.sleep(Constants.Drivetrain.GYRO_DELAY_MS);
+                zeroHeading();
+                calibrateGyro();
+                // zeroTalonsABS();
+                zeroTalons();
+            }
+            catch (Exception e) {
+
+            }
+        }
+        ).start();
+
+    }
+
+
+
+
     public void zeroHeading() {
         gyro.reset();
         this.targetHeading = 0;
@@ -147,29 +178,6 @@ public class SwerveDrive extends SubsystemBase {
 
     public void togglePrecise() {
         isPrecise = !isPrecise;
-    }
-    
-    public SwerveDrive() {
-        this.timer = new Timer();
-        timer.reset();
-
-        headingController.enableContinuousInput(0, 360);
-
-        // Init gyro with delay
-        new Thread(() -> {
-            try {
-                Thread.sleep(Constants.Drivetrain.GYRO_DELAY_MS);
-                zeroHeading();
-                calibrateGyro();
-                // zeroTalonsABS();
-                zeroTalons();
-            }
-            catch (Exception e) {
-
-            }
-        }
-        ).start();
-
     }
 
     public void setTurnDefaultMode(NeutralMode mode) {
@@ -272,7 +280,7 @@ public class SwerveDrive extends SubsystemBase {
         double diff = Math.abs(timer.get() - last); // Adjust for exec time for consistent turning 
         last = timer.get();
         
-        this.targetHeading += tSpeed;
+        this.targetHeading += tSpeed * diff;
         this.targetHeading = (targetHeading % 360.0);
         this.targetHeading = (targetHeading < 0) ? targetHeading + 360.0 : targetHeading;
         headingController.setSetpoint(targetHeading);
@@ -323,6 +331,8 @@ public class SwerveDrive extends SubsystemBase {
 
     @Override
     public void periodic() {
+        postShuffleboardPIDTuner();
+
         clearStickyFaults();
 
         if (Constants.Drivetrain.JOYSTICK_DRIVING_ENABLED) {
@@ -345,6 +355,13 @@ public class SwerveDrive extends SubsystemBase {
             backLeft.setDesiredState(moduleStates[2], isPrecise);
             backRight.setDesiredState(moduleStates[3], isPrecise);
         }
+    }
+
+
+    public void postShuffleboardPIDTuner() {
+        headingController.setP(ShuffleboardPIDTuner.get("kPSwerveDriveHeading"));
+        headingController.setI(ShuffleboardPIDTuner.get("kISwerveDriveHeading"));
+        headingController.setD(ShuffleboardPIDTuner.get("kDSwerveDriveHeading"));
     }
 
 
