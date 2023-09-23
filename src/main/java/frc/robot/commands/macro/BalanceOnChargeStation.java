@@ -101,7 +101,7 @@ public class BalanceOnChargeStation extends CommandBase {
 
   public void setSpeeds(double output, double turn) {
     ChassisSpeeds chassisSpeeds;
-    if (Constants.Drivetrain.IS_FIELD_ORIENTED) {
+    if (Constants.Drivetrain.kIsFieldOriented) {
       double headingRad = Math.toRadians(swerveDrive.getHeading());
       chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
           output, 0, turn, new Rotation2d(headingRad));
@@ -110,7 +110,7 @@ public class BalanceOnChargeStation extends CommandBase {
     }
 
     // Calculate module states per module
-    SwerveModuleState[] moduleStates = Constants.Drivetrain.driveKinematics.toSwerveModuleStates(chassisSpeeds);
+    SwerveModuleState[] moduleStates = Constants.Drivetrain.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
   
     // Apply to modules
     swerveDrive.setModuleStates(moduleStates);

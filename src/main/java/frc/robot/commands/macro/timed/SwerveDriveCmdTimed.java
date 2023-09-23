@@ -61,9 +61,9 @@ public class SwerveDriveCmdTimed extends MacroCommand {
     talonBL = new WPI_TalonFX(RobotMap.Drivetrain.BACK_LEFT_TALON_D);
     talonBR = new WPI_TalonFX(RobotMap.Drivetrain.BACK_RIGHT_TALON_D);
 
-    // xSlewLimit = new SlewRateLimiter(Constants.Drivetrain.kTeleDriveMaxAccelerationUnitsPerSecond);
-    // ySlewLimit = new SlewRateLimiter(Constants.Drivetrain.kTeleDriveMaxAccelerationUnitsPerSecond);
-    // tSlewLimit = new SlewRateLimiter(Constants.Drivetrain.kTeleDriveMaxAngularAccelerationUnitsPerSecond);
+    // xSlewLimit = new SlewRateLimiter(Constants.Drivetrain.kMaxAccel);
+    // ySlewLimit = new SlewRateLimiter(Constants.Drivetrain.kMaxAccel);
+    // tSlewLimit = new SlewRateLimiter(Constants.Drivetrain.kMaxTurnAccel);
     
 
     this.xSpeed = xTarget / 12;
@@ -79,7 +79,7 @@ public class SwerveDriveCmdTimed extends MacroCommand {
       //     new SwerveModulePosition(backRight.getDrivePosition(), new Rotation2d(backRight.getTurnPosition())),
       // };
   //   posEstimator = new SwerveDrivePoseEstimator(
-  //     Constants.Drivetrain.driveKinematics, 
+  //     Constants.Drivetrain.kDriveKinematics, 
   //     new Rotation2d(Math.toRadians(swerveDrive.getHeading())), 
   //     null, 
   //     null);
@@ -98,8 +98,8 @@ public class SwerveDriveCmdTimed extends MacroCommand {
     //     speed = xSpeed;
     //   }
       
-    //   if (Math.abs(speed) > Constants.Drivetrain.kMaxSpeedMetersPerSecond) {
-    //     speed = Constants.Drivetrain.kMaxSpeedMetersPerSecond;
+    //   if (Math.abs(speed) > Constants.Drivetrain.kMaxSpeed) {
+    //     speed = Constants.Drivetrain.kMaxSpeed;
     //  }
 
     //  return speed / 4;
@@ -137,8 +137,8 @@ public class SwerveDriveCmdTimed extends MacroCommand {
     // ySpeed = xSpeed;
 
     // Slew limit (accel)
-    // xSpeed = xSlewLimit.calculate(xSpeed) * Constants.Drivetrain.kMaxSpeedMetersPerSecond;
-    // ySpeed = ySlewLimit.calculate(ySpeed) * Constants.Drivetrain.kMaxSpeedMetersPerSecond;
+    // xSpeed = xSlewLimit.calculate(xSpeed) * Constants.Drivetrain.kMaxSpeed;
+    // ySpeed = ySlewLimit.calculate(ySpeed) * Constants.Drivetrain.kMaxSpeed;
     // tSpeed = tSlewLimit.calculate(tSpeed) * Constants.Drivetrain.kTeleDriveMaxAngularSpeedRadiansPerSecond;
     
       // System.out.println("SLEWWWW: " + xSpeed);
@@ -148,7 +148,7 @@ public class SwerveDriveCmdTimed extends MacroCommand {
 
     ChassisSpeeds chassisSpeeds;
     // // Field Oriented
-    if (Constants.Drivetrain.IS_FIELD_ORIENTED) {
+    if (Constants.Drivetrain.kIsFieldOriented) {
       double headingRad = Math.toRadians(swerveDrive.getHeading());
       chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
           xSpeed, ySpeed, tSpeed, new Rotation2d(headingRad));
@@ -164,12 +164,12 @@ public class SwerveDriveCmdTimed extends MacroCommand {
     }
 
     // Calculate module states per module
-    SwerveModuleState[] moduleStates = Constants.Drivetrain.driveKinematics.toSwerveModuleStates(chassisSpeeds);
+    SwerveModuleState[] moduleStates = Constants.Drivetrain.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
     
       
 
     // Normalize speeds
-    // SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.Drivetrain.kMaxSpeedMetersPerSecond);
+    // SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.Drivetrain.kMaxSpeed);
 
       // System.out.println("Desaturated: " + chassisSpeeds.toString());
 

@@ -38,7 +38,7 @@ public class LimelightAlignTimed extends CommandBase {
     // this.duration = duration;
 
     timer = new Timer();
-    this.pidController = new PIDController(Constants.Drivetrain.kLimelightP, Constants.Drivetrain.kLimelightI, Constants.Drivetrain.kLimelightD);
+    this.pidController = new PIDController(Constants.Drivetrain.kLimelightAlignP, Constants.Drivetrain.kLimelightAlignI, Constants.Drivetrain.kLimelightAlignD);
     this.pidController.setSetpoint(0);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -51,7 +51,7 @@ public class LimelightAlignTimed extends CommandBase {
     // this.duration = duration;
 
     timer = new Timer();
-    this.pidController = new PIDController(Constants.Drivetrain.kLimelightP, Constants.Drivetrain.kLimelightI, Constants.Drivetrain.kLimelightD);
+    this.pidController = new PIDController(Constants.Drivetrain.kLimelightAlignP, Constants.Drivetrain.kLimelightAlignI, Constants.Drivetrain.kLimelightAlignD);
     this.pidController.setSetpoint(0);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -61,7 +61,7 @@ public class LimelightAlignTimed extends CommandBase {
   public void initialize() {
     timer.reset();
     // timer.reset();
-    Constants.Drivetrain.JOYSTICK_DRIVING_ENABLED = false;
+    Constants.isEnabled = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -84,7 +84,7 @@ public class LimelightAlignTimed extends CommandBase {
 
   public void setSpeeds(double output) {
     ChassisSpeeds chassisSpeeds;
-    if (Constants.Drivetrain.IS_FIELD_ORIENTED) {
+    if (Constants.Drivetrain.kIsFieldOriented) {
       double headingRad = Math.toRadians(swerveDrive.getHeading());
       chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
           verticalSpeed, output, 0, new Rotation2d(headingRad));
@@ -93,7 +93,7 @@ public class LimelightAlignTimed extends CommandBase {
     }
 
     // Calculate module states per module
-    SwerveModuleState[] moduleStates = Constants.Drivetrain.driveKinematics.toSwerveModuleStates(chassisSpeeds);
+    SwerveModuleState[] moduleStates = Constants.Drivetrain.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
   
     // Apply to modules
     swerveDrive.setModuleStates(moduleStates);
@@ -103,7 +103,7 @@ public class LimelightAlignTimed extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     swerveDrive.stopModules();
-    Constants.Drivetrain.JOYSTICK_DRIVING_ENABLED = true;
+    Constants.isEnabled = true;
   }
 
   // Returns true when the command should end.

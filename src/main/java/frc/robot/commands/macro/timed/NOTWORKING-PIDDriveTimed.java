@@ -67,7 +67,7 @@ package frc.robot.commands.macro.timed;
 //     // }
 
 //     ChassisSpeeds chassisSpeeds;
-//     if (Constants.Drivetrain.IS_FIELD_ORIENTED) {
+//     if (Constants.Drivetrain.kIsFieldOriented) {
 //       double headingRad = Math.toRadians(swerveDrive.getHeading());
 //       chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
 //           output, 0, 0, new Rotation2d(headingRad));
@@ -76,7 +76,7 @@ package frc.robot.commands.macro.timed;
 //     }
 
 //     // Calculate module states per module
-//     SwerveModuleState[] moduleStates = Constants.Drivetrain.driveKinematics.toSwerveModuleStates(chassisSpeeds);
+//     SwerveModuleState[] moduleStates = Constants.Drivetrain.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
   
 //     // Apply to modules
 //     swerveDrive.setModuleStates(moduleStates);

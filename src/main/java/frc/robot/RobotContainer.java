@@ -285,9 +285,9 @@ public Command getAutonomousCommand() {
 
 		// 	// Create Trajectory Speed/Settings
 		// 	TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
-		// 		Constants.Drivetrain.kMaxSpeedMetersPerSecond,
-		// 			Constants.Drivetrain.kTeleDriveMaxAccelerationUnitsPerSecond)
-		// 			.setKinematics(Constants.Drivetrain.driveKinematics);
+		// 		Constants.Drivetrain.kMaxSpeed,
+		// 			Constants.Drivetrain.kMaxAccel)
+		// 			.setKinematics(Constants.Drivetrain.kDriveKinematics);
 
 		// 	// Create auton trajectory
 		// 	Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
@@ -310,15 +310,15 @@ public Command getAutonomousCommand() {
 		// 	// PIDController yController = new PIDController(Constants.Drivetrain.PID_CONTROLLER_Y_P, 0, 0);
 		// 	// ProfiledPIDController tController = new ProfiledPIDController(Constants.Drivetrain.PID_CONTROLLER_T_P, 0, 0,
 		// 	// 	new TrapezoidProfile.Constraints(
-		// 	// 		Constants.Drivetrain.kPhysicalMaxAngularSpeedRadiansPerSecond,
-		// 	// 		Constants.Drivetrain.kTeleDriveMaxAngularAccelerationUnitsPerSecond));
+		// 	// 		Constants.Drivetrain.kMaxTurnSpeed,
+		// 	// 		Constants.Drivetrain.kMaxTurnAccel));
 		// 	// tController.enableContinuousInput(-Math.PI, Math.PI);
 
 			// Follow trajectory command
 			// SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
 			// 	trajectory,
 			// 	swerveDrive::getPose,
-			// 	Constants.Drivetrain.driveKinematics,
+			// 	Constants.Drivetrain.kDriveKinematics,
 			// 	xController,
 			// 	yController,
 			// 	tController,

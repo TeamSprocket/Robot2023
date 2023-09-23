@@ -60,7 +60,7 @@ public class PIDTurnTimedOnlyI extends CommandBase {
 
     ChassisSpeeds chassisSpeeds;
     // // Field Oriented
-    if (Constants.Drivetrain.IS_FIELD_ORIENTED) {
+    if (Constants.Drivetrain.kIsFieldOriented) {
       double headingRad = Math.toRadians(swerveDrive.getHeading());
       chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
           0, 0, speed, new Rotation2d(headingRad));
@@ -68,7 +68,7 @@ public class PIDTurnTimedOnlyI extends CommandBase {
       chassisSpeeds = new ChassisSpeeds(0, 0, speed);
     }
 
-    SwerveModuleState[] moduleStates = Constants.Drivetrain.driveKinematics.toSwerveModuleStates(chassisSpeeds);
+    SwerveModuleState[] moduleStates = Constants.Drivetrain.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
     
     swerveDrive.setModuleStates(moduleStates);
     

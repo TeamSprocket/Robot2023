@@ -48,39 +48,43 @@ public class SwerveDrive extends SubsystemBase {
     // Init Swerve Modules 
     private final SwerveModule frontLeft = new SwerveModule(
         RobotMap.Drivetrain.FRONT_LEFT_TALON_D,
-        RobotMap.Drivetrain.FRONT_LEFT_TALON_T,
-        Constants.Drivetrain.FRONT_LEFT_D_IS_REVERSED,
-        Constants.Drivetrain.FRONT_LEFT_T_IS_REVERSED,
-        RobotMap.Drivetrain.FRONT_RIGHT_ABS_ENCODER_ID,
-        Constants.Drivetrain.FRONT_RIGHT_ABS_ENCODER_OFFSET_RAD,
-        true);
+        RobotMap.Drivetrain.FRONT_LEFT_TALON_T
+        // Constants.Drivetrain.FRONT_LEFT_D_IS_REVERSED,
+        // Constants.Drivetrain.FRONT_LEFT_T_IS_REVERSED,
+        // RobotMap.Drivetrain.FRONT_RIGHT_ABS_ENCODER_ID,
+        // Constants.Drivetrain.FRONT_RIGHT_ABS_ENCODER_OFFSET_RAD,
+        // true
+        );
 
     private final SwerveModule frontRight = new SwerveModule(
         RobotMap.Drivetrain.FRONT_RIGHT_TALON_D,
-        RobotMap.Drivetrain.FRONT_RIGHT_TALON_T,
-        Constants.Drivetrain.FRONT_RIGHT_D_IS_REVERSED,
-        Constants.Drivetrain.FRONT_RIGHT_T_IS_REVERSED,
-        RobotMap.Drivetrain.BACK_RIGHT_ABS_ENCODER_ID,
-        Constants.Drivetrain.BACK_RIGHT_ABS_ENCODER_OFFSET_RAD,
-        false);
+        RobotMap.Drivetrain.FRONT_RIGHT_TALON_T
+        // Constants.Drivetrain.FRONT_RIGHT_D_IS_REVERSED,
+        // Constants.Drivetrain.FRONT_RIGHT_T_IS_REVERSED,
+        // RobotMap.Drivetrain.BACK_RIGHT_ABS_ENCODER_ID,
+        // Constants.Drivetrain.BACK_RIGHT_ABS_ENCODER_OFFSET_RAD,
+        // false
+        );
 
     private final SwerveModule backLeft = new SwerveModule(
         RobotMap.Drivetrain.BACK_LEFT_TALON_D,
-        RobotMap.Drivetrain.BACK_LEFT_TALON_T,
-        Constants.Drivetrain.BACK_LEFT_D_IS_REVERSED,
-        Constants.Drivetrain.BACK_LEFT_T_IS_REVERSED,
-        RobotMap.Drivetrain.FRONT_LEFT_ABS_ENCODER_ID,
-        Constants.Drivetrain.FRONT_LEFT_ABS_ENCODER_OFFSET_RAD,
-        false);
+        RobotMap.Drivetrain.BACK_LEFT_TALON_T
+        // Constants.Drivetrain.BACK_LEFT_D_IS_REVERSED,
+        // Constants.Drivetrain.BACK_LEFT_T_IS_REVERSED,
+        // RobotMap.Drivetrain.FRONT_LEFT_ABS_ENCODER_ID,
+        // Constants.Drivetrain.FRONT_LEFT_ABS_ENCODER_OFFSET_RAD,
+        // false
+        );
 
     private final SwerveModule backRight = new SwerveModule(
         RobotMap.Drivetrain.BACK_RIGHT_TALON_D,
-        RobotMap.Drivetrain.BACK_RIGHT_TALON_T,
-        Constants.Drivetrain.BACK_RIGHT_D_IS_REVERSED,
-        Constants.Drivetrain.BACK_RIGHT_T_IS_REVERSED,
-        RobotMap.Drivetrain.BACK_LEFT_ABS_ENCODER_ID,
-        Constants.Drivetrain.BACK_LEFT_ABS_ENCODER_OFFSET_RAD,
-        true);
+        RobotMap.Drivetrain.BACK_RIGHT_TALON_T
+        // Constants.Drivetrain.BACK_RIGHT_D_IS_REVERSED,
+        // Constants.Drivetrain.BACK_RIGHT_T_IS_REVERSED,
+        // RobotMap.Drivetrain.BACK_LEFT_ABS_ENCODER_ID,
+        // Constants.Drivetrain.BACK_LEFT_ABS_ENCODER_OFFSET_RAD,
+        // true
+        );
 
     // Init gyro
     private final ADIS16470_IMU gyro = new ADIS16470_IMU();
@@ -94,14 +98,14 @@ public class SwerveDrive extends SubsystemBase {
         ShuffleboardPIDTuner.addSlider("kPSwerveDriveHeading", 0, 0.05, Constants.Drivetrain.kPHeading);
         ShuffleboardPIDTuner.addSlider("kISwerveDriveHeading", 0, 0.05, Constants.Drivetrain.kIHeading);
         ShuffleboardPIDTuner.addSlider("kDSwerveDriveHeading", 0, 0.05, Constants.Drivetrain.kDHeading);
-        ShuffleboardPIDTuner.addSlider("kMaxSpeedAngular", 0, 1, Constants.Drivetrain.kPhysicalMaxAngularSpeedRadiansPerSecond);
-        ShuffleboardPIDTuner.addSlider("kMaxAccelAngular", 0, 1000, Constants.Drivetrain.kTeleDriveMaxAngularAccelerationUnitsPerSecond);
+        ShuffleboardPIDTuner.addSlider("kMaxSpeedAngular", 0, 1, Constants.Drivetrain.kMaxTurnSpeed);
+        ShuffleboardPIDTuner.addSlider("kMaxAccelAngular", 0, 1000, Constants.Drivetrain.kMaxTurnAccel);
 
 
         // Init gyro with delay
         new Thread(() -> {
             try {
-                Thread.sleep(Constants.Drivetrain.GYRO_DELAY_MS);
+                Thread.sleep(Constants.kGyroInitDelayMS);
                 zeroHeading();
                 calibrateGyro();
                 // zeroTalonsABS();
@@ -286,7 +290,7 @@ public class SwerveDrive extends SubsystemBase {
         double diff = Math.abs(timer.get() - last); // Adjust for exec time for consistent turning 
         last = timer.get();
         
-        this.targetHeading += tSpeed * Constants.Drivetrain.kPhysicalMaxAngularSpeedRadiansPerSecond;
+        this.targetHeading += tSpeed * Constants.Drivetrain.kMaxTurnSpeed;
         this.targetHeading = (targetHeading % 360.0);
         this.targetHeading = (targetHeading < 0) ? targetHeading + 360.0 : targetHeading;
         headingController.setSetpoint(targetHeading);
@@ -344,9 +348,9 @@ public class SwerveDrive extends SubsystemBase {
 
         clearStickyFaults();
 
-        if (Constants.Drivetrain.JOYSTICK_DRIVING_ENABLED) {
+        if (Constants.isEnabled) {
             double headingRad = Math.toRadians(-getHeading());
-            if (Constants.Auton.FACING_DRIVERS) {
+            if (Constants.Auton.kFacingDriversOnStart) {
                 headingRad += Math.PI;
             }
 
@@ -354,10 +358,10 @@ public class SwerveDrive extends SubsystemBase {
             xSpeed, ySpeed, tSpeed, new Rotation2d(headingRad));
 
             // Calculate module states per module
-            SwerveModuleState[] moduleStates = Constants.Drivetrain.driveKinematics.toSwerveModuleStates(chassisSpeeds);
+            SwerveModuleState[] moduleStates = Constants.Drivetrain.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
 
             // Normalize speeds
-            SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.Drivetrain.kMaxSpeedMetersPerSecond);
+            SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.Drivetrain.kMaxSpeed);
             
             frontLeft.setDesiredState(moduleStates[0], isPrecise);
             frontRight.setDesiredState(moduleStates[1], isPrecise);
@@ -371,8 +375,8 @@ public class SwerveDrive extends SubsystemBase {
         headingController.setP(ShuffleboardPIDTuner.get("kPSwerveDriveHeading"));
         headingController.setI(ShuffleboardPIDTuner.get("kISwerveDriveHeading"));
         headingController.setD(ShuffleboardPIDTuner.get("kDSwerveDriveHeading"));
-        Constants.Drivetrain.kPhysicalMaxAngularSpeedRadiansPerSecond = ShuffleboardPIDTuner.get("kMaxSpeedAngular");
-        Constants.Drivetrain.kTeleDriveMaxAngularAccelerationUnitsPerSecond = ShuffleboardPIDTuner.get("kMaxAccelAngular");
+        Constants.Drivetrain.kMaxTurnSpeed = ShuffleboardPIDTuner.get("kMaxSpeedAngular");
+        Constants.Drivetrain.kMaxTurnAccel = ShuffleboardPIDTuner.get("kMaxAccelAngular");
     }
 
 
@@ -405,7 +409,7 @@ public class SwerveDrive extends SubsystemBase {
     // };
 
     // private final SwerveDriveOdometry odometer = new SwerveDriveOdometry( 
-    //     Constants.Drivetrain.driveKinematics, new Rotation2d(getHeading()), getModulePositions()); 
+    //     Constants.Drivetrain.kDriveKinematics, new Rotation2d(getHeading()), getModulePositions()); 
 
     
     // // Update Odometer

@@ -38,14 +38,15 @@ public class SwerveModule extends SubsystemBase {
   private final PIDController turnPIDController; 
 
   // private final CANCoder absEncoder;
-  private final double absEncoderOffsetRad;
+  // private final double absEncoderOffsetRad;
   
-  private final boolean isTurnedReverse;
+  // private final boolean isTurnedReverse;
 
 
-  public SwerveModule(int driveMotorID, int turnMotorID, boolean driveMotorIsReversed, boolean turnMotorIsReversed, 
-  int absEncoderID, double absEncoderOffsetRad, boolean isTurnedReverse) {
-    this.absEncoderOffsetRad = absEncoderOffsetRad;
+  public SwerveModule(int driveMotorID, int turnMotorID 
+  // boolean driveMotorIsReversed, boolean turnMotorIsReversed, int absEncoderID, double absEncoderOffsetRad, boolean isTurnedReverse
+  ) {
+    // this.absEncoderOffsetRad = absEncoderOffsetRad;
     // absEncoder = new CANCoder(absEncoderID); 
 
     driveMotor = new WPI_TalonFX(driveMotorID);
@@ -53,15 +54,15 @@ public class SwerveModule extends SubsystemBase {
 
     turnMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
 
-    driveMotor.setInverted(driveMotorIsReversed);
-    turnMotor.setInverted(turnMotorIsReversed); 
+    // driveMotor.setInverted(driveMotorIsReversed);
+    // turnMotor.setInverted(turnMotorIsReversed); 
 
-    this.isTurnedReverse = isTurnedReverse;
+    // this.isTurnedReverse = isTurnedReverse;
 
     turnMotor.setNeutralMode(NeutralMode.Coast);
     driveMotor.setNeutralMode(NeutralMode.Brake);
 
-    turnPIDController = new PIDController(Constants.Drivetrain.kPTurn, Constants.Drivetrain.kITurn, Constants.Drivetrain.kDTurn);
+    turnPIDController = new PIDController(Constants.Drivetrain.kPTurnMotor, Constants.Drivetrain.kITurnMotor, Constants.Drivetrain.kDTurnMotor);
 
     turnPIDController.enableContinuousInput(0, (2.0 * Math.PI));
 
@@ -185,27 +186,23 @@ public class SwerveModule extends SubsystemBase {
         if (fullTargetAngle < 0) {
           fullTargetAngle += (Math.PI * 2.0);
         }
-      double driveSpd = state.speedMetersPerSecond / Constants.Drivetrain.kMaxSpeedMetersPerSecond;
+      double driveSpd = state.speedMetersPerSecond / Constants.Drivetrain.kMaxSpeed;
 
         if (isPrecise) {
           // System.out.println("PRECISEPRECISE\nPRECISE\nPRECISE\nPRECISE\nPRECISE\nPRECISE\nPRECISE\nPRECISE\nPRECISE\nPRECISE\n\n");
-          driveSpd *= Constants.Drivetrain.PRECISE_DRIVE_SPEED_PERCENT;
-        }
-
-        if (Constants.isTeleop) {
-          driveSpd *= Constants.kTeleopMultiplier;
+          driveSpd *= Constants.Drivetrain.kPreciseMultiplier;
         }
         
         
 
       
-      if (Math.abs(state.speedMetersPerSecond /  Constants.Drivetrain.kMaxSpeedMetersPerSecond) < 0.01) {
+      if (Math.abs(state.speedMetersPerSecond /  Constants.Drivetrain.kMaxSpeed) < 0.01) {
         stop();
         return;
       }
 
 
-      if (Constants.Drivetrain.SWERVE_IS_SLOW) {
+      if (Constants.Drivetrain.isPrecise) {
         driveSpd /= 3.0;
       }
       driveMotor.set(driveSpd);
