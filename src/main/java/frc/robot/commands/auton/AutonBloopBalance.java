@@ -28,7 +28,7 @@ public class AutonBloopBalance extends SequentialCommandGroup {
         new RollClawTimed(claw, -1, 0.25),
         new RollClawTimed(claw, 1, 0.25),
         new PIDTurnTimed(swerveDrive, Math.PI, 1.5),
-        new BalanceOnChargeStation(swerveDrive, 0.08, true, 12),
+        new BalanceOnChargeStation(swerveDrive, 0.08, true, 1200  ),
         new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.0, new Rotation2d(0.1)), 0.5)
       )
     );

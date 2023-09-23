@@ -80,12 +80,12 @@ public Command getAutonomousCommand() {
 	// return new AutonOneCubeOnly(swerveDrive, elevator, arm, wrist, claw);
 
 	/////////////// Universal 
-	return new AutonDoNothing();
+	// return new AutonDoNothing();
 	// return new AutonOneCube(swerveDrive, elevator, arm, wrist, claw);
 	// return new AutonTwoCube(swerveDrive, elevator, arm, wrist, claw);
 
 	/////////////// Middle (locbvb  ation bot starts from POV of drivers)
-	// return new AutonBloopBalance(swerveDrive, elevator, arm, wrist, claw);
+	return new AutonBloopBalance(swerveDrive, elevator, arm, wrist, claw);
 	// return new AutonBloopBalanceReverse(swerveDrive, elevator, arm, wrist, claw);
 	// return new AutonOneHighCubeBalance(swerveDrive, elevator, arm, wrist, claw);
 

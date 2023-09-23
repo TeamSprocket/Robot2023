@@ -3,6 +3,7 @@ package frc.robot.commands.macro;
 import frc.util.commands.MacroCommand;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.subsystems.*;
+import frc.robot.Constants;
 import frc.robot.commands.macro.*;
 
 public class SetMid extends MacroCommand{
@@ -19,6 +20,8 @@ public class SetMid extends MacroCommand{
         timer = new Timer();
 
         addRequirements(elevator, arm, wrist);
+
+        // Constants.Drivetrain.CAN_DIRECTION_SWITCH = false;
         
     }
 

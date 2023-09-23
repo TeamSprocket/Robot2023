@@ -3,6 +3,7 @@ package frc.robot.commands.macro;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants;
 import frc.robot.commands.macro.*;
 import frc.robot.commands.macro.ElevatePosition;
 import frc.robot.commands.macro.MoveArmPosition;
@@ -26,6 +27,8 @@ public class SetDeport extends MacroCommand{
         timer = new Timer();
 
         addRequirements(elevator, arm, wrist);
+
+        // Constants.Drivetrain.CAN_DIRECTION_SWITCH = false;
         
     }
 

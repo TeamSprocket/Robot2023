@@ -20,6 +20,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SwerveDrive extends SubsystemBase {
@@ -93,6 +94,9 @@ public class SwerveDrive extends SubsystemBase {
         ShuffleboardPIDTuner.addSlider("kPSwerveDriveHeading", 0, 0.05, Constants.Drivetrain.kPHeading);
         ShuffleboardPIDTuner.addSlider("kISwerveDriveHeading", 0, 0.05, Constants.Drivetrain.kIHeading);
         ShuffleboardPIDTuner.addSlider("kDSwerveDriveHeading", 0, 0.05, Constants.Drivetrain.kDHeading);
+        ShuffleboardPIDTuner.addSlider("kMaxSpeedAngular", 0, 1, Constants.Drivetrain.kPhysicalMaxAngularSpeedRadiansPerSecond);
+        ShuffleboardPIDTuner.addSlider("kMaxAccelAngular", 0, 1000, Constants.Drivetrain.kTeleDriveMaxAngularAccelerationUnitsPerSecond);
+
 
         // Init gyro with delay
         new Thread(() -> {
@@ -225,7 +229,7 @@ public class SwerveDrive extends SubsystemBase {
         double defaultOffset = -1.8;
         deg -= defaultOffset;
 
-        return deg;
+        return -deg;
     
     }
 
@@ -258,20 +262,22 @@ public class SwerveDrive extends SubsystemBase {
     }
 
     public void updateHeading(Direction direction) {
-        switch (direction) {
-            case FRONT: 
-                targetHeading = 0;
-                break;
-            case LEFT: 
-                targetHeading = 270;
-                break;
-            case RIGHT: 
-                targetHeading = 90;
-                break;
-            case BACK: 
-                targetHeading = 180;
-                break;
-        }
+        // if (Constants.Drivetrain.CAN_DIRECTION_SWITCH) {
+            switch (direction) {
+                case FRONT: 
+                    targetHeading = 180;
+                    break;
+                case LEFT: 
+                    targetHeading = 270;
+                    break;
+                case RIGHT: 
+                    targetHeading = 90;
+                    break;
+                case BACK: 
+                    targetHeading = 0;
+                    break;
+            }
+        // }
     }
 
 
@@ -280,7 +286,7 @@ public class SwerveDrive extends SubsystemBase {
         double diff = Math.abs(timer.get() - last); // Adjust for exec time for consistent turning 
         last = timer.get();
         
-        this.targetHeading += tSpeed * diff;
+        this.targetHeading += tSpeed * Constants.Drivetrain.kPhysicalMaxAngularSpeedRadiansPerSecond;
         this.targetHeading = (targetHeading % 360.0);
         this.targetHeading = (targetHeading < 0) ? targetHeading + 360.0 : targetHeading;
         headingController.setSetpoint(targetHeading);
@@ -333,6 +339,9 @@ public class SwerveDrive extends SubsystemBase {
     public void periodic() {
         postShuffleboardPIDTuner();
 
+        SmartDashboard.putNumber("Target Heading", targetHeading);
+        // SmartDashboard.putBoolean("Can Direction Switch", Constants.Drivetrain.CAN_DIRECTION_SWITCH);
+
         clearStickyFaults();
 
         if (Constants.Drivetrain.JOYSTICK_DRIVING_ENABLED) {
@@ -362,6 +371,8 @@ public class SwerveDrive extends SubsystemBase {
         headingController.setP(ShuffleboardPIDTuner.get("kPSwerveDriveHeading"));
         headingController.setI(ShuffleboardPIDTuner.get("kISwerveDriveHeading"));
         headingController.setD(ShuffleboardPIDTuner.get("kDSwerveDriveHeading"));
+        Constants.Drivetrain.kPhysicalMaxAngularSpeedRadiansPerSecond = ShuffleboardPIDTuner.get("kMaxSpeedAngular");
+        Constants.Drivetrain.kTeleDriveMaxAngularAccelerationUnitsPerSecond = ShuffleboardPIDTuner.get("kMaxAccelAngular");
     }
 
 

@@ -3,6 +3,7 @@ package frc.robot.commands.macro;
 import frc.util.commands.MacroCommand;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.subsystems.*;
+import frc.robot.Constants;
 import frc.robot.commands.macro.*;
 
 public class SetHome extends MacroCommand{
@@ -54,6 +55,12 @@ public class SetHome extends MacroCommand{
             arm.moveArm(0.125);
             elevator.setElevatorPositionSpeed(0, 0, 0.1);
         }
+
+        // if (timer.get() > Constants.Elevator.kSetHomeTimeTolerance) {
+            // Constants.Drivetrain.CAN_DIRECTION_SWITCH = true;
+        // }
+
+        
 
     }
 

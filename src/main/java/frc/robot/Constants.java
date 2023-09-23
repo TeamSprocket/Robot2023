@@ -12,6 +12,7 @@ public class Constants {
 
     //TODO Edit PID values, tune speeds
     public static final class Elevator {
+        public static final double kSetHomeTimeTolerance = 2.0; // TODO: amount of time to set home before confirm stowed (sec)
     
         //check sprocket radius in inches
         public static double kSprocketRadius = 2.938;
@@ -83,6 +84,8 @@ public class Constants {
     }
 
     public static final class Drivetrain {
+        // public static boolean CAN_DIRECTION_SWITCH = false;
+
         public static final double kWheelDiameterMeters = Units.inchesToMeters(4);
 
         public static final double DIST_MODULE_OFFSET = 0.572;
@@ -130,15 +133,15 @@ public class Constants {
         public static final double kITurn = 0.0000;
         public static final double kDTurn = 0.0015; 
 
-        public static final double kPHeading = 0.012; //0.6
+        public static final double kPHeading = 0.0053; //0.6
         public static final double kIHeading = 0.0000;
-        public static final double kDHeading = 0.001; 
+        public static final double kDHeading = 0.000352; 
         
         public static final double kMaxSpeedMetersPerSecond = 0.2; //0.2
         public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 1;
         
-        public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 10;
-        public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 1.5;
+        public static double kPhysicalMaxAngularSpeedRadiansPerSecond = 0.5;
+        public static double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 23;
 
         public static final double kPhysicalMaxSpeedMetersPerSecond = kMaxSpeedMetersPerSecond;
         public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond;

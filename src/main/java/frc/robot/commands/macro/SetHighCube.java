@@ -30,6 +30,8 @@ public class SetHighCube extends CommandBase {
         timer = new Timer();
 
         addRequirements(elevator, arm, wrist);
+
+        // Constants.Drivetrain.CAN_DIRECTION_SWITCH = false;
     }
 
     public void initialize(){
