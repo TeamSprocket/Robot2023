@@ -337,7 +337,7 @@ public class SwerveDrive extends SubsystemBase {
 
     @Override
     public void periodic() {
-        postShuffleboardPIDTuner();
+        // postShuffleboardPIDTuner();
 
         SmartDashboard.putNumber("Target Heading", targetHeading);
         // SmartDashboard.putBoolean("Can Direction Switch", Constants.Drivetrain.CAN_DIRECTION_SWITCH);
