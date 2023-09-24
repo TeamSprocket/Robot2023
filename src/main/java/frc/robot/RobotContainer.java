@@ -32,7 +32,7 @@
 	import frc.robot.subsystems.SwerveDrive;
 	import frc.robot.subsystems.Wrist;
 	import frc.robot.subsystems.LEDStrip;
-import frc.robot.subsystems.Superstructure;
+	import frc.robot.subsystems.Superstructure;
 	/**
 	 * This class is where the bulk of the robot should be declared. Since
 	 * Command-based is a "declarative" paradigm, very little robot logic should
@@ -63,12 +63,12 @@ public Command getAutonomousCommand() {
 	// return new AutonOneCubeOnly(swerveDrive, elevator, arm, wrist, claw);
 
 	/////////////// Universal 
-	return new AutonDoNothing();
+	// return new AutonDoNothing();
 	// return new AutonOneCube(swerveDrive, elevator, arm, wrist, claw);
 	// return new AutonTwoCube(swerveDrive, elevator, arm, wrist, claw);
 
 	/////////////// Middle (locbvb  ation bot starts from POV of drivers)
-	// return new AutonBloopBalance(swerveDrive, elevator, arm, wrist, claw);
+	return new AutonBloopBalance(swerveDrive, elevator, arm, wrist, claw);
 	// return new AutonBloopBalanceReverse(swerveDrive, elevator, arm, wrist, claw);
 	// return new AutonOneHighCubeBalance(swerveDrive, elevator, arm, wrist, claw);
 
@@ -94,12 +94,16 @@ public Command getAutonomousCommand() {
 				() -> driver.getLeftX(), 
 				// T
 				() -> -driver.getRightX()));
-			superstructure.tempFunctGetIntake().setDefaultCommand(new RollClaw(superstructure.tempFunctGetIntake(), driver));
-			new JoystickButton(driver,
-				RobotMap.Controller.RESET_GYRO_HEADING_BUTTON_ID).whenPressed(() -> swerveDrive.zeroHeading());
-			new JoystickButton(driver, 8).whenPressed(() -> swerveDrive.togglePrecise());
+			claw.setDefaultCommand(new RollClaw(claw, driver));
+			new JoystickButton(driver, RobotMap.Controller.RB).whenPressed(() -> swerveDrive.zeroHeading());
+			new JoystickButton(driver, RobotMap.Controller.LB).whenPressed(() -> swerveDrive.togglePrecise());
+			new JoystickButton(driver, RobotMap.Controller.Y).whenPressed(() -> swerveDrive.updateHeading(Direction.FRONT));
+			new JoystickButton(driver, RobotMap.Controller.X).whenPressed(() -> swerveDrive.updateHeading(Direction.LEFT));
+			new JoystickButton(driver, RobotMap.Controller.B).whenPressed(() -> swerveDrive.updateHeading(Direction.RIGHT));
+			new JoystickButton(driver, RobotMap.Controller.A).whenPressed(() -> swerveDrive.updateHeading(Direction.BACK));
 				// new JoystickButton(driver,
 			// 	3).whenPressed(() -> swerveDrive.zeroTalonsABS());
+			// new JoystickButton(driver, 2).whenHeld(new LimelightAlign(swerveDrive));
 
 
 			// --------------------=Operator=-------------------- 
@@ -199,9 +203,9 @@ public Command getAutonomousCommand() {
 
 		// 	// Create Trajectory Speed/Settings
 		// 	TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
-		// 		Constants.Drivetrain.kMaxSpeedMetersPerSecond,
-		// 			Constants.Drivetrain.kTeleDriveMaxAccelerationUnitsPerSecond)
-		// 			.setKinematics(Constants.Drivetrain.driveKinematics);
+		// 		Constants.Drivetrain.kMaxSpeed,
+		// 			Constants.Drivetrain.kMaxAccel)
+		// 			.setKinematics(Constants.Drivetrain.kDriveKinematics);
 
 		// 	// Create auton trajectory
 		// 	Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
@@ -224,15 +228,15 @@ public Command getAutonomousCommand() {
 		// 	// PIDController yController = new PIDController(Constants.Drivetrain.PID_CONTROLLER_Y_P, 0, 0);
 		// 	// ProfiledPIDController tController = new ProfiledPIDController(Constants.Drivetrain.PID_CONTROLLER_T_P, 0, 0,
 		// 	// 	new TrapezoidProfile.Constraints(
-		// 	// 		Constants.Drivetrain.kPhysicalMaxAngularSpeedRadiansPerSecond,
-		// 	// 		Constants.Drivetrain.kTeleDriveMaxAngularAccelerationUnitsPerSecond));
+		// 	// 		Constants.Drivetrain.kMaxTurnSpeed,
+		// 	// 		Constants.Drivetrain.kMaxTurnAccel));
 		// 	// tController.enableContinuousInput(-Math.PI, Math.PI);
 
 			// Follow trajectory command
 			// SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
 			// 	trajectory,
 			// 	swerveDrive::getPose,
-			// 	Constants.Drivetrain.driveKinematics,
+			// 	Constants.Drivetrain.kDriveKinematics,
 			// 	xController,
 			// 	yController,
 			// 	tController,

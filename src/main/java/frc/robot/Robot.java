@@ -41,8 +41,8 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-        robotContainer.setSwerveDriveCurrentLimitTurn(Constants.Drivetrain.CURRENT_LIMIT_TURN);
-        robotContainer.setSwerveDriveCurrentLimitDrive(Constants.Drivetrain.CURRENT_LIMIT_DRIVE);
+        robotContainer.setSwerveDriveCurrentLimitTurn(Constants.Drivetrain.kTurnCurrentLimit);
+        robotContainer.setSwerveDriveCurrentLimitDrive(Constants.Drivetrain.kDriveCurrentLimit);
     }
 
     /**
@@ -66,7 +66,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void disabledInit() {
-        Constants.isTeleop = false;
+        Constants.isEnabled = false;
 
         CommandScheduler.getInstance().cancelAll();
         robotContainer.setTurnDefaultMode(NeutralMode.Coast);
@@ -80,8 +80,8 @@ public class Robot extends TimedRobot {
     /** This function is run once each time the robot enters autonomous mode. */
     @Override
     public void autonomousInit() {
-        Constants.isTeleop = false;
-        Constants.Drivetrain.JOYSTICK_DRIVING_ENABLED = false;
+        Constants.isEnabled = false;
+        Constants.isEnabled = false;
         robotContainer.setTurnDefaultMode(NeutralMode.Brake);
         robotContainer.setDriveDefaultMode(NeutralMode.Brake);
         robotContainer.autonInit();
@@ -104,8 +104,8 @@ public class Robot extends TimedRobot {
     /** This function is called once each time the robot enters teleoperated mode. */ 
     @Override
     public void teleopInit() {
-        Constants.isTeleop = true;
-        Constants.Drivetrain.JOYSTICK_DRIVING_ENABLED = true;
+        Constants.isEnabled = true;
+        Constants.isEnabled = true;
         CommandScheduler.getInstance().cancelAll();
         robotContainer.setTurnDefaultMode(NeutralMode.Coast);
         robotContainer.setDriveDefaultMode(NeutralMode.Coast);

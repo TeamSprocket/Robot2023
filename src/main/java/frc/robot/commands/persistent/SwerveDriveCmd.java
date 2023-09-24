@@ -38,10 +38,10 @@ public class SwerveDriveCmd extends CommandBase {
         this.xSPDFunct = xSPDFunct;
         this.ySPDFunct = ySPDFunct;
         this.tSPDFunct = tSPDFunct;
-        this.fieldOrientedFunct = () -> Constants.Drivetrain.IS_FIELD_ORIENTED;
-        this.xSlewLimit = new SlewRateLimiter(Constants.Drivetrain.kTeleDriveMaxAccelerationUnitsPerSecond);
-        this.ySlewLimit = new SlewRateLimiter(Constants.Drivetrain.kTeleDriveMaxAccelerationUnitsPerSecond);
-        this.tSlewLimit = new SlewRateLimiter(Constants.Drivetrain.kTeleDriveMaxAngularAccelerationUnitsPerSecond);
+        this.fieldOrientedFunct = () -> Constants.Drivetrain.kIsFieldOriented;
+        this.xSlewLimit = new SlewRateLimiter(Constants.Drivetrain.kMaxAccel);
+        this.ySlewLimit = new SlewRateLimiter(Constants.Drivetrain.kMaxAccel);
+        this.tSlewLimit = new SlewRateLimiter(Constants.Drivetrain.kMaxTurnAccel);
         
         addRequirements(swerveDrive);
 
@@ -71,43 +71,19 @@ public class SwerveDriveCmd extends CommandBase {
     SmartDashboard.putNumber("tSpeed", tSpeed);
 
     // Slew limit (accel)
-    xSpeed = xSlewLimit.calculate(xSpeed) * Constants.Drivetrain.kMaxSpeedMetersPerSecond;
-    ySpeed = ySlewLimit.calculate(ySpeed) * Constants.Drivetrain.kMaxSpeedMetersPerSecond;
-    tSpeed = tSlewLimit.calculate(tSpeed) * Constants.Drivetrain.kTeleDriveMaxAngularSpeedRadiansPerSecond;
+    xSpeed = xSlewLimit.calculate(xSpeed) * Constants.Drivetrain.kMaxSpeed;
+    ySpeed = ySlewLimit.calculate(ySpeed) * Constants.Drivetrain.kMaxSpeed;
+    tSpeed = tSlewLimit.calculate(tSpeed) * Constants.Drivetrain.kMaxTurnSpeed;
     
     SmartDashboard.putNumber("SLEW xSpeed", xSpeed);
     SmartDashboard.putNumber("SLEW ySpeed", ySpeed);
     SmartDashboard.putNumber("SLEW tSpeed", tSpeed);
 
-    ChassisSpeeds chassisSpeeds;
-    // Field Oriented
-    if (Constants.Drivetrain.IS_FIELD_ORIENTED) {
-      double headingRad = Math.toRadians(-swerveDrive.getHeading());
-      
-      if (Constants.Auton.FACING_DRIVERS) {
-        headingRad += Math.PI;
-      }
-
-      chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-          xSpeed, ySpeed, tSpeed, new Rotation2d(headingRad));
-    } else { // Robot oriented
-      chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, tSpeed);
-      SmartDashboard.putString("Chassis Speed", chassisSpeeds.toString());
-
-    }
-
-    // Calculate module states per module
-    SwerveModuleState[] moduleStates = Constants.Drivetrain.driveKinematics.toSwerveModuleStates(chassisSpeeds);
-    SmartDashboard.putString("Module States", moduleStates[2].toString());
-
-    // Normalize speeds
-    SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.Drivetrain.kMaxSpeedMetersPerSecond);
-
     // Apply to modules
-    if (Constants.Drivetrain.JOYSTICK_DRIVING_ENABLED) {
-      swerveDrive.setModuleStates(moduleStates);
+    if (Constants.isEnabled) {
+      swerveDrive.setModuleSpeeds(xSpeed, ySpeed, tSpeed);
     }
-    SmartDashboard.putString("Module States Desaturated", moduleStates[2].toString());
+    // SmartDashboard.putString("Module States Desaturated", moduleStates[2].toString());
 
   }
 
