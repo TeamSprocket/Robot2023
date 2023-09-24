@@ -31,7 +31,8 @@
 	import frc.robot.subsystems.Intake;
 	import frc.robot.subsystems.SwerveDrive;
 	import frc.robot.subsystems.Wrist;
-	import frc.robot.subsystems.LEDStrip;
+import frc.robot.subsystems.SwerveDrive.Direction;
+import frc.robot.subsystems.LEDStrip;
 	import frc.robot.subsystems.Superstructure;
 	/**
 	 * This class is where the bulk of the robot should be declared. Since
@@ -53,6 +54,7 @@
 		private final PowerDistribution pdh = new PowerDistribution();
 
 		Superstructure superstructure = new Superstructure();
+		Intake intake = new Intake();
 		// private final LEDStrip ledStrip = new LEDStrip();
 
 		
@@ -63,12 +65,12 @@ public Command getAutonomousCommand() {
 	// return new AutonOneCubeOnly(swerveDrive, elevator, arm, wrist, claw);
 
 	/////////////// Universal 
-	// return new AutonDoNothing();
+	return new AutonDoNothing();
 	// return new AutonOneCube(swerveDrive, elevator, arm, wrist, claw);
 	// return new AutonTwoCube(swerveDrive, elevator, arm, wrist, claw);
 
 	/////////////// Middle (locbvb  ation bot starts from POV of drivers)
-	return new AutonBloopBalance(swerveDrive, elevator, arm, wrist, claw);
+	// return new AutonBloopBalance(swerveDrive, elevator, arm, wrist, claw);
 	// return new AutonBloopBalanceReverse(swerveDrive, elevator, arm, wrist, claw);
 	// return new AutonOneHighCubeBalance(swerveDrive, elevator, arm, wrist, claw);
 
@@ -94,7 +96,7 @@ public Command getAutonomousCommand() {
 				() -> driver.getLeftX(), 
 				// T
 				() -> -driver.getRightX()));
-			claw.setDefaultCommand(new RollClaw(claw, driver));
+			intake.setDefaultCommand(new RollClaw(intake, driver));
 			new JoystickButton(driver, RobotMap.Controller.RB).whenPressed(() -> swerveDrive.zeroHeading());
 			new JoystickButton(driver, RobotMap.Controller.LB).whenPressed(() -> swerveDrive.togglePrecise());
 			new JoystickButton(driver, RobotMap.Controller.Y).whenPressed(() -> swerveDrive.updateHeading(Direction.FRONT));

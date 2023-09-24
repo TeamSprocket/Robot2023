@@ -103,31 +103,51 @@ public class Constants {
         public static double kSprocketRadius = Conversions.InchesToMeters(1.989/2);
         public static double kElevatorGearRatio = 9 * (1.989/1.625) * 1.11;
 
-        public static double kP = 0.175;
+        public static double kP = 20;   // TODO 
         public static double kI = 0;
-        public static double kD = 0.00675;
+        public static double kD = 0;  // TODO 
     }
 
     public static final class Arm{
+        public static final double kMaxSpeed = 0.01;  // TODO 
+        public static final double homeOffset = 0.8225;  // TODO 
+
+        public static final double reachedStatePosTolerance = 1;
+
+        // Degrees
+        public static double MAX_ANGLE = 90; 
+        public static double MIN_ANGLE = 0;
+
         public static double kArmGearRatio = 31.5;
-        public static double angleConversionFactor = 360.0 / kArmGearRatio;
-
-        public static double kP = 0.05;
+        
+        public static double kP = 10;
         public static double kI = 0;
-        public static double kD = 0.0003;
-
+        public static double kD = 0.000;
     }
 
     public static final class Wrist {
-        public static double kWristGearRatio = 2.75;
-        public static double angleConversionFactor = 360.0 / (kWristGearRatio * 10);
+        public static final double kMaxSpeed = 0.01;  // TODO 
+        public static final double homeOffset = -3.095;  // TODO 
+
+        public static final double reachedStatePosTolerance = 1;
+
+        // Degrees
+        public static double MAX_ANGLE = 180;
+        public static double MIN_ANGLE = 0;
+
+
+        public static double kWristGearRatio = 17.1; 
         
-        public static double P = 0.0175;
-        public static double I = 0;
-        public static double D = 0.0007;
+        public static double kP = 0.5;
+        public static double kI = 0;
+        public static double kD = 0.000;
     }
 
-    public static final class Claw {}
+    public static final class Intake {
+         // Intake
+         public static final double kIdleIntakeSpeed = 0.05;
+         public static final double kActiveIntakeSpeed = 0.5;
+    }
 
     public static final class Drivetrain {
         // Measurements
