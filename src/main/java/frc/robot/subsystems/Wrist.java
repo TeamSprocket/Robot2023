@@ -58,6 +58,16 @@ public class Wrist extends SubsystemBase {
         wrist.set(output);
     }
 
+    public void setWristAngle(double __, double setpoint){
+        double output = wristPIDController.calculate(getWristAngle(), setpoint);
+        if (output < -0.275){
+            output = -0.275;
+        } else if (output > 0.275) {
+            output = 0.275;
+        }
+        wrist.set(output);
+    }
+
     public void stop() {
         wrist.stopMotor();
     }
