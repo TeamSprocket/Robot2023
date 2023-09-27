@@ -56,9 +56,15 @@ public class MoveWristManual extends PersistentCommand {
         
     //     }
     // else {
-        wrist.moveWrist(wristInput * 0.2);
     // }
+    // wrist.moveWrist(wristInput * 0.2);
+
+    double wristOutput = (wristInput * 1.0) + wrist.getWristAngle(); // TODO: TUNE
+    wrist.setWristAngle(wristInput);
+
+
     }
+
   
     @Override
     public void end(boolean interrupted) {
