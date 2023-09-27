@@ -80,12 +80,12 @@ public Command getAutonomousCommand() {
 	// return new AutonOneCubeOnly(swerveDrive, elevator, arm, wrist, claw);
 
 	/////////////// Universal 
-	// return new AutonDoNothing();
+	return new AutonDoNothing();
 	// return new AutonOneCube(swerveDrive, elevator, arm, wrist, claw);
 	// return new AutonTwoCube(swerveDrive, elevator, arm, wrist, claw);
 
 	/////////////// Middle (locbvb  ation bot starts from POV of drivers)
-	return new AutonBloopBalance(swerveDrive, elevator, arm, wrist, claw);
+	// return new AutonBloopBalance(swerveDrive, elevator, arm, wrist, claw);
 	// return new AutonBloopBalanceReverse(swerveDrive, elevator, arm, wrist, claw);
 	// return new AutonOneHighCubeBalance(swerveDrive, elevator, arm, wrist, claw);
 
@@ -127,20 +127,16 @@ public Command getAutonomousCommand() {
 			elevator.setDefaultCommand(new Elevate(elevator, operator));
 			arm.setDefaultCommand(new MoveArmJoystick(arm, operator));
 			wrist.setDefaultCommand(new MoveWristManual(wrist, operator));
-			new JoystickButton(operator, 1).whenHeld(new SetMid(elevator, arm, wrist));
-			new JoystickButton(operator, 2).whenHeld(new SetHighCube(elevator, arm, wrist));
-			new JoystickButton(operator, 3).whenHeld(new SetHome(elevator, arm, wrist));
-			new JoystickButton(operator, 4).whenHeld(new SetHigh(elevator, arm, wrist));
-			new JoystickButton(operator, 5).whenHeld(new SetLowCube(elevator, arm, wrist));
-			new JoystickButton(operator, 6).whenHeld(new SetLowConeTilted(elevator, arm, wrist));
-			new JoystickButton(operator, 7).whenHeld(new ResetEncoders(elevator, arm, wrist));
-			new JoystickButton(operator, 8).whenHeld(new SetMidCube(elevator, arm, wrist));
-			new JoystickButton(operator, 9).whenHeld(new SetLowConeStanding(elevator, arm, wrist));
-			new JoystickButton(operator, 10).whenHeld(new SetDeport(elevator, arm, wrist));
-		}
-
-		public CvSink getCameraFeed() {
-			return CameraServer.getVideo();
+			new JoystickButton(operator, RobotMap.Controller.A).whenHeld(new SetMid(elevator, arm, wrist));
+			new JoystickButton(operator, RobotMap.Controller.B).whenHeld(new SetHighCube(elevator, arm, wrist));
+			new JoystickButton(operator, RobotMap.Controller.X).whenHeld(new SetHome(elevator, arm, wrist));
+			new JoystickButton(operator, RobotMap.Controller.Y).whenHeld(new SetHigh(elevator, arm, wrist));
+			new JoystickButton(operator, RobotMap.Controller.LB).whenHeld(new SetLowCube(elevator, arm, wrist));
+			new JoystickButton(operator, RobotMap.Controller.RB).whenHeld(new SetLowConeTilted(elevator, arm, wrist));
+			new JoystickButton(operator, RobotMap.Controller.LOGO_LEFT).whenHeld(new ResetEncoders(elevator, arm, wrist));
+			new JoystickButton(operator, RobotMap.Controller.LOGO_RIGHT).whenHeld(new SetMidCube(elevator, arm, wrist));
+			new JoystickButton(operator, RobotMap.Controller.LEFT_STICK_BUTTON).whenHeld(new SetLowConeStanding(elevator, arm, wrist));
+			new JoystickButton(operator, RobotMap.Controller.RIGHT_STICK_BUTTON).whenHeld(new SetDeport(elevator, arm, wrist));
 		}
 		
 
