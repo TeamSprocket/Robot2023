@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
+
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -17,11 +18,13 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.persistent.SwerveDriveCmd;
 import frc.robot.subsystems.SwerveDrive;
 
-
 /**
- * The VM is configured to automatically run this class, and to call the functions corresponding to
- * each mode, as described in the TimedRobot documentation. If you change the name of this class or
- * the package after creating this project, you must also update the manifest file in the resource
+ * The VM is configured to automatically run this class, and to call the
+ * functions corresponding to
+ * each mode, as described in the TimedRobot documentation. If you change the
+ * name of this class or
+ * the package after creating this project, you must also update the manifest
+ * file in the resource
  * directory.
  */
 public class Robot extends TimedRobot {
@@ -40,21 +43,24 @@ public class Robot extends TimedRobot {
      * used for any initialization code.
      */
     @Override
-    public void robotInit() {}
+    public void robotInit() {
+    }
 
     /**
-     * This function is called every robot packet, no matter the mode. Use this for items like
-     * diagnostics that you want ran during disabled, autonomous, teleoperated and test.
+     * This function is called every robot packet, no matter the mode. Use this for
+     * items like
+     * diagnostics that you want ran during disabled, autonomous, teleoperated and
+     * test.
      *
-     * <p>This runs after the mode specific periodic functions, but before
+     * <p>
+     * This runs after the mode specific periodic functions, but before
      * LiveWindow and SmartDashboard integrated updating.
      */
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
         robotContainer.clearStickyFaults();
-        robotContainer.outputPitch();
-        
+
         // SmartDashboard.put robotContainer.getCameraFeed();
     }
 
@@ -84,10 +90,11 @@ public class Robot extends TimedRobot {
         robotContainer.autonInit();
         this.auton = robotContainer.getAutonomousCommand();
 
-        if(auton!=null) {
+        if (auton != null) {
             auton.schedule();
         } else {
-            System.out.println("AUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\n");
+            System.out.println(
+                    "AUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\nAUTON IS NULL\n");
         }
     }
 
@@ -99,7 +106,9 @@ public class Robot extends TimedRobot {
 
     }
 
-    /** This function is called once each time the robot enters teleoperated mode. */ 
+    /**
+     * This function is called once each time the robot enters teleoperated mode.
+     */
     @Override
     public void teleopInit() {
         Constants.isEnabled = true;
@@ -109,18 +118,12 @@ public class Robot extends TimedRobot {
         robotContainer.setDriveDefaultMode(NeutralMode.Coast);
         robotContainer.configureButtonBindings();
         robotContainer.getSwerveDrive().zeroDrive();
-        
+
     }
-    
+
     /** This function is called periodically during teleoperated mode. */
     @Override
     public void teleopPeriodic() {
-        robotContainer.initRumbleTimer();
-
-        // robotContainer.outputAutonLog();
-        // robotContainer.outputAutonLog();
     }
-
-
 
 }
