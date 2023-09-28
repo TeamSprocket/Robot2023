@@ -40,10 +40,7 @@ public class Robot extends TimedRobot {
      * used for any initialization code.
      */
     @Override
-    public void robotInit() {
-        robotContainer.setSwerveDriveCurrentLimitTurn(Constants.Drivetrain.kTurnCurrentLimit);
-        robotContainer.setSwerveDriveCurrentLimitDrive(Constants.Drivetrain.kDriveCurrentLimit);
-    }
+    public void robotInit() {}
 
     /**
      * This function is called every robot packet, no matter the mode. Use this for items like

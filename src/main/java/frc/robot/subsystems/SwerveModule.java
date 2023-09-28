@@ -91,14 +91,14 @@ public class SwerveModule extends SubsystemBase {
     
   
 
-  public void setCurrentLimitTurn(double currentLimit) {
-    turnMotor.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, currentLimit, currentLimit, 1.0));
-    turnMotor.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, currentLimit, 1.0));
+  public void setCurrentLimitTurn(double supplyLimit, double statorLimit) {
+    turnMotor.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, statorLimit, statorLimit, 0.1));
+    turnMotor.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, supplyLimit, supplyLimit, 0.1));
   }
 
-  public void setCurrentLimitDrive(double currentLimit) {
-    driveMotor.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, currentLimit, currentLimit, 1.0));
-    driveMotor.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, currentLimit, 1.0));
+  public void setCurrentLimitDrive(double supplyLimit, double statorLimit) {
+    driveMotor.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, statorLimit, statorLimit, 0.1));
+    driveMotor.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, supplyLimit, supplyLimit, 0.1));
   }
 
 

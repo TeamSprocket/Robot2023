@@ -200,14 +200,6 @@ public Command getAutonomousCommand() {
 			// swerveDrive.clearStickyFaults();
 		}
 
-		public void setSwerveDriveCurrentLimitTurn(double currentLimit) {
-			swerveDrive.setCurrentLimitTurn(currentLimit);
-		}
-
-		public void setSwerveDriveCurrentLimitDrive(double currentLimit) {
-			swerveDrive.setCurrentLimitDrive(currentLimit);
-		}
-
 
 		public void setTurnDefaultMode(NeutralMode mode) {
 			swerveDrive.setTurnDefaultMode(mode);

@@ -84,8 +84,10 @@ public class Constants {
         public static boolean isPrecise = false;
         public static final double kPreciseMultiplier = 0.25;
 
-        public static final double kTurnCurrentLimit = 100;
-        public static final double kDriveCurrentLimit = 100;
+        public static double kTurnSupplyCurrentLimit = 100;
+        public static double kTurnStatorCurrentLimit = 100;
+        public static double kDriveSupplyCurrentLimit = 100;
+        public static double kDriveStatorCurrentLimit = 100;
 
         // public static boolean CAN_DIRECTION_SWITCH = false;
 

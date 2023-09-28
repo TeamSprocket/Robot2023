@@ -100,8 +100,12 @@ public class SwerveDrive extends SubsystemBase {
         ShuffleboardPIDTuner.addSlider("kDSwerveDriveHeading", 0, 0.05, Constants.Drivetrain.kDHeading);
         ShuffleboardPIDTuner.addSlider("kMaxSpeedAngular", 0, 1, Constants.Drivetrain.kMaxTurnSpeed);
         ShuffleboardPIDTuner.addSlider("kMaxAccelAngular", 0, 1000, Constants.Drivetrain.kMaxTurnAccel);
-
-
+       
+        ShuffleboardPIDTuner.addSlider("kSwerveTurnSupplyCurrentLimit", 0, 100, Constants.Drivetrain.kTurnSupplyCurrentLimit);
+        ShuffleboardPIDTuner.addSlider("kSwerveTurnStatorCurrentLimit", 0, 100, Constants.Drivetrain.kTurnStatorCurrentLimit);
+        ShuffleboardPIDTuner.addSlider("kSwerveDriveSupplyCurrentLimit", 0, 100, Constants.Drivetrain.kDriveSupplyCurrentLimit);
+        ShuffleboardPIDTuner.addSlider("kSwerveDriveStatorCurrentLimit", 0, 100, Constants.Drivetrain.kDriveStatorCurrentLimit);
+        
         // Init gyro with delay
         new Thread(() -> {
             try {
@@ -160,18 +164,18 @@ public class SwerveDrive extends SubsystemBase {
         backRight.clearStickyFaults();
     }
 
-    public void setCurrentLimitTurn(double currentLimit) {
-        frontLeft.setCurrentLimitTurn(currentLimit);
-        frontRight.setCurrentLimitTurn(currentLimit);
-        backLeft.setCurrentLimitTurn(currentLimit);
-        backRight.setCurrentLimitTurn(currentLimit);
+    public void setCurrentLimitTurn(double supplyLimit, double statorLimit) {
+        frontLeft.setCurrentLimitTurn(supplyLimit, statorLimit);
+        frontRight.setCurrentLimitTurn(supplyLimit, statorLimit);
+        backLeft.setCurrentLimitTurn(supplyLimit, statorLimit);
+        backRight.setCurrentLimitTurn(supplyLimit, statorLimit);
     }
 
-    public void setCurrentLimitDrive(double currentLimit) {
-        frontLeft.setCurrentLimitDrive(currentLimit);
-        frontRight.setCurrentLimitDrive(currentLimit);
-        backLeft.setCurrentLimitDrive(currentLimit);
-        backRight.setCurrentLimitDrive(currentLimit);
+    public void setCurrentLimitDrive(double supplyLimit, double statorLimit) {
+        frontLeft.setCurrentLimitDrive(supplyLimit, statorLimit);
+        frontRight.setCurrentLimitDrive(supplyLimit, statorLimit);
+        backLeft.setCurrentLimitDrive(supplyLimit, statorLimit);
+        backRight.setCurrentLimitDrive(supplyLimit, statorLimit);
     }
 
     public SwerveModulePosition[] getSwerveModulePositions() {
@@ -342,9 +346,11 @@ public class SwerveDrive extends SubsystemBase {
     @Override
     public void periodic() {
         // postShuffleboardPIDTuner();
+        updateCurrentLimits();
 
         SmartDashboard.putNumber("Target Heading", targetHeading);
         // SmartDashboard.putBoolean("Can Direction Switch", Constants.Drivetrain.CAN_DIRECTION_SWITCH);
+        
 
         clearStickyFaults();
 
@@ -377,8 +383,18 @@ public class SwerveDrive extends SubsystemBase {
         headingController.setD(ShuffleboardPIDTuner.get("kDSwerveDriveHeading"));
         Constants.Drivetrain.kMaxTurnSpeed = ShuffleboardPIDTuner.get("kMaxSpeedAngular");
         Constants.Drivetrain.kMaxTurnAccel = ShuffleboardPIDTuner.get("kMaxAccelAngular");
+        Constants.Drivetrain.kTurnSupplyCurrentLimit = ShuffleboardPIDTuner.get("kSwerveTurnSupplyCurrentLimit");
+        Constants.Drivetrain.kTurnStatorCurrentLimit = ShuffleboardPIDTuner.get("kSwerveTurnStatorCurrentLimit");
+        Constants.Drivetrain.kDriveSupplyCurrentLimit = ShuffleboardPIDTuner.get("kSwerveDriveSupplyCurrentLimit");
+        Constants.Drivetrain.kDriveStatorCurrentLimit = ShuffleboardPIDTuner.get("kSwerveDriveStatorCurrentLimit");
     }
 
+
+    public void updateCurrentLimits() {
+        setCurrentLimitTurn(Constants.Drivetrain.kTurnSupplyCurrentLimit, Constants.Drivetrain.kTurnStatorCurrentLimit);
+        setCurrentLimitDrive(Constants.Drivetrain.kDriveSupplyCurrentLimit, Constants.Drivetrain.kDriveStatorCurrentLimit);
+
+    }
 
 
 
