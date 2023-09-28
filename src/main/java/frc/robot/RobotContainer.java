@@ -16,7 +16,7 @@ import frc.robot.commands.macro.SetLowConeTilted;
 import frc.robot.commands.macro.SetLowCube;
 import frc.robot.commands.macro.SetMid;
 import frc.robot.commands.macro.SetMidCube;
-=import frc.robot.commands.macro.SetLowConeStanding;
+import frc.robot.commands.macro.SetLowConeStanding;
 import frc.robot.commands.persistent.Elevate;
 import frc.robot.commands.persistent.MoveArmJoystick;
 import frc.robot.commands.persistent.MoveWristManual;
@@ -30,7 +30,6 @@ import frc.robot.subsystems.SwerveDrive;
 import frc.robot.subsystems.Wrist;
 import frc.robot.subsystems.SwerveDrive.Direction;
 
-
 public final class RobotContainer {
 	Timer timer;
 	double last = 0.0;
@@ -39,7 +38,7 @@ public final class RobotContainer {
 	// Controllers
 	private final XboxController driver = new XboxController(0);
 	private final XboxController operator = new XboxController(1);
-	XboxController[] controllers = {driver, operator};
+	XboxController[] controllers = { driver, operator };
 
 	// Smartdashboard
 	// Subsystems
@@ -77,7 +76,7 @@ public final class RobotContainer {
 		new JoystickButton(driver, RobotMap.Controller.X).whenPressed(() -> swerveDrive.updateHeading(Direction.LEFT));
 		new JoystickButton(driver, RobotMap.Controller.B).whenPressed(() -> swerveDrive.updateHeading(Direction.RIGHT));
 		new JoystickButton(driver, RobotMap.Controller.A).whenPressed(() -> swerveDrive.updateHeading(Direction.BACK));
-		
+
 		// --------------------=Operator=-------------------- ,
 		elevator.setDefaultCommand(new Elevate(elevator, operator));
 		arm.setDefaultCommand(new MoveArmJoystick(arm, operator));
@@ -90,8 +89,10 @@ public final class RobotContainer {
 		new JoystickButton(operator, RobotMap.Controller.RB).whenHeld(new SetLowConeTilted(elevator, arm, wrist));
 		new JoystickButton(operator, RobotMap.Controller.LOGO_LEFT).whenHeld(new ResetEncoders(elevator, arm, wrist));
 		new JoystickButton(operator, RobotMap.Controller.LOGO_RIGHT).whenHeld(new SetMidCube(elevator, arm, wrist));
-		new JoystickButton(operator, RobotMap.Controller.LEFT_STICK_BUTTON).whenHeld(new SetLowConeStanding(elevator, arm, wrist));
-		new JoystickButton(operator, RobotMap.Controller.RIGHT_STICK_BUTTON).whenHeld(new SetDeport(elevator, arm, wrist));
+		new JoystickButton(operator, RobotMap.Controller.LEFT_STICK_BUTTON)
+				.whenHeld(new SetLowConeStanding(elevator, arm, wrist));
+		new JoystickButton(operator, RobotMap.Controller.RIGHT_STICK_BUTTON)
+				.whenHeld(new SetDeport(elevator, arm, wrist));
 	}
 
 	public void rumbleControllers(double rumbleValue) {
@@ -116,14 +117,6 @@ public final class RobotContainer {
 		arm.clearStickyFaults();
 		wrist.clearStickyFaults();
 		claw.clearStickyFaults();
-	}
-
-	public void setSwerveDriveCurrentLimitTurn(double currentLimit) {
-		swerveDrive.setCurrentLimitTurn(currentLimit);
-	}
-
-	public void setSwerveDriveCurrentLimitDrive(double currentLimit) {
-		swerveDrive.setCurrentLimitDrive(currentLimit);
 	}
 
 	public void setTurnDefaultMode(NeutralMode mode) {
@@ -171,7 +164,7 @@ public final class RobotContainer {
 		}
 
 		double time = Math.round(timer.get() * 10) / 10.0;
-		
+
 		if (time - (int) (time) != last) {
 			last = time - (int) (time);
 
