@@ -1,7 +1,7 @@
 package frc.robot.commands.persistent;
 
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
 import frc.robot.subsystems.Elevator;
 import frc.util.Util;
@@ -9,10 +9,10 @@ import frc.util.commands.PersistentCommand;
 
 public class Elevate extends PersistentCommand {
     private final Elevator elevator;
-    private final XboxController gamepad;
+    private final CommandXboxController gamepad;
 
   
-    public Elevate (Elevator elevator, XboxController gamepad) {
+    public Elevate (Elevator elevator, CommandXboxController gamepad) {
       this.elevator = elevator;
       this.gamepad = gamepad;
   

@@ -192,18 +192,18 @@ public class SwerveDrive extends SubsystemBase {
         isPrecise = !isPrecise;
     }
 
-    public void setTurnDefaultMode(NeutralMode mode) {
-        frontLeft.setTurnDefaultMode(mode);
-        frontRight.setTurnDefaultMode(mode);
-        backLeft.setTurnDefaultMode(mode);
-        backRight.setTurnDefaultMode(mode);
+    public void setSwerveTurnMotorDefaultMode(NeutralMode mode) {
+        frontLeft.setSwerveTurnMotorDefaultMode(mode);
+        frontRight.setSwerveTurnMotorDefaultMode(mode);
+        backLeft.setSwerveTurnMotorDefaultMode(mode);
+        backRight.setSwerveTurnMotorDefaultMode(mode);
     }
 
-    public void setDriveDefaultMode(NeutralMode mode) {
-        frontLeft.setDriveDefaultMode(mode);
-        frontRight.setDriveDefaultMode(mode);
-        backLeft.setDriveDefaultMode(mode);
-        backRight.setDriveDefaultMode(mode);
+    public void setSwerveDriveMotorDefaultMode(NeutralMode mode) {
+        frontLeft.setSwerveDriveMotorDefaultMode(mode);
+        frontRight.setSwerveDriveMotorDefaultMode(mode);
+        backLeft.setSwerveDriveMotorDefaultMode(mode);
+        backRight.setSwerveDriveMotorDefaultMode(mode);
     }
     
     public void calibrateGyro() {
