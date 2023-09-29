@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.persistent.SwerveDriveCmd;
 import frc.robot.subsystems.SwerveDrive;
+import frc.util.ShuffleboardPIDTuner;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -119,11 +120,13 @@ public class Robot extends TimedRobot {
         robotContainer.configureButtonBindings();
         robotContainer.getSwerveDrive().zeroDrive();
 
+        ShuffleboardPIDTuner.addSlider("kWristP", 0, 0.02, Constants.Wrist.P);
     }
 
     /** This function is called periodically during teleoperated mode. */
     @Override
     public void teleopPeriodic() {
+        Constants.Wrist.P = ShuffleboardPIDTuner.get("kWristP");
     }
 
 }

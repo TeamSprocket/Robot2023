@@ -35,7 +35,7 @@ public class Constants {
         public static double kWristGearRatio = 2.75;
         public static double angleConversionFactor = 360.0 / (kWristGearRatio * 10);
         
-        public static double P = 0.019; //0175
+        public static double P = 0.0175;
         public static double I = 0;
         public static double D = 0.0007;
     }
@@ -70,12 +70,12 @@ public class Constants {
         public static final double kLimelightAlignD = 0.00015;
 
 
-        // Speed/Accel 
-        public static double kMaxSpeed = 0.2; //0.2 
-        public static double kMaxAccel = 1; 
+        // Speed/Accel
+        public static double kMaxSpeed = 0.2; //0.2
+        public static double kMaxAccel = 1;
         
-        public static double kMaxTurnSpeed = 3; 
-        public static double kMaxTurnAccel = 2; 
+        public static double kMaxTurnSpeed = 0.5;
+        public static double kMaxTurnAccel = 23; 
 
 
         // Misc
