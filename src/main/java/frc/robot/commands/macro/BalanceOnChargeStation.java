@@ -67,14 +67,14 @@ public class BalanceOnChargeStation extends CommandBase {
     timer.reset();
     endTimer.reset();
     onRampTimer.reset();
-    swerveDrive.setSwerveTurnMotorDefaultMode(NeutralMode.Brake);
-    swerveDrive.setSwerveDriveMotorDefaultMode(NeutralMode.Brake);
     // swerveDrive.zeroPitch();
   }
   
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    swerveDrive.setTurnDefaultMode(NeutralMode.Brake);
+    swerveDrive.setDriveDefaultMode(NeutralMode.Brake);
 
     timer.start();
 

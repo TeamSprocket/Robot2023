@@ -11,26 +11,41 @@ import frc.robot.commands.macro.BalanceOnChargeStation;
 import frc.robot.commands.macro.timed.DeportArmTimed;
 import frc.robot.commands.macro.timed.LimelightAlignTimed;
 import frc.robot.commands.macro.timed.PIDTurnTimed;
+import frc.robot.commands.macro.timed.PIDTurnTimedOnlyI;
 import frc.robot.commands.macro.timed.RollClawTimed;
 import frc.robot.commands.macro.timed.SetHighTimedCube;
+import frc.robot.commands.macro.timed.SetHomeTimed;
+import frc.robot.commands.macro.timed.SetLowCubeTimed;
 import frc.robot.commands.macro.timed.SwerveDriveCmdTimed;
 import frc.robot.commands.macro.timed.WaitTimed;
-import frc.robot.commands.macro.timed.ZeroHeadingTimed;
 import frc.robot.commands.persistent.RollClaw;
 import frc.robot.subsystems.SwerveDrive;
 
-public class AutonBloopBalance extends SequentialCommandGroup {
-  public AutonBloopBalance(SwerveDrive swerveDrive, Elevator elevator, Arm arm, Wrist wrist, Claw claw) {
+public class AutonOneCubeOnly extends SequentialCommandGroup {
+  public AutonOneCubeOnly(SwerveDrive swerveDrive, Elevator elevator, Arm arm, Wrist wrist, Claw claw) {
     // public AutonConeBalance(SwerveDrive swerveDrive, Elevator elevator, Arm arm, Wrist wrist) {
-  
+    
     addCommands(
       new SequentialCommandGroup(
-        new RollClawTimed(claw, -1, 0.25),
-        new RollClawTimed(claw, 1, 0.25),
-        new PIDTurnTimed(swerveDrive, Math.PI, 1.5),
-        new BalanceOnChargeStation(swerveDrive, 0.08, true, 1200  ),
-        new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, 0.0, new Rotation2d(0.1)), 0.5)
-      )
-    );
+        new ParallelCommandGroup(
+          new DeportArmTimed(elevator, arm, wrist, 1),
+          new RollClawTimed(claw, -0.2, 1)
+        ), 
+
+        // Put cube 
+        new ParallelCommandGroup(
+          new SetHighTimedCube(elevator, arm, wrist, 1),
+          new RollClawTimed(claw, -0.25, 1),
+          new SwerveDriveCmdTimed(swerveDrive, new Pose2d(0.0, -0.45, new Rotation2d(0.0)), 1)
+        ),
+
+      // Score cube
+        new ParallelCommandGroup(
+          new RollClawTimed(claw, 0.25, 0.4),
+          new SetHighTimedCube(elevator, arm, wrist, 0.4)
+        ),
+        new SetHighTimedCube(elevator, arm, wrist, 12.6)
+      ));
+      
   }
 }

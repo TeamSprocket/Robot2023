@@ -1,6 +1,6 @@
 package frc.robot.commands.persistent;
 
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Arm;
@@ -9,9 +9,9 @@ import frc.util.commands.PersistentCommand;
 
 public class MoveArmJoystick extends PersistentCommand {
     private final Arm arm;
-    private final CommandXboxController gamepad;
+    private final XboxController gamepad;
   
-    public MoveArmJoystick (Arm arm, CommandXboxController gamepad) {
+    public MoveArmJoystick (Arm arm, XboxController gamepad) {
         this.arm = arm;
         this.gamepad = gamepad;
   

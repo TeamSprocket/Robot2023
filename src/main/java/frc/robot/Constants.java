@@ -40,7 +40,7 @@ public class Constants {
         public static double D = 0.0007;
     }
 
-    public static final class Intake {}
+    public static final class Claw {}
 
     public static final class Drivetrain {
         // Measurements

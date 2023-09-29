@@ -10,12 +10,12 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 // import frc.robot.commands.macro.timed.DeportArm;
-import frc.robot.commands.macro.timed.RollIntakeTimed;
+import frc.robot.commands.macro.timed.RollClawTimed;
 import frc.robot.commands.macro.timed.SetHighTimedCube;
 import frc.robot.commands.macro.timed.SetHomeTimed;
 import frc.robot.commands.macro.timed.SetLowCubeTimed;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.SwerveDrive;
 import frc.robot.subsystems.SwerveModule;
@@ -33,9 +33,9 @@ public class ParseAuton extends CommandBase {
   Elevator elevator;
   Arm arm;
   Wrist wrist;
-  Intake intake;
+  Claw claw;
 
-  public ParseAuton(SwerveDrive swerveDrive, Elevator elevator, Arm arm, Wrist wrist, Intake intake) {
+  public ParseAuton(SwerveDrive swerveDrive, Elevator elevator, Arm arm, Wrist wrist, Claw claw) {
     this.swerveDrive = swerveDrive;
     cur = 0;
     timer = new Timer();
@@ -43,7 +43,7 @@ public class ParseAuton extends CommandBase {
     this.elevator = elevator;
     this.arm = arm;
     this.wrist = wrist;
-    this.intake = intake;
+    this.claw = claw;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

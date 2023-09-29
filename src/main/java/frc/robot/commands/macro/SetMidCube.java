@@ -3,11 +3,12 @@ package frc.robot.commands.macro
 import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Wrist;
 import frc.util.Util;

@@ -66,7 +66,7 @@ public final class RobotMap {
     public static final int WRIST = 44;
   }
 
-  public static final class Intake{
+  public static final class Claw{
     public static final int CLAW = 45; // or 46
 
 

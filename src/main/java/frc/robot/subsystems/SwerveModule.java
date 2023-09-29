@@ -76,10 +76,10 @@ public class SwerveModule extends SubsystemBase {
 
   }
 
-    public void setSwerveTurnMotorDefaultMode(NeutralMode mode) {
+    public void setTurnDefaultMode(NeutralMode mode) {
       turnMotor.setNeutralMode(mode);
     }
-    public void setSwerveDriveMotorDefaultMode(NeutralMode mode) {
+    public void setDriveDefaultMode(NeutralMode mode) {
       driveMotor.setNeutralMode(mode);
     }
 

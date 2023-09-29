@@ -1,6 +1,6 @@
 package frc.robot.commands.persistent;
 
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Wrist;
@@ -10,9 +10,9 @@ import frc.util.commands.PersistentCommand;
 
 public class MoveWristManual extends PersistentCommand {
     private final Wrist wrist;
-    private final CommandXboxController gamepad;
+    private final XboxController gamepad;
   
-    public MoveWristManual (Wrist wrist, CommandXboxController gamepad) {
+    public MoveWristManual (Wrist wrist, XboxController gamepad) {
         this.wrist = wrist;
         this.gamepad = gamepad;
   
