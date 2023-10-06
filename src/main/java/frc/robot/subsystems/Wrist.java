@@ -27,7 +27,8 @@ public class Wrist extends SubsystemBase {
 
         wrist.setInverted(false);
 
-        wrist.setSmartCurrentLimit(105);
+        wrist.setSmartCurrentLimit(999);
+        resetWristEncoder();
 
     }
 
@@ -41,7 +42,7 @@ public class Wrist extends SubsystemBase {
     }
 
     public void resetWristEncoder(){
-        wrist.getEncoder().setPosition(0);
+        wrist.getEncoder().setPosition(0.1);
     }
 
     public void moveWrist(double output) {
