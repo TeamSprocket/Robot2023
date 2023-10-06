@@ -27,12 +27,6 @@ public class SwerveDriveCmdTimed extends MacroCommand {
   private final double yTarget, xTarget, tTarget;
   private final Timer timer;
   private final double duration;
-  private boolean first = true;
-  private double startTime;
-  private WPI_TalonFX talonFL;
-  private WPI_TalonFX talonFR;
-  private WPI_TalonFX talonBL;
-  private WPI_TalonFX talonBR;
 
   SlewRateLimiter xSlewLimit, ySlewLimit, tSlewLimit;
 
@@ -56,10 +50,6 @@ public class SwerveDriveCmdTimed extends MacroCommand {
     this.tTarget = (target.getRotation().getRadians() / 10.0);
     this.timer = new Timer();
     this.duration = duration;
-    talonFL = new WPI_TalonFX(RobotMap.Drivetrain.FRONT_LEFT_TALON_D);
-    talonFR = new WPI_TalonFX(RobotMap.Drivetrain.FRONT_RIGHT_TALON_D);
-    talonBL = new WPI_TalonFX(RobotMap.Drivetrain.BACK_LEFT_TALON_D);
-    talonBR = new WPI_TalonFX(RobotMap.Drivetrain.BACK_RIGHT_TALON_D);
 
     // xSlewLimit = new SlewRateLimiter(Constants.Drivetrain.kMaxAccel);
     // ySlewLimit = new SlewRateLimiter(Constants.Drivetrain.kMaxAccel);

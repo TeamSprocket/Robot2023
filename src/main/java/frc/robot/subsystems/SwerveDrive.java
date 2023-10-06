@@ -129,6 +129,10 @@ public class SwerveDrive extends SubsystemBase {
         // gyro.setYawAxis(null)
     }
 
+    public void updateTargetHeading() {
+        targetHeading = getHeading();
+    }
+
     public void zeroTalons() {
         frontLeft.zeroTalon();
         frontRight.zeroTalon();
@@ -247,13 +251,7 @@ public class SwerveDrive extends SubsystemBase {
     }
 
     public double getHeadingRad() {
-        double angle = gyro.getAngle() % 360.0;
-        if (angle < 0) {
-            angle += 360;
-        }
-        angle = Math.toRadians(angle);
-        
-        return angle;
+        return Math.toRadians(getHeading());
     }
 
     
