@@ -12,6 +12,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.SwerveDrive;
@@ -22,9 +23,9 @@ public class BalanceOnChargeStation extends CommandBase {
   boolean isFinished = false;
   double speedInitial;
   boolean onRamp = false;
-  Timer timer, rampTimer;
+  Timer timer;
   double waitTime = 2;
-  Timer endTimer, onRampTimer;
+  Timer endTimer;
 
   double onRampAngle = Constants.Auton.kChargeStationAngle;
 
@@ -36,18 +37,12 @@ public class BalanceOnChargeStation extends CommandBase {
    * @param swerveDrive swerveDrive object
    * @param speedInitial initiall speed to approach charging station at, reduced to 0.05 if it surpasses it
    */
-  public BalanceOnChargeStation(SwerveDrive swerveDrive, double speedInitial, boolean climbFromBackOfBot, double duration) {
+  public BalanceOnChargeStation(SwerveDrive swerveDrive, double speedInitial, double duration) {
     this.swerveDrive = swerveDrive;
     this.timer = new Timer();
     this.endTimer = new Timer();
-    this.onRampTimer = new Timer();
-    this.speedInitial = -1.0 * speedInitial;
+    this.speedInitial = -speedInitial;
     this.duration = duration;
-
-    if (!climbFromBackOfBot) {
-      this.speedInitial *= -1;
-      this.onRampAngle *= -1;
-    }
 
     if (this.speedInitial >= 0.1) {
       this.speedInitial = 0.1;
@@ -66,7 +61,6 @@ public class BalanceOnChargeStation extends CommandBase {
   public void initialize() {
     timer.reset();
     endTimer.reset();
-    onRampTimer.reset();
     // swerveDrive.zeroPitch();
   }
   
@@ -83,17 +77,21 @@ public class BalanceOnChargeStation extends CommandBase {
 
     if (Math.abs(swerveDrive.getPitchDeg()) >= (onRampAngle - Constants.Auton.kOnChargeStationTolerance)) {
       onRamp = true;
-    }
+    } 
 
     if (onRamp) {
       if (swerveDrive.getPitchDeg() >= (onRampAngle - Constants.Auton.kChargeStationBalanceTolerance)) { //climbing
         speed = Constants.Auton.kSpeedWhileClimbing;
+        endTimer.reset();
       } else { //falling
         speed = 0;
         turn = 0.01;
         endTimer.start();
       }
     }
+
+    SmartDashboard.putBoolean("On Ramp", onRamp);
+    SmartDashboard.putNumber("Balance drive spd", speed);
 
     setSpeeds(speed, turn);
     

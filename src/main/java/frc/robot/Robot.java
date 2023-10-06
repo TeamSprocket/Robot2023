@@ -57,6 +57,8 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().run();
         robotContainer.clearStickyFaults();
         robotContainer.outputPitch();
+        // SmartDashboard.putNumber("kIntakeVoltageSupply", robotContainer.getIntakeMotorObj().getSupplyCurrent());
+        // SmartDashboard.putNumber("kIntakeVoltageStator", robotContainer.getIntakeMotorObj().getStatorCurrent());
         
         // SmartDashboard.put robotContainer.getCameraFeed();
     }
@@ -82,11 +84,13 @@ public class Robot extends TimedRobot {
     public void autonomousInit() {
         Constants.isEnabled = false;
         Constants.isEnabled = false;
+        robotContainer.resetEncoders();
         robotContainer.setTurnDefaultMode(NeutralMode.Brake);
         robotContainer.setDriveDefaultMode(NeutralMode.Brake);
         robotContainer.autonInit();
-        this.auton = robotContainer.getAutonomousCommand();
+        robotContainer.getSwerveDrive().zeroTalonsABS();
 
+        this.auton = robotContainer.getAutonomousCommand();
         if(auton!=null) {
             auton.schedule();
         } else {
@@ -111,8 +115,8 @@ public class Robot extends TimedRobot {
         robotContainer.setTurnDefaultMode(NeutralMode.Coast);
         robotContainer.setDriveDefaultMode(NeutralMode.Coast);
         robotContainer.configureButtonBindings();
-        robotContainer.getSwerveDrive().zeroDrive();
-        
+        // robotContainer.getSwerveDrive().zeroDrive();
+        robotContainer.getSwerveDrive().zeroTalonsABS();
     }
     
     /** This function is called periodically during teleoperated mode. */

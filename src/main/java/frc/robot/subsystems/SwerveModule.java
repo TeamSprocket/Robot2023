@@ -19,6 +19,7 @@ import com.revrobotics.AbsoluteEncoder;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.networktables.DoublePublisher;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.RuntimeType;
@@ -37,17 +38,18 @@ public class SwerveModule extends SubsystemBase {
   
   private final PIDController turnPIDController; 
 
-  // private final CANCoder absEncoder;
-  // private final double absEncoderOffsetRad;
+  private final CANCoder absEncoder;
+  private final double absEncoderOffsetRad;
   
   // private final boolean isTurnedReverse;
 
 
-  public SwerveModule(int driveMotorID, int turnMotorID 
-  // boolean driveMotorIsReversed, boolean turnMotorIsReversed, int absEncoderID, double absEncoderOffsetRad, boolean isTurnedReverse
+  public SwerveModule(int driveMotorID, int turnMotorID,
+  // boolean driveMotorIsReversed, boolean turnMotorIsReversed, 
+  int absEncoderID, double absEncoderOffsetRad
   ) {
-    // this.absEncoderOffsetRad = absEncoderOffsetRad;
-    // absEncoder = new CANCoder(absEncoderID); 
+    this.absEncoderOffsetRad = absEncoderOffsetRad;
+    absEncoder = new CANCoder(absEncoderID); 
 
     driveMotor = new WPI_TalonFX(driveMotorID);
     turnMotor = new WPI_TalonFX(turnMotorID);
@@ -66,9 +68,10 @@ public class SwerveModule extends SubsystemBase {
 
     turnPIDController.enableContinuousInput(0, (2.0 * Math.PI));
 
-    // absEncoder.configMagnetOffset(Math.toDegrees(absEncoderOffsetRad));
+    
     // absEncoder.configMagnetOffset(-Math.toDegrees(absEncoderOffsetRad));
-    // absEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
+    absEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
+    // absEncoder.configMagnetOffset(Math.toDegrees(absEncoderOffsetRad));
 
     
 
@@ -118,21 +121,17 @@ public class SwerveModule extends SubsystemBase {
     }
 
     
-    // public double getAbsEncoderRad() {
-    //   double angle = absEncoder.getAbsolutePosition();
-    //   angle = Math.toRadians(angle);
-    //   // angle = Math.toRadians(angle);
-    //   // angle -= absEncoderOffsetRad;
-    //   // double rad = Math.abs(angle % (Math.PI * 2.0));
-    //   // if (rad > Math.PI) {
-    //   //   rad = -1.0 * (2.0 * Math.PI - rad);
-    //   // }
+    public double getAbsEncoderRad() {
+      double angleRad = absEncoder.getAbsolutePosition();
+      angleRad = Math.toRadians(angleRad);
+      angleRad -= absEncoderOffsetRad;
+      if (angleRad < 0) {
+        angleRad %= (2.0 * Math.PI);
+        angleRad += (2.0 * Math.PI);
+      }
+      return angleRad;
 
-    //   // angle -= absEncoderOffsetRad;
-    //   // return rad;
-    //   return angle;
-
-    // }
+    }
 
     // public void resetEncoderPos() {
     //   // double tunedAbsEncoderRad = -getAbsEncoderRad();
@@ -147,6 +146,45 @@ public class SwerveModule extends SubsystemBase {
     //   System.out.println(absAngle);
 
     // }
+
+
+    public void resetTurnABS(double offsetRad) {
+      // double turnPerc = offsetRad / (2.0 * Math.PI);
+      // double turnPercWithRatio = turnPerc * Constants.Drivetrain.kTurningMotorGearRatio;
+      // double turnTicksWithRatio = turnPercWithRatio * 2048.0;
+      // turnMotor.setSelectedSensorPosition(turnTicksWithRatio);
+      double angleRad = absEncoder.getAbsolutePosition();
+      angleRad = Math.toRadians(angleRad);
+      angleRad -= absEncoderOffsetRad;
+      if (angleRad < 0) {
+        angleRad %= (2.0 * Math.PI);
+        angleRad += (2.0 * Math.PI);
+      }
+      double turnPerc = angleRad / (2.0 * Math.PI);
+      double turnPercWithRatio = turnPerc * Constants.Drivetrain.kTurningMotorGearRatio;
+      double turnTicksWithRatio = turnPercWithRatio * 2048.0;
+
+      turnMotor.setSelectedSensorPosition(turnTicksWithRatio);
+    }
+
+    @Override
+    public void periodic() {}
+
+    public double getTurnResetTicks() {
+      double angleRad = absEncoder.getAbsolutePosition();
+      angleRad = Math.toRadians(angleRad);
+      angleRad -= absEncoderOffsetRad;
+      if (angleRad < 0) {
+        angleRad %= (2.0 * Math.PI);
+        angleRad += (2.0 * Math.PI);
+      }
+      double turnPerc = angleRad / (2.0 * Math.PI);
+      double turnPercWithRatio = turnPerc * Constants.Drivetrain.kTurningMotorGearRatio;
+      double turnTicksWithRatio = turnPercWithRatio * 2048.0;
+
+      return turnTicksWithRatio;
+    }
+
 
     public void zeroTalon() { 
       driveMotor.setSelectedSensorPosition(0);
