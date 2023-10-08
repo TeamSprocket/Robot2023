@@ -40,7 +40,7 @@ public class Constants {
         public static double D = 0.0007;
     }
 
-    public static final class Claw {}
+    public static final class Intake {}
 
     public static final class Drivetrain {
         // Measurements
@@ -79,6 +79,8 @@ public class Constants {
 
 
         // Misc
+        public static final double kGyroDefaultPitchOffset = 0.0;
+
         public static final boolean kIsFieldOriented = true;
 
         public static boolean isPrecise = false;
@@ -115,12 +117,11 @@ public class Constants {
         public static final boolean kFacingDriversOnStart = true;
 
         // Balance
-        public static final double kChargeStationAngle = 14.0; // TODO: tune (pitch angle of bot on charge station)
-        public static final double kOnChargeStationTolerance = 1.0; // TODO: tune (pitch angle tolerance for bot to be considered on charge station)
-        public static final double kChargeStationBalanceTolerance = 1.0; // TODO: tune (pitch angle tolerance while climbing for charge station to be considered falling)
-        public static final double BALANCE_END_TIME_THRESHOLD = 0.5; // 0.5
-        public static final double BALANCE_END_ANGLE_THRESHOLD = 5; 
-        public static final double kSpeedWhileClimbing = 0.02;
+        public static final double kChargeStationAngle = 11; // TODO: tune (pitch angle of bot on charge station)
+        public static final double kOnChargeStationTolerance = 0.5; // TODO: tune (pitch angle tolerance for bot to be considered on charge station)
+        public static final double kChargeStationBalanceTolerance = 1.5; // TODO: tune (pitch angle tolerance while climbing for charge station to be considered falling)
+        public static final double BALANCE_END_TIME_THRESHOLD = 0.1; // 0.5 
+        public static final double kSpeedWhileClimbing = 0.035;
 
         // PID Turn
         public static final double kPTurn = 0.3; //0.2

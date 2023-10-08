@@ -43,6 +43,8 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         robotContainer.setSwerveDriveCurrentLimitTurn(Constants.Drivetrain.kTurnCurrentLimit);
         robotContainer.setSwerveDriveCurrentLimitDrive(Constants.Drivetrain.kDriveCurrentLimit);
+        robotContainer.postAutonChoices();
+        robotContainer.getSwerveDrive().calibrateGyro();
     }
 
     /**

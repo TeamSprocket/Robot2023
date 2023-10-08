@@ -171,6 +171,10 @@ public class SwerveModule extends SubsystemBase {
       return SwerveModuleState.optimize(swerveState, new Rotation2d(currentRad));
     }
 
+    public double getDriveVelocity() {
+      return driveMotor.getSelectedSensorVelocity();
+    }
+
 
     public void setDesiredState(SwerveModuleState swerveState, boolean isPrecise) {
       SmartDashboard.putNumber("Turn Stator Current", turnMotor.getStatorCurrent());

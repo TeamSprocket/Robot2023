@@ -11,25 +11,25 @@ import frc.robot.RobotMap;
 import frc.util.ShuffleboardPIDTuner;
 import frc.robot.Constants;
 
-public class Claw extends SubsystemBase{
+public class Intake extends SubsystemBase{
 
-    private final WPI_TalonFX claw = new WPI_TalonFX(RobotMap.Claw.CLAW);
+    private final WPI_TalonFX intake = new WPI_TalonFX(RobotMap.Intake.CLAW);
     double idleSpeed = 0;
     double activeSpeed = 0;
 
     
-    public Claw() {
-        claw.setInverted(false);
-        claw.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true,50,50,1.0));
-        claw.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true,50,50,1.0));
+    public Intake() {
+        intake.setInverted(false);
+        intake.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true,50,50,1.0));
+        intake.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true,50,50,1.0));
 
         ShuffleboardPIDTuner.addSlider("kIdleSpeed", 0, 1, 0.1);
 
-        claw.setNeutralMode(NeutralMode.Brake);
+        intake.setNeutralMode(NeutralMode.Brake);
 
     }
 
-    public void moveClaw(double output){
+    public void moveIntake(double output){
         if (output > 0) {
             idleSpeed = ShuffleboardPIDTuner.get("kIdleSpeed");
         } else if (output < 0) {
@@ -46,18 +46,18 @@ public class Claw extends SubsystemBase{
     }
 
     public void clearStickyFaults() {
-        claw.clearStickyFaults();
+        intake.clearStickyFaults();
     }
 
 
 
     public double getVelocity() {
-        return claw.getSelectedSensorVelocity();
+        return intake.getSelectedSensorVelocity();
     }
 
     @Override
     public void periodic() {
-        claw.set(ControlMode.PercentOutput, activeSpeed);
-        SmartDashboard.putNumber("[Claw] RPM", getVelocity());
+        intake.set(ControlMode.PercentOutput, activeSpeed);
+        SmartDashboard.putNumber("[Intake] RPM", getVelocity());
     }
 }

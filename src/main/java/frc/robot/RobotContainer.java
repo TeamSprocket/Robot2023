@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -31,14 +32,14 @@ import frc.robot.commands.macro.SetLowConeStanding;
 import frc.robot.commands.persistent.Elevate;
 import frc.robot.commands.persistent.MoveArmJoystick;
 import frc.robot.commands.persistent.MoveWristManual;
-import frc.robot.commands.persistent.RollClaw;
+import frc.robot.commands.persistent.RollIntake;
 import frc.robot.commands.persistent.SwerveDriveCmd;
 // import frc.robot.commands.auton.AutonBalance;
 import frc.robot.commands.auton.*;
 // import frc.robot.commands.persistent.VibrateControllerTimed;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Claw;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.SwerveDrive;
 import frc.robot.subsystems.Wrist;
 import frc.robot.subsystems.SwerveDrive.Direction;
@@ -66,9 +67,48 @@ public final class RobotContainer {
 	private final Elevator elevator = new Elevator();
 	private final Arm arm = new Arm();
 	private final Wrist wrist = new Wrist();
-	private final Claw claw = new Claw();
+	private final Intake intake = new Intake();
 	private final PowerDistribution pdh = new PowerDistribution();
+
+	SendableChooser<Command> autonChooser = new SendableChooser<>();
+	
+
+	// return new AutonOneCubeOnly(swerveDrive, elevator, arm, wrist, intake);
+
+	/////////////// Universal 
+	// return new AutonDoNothing();
+	// return new AutonBloop(swerveDrive, elevator, arm, wrist, intake);
+	// return new AutonHighOneCube(swerveDrive, elevator, arm, wrist, intake);
+	// return new AutonTwoCube(swerveDrive, elevator, arm, wrist, intake);
+
+	/////////////// Middle (location bot starts from POV of drivers)
+	// return new AutonBloopBalance(swerveDrive, elevator, arm, wrist, intake);
+	// return new AutonBloopBalanceReverse(swerveDrive, elevator, arm, wrist, intake);
+	// return new AutonOnezzHighCubeBalance(swerveDrive, elevator, arm, wrist, intake);
+
+	/////////////// Right (location bot starts from POV of drivers)
+	// return new AutonHighOneCube(swerveDrive, elevator, arm, wrist, intake);
+	// return new AutonHighOneCubeNoTaxi(swerveDrive, elevator, arm, wrist, intake);
+
+	/////////////// Left (location bot starts from POV of drivers)
+	// return new AutonOneHighCubeBalanceRight(swerveDrive, elevator, arm, wrist, intake);
+	// return new AutonHighOneCubeNoTaxiLeft(swerveDrive, elevator, arm, wrist, intake);
+
+	// return new AutonTester(swerveDrive, elevator, arm, wrist, intake);
 	// private final LEDStrip ledStrip = new LEDStrip();
+
+	Command autonDoNothing = new AutonDoNothing();
+	Command autonBloopBalance = new AutonBloopBalance(swerveDrive, elevator, arm, wrist, intake);
+	Command autonHighCubeBalance = new AutonHighCubeBalance(swerveDrive, elevator, arm, wrist, intake);
+	Command autonHighCubeNoTaxiLeft = new AutonHighOneCubeNoTaxiLeft(swerveDrive, elevator, arm, wrist, intake);
+	Command autonHighCubeNoTaxiRight = new AutonHighOneCubeNoTaxiRight(swerveDrive, elevator, arm, wrist, intake);
+	Command autonHighOneCubeLeft = new AutonHighOneCubeLeft(swerveDrive, elevator, arm, wrist, intake);
+	Command autonHighOneCubeRight = new AutonHighOneCubeRight(swerveDrive, elevator, arm, wrist, intake);
+
+	Command autonHighTwoCubeRight = new AutonTwoCubeRight(swerveDrive, elevator, arm, wrist, intake);
+	
+	// Command autonHighCubeLeft = new ();
+	// Command autonHighCubeRight = new AutonHighOneCubeRight();
 
 	
 	public RobotContainer() {	
@@ -77,28 +117,24 @@ public final class RobotContainer {
 	}	
 
 	// --------------------=Auton Selection=--------------------
-public Command getAutonomousCommand() {
-// return new AutonOneCubeOnly(swerveDrive, elevator, arm, wrist, claw);
+	public void postAutonChoices() {
+		autonChooser.addOption("Do Nothing - ALL", autonDoNothing);
+		autonChooser.addOption("Bloop Balance - MID", autonBloopBalance);
+		autonChooser.addOption("High Cube Balance - MID", autonHighCubeBalance);
+		autonChooser.addOption("High Cube No Taxi - LEFT", autonHighCubeNoTaxiLeft);
+		autonChooser.addOption("High Cube No Taxi - RIGHT", autonHighCubeNoTaxiRight);
+		autonChooser.addOption("High Cube Taxi - LEFT", autonHighOneCubeLeft);
+		autonChooser.addOption("High Cube Taxi - RIGHT", autonHighOneCubeRight);
 
-/////////////// Universal 
-return new AutonDoNothing();
-// return new AutonBloop(swerveDrive, elevator, arm, wrist, claw);
-// return new AutonHighOneCube(swerveDrive, elevator, arm, wrist, claw);
-// return new AutonTwoCube(swerveDrive, elevator, arm, wrist, claw);
+		autonChooser.addOption("[NOT WORKING] Two High Cube Taxi - RIGHT", autonHighTwoCubeRight);
+		
+		SmartDashboard.putData(autonChooser);
 
-/////////////// Middle (location bot starts from POV of drivers)
-// return new AutonBloopBalance(swerveDrive, elevator, arm, wrist, claw);
-// return new AutonBloopBalanceReverse(swerveDrive, elevator, arm, wrist, claw);
-// return new AutonOneHighCubeBalance(swerveDrive, elevator, arm, wrist, claw);
-
-/////////////// Right (location bot starts from POV of drivers)
-// return new AutonHighOneCube(swerveDrive, elevator, arm, wrist, claw);
-
-/////////////// Left (location bot starts from POV of drivers)
-// return new AutonOneHighCubeBalanceRight(swerveDrive, elevator, arm, wrist, claw);
-
-// return new AutonTester(swerveDrive, elevator, arm, wrist, claw);
-}
+	}
+		
+	public Command getAutonomousCommand() {
+		return autonChooser.getSelected();
+	}
 	
 
 
@@ -112,7 +148,7 @@ return new AutonDoNothing();
 			() -> driver.getLeftX(), 
 			// T
 			() -> -driver.getRightX()));
-		claw.setDefaultCommand(new RollClaw(claw, driver));
+		intake.setDefaultCommand(new RollIntake(intake, driver));
 		new JoystickButton(driver, RobotMap.Controller.RB).whenPressed(() -> swerveDrive.zeroHeading());
 		new JoystickButton(driver, RobotMap.Controller.LB).whenPressed(() -> swerveDrive.togglePrecise());
 		new JoystickButton(driver, RobotMap.Controller.Y).whenPressed(() -> swerveDrive.updateHeading(Direction.FRONT));
@@ -197,12 +233,12 @@ return new AutonDoNothing();
 		elevator.clearStickyFaults();
 		arm.clearStickyFaults();
 		wrist.clearStickyFaults();
-		claw.clearStickyFaults();
+		intake.clearStickyFaults();
 		// swerveDrive.clearStickyFaults();
 	}
 
 	// public WPI_TalonFX getIntakeMotorObj() {
-		// return claw.getIntakeMotor();
+		// return intake.getIntakeMotor();
 	// }
 
 	public void resetEncoders() {

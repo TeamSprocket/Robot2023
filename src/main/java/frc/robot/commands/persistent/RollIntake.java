@@ -6,23 +6,23 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.Claw;
+import frc.robot.subsystems.Intake;
 import frc.util.Util;
 import frc.util.commands.PersistentCommand;
 
-public class RollClaw extends CommandBase {
-    private final Claw claw;
+public class RollIntake extends CommandBase {
+    private final Intake intake;
     private final XboxController controller;
     // double input;
     // private final Supplier<Double> inputFunct;
 
-    public RollClaw(Claw claw, XboxController controller) {
-        this.claw = claw;
+    public RollIntake(Intake intake, XboxController controller) {
+        this.intake = intake;
         this.controller = controller;
         // this.input = inputFunct.get();
         // this.input = 0.1;
 
-        addRequirements(claw);
+        addRequirements(intake);
     }
 
     @Override
@@ -38,8 +38,8 @@ public class RollClaw extends CommandBase {
         //     input = -1;
         // }
 
-        claw.moveClaw(deadbandcedInput);
-        // claw.moveClaw(0.1);
+        intake.moveIntake(deadbandcedInput);
+        // intake.moveIntake(0.1);
 
         // System.out.println(deadbandedInput);
         // SmartDashboard.putNumber("Intake Speed", input);
@@ -48,7 +48,7 @@ public class RollClaw extends CommandBase {
     }
     @Override
     public void end(boolean interrupted) {
-        claw.moveClaw(0);
+        intake.moveIntake(0);
     }
 
     @Override

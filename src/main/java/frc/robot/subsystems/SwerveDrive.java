@@ -107,7 +107,7 @@ public class SwerveDrive extends SubsystemBase {
             try {
                 Thread.sleep(Constants.kGyroInitDelayMS);
                 zeroHeading();
-                calibrateGyro();
+                // calibrateGyro();
                 // zeroTalonsABS();
                 zeroTalons();
             }
@@ -123,6 +123,7 @@ public class SwerveDrive extends SubsystemBase {
 
 
     public void zeroHeading() {
+        // gyro.calibrate();
         gyro.reset();
         this.targetHeading = 0;
         
@@ -210,34 +211,27 @@ public class SwerveDrive extends SubsystemBase {
         gyro.calibrate();
     }
 
+    // public void zeroPitch() {
+    //     gyro.reset();
+    // }
+
     public double getDrivePosition() {
         return (frontLeft.getDrivePosition() + frontRight.getDrivePosition() + backLeft.getDrivePosition() + backRight.getDrivePosition()) / 4;
     }
-
-    public double getPitchDegFiltered() {
-        double deg = gyro.getYComplementaryAngle();
-        deg -= 360;
-        deg %= 360;
-        deg = Math.abs(deg);
-
-        if (deg > 180) { 
-            deg = 0;
-        }
-        return deg;
     
-    }
-
     public double getPitchDeg() {
         double deg = gyro.getYComplementaryAngle();
+        // deg *= -1;
+
         deg %= 360;
         if (deg >= 180) {
             deg -= 360;
         }
 
-        double defaultOffset = -1.8;
+        double defaultOffset = Constants.Drivetrain.kGyroDefaultPitchOffset;
         deg -= defaultOffset;
 
-        return -deg;
+        return deg;
     
     }
 
@@ -330,6 +324,9 @@ public class SwerveDrive extends SubsystemBase {
         SmartDashboard.putNumber("FrontRightAngleTalonEncoder", Math.toDegrees(frontRight.getTurnPosition()));
         SmartDashboard.putNumber("BackLeftAngleTalonEncoder", Math.toDegrees(backLeft.getTurnPosition()));
         SmartDashboard.putNumber("BackRightAngleTalonEncoder", Math.toDegrees(backRight.getTurnPosition()));
+
+        SmartDashboard.putNumber("FrontLeftDriveVelocity [RPM]", frontLeft.getDriveVelocity());
+        
 
         SmartDashboard.putNumber("Gyro", getHeading());
 
