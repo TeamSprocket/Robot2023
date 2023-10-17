@@ -116,22 +116,14 @@ public class Robot extends TimedRobot {
 
         robotContainer.setTurnDefaultMode(NeutralMode.Coast);
         robotContainer.setDriveDefaultMode(NeutralMode.Coast);
-<<<<<<< HEAD
-        robotContainer.getSwerveDrive().zeroDrive();
-        robotContainer.configureButtonBindings();
-        
-=======
         robotContainer.configureButtonBindings();
         // robotContainer.getSwerveDrive().zeroDrive();
         robotContainer.getSwerveDrive().zeroTalonsABS();
->>>>>>> RawcTest
     }
     
     /** This function is called periodically during teleoperated mode. */
     @Override
     public void teleopPeriodic() {
-        robotContainer.initRumbleTimer();
-
         // robotContainer.outputAutonLog();
         // robotContainer.outputAutonLog();
     }
