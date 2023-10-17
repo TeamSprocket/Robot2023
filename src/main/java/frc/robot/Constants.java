@@ -40,7 +40,11 @@ public class Constants {
         public static double D = 0.0007;
     }
 
-    public static final class Claw {}
+    public static final class Claw {
+        public static double kGamePieceStatorCurrentThreshold = 60;
+        public static double kActiveSpeedWithPiece = 0.2;
+        public static double kActiveSpeedWithoutPiece = 0.9;
+    }
 
     public static final class Drivetrain {
         // Measurements
@@ -104,10 +108,10 @@ public class Constants {
         // public static final double BACK_LEFT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(40.78);
         // public static final double FRONT_LEFT_ABS_ENCODER_OFFSET_RAD =  Math.toRadians(117.86);
 
-        // public static final double FRONT_RIGHT_ABS_ENCODER_OFFSET_RAD =  Math.toRadians(303.2);
-        // public static final double BACK_RIGHT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(305.5);
-        // public static final double FRONT_LEFT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(44.6);
-        // public static final double BACK_LEFT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(77.5);
+        public static final double FRONT_LEFT_ABS_ENCODER_OFFSET_RAD =  Math.toRadians(263.408203125);
+        public static final double FRONT_RIGHT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(253.476562);
+        public static final double BACK_LEFT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(113.818359375);
+        public static final double BACK_RIGHT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(57.568359375);
 
     }
 
@@ -115,12 +119,11 @@ public class Constants {
         public static final boolean kFacingDriversOnStart = true;
 
         // Balance
-        public static final double kChargeStationAngle = 14.0; // TODO: tune (pitch angle of bot on charge station)
+        public static final double kChargeStationAngle = 11.0; // TODO: tune (pitch angle of bot on charge station)
         public static final double kOnChargeStationTolerance = 1.0; // TODO: tune (pitch angle tolerance for bot to be considered on charge station)
-        public static final double kChargeStationBalanceTolerance = 1.0; // TODO: tune (pitch angle tolerance while climbing for charge station to be considered falling)
+        public static final double kChargeStationBalanceTolerance = 2; // TODO: tune (pitch angle tolerance while climbing for charge station to be considered falling)
         public static final double BALANCE_END_TIME_THRESHOLD = 0.5; // 0.5
-        public static final double BALANCE_END_ANGLE_THRESHOLD = 5; 
-        public static final double kSpeedWhileClimbing = 0.02;
+        public static final double kSpeedWhileClimbing = -0.03;
 
         // PID Turn
         public static final double kPTurn = 0.3; //0.2
