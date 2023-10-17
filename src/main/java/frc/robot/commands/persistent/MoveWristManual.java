@@ -6,7 +6,7 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Wrist;
 import frc.robot.subsystems.Arm;
 import frc.util.Util;
-import frc.util.commands.PersistentCommand;
+import frc.util.wpilib_defaults.commands.PersistentCommand;
 
 public class MoveWristManual extends PersistentCommand {
     private final Wrist wrist;

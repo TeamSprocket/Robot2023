@@ -3,55 +3,24 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.cscore.CameraServerCvJNI;
-import edu.wpi.first.cscore.CvSink;
-import edu.wpi.first.wpilibj.GenericHID;
+
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.macro.LimelightAlign;
-import frc.robot.commands.macro.ResetEncoders;
-import frc.robot.commands.macro.SetDeport;
-import frc.robot.commands.macro.SetHigh;
-import frc.robot.commands.macro.SetHighCube;
-import frc.robot.commands.macro.SetHome;
-import frc.robot.commands.macro.SetLowConeTilted;
-import frc.robot.commands.macro.SetLowCube;
-import frc.robot.commands.macro.SetMid;
-import frc.robot.commands.macro.SetMidCube;
-import frc.robot.commands.macro.timed.PIDTurnTimed;
-import frc.robot.commands.macro.SetHumanPlayer;
-import frc.robot.commands.macro.SetLowConeStanding;
-import frc.robot.commands.persistent.Elevate;
-import frc.robot.commands.persistent.MoveArmJoystick;
-import frc.robot.commands.persistent.MoveWristManual;
-import frc.robot.commands.persistent.RollClaw;
-import frc.robot.commands.persistent.SwerveDriveCmd;
-// import frc.robot.commands.auton.AutonBalance;
-import frc.robot.commands.auton.*;
-// import frc.robot.commands.persistent.VibrateControllerTimed;
-import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Claw;
-import frc.robot.subsystems.SwerveDrive;
-import frc.robot.subsystems.Wrist;
+import frc.robot.commands.auton_routines.*;
+import frc.robot.commands.macro.*;
+import frc.robot.commands.persistent.*;
+import frc.robot.commands.superstructure.*;
+import frc.robot.subsystems.*;
 import frc.robot.subsystems.SwerveDrive.Direction;
-import frc.robot.subsystems.LEDStrip;
-/**
- * This class is where the bulk of the robot should be declared. Since
- * Command-based is a "declarative" paradigm, very little robot logic should
- * actually be handled in the {@link Robot} periodic methods (other than the
- * scheduler calls). Instead, the structure of the robot (including subsystems,
- * commands, and button mappings) should be declared here.
- */
+
 public final class RobotContainer {
+
 	Timer timer;
 	double last = 0.0;
 	double[] desiredStates = new double[13];
@@ -161,8 +130,8 @@ public final class RobotContainer {
 
 
 		// --------------------=Operator=-------------------- ,
-		elevator.setDefaultCommand(new Elevate(elevator, operator));
-		arm.setDefaultCommand(new MoveArmJoystick(arm, operator));
+		elevator.setDefaultCommand(new MoveElevatorManual(elevator, operator));
+		arm.setDefaultCommand(new MoveArmManual(arm, operator));
 		wrist.setDefaultCommand(new MoveWristManual(wrist, operator));
 		new JoystickButton(operator, RobotMap.Controller.A).whenHeld(new SetMid(elevator, arm, wrist));
 		new JoystickButton(operator, RobotMap.Controller.B).whenHeld(new SetHighCube(elevator, arm, wrist));

@@ -6,7 +6,6 @@ package frc.robot.commands.macro;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -53,6 +52,7 @@ public class BalanceOnChargeStation extends CommandBase {
   public void execute() {
     timer.start();
     double speed = speedInitial;
+
     double turn = 0;
 
     
@@ -84,6 +84,8 @@ public class BalanceOnChargeStation extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     swerveDrive.stopModules();
+    System.out.println("BALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nBALANCED\nsBALANCED\nBALANCED\nBALANCED");
+    // lockWheels();
   }
 
   @Override

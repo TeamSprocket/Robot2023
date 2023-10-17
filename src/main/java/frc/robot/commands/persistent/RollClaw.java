@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Claw;
 import frc.util.Util;
-import frc.util.commands.PersistentCommand;
+import frc.util.wpilib_defaults.commands.PersistentCommand;
 
 public class RollClaw extends CommandBase {
     private final Claw claw;
