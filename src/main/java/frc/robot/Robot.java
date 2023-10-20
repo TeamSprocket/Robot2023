@@ -40,11 +40,7 @@ public class Robot extends TimedRobot {
      * used for any initialization code.
      */
     @Override
-    public void robotInit() {
-        robotContainer.postAutonChoices();
-        robotContainer.setSwerveDriveCurrentLimitTurn(Constants.Drivetrain.kTurnCurrentLimit);
-        robotContainer.setSwerveDriveCurrentLimitDrive(Constants.Drivetrain.kDriveCurrentLimit);
-    }
+    public void robotInit() {}
 
     /**
      * This function is called every robot packet, no matter the mode. Use this for items like
@@ -57,9 +53,6 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
         robotContainer.clearStickyFaults();
-        robotContainer.outputPitch();
-        
-        // SmartDashboard.put robotContainer.getCameraFeed();
     }
 
     /**
@@ -67,26 +60,16 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void disabledInit() {
-        Constants.isEnabled = false;
-
         CommandScheduler.getInstance().cancelAll();
-        robotContainer.setTurnDefaultMode(NeutralMode.Coast);
-        robotContainer.setDriveDefaultMode(NeutralMode.Coast);
     }
 
     @Override
-    public void disabledPeriodic() {
-    }
+    public void disabledPeriodic() {}
 
     /** This function is run once each time the robot enters autonomous mode. */
     @Override
     public void autonomousInit() {
         Constants.isEnabled = false;
-        Constants.isEnabled = false;
-        robotContainer.setTurnDefaultMode(NeutralMode.Brake);
-        robotContainer.setDriveDefaultMode(NeutralMode.Brake);
-        robotContainer.autonInit();
-        this.auton = robotContainer.getAutonomousCommand();
 
         if(auton!=null) {
             auton.schedule();
@@ -109,21 +92,17 @@ public class Robot extends TimedRobot {
         Constants.isEnabled = true;
         CommandScheduler.getInstance().cancelAll();
         robotContainer.getSwerveDrive().updateTargetHeading(); 
-
-        robotContainer.setTurnDefaultMode(NeutralMode.Coast);
-        robotContainer.setDriveDefaultMode(NeutralMode.Coast);
-        robotContainer.getSwerveDrive().zeroDrive();
         robotContainer.configureButtonBindings();
-        
+
+
+        // REMOVE REMOVE REMOVE REMOVE REMOVE REMOVE REMOVE REMOVE REMOVE REMOVE REMOVE REMOVE REMOVE REMOVE REMOVE REMOVE REMOVE REMOVE 
+        robotContainer.getSwerveDrive().zeroTurnABS();
     }
     
     /** This function is called periodically during teleoperated mode. */
     @Override
     public void teleopPeriodic() {
-        robotContainer.initRumbleTimer();
-
-        // robotContainer.outputAutonLog();
-        // robotContainer.outputAutonLog();
+        
     }
 
 

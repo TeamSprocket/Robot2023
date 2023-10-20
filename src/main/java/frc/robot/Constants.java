@@ -99,10 +99,10 @@ public class Constants {
         // public static final boolean BACK_LEFT_T_IS_REVERSED = false;
         // public static final boolean FRONT_LEFT_T_IS_REVERSED = false; 
 
-        // public static final double BACK_RIGHT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(56.78);
-        // public static final double FRONT_RIGHT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(117.86);
-        // public static final double BACK_LEFT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(40.78);
-        // public static final double FRONT_LEFT_ABS_ENCODER_OFFSET_RAD =  Math.toRadians(117.86);
+        public static final double BACK_RIGHT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(0.0);
+        public static final double FRONT_RIGHT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(0.0);
+        public static final double BACK_LEFT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(0.0);
+        public static final double FRONT_LEFT_ABS_ENCODER_OFFSET_RAD =  Math.toRadians(0.0);
 
         // public static final double FRONT_RIGHT_ABS_ENCODER_OFFSET_RAD =  Math.toRadians(303.2);
         // public static final double BACK_RIGHT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(305.5);
