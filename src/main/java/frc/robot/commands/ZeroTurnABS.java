@@ -21,25 +21,27 @@ public class ZeroTurnABS extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    timer.reset();
-    resetTicks = swerveDrive.getTurnResetTicks();
+    // timer.reset();
+    // resetTicks = swerveDrive.getTurnResetTicks();
+    swerveDrive.resetTurnABS();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    timer.start();
+    // timer.start();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    swerveDrive.zeroTurnABS();
+    // swerveDrive.zeroTurnABS();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return timer.get() > 0.1;
+    // return timer.get() > 0.1;
+    return true;
   }
 }

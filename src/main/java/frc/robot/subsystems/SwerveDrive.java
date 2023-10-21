@@ -78,11 +78,17 @@ public class SwerveDrive extends SubsystemBase {
     }
 
 
+    public void resetTurnABS() {
+        frontLeft.resetTurnABS();
+    }
+
+
 
     public void putDebugInfo() {
         SmartDashboard.putNumber("FrontLeftAngleABS", Math.toDegrees(frontLeft.getAbsEncoderRad()));
-
-        SmartDashboard.putNumber("FrontLeftAngleTalonEncoder", Math.toDegrees(frontLeft.getTurnPositionRad()));
+        SmartDashboard.putNumber("FrontLeftAngleTalonEncoder", frontLeft.getTurnPositionRad());
+        
+        SmartDashboard.putNumber("FrontLeftResetTicks", frontLeft.getTurnResetTicks());
 
     }
 
