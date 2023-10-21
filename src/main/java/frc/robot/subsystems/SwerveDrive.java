@@ -60,6 +60,10 @@ public class SwerveDrive extends SubsystemBase {
         frontLeft.resetTurnABS();
     }
 
+    public double getTurnResetTicks() {
+        return frontLeft.getTurnResetTicks();
+    }
+
     // Set module speeds/angles
     public void setModuleSpeeds(double xSpeed, double ySpeed, double tSpeed) {
         ChassisSpeeds chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, tSpeed, new Rotation2d(gyro.getAngle()));

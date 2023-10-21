@@ -89,7 +89,9 @@ public class SwerveModule extends SubsystemBase {
 
     }
 
-    public void resetTurnABS() {
+
+
+    public double getTurnResetTicks() {
       double angleRad = absEncoder.getAbsolutePosition();
       angleRad = Math.toRadians(angleRad);
       angleRad -= absEncoderOffsetRad;
@@ -100,8 +102,15 @@ public class SwerveModule extends SubsystemBase {
       double turnPerc = angleRad / (2.0 * Math.PI);
       double turnPercWithRatio = turnPerc * Constants.Drivetrain.kTurningMotorGearRatio;
       double turnTicksWithRatio = turnPercWithRatio * 2048.0;
-      turnMotor.setSelectedSensorPosition(turnTicksWithRatio);
+      return turnTicksWithRatio;
     }
+    public void resetTurnABS() {
+      turnMotor.setSelectedSensorPosition(getTurnResetTicks());
+    }
+
+
+
+
 
     public void setDesiredState(SwerveModuleState swerveState) {
       double driveSpd = swerveState.speedMetersPerSecond / Constants.Drivetrain.kMaxSpeed;

@@ -11,7 +11,7 @@ import frc.robot.subsystems.SwerveDrive;
 public class ZeroTurnABS extends CommandBase {
   SwerveDrive swerveDrive;
   Timer timer = new Timer();
-  double[] resetTicks;
+  double resetTicks;
 
   public ZeroTurnABS(SwerveDrive swerveDrive) {
     this.swerveDrive = swerveDrive; 
@@ -34,12 +34,12 @@ public class ZeroTurnABS extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    swerveDrive.zeroTurnABSManual(resetTicks);
+    swerveDrive.zeroTurnABS();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return timer.get() > 0.05;
+    return timer.get() > 0.1;
   }
 }

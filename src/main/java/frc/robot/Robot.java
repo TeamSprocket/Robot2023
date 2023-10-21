@@ -91,7 +91,7 @@ public class Robot extends TimedRobot {
     public void teleopInit() {
         Constants.isEnabled = true;
         CommandScheduler.getInstance().cancelAll();
-        robotContainer.getSwerveDrive().updateTargetHeading(); 
+        // robotContainer.getSwerveDrive().updateTargetHeading(); 
         robotContainer.configureButtonBindings();
 
 

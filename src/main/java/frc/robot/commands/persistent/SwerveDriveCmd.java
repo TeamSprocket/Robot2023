@@ -89,7 +89,7 @@ public class SwerveDriveCmd extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    swerveDrive.stopModules();
+    // swerveDrive.stopModules();
   }
 
   @Override

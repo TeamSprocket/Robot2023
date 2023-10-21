@@ -3,7 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.commands.ZeroTurn;
+// import frc.robot.commands.ZeroTurn;
 import frc.robot.commands.persistent.SwerveDriveCmd;
 import frc.robot.commands.ZeroTurnABS;
 import frc.robot.subsystems.SwerveDrive;
@@ -29,8 +29,8 @@ public final class RobotContainer {
 			() -> driver.getLeftX(), 
 			// T
 			() -> -driver.getRightX()));
-			driver.x().onTrue(new ZeroTurn(swerveDrive));
-			driver.a().onTrue(new ZeroTurnABS(swerveDrive));
+			// driver.x().onTrue(new ZeroTurn(swerveDrive));
+			driver.x().onTrue(new ZeroTurnABS(swerveDrive));
 	}
 
 	public SwerveDrive getSwerveDrive() {
@@ -39,7 +39,7 @@ public final class RobotContainer {
 
 	public void clearStickyFaults() {
 		pdh.clearStickyFaults();
-		swerveDrive.clearStickyFaults();
+		// swerveDrive.clearStickyFaults();
 	}
 	
 }
