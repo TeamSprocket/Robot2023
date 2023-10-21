@@ -8,6 +8,7 @@ import edu.wpi.first.math.util.Units;
 public class Constants {
     // Global
     public static boolean isEnabled = false;
+    public static boolean isScoreConeAlign = false;
     public static final double kSetHomeTimeTolerance = 2.0; // TODO: amount of time to set home before confirm stowed (sec)
     public static final int kGyroInitDelayMS = 1000;
 
@@ -141,6 +142,20 @@ public class Constants {
         // public static final double kPDriveToTargetT = 1;
         // public static final double kIDriveToTargetT = 0.0;
         // public static final double kDDriveToTargetT = 0.0;
+    }
+
+
+    public static class LL {
+        // Shoot Cone
+        public static final double kShootConeSpeed = 0.5;
+        public static final double kShootConeDuration = 0.5;
+
+        // Score Cone Align
+        public static final double kYPosSetpoint = 0.0;
+        public static final double kPScoreConeAlignY = 0.0;
+        public static final double kIScoreConeAlignY = 0.0;
+        public static final double kDScoreConeAlignY = 0.0; 
+
     }
 
 
