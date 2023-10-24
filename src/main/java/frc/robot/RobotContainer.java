@@ -3,11 +3,10 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
-import edu.wpi.first.wpilibj.DriverStation;
+
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -39,8 +38,6 @@ public final class RobotContainer {
 	private final Wrist wrist = new Wrist();
 	private final Claw claw = new Claw();
 	private final PowerDistribution pdh = new PowerDistribution();
-
-	SendableChooser<Alliance> AllianceChooser = new SendableChooser<>();
 
 	SendableChooser<Command> autonChooser = new SendableChooser<>();
 	
@@ -88,14 +85,6 @@ public final class RobotContainer {
 		timer.reset(); 
 	}	
 
-
-	public void postAllianceChoices() {
-		AllianceChooser.addOption("NONE CHOSEN", Alliance.Invalid);
-		AllianceChooser.addOption("BLUE", Alliance.Blue);
-		AllianceChooser.addOption("RED", Alliance.Red);
-	}
-
-
 	// --------------------=Auton Selection=--------------------
 	public void postAutonChoices() {
 		autonChooser.addOption("Do Nothing - ALL", autonDoNothing);
@@ -129,7 +118,7 @@ public final class RobotContainer {
 			() -> -driver.getRightX()));
 		claw.setDefaultCommand(new RollClaw(claw, driver));
 		new JoystickButton(driver, RobotMap.Controller.RB).whenPressed(() -> swerveDrive.zeroHeading());
-		new JoystickButton(driver, RobotMap.Controller.LB).whenPressed(new LLScoreConeAlign(swerveDrive, claw, getAlliance()));
+		new JoystickButton(driver, RobotMap.Controller.LB).whenPressed(() -> swerveDrive.togglePrecise());
 		new JoystickButton(driver, RobotMap.Controller.Y).whenPressed(() -> swerveDrive.updateHeading(Direction.FRONT));
 		new JoystickButton(driver, RobotMap.Controller.X).whenPressed(() -> swerveDrive.updateHeading(Direction.LEFT));
 		new JoystickButton(driver, RobotMap.Controller.B).whenPressed(() -> swerveDrive.updateHeading(Direction.RIGHT));
@@ -162,16 +151,6 @@ public final class RobotContainer {
 		swerveDrive.zeroTalons();
 		// swerveDrive.calibrateGyro();
 		swerveDrive.zeroHeading();	
-	}
-	
-	public Alliance getAlliance() {
-		Alliance chooserSelection = AllianceChooser.getSelected();
-		if (chooserSelection.equals(Alliance.Invalid)) {
-			return DriverStation.getAlliance();
-		} else {
-			return chooserSelection;
-		}
-
 	}
 
 	public SwerveDrive getSwerveDrive() {

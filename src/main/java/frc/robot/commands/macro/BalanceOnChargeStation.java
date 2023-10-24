@@ -21,12 +21,17 @@ public class BalanceOnChargeStation extends CommandBase {
   SwerveDrive swerveDrive;
   double speedInitial;
   boolean onRamp = false;
+<<<<<<< HEAD
+  Timer timer = new Timer();
+  Timer endTimer = new Timer();
+=======
   Timer timer;
   double waitTime = 2;
   Timer endTimer;
 
   double onRampAngle = Constants.Auton.kChargeStationAngle;
 
+>>>>>>> RawcTest
   double duration;
 
   /**
@@ -36,6 +41,13 @@ public class BalanceOnChargeStation extends CommandBase {
    */
   public BalanceOnChargeStation(SwerveDrive swerveDrive, double speedInitial, double duration) {
     this.swerveDrive = swerveDrive;
+<<<<<<< HEAD
+    this.speedInitial = speedInitial / 10.0;
+    this.duration = duration;
+
+    // Deadband (hard limit)
+    Util.minmax(this.speedInitial, -0.2, 0.2);
+=======
     this.timer = new Timer();
     this.endTimer = new Timer();
     this.speedInitial = -speedInitial;
@@ -51,17 +63,26 @@ public class BalanceOnChargeStation extends CommandBase {
   /** Creates a new BalanceOnChargeStation. */
   // public BalanceOnChargeStation() {
     // Use addRequirements() here to declare subsystem dependencies.
+>>>>>>> RawcTest
   }
 
   @Override
   public void initialize() {
     timer.reset();
     endTimer.reset();
+<<<<<<< HEAD
+    
+=======
     // swerveDrive.zeroPitch();
+  }
+  
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {
+>>>>>>> RawcTest
     swerveDrive.setTurnDefaultMode(NeutralMode.Brake);
     swerveDrive.setDriveDefaultMode(NeutralMode.Brake);
   }
-  
   
   @Override
   public void execute() {
@@ -77,17 +98,36 @@ public class BalanceOnChargeStation extends CommandBase {
 
     if (onRamp) {
         speed = Constants.Auton.kSpeedWhileClimbing;
+<<<<<<< HEAD
+
+      if (swerveDrive.getPitchDeg() >= (Constants.Auton.kChargeStationAngle - Constants.Auton.kChargeStationBalanceTolerance)) {
+        endTimer.stop();
+      } else { // Below tolerance
+=======
         endTimer.reset();
       } else { //falling
         speed = 0;
         turn = 0.01;
+>>>>>>> RawcTest
         endTimer.start();
       }
+    }
 
-    // SmartDashboard.putBoolean("On Ramp", onRamp);
-    // SmartDashboard.putNumber("Balance drive spd", speed);
+<<<<<<< HEAD
+    // Lock Wheels
+    if (endTimer.get() >= Constants.Auton.BALANCE_END_TIME_THRESHOLD) {
+      speed = 0;
+      turn = 0.01;
+    } 
 
+    putDebugInfo(speed);
+=======
+    SmartDashboard.putBoolean("On Ramp", onRamp);
+    SmartDashboard.putNumber("Balance drive spd", speed);
+
+>>>>>>> RawcTest
     setSpeeds(speed, turn);
+    
   }
   
   @Override

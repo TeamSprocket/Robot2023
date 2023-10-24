@@ -42,7 +42,6 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         robotContainer.postAutonChoices();
-        robotContainer.postAllianceChoices();
         robotContainer.setSwerveDriveCurrentLimitTurn(Constants.Drivetrain.kTurnCurrentLimit);
         robotContainer.setSwerveDriveCurrentLimitDrive(Constants.Drivetrain.kDriveCurrentLimit);
     }

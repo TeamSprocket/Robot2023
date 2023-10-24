@@ -1,15 +1,21 @@
 
-package frc.robot.commands.auton_routines;
+package frc.robot.commands.auton;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.*;
-import frc.robot.commands.macro.auton.*;
-import frc.robot.commands.superstructure.auton.*;
 // import frc.robot.commands.macro.BalanceOnChargeStation;
 import frc.robot.commands.macro.BalanceOnChargeStation;
+import frc.robot.commands.macro.timed.DeportArmTimed;
+import frc.robot.commands.macro.timed.LimelightAlignTimed;
+import frc.robot.commands.macro.timed.PIDTurnTimed;
+import frc.robot.commands.macro.timed.RollClawTimed;
+import frc.robot.commands.macro.timed.SetHighTimedCube;
+import frc.robot.commands.macro.timed.SwerveDriveCmdTimed;
+import frc.robot.commands.macro.timed.WaitTimed;
+import frc.robot.commands.macro.timed.ZeroHeadingTimed;
 import frc.robot.commands.persistent.RollClaw;
 import frc.robot.subsystems.SwerveDrive;
 
