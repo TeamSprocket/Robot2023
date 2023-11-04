@@ -42,7 +42,7 @@ public class RollClaw extends CommandBase {
         // claw.moveClaw(0.1);
 
         // System.out.println(deadbandedInput);
-        // SmartDashboard.putNumber("Claw Speed", input);
+        // SmartDashboard.putNumber("Intake Speed", input);
         
 
     }

@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -69,46 +68,7 @@ public final class RobotContainer {
 	private final Wrist wrist = new Wrist();
 	private final Claw claw = new Claw();
 	private final PowerDistribution pdh = new PowerDistribution();
-
-	SendableChooser<Command> autonChooser = new SendableChooser<>();
-	
-
-	// return new AutonOneCubeOnly(swerveDrive, elevator, arm, wrist, claw);
-
-	/////////////// Universal 
-	// return new AutonDoNothing();
-	// return new AutonBloop(swerveDrive, elevator, arm, wrist, claw);
-	// return new AutonHighOneCube(swerveDrive, elevator, arm, wrist, claw);
-	// return new AutonTwoCube(swerveDrive, elevator, arm, wrist, claw);
-
-	/////////////// Middle (location bot starts from POV of drivers)
-	// return new AutonBloopBalance(swerveDrive, elevator, arm, wrist, claw);
-	// return new AutonBloopBalanceReverse(swerveDrive, elevator, arm, wrist, claw);
-	// return new AutonOnezzHighCubeBalance(swerveDrive, elevator, arm, wrist, claw);
-
-	/////////////// Right (location bot starts from POV of drivers)
-	// return new AutonHighOneCube(swerveDrive, elevator, arm, wrist, claw);
-	// return new AutonHighOneCubeNoTaxi(swerveDrive, elevator, arm, wrist, claw);
-
-	/////////////// Left (location bot starts from POV of drivers)
-	// return new AutonOneHighCubeBalanceRight(swerveDrive, elevator, arm, wrist, claw);
-	// return new AutonHighOneCubeNoTaxiLeft(swerveDrive, elevator, arm, wrist, claw);
-
-	// return new AutonTester(swerveDrive, elevator, arm, wrist, claw);
 	// private final LEDStrip ledStrip = new LEDStrip();
-
-	Command autonDoNothing = new AutonDoNothing();
-	// Command autonBloopBalance = new AutonBloopBalance(swerveDrive, elevator, arm, wrist, claw);
-	Command autonHighCubeBalance = new AutonHighCubeBalance(swerveDrive, elevator, arm, wrist, claw);
-	// Command autonHighCubeNoTaxiLeft = new AutonHighOneCubeNoTaxiLeft(swerveDrive, elevator, arm, wrist, claw);
-	// Command autonHighCubeNoTaxiRight = new AutonHighOneCubeNoTaxiRight(swerveDrive, elevator, arm, wrist, claw);
-	Command autonHighOneCubeLeft = new AutonHighOneCubeLeft(swerveDrive, elevator, arm, wrist, claw);
-	Command autonHighOneCubeRight = new AutonHighOneCubeRight(swerveDrive, elevator, arm, wrist, claw);
-
-	// Command autonHighTwoCubeRight = new AutonTwoCubeRight(swerveDrive, elevator, arm, wrist, claw);
-	
-	// Command autonHighCubeLeft = new ();
-	// Command autonHighCubeRight = new AutonHighOneCubeRight();
 
 	
 	public RobotContainer() {	
@@ -117,24 +77,28 @@ public final class RobotContainer {
 	}	
 
 	// --------------------=Auton Selection=--------------------
-	public void postAutonChoices() {
-		autonChooser.addOption("Do Nothing - ALL", autonDoNothing);
-		// autonChooser.addOption("Bloop Balance - MID", autonBloopBalance);
-		autonChooser.addOption("High Cube Balance - MID", autonHighCubeBalance);
-		// autonChooser.addOption("High Cube No Taxi - LEFT", autonHighCubeNoTaxiLeft);
-		// autonChooser.addOption("High Cube No Taxi - RIGHT", autonHighCubeNoTaxiRight);
-		autonChooser.addOption("High Cube Taxi - LEFT", autonHighOneCubeLeft);
-		autonChooser.addOption("High Cube Taxi - RIGHT", autonHighOneCubeRight);
+public Command getAutonomousCommand() {
+// return new AutonOneCubeOnly(swerveDrive, elevator, arm, wrist, claw);
 
-		// autonChooser.addOption("[NOT WORKING] Two High Cube Taxi - RIGHT", autonHighTwoCubeRight);
-		
-		SmartDashboard.putData(autonChooser);
+/////////////// Universal 
+return new AutonDoNothing();
+// return new AutonBloop(swerveDrive, elevator, arm, wrist, claw);
+// return new AutonHighOneCube(swerveDrive, elevator, arm, wrist, claw);
+// return new AutonTwoCube(swerveDrive, elevator, arm, wrist, claw);
 
-	}
-		
-	public Command getAutonomousCommand() {
-		return autonChooser.getSelected();
-	}
+/////////////// Middle (location bot starts from POV of drivers)
+// return new AutonBloopBalance(swerveDrive, elevator, arm, wrist, claw);
+// return new AutonBloopBalanceReverse(swerveDrive, elevator, arm, wrist, claw);
+// return new AutonOneHighCubeBalance(swerveDrive, elevator, arm, wrist, claw);
+
+/////////////// Right (location bot starts from POV of drivers)
+// return new AutonHighOneCube(swerveDrive, elevator, arm, wrist, claw);
+
+/////////////// Left (location bot starts from POV of drivers)
+// return new AutonOneHighCubeBalanceRight(swerveDrive, elevator, arm, wrist, claw);
+
+// return new AutonTester(swerveDrive, elevator, arm, wrist, claw);
+}
 	
 
 
@@ -237,8 +201,8 @@ public final class RobotContainer {
 		// swerveDrive.clearStickyFaults();
 	}
 
-	// public WPI_TalonFX getClawMotorObj() {
-		// return claw.getClawMotor();
+	// public WPI_TalonFX getIntakeMotorObj() {
+		// return claw.getIntakeMotor();
 	// }
 
 	public void resetEncoders() {

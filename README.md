@@ -20,7 +20,7 @@ Special Thanks to
 - Swerve Drive (MK4I L2)
 - Single Stage Elevator
 - Double Jointed Arm
-- Cone + Cube Roller Claw
+- Cone + Cube Roller Intake
 
 ## Significant Features
 - Field Oriented Swerve Drive

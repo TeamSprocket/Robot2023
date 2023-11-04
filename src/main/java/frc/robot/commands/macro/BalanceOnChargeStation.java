@@ -12,100 +12,99 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.SwerveDrive;
-import frc.util.Util;
 
 public class BalanceOnChargeStation extends CommandBase {
   SwerveDrive swerveDrive;
+  // ADIS16470_IMU gyro;
+  boolean isFinished = false;
   double speedInitial;
   boolean onRamp = false;
-  Timer timer = new Timer();
-  Timer endTimer = new Timer();
-  double duration;
+  Timer timer, rampTimer;
+  double waitTime = 2;
+  Timer endTimer, onRampTimer;
 
+  double onRampAngle = Constants.Auton.kChargeStationAngle;
+
+  double duration;
+  // PIDController controller;
+   
   /**
    * 
    * @param swerveDrive swerveDrive object
    * @param speedInitial initiall speed to approach charging station at, reduced to 0.05 if it surpasses it
    */
-  public BalanceOnChargeStation(SwerveDrive swerveDrive, double speedInitial, double duration) {
+  public BalanceOnChargeStation(SwerveDrive swerveDrive, double speedInitial, boolean climbFromBackOfBot, double duration) {
     this.swerveDrive = swerveDrive;
-    this.speedInitial = speedInitial / 10.0;
+    this.timer = new Timer();
+    this.endTimer = new Timer();
+    this.onRampTimer = new Timer();
+    this.speedInitial = -1.0 * speedInitial;
     this.duration = duration;
 
-    // Deadband (hard limit)
-    Util.minmax(this.speedInitial, -0.2, 0.2);
+    if (!climbFromBackOfBot) {
+      this.speedInitial *= -1;
+      this.onRampAngle *= -1;
+    }
+
+    if (this.speedInitial >= 0.1) {
+      this.speedInitial = 0.1;
+    }
+    if (this.speedInitial <= -0.1) {
+      this.speedInitial = -0.1;
+    }
+    // this.gyro = new ADIS16470_IMU();
+  /** Creates a new BalanceOnChargeStation. */
+  // public BalanceOnChargeStation() {
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
+  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     timer.reset();
     endTimer.reset();
-    
-    swerveDrive.setTurnDefaultMode(NeutralMode.Brake);
-    swerveDrive.setDriveDefaultMode(NeutralMode.Brake);
+    onRampTimer.reset();
+    // swerveDrive.zeroPitch();
   }
   
+  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    swerveDrive.setTurnDefaultMode(NeutralMode.Brake);
+    swerveDrive.setDriveDefaultMode(NeutralMode.Brake);
+
     timer.start();
+
     double speed = speedInitial;
     double turn = 0;
 
-    
-    if (Math.abs(swerveDrive.getPitchDeg()) >= (Constants.Auton.kChargeStationAngle - Constants.Auton.kOnChargeStationTolerance)) {
+    if (Math.abs(swerveDrive.getPitchDeg()) >= (onRampAngle - Constants.Auton.kOnChargeStationTolerance)) {
       onRamp = true;
-    } 
+    }
 
     if (onRamp) {
+      if (swerveDrive.getPitchDeg() >= (onRampAngle - Constants.Auton.kChargeStationBalanceTolerance)) { //climbing
         speed = Constants.Auton.kSpeedWhileClimbing;
-
-      if (swerveDrive.getPitchDeg() >= (Constants.Auton.kChargeStationAngle - Constants.Auton.kChargeStationBalanceTolerance)) {
-        endTimer.stop();
-      } else { // Below tolerance
+      } else { //falling
+        speed = 0;
+        turn = 0.01;
         endTimer.start();
       }
     }
 
-    // Lock Wheels
-    if (endTimer.get() >= Constants.Auton.BALANCE_END_TIME_THRESHOLD) {
-      speed = 0;
-      turn = 0.01;
-    } 
-
-    putDebugInfo(speed);
     setSpeeds(speed, turn);
     
   }
-  
-  @Override
-  public void end(boolean interrupted) {
-    swerveDrive.stopModules();
-  }
-
-  @Override
-  public boolean isFinished() {
-    return timer.get() > duration || endTimer.get() >= (Constants.Auton.BALANCE_END_TIME_THRESHOLD + 0.5);
-    // return timer.get() > duration || endTimer.get() >= (Constants.Auton.BALANCE_END_TIME_THRESHOLD);
-  }
-
-
-
-
-
-
 
   public void setSpeeds(double output, double turn) {
-    double vYSpeed = -1 * output;
-
     ChassisSpeeds chassisSpeeds;
     if (Constants.Drivetrain.kIsFieldOriented) {
       double headingRad = Math.toRadians(swerveDrive.getHeading());
       chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-        vYSpeed, 0, turn, new Rotation2d(headingRad));
+          output, 0, turn, new Rotation2d(headingRad));
     } else { 
       chassisSpeeds = new ChassisSpeeds(output, 0, 0);
     }
@@ -117,15 +116,16 @@ public class BalanceOnChargeStation extends CommandBase {
     swerveDrive.setModuleStates(moduleStates);
   }
 
-  public void putDebugInfo(double speed) {
-    SmartDashboard.putBoolean("On Ramp", onRamp);
-    SmartDashboard.putNumber("Balance drive spd", speed);
-
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {
+    swerveDrive.stopModules();
   }
 
-
-
-
-  
-
+  // Returns true when the command should end.
+  @Override
+  public boolean isFinished() {
+    return timer.get() > duration || endTimer.get() >= Constants.Auton.BALANCE_END_TIME_THRESHOLD;
+    
+  }
 }

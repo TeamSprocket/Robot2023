@@ -22,17 +22,6 @@ public final class Util {
       return value;
   }
   
-  public static double minmax(double value, double min, double max) {
-    if (value > max) {
-      return max;
-    } else if (value < min) {
-      return min;
-    } else {
-      return value;
-    }
-  }
-
-
   /**
    * Corrects an input based on a polynomial function.
    */
