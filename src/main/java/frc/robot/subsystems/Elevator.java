@@ -15,32 +15,32 @@ import frc.robot.RobotMap;
 public class Elevator extends SubsystemBase{
     
     private CANSparkMax elevatorLeft = new CANSparkMax(RobotMap.Elevator.ELEVATOR_LEFT, MotorType.kBrushless);
-    private CANSparkMax elevatorRight = new CANSparkMax(RobotMap.Elevator.ELEVATOR_RIGHT, MotorType.kBrushless);
+    // private CANSparkMax elevatorRight = new CANSparkMax(RobotMap.Elevator.ELEVATOR_RIGHT, MotorType.kBrushless);
 
     private final PIDController elevatorPIDController = new PIDController(Constants.Elevator.kP, Constants.Elevator.kI, Constants.Elevator.kD);
 
     private RelativeEncoder elevatorLeftEncoder = elevatorLeft.getEncoder();
-    private RelativeEncoder elevatorRightEncoder = elevatorRight.getEncoder();
+    // private RelativeEncoder elevatorRightEncoder = // elevatorRight.getEncoder();
     
 
     public Elevator(){
         elevatorLeft.restoreFactoryDefaults();
-        elevatorRight.restoreFactoryDefaults();
+        // elevatorRight.restoreFactoryDefaults();
 
 
         elevatorLeft.setInverted(true);
-        elevatorRight.setInverted(false);
+        // elevatorRight.setInverted(false);
 
-        elevatorRight.follow(elevatorLeft, true); 
+        // elevatorRight.follow(elevatorLeft, true); 
         
         elevatorLeft.enableVoltageCompensation(8);
-        elevatorRight.enableVoltageCompensation(8);
+        // elevatorRight.enableVoltageCompensation(8);
 
     }
 
     public void clearStickyFaults() {
         elevatorLeft.clearFaults();
-        elevatorRight.clearFaults();
+        // elevatorRight.clearFaults();
     }
 
 
@@ -58,7 +58,7 @@ public class Elevator extends SubsystemBase{
 
     public void resetElevatorEncoder(){
         elevatorLeft.getEncoder().setPosition(0);
-        elevatorRight.getEncoder().setPosition(0);
+        // elevatorRight.getEncoder().setPosition(0);
     }
 
     public void setElevatorPosition(double currentPosition, double setpoint){
@@ -85,13 +85,13 @@ public class Elevator extends SubsystemBase{
 
     public void stop(){
         elevatorLeft.stopMotor();
-        elevatorRight.stopMotor();
+        // elevatorRight.stopMotor();
     }
 
     @Override
     public void periodic(){
         SmartDashboard.putNumber("[Elvator] Encoder Left", elevatorLeftEncoder.getPosition());
-        SmartDashboard.putNumber("[Elvator] Encoder Right ", elevatorRightEncoder.getPosition());
+        // SmartDashboard.putNumber("[Elvator] Encoder Right ", elevatorRightEncoder.getPosition());
 
 
         SmartDashboard.putNumber("[Elvator] Voltage", elevatorLeft.getBusVoltage());
