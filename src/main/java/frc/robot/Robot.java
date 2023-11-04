@@ -107,13 +107,12 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopInit() {
         Constants.isEnabled = true;
+        Constants.isEnabled = true;
         CommandScheduler.getInstance().cancelAll();
-        robotContainer.getSwerveDrive().updateTargetHeading(); 
-
         robotContainer.setTurnDefaultMode(NeutralMode.Coast);
         robotContainer.setDriveDefaultMode(NeutralMode.Coast);
-        robotContainer.getSwerveDrive().zeroDrive();
         robotContainer.configureButtonBindings();
+        robotContainer.getSwerveDrive().zeroDrive();
         
     }
     
