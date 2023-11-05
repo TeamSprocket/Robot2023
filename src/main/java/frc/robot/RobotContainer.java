@@ -104,7 +104,7 @@ public final class RobotContainer {
 	// Command autonHighCubeNoTaxiRight = new AutonHighOneCubeNoTaxiRight(swerveDrive, elevator, arm, wrist, claw);
 	Command autonHighOneCubeLeft = new AutonHighOneCubeLeft(swerveDrive, elevator, arm, wrist, claw);
 	Command autonHighOneCubeRight = new AutonHighOneCubeRight(swerveDrive, elevator, arm, wrist, claw);
-
+	Command autonLowCube = new AutonLowCube(swerveDrive, elevator, arm, wrist, claw);
 	// Command autonHighTwoCubeRight = new AutonTwoCubeRight(swerveDrive, elevator, arm, wrist, claw);
 	
 	// Command autonHighCubeLeft = new ();
@@ -125,7 +125,7 @@ public final class RobotContainer {
 		// autonChooser.addOption("High Cube No Taxi - RIGHT", autonHighCubeNoTaxiRight);
 		autonChooser.addOption("High Cube Taxi - LEFT", autonHighOneCubeLeft);
 		autonChooser.addOption("High Cube Taxi - RIGHT", autonHighOneCubeRight);
-
+		autonChooser.addOption("Low Cube", autonLowCube);
 		// autonChooser.addOption("[NOT WORKING] Two High Cube Taxi - RIGHT", autonHighTwoCubeRight);
 		
 		SmartDashboard.putData(autonChooser);
