@@ -23,7 +23,7 @@ Special Thanks to
 - Cone + Cube Roller Claw
 
 ## Significant Features
-- Field Oriented Swerve Drive
+- Field Oriented Swerve Drive + Heading Maintainment
 - Automated Command Setpoints
 - Ground Game Piece Pickup (Cube + Standing/Tilted Cones)
 - Limelight Strafe Alignment
