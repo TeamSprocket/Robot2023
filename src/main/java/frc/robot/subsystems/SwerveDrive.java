@@ -119,7 +119,9 @@ public class SwerveDrive extends SubsystemBase {
 
     }
 
-
+    public void setHeadingRad(double angleRad) {
+        this.targetHeading = angleRad;
+    }
 
 
     public void zeroHeading() {
