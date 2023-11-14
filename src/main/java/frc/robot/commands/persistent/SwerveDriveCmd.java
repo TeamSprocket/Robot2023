@@ -71,9 +71,11 @@ public class SwerveDriveCmd extends CommandBase {
     SmartDashboard.putNumber("tSpeed", tSpeed);
 
     // Slew limit (accel)
-    xSpeed = xSlewLimit.calculate(xSpeed) * Constants.Drivetrain.kMaxSpeed;
-    ySpeed = ySlewLimit.calculate(ySpeed) * Constants.Drivetrain.kMaxSpeed;
-    tSpeed = tSlewLimit.calculate(tSpeed) * Constants.Drivetrain.kMaxTurnSpeed;
+    if (!Constants.isScoreConeAlign) {
+      xSpeed = xSlewLimit.calculate(xSpeed) * Constants.Drivetrain.kMaxSpeed;
+      ySpeed = ySlewLimit.calculate(ySpeed) * Constants.Drivetrain.kMaxSpeed;
+      tSpeed = tSlewLimit.calculate(tSpeed) * Constants.Drivetrain.kMaxTurnSpeed;
+    }
     
     SmartDashboard.putNumber("SLEW xSpeed", xSpeed);
     SmartDashboard.putNumber("SLEW ySpeed", ySpeed);

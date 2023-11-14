@@ -30,6 +30,7 @@ public class SwerveDrive extends SubsystemBase {
     double targetHeading;
     PIDController headingController = new PIDController(Constants.Drivetrain.kPHeading, Constants.Drivetrain.kIHeading, Constants.Drivetrain.kDHeading);
     double xSpeed, ySpeed, tSpeed;
+    double scoreConeAlignSpeed = 0;
 
     public enum Direction {
         FRONT, 
@@ -131,6 +132,10 @@ public class SwerveDrive extends SubsystemBase {
 
     public void updateTargetHeading() {
         targetHeading = getHeading();
+    }
+
+    public void setTargetHeading(double targetHeading) {
+        this.targetHeading = targetHeading;
     }
 
     public void zeroTalons() {
@@ -294,23 +299,33 @@ public class SwerveDrive extends SubsystemBase {
         headingController.setSetpoint(targetHeading);
         double tSpeedPID = headingController.calculate(getHeading());
 
-        this.xSpeed = xSpeed;
-        this.ySpeed = ySpeed;
-        this.tSpeed = tSpeedPID;
+        if (!Constants.isScoreConeAlign) {
+            this.xSpeed = xSpeed;
+            this.ySpeed = ySpeed;
+            this.tSpeed = tSpeedPID;
+        } else {
+            this.xSpeed = xSpeed * Constants.Drivetrain.kPreciseMultiplier;
+            this.ySpeed = scoreConeAlignSpeed;
+            this.tSpeed = tSpeedPID;
+        }
     }
 
-    public void setModuleSpeedsHeading(double xSpeed, double ySpeed, double targetHeading) {
-        this.targetHeading = targetHeading;
-        headingController.setSetpoint(this.targetHeading);
-        double tSpeedPID = headingController.calculate(getHeading());
+    public void setScoreConeAlignSpeed(double scoreConeAlignSpeed) {
+        this.scoreConeAlignSpeed = scoreConeAlignSpeed;
+    }
 
+
+    public void setModuleSpeedsManual(double xSpeed, double ySpeed, double tSpeed) {
+        this.targetHeading = getHeading();
+        headingController.setSetpoint(this.targetHeading);
+        
         double headingRad = Math.toRadians(-getHeading());
         if (Constants.Auton.kFacingDriversOnStart) {
             headingRad += Math.PI;
         }
 
         ChassisSpeeds chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-        xSpeed, ySpeed, tSpeedPID, new Rotation2d(headingRad));
+        xSpeed, ySpeed, tSpeed, new Rotation2d(headingRad));
 
         // Calculate module states per module
         SwerveModuleState[] moduleStates = Constants.Drivetrain.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
