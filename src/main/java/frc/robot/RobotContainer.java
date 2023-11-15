@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import frc.robot.commands.macro.LimelightAlign;
 import frc.robot.commands.macro.ResetEncoders;
 import frc.robot.commands.macro.SetDeport;
@@ -73,6 +74,7 @@ public final class RobotContainer {
 
 	SendableChooser<Command> autonChooser = new SendableChooser<>();
 	
+	SendableChooser<Alliance> allianceChooser = new SendableChooser<>();
 
 	// return new AutonOneCubeOnly(swerveDrive, elevator, arm, wrist, claw);
 
@@ -272,6 +274,18 @@ public final class RobotContainer {
 			return 1.0;
 		}
 		return 0.0;
+	}
+
+	public void setTeamColor() {
+		allianceChooser.setDefaultOption("NONE", Alliance.Invalid);
+        allianceChooser.addOption("RED", Alliance.Red);
+        allianceChooser.addOption("BLUE", Alliance.Blue);
+		SmartDashboard.putData(allianceChooser);
+	}
+
+	public Alliance getTeamColor() {
+		Alliance teamColor = allianceChooser.getSelected();
+		return teamColor;
 	}
 
 	public void outputAutonLog() {
