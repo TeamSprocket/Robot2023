@@ -1,115 +1,112 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.ADIS16470_IMU;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 import frc.util.ShuffleboardPIDTuner;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
-import edu.wpi.first.math.kinematics.SwerveModulePosition;
-import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.ADIS16470_IMU;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 public class SwerveDrive extends SubsystemBase {
-    // Init Swerve Modules 
-    private final SwerveModule frontLeft = new SwerveModule(
+  
+  private final ADIS16470_IMU gyro = new ADIS16470_IMU();
+  
+  private final SwerveModule frontLeft = new SwerveModule(
         RobotMap.Drivetrain.FRONT_LEFT_TALON_D,
         RobotMap.Drivetrain.FRONT_LEFT_TALON_T,
         RobotMap.Drivetrain.FRONT_LEFT_ABS_ENCODER_ID,
-        Constants.Drivetrain.FRONT_LEFT_ABS_ENCODER_OFFSET_RAD
-        // true
-        );
+        () -> Constants.Drivetrain.kCANCoderOffsetFrontLeft,
+        Constants.Drivetrain.FRONT_LEFT_D_IS_REVERSED
+  );
+  private final SwerveModule frontRight = new SwerveModule(
+        RobotMap.Drivetrain.FRONT_RIGHT_TALON_D,
+        RobotMap.Drivetrain.FRONT_RIGHT_TALON_T,
+        RobotMap.Drivetrain.FRONT_RIGHT_ABS_ENCODER_ID,
+        () -> Constants.Drivetrain.kCANCoderOffsetFrontRight,
+        Constants.Drivetrain.FRONT_RIGHT_D_IS_REVERSED
+  );
+  private final SwerveModule backLeft = new SwerveModule(
+        RobotMap.Drivetrain.BACK_LEFT_TALON_D,
+        RobotMap.Drivetrain.BACK_LEFT_TALON_T,
+        RobotMap.Drivetrain.BACK_LEFT_ABS_ENCODER_ID,
+        () -> Constants.Drivetrain.kCANCoderOffsetBackLeft,
+        Constants.Drivetrain.BACK_LEFT_D_IS_REVERSED
+  );
+  private final SwerveModule backRight = new SwerveModule(
+        RobotMap.Drivetrain.BACK_RIGHT_TALON_D,
+        RobotMap.Drivetrain.BACK_RIGHT_TALON_T,
+        RobotMap.Drivetrain.BACK_RIGHT_ABS_ENCODER_ID,
+        () -> Constants.Drivetrain.kCANCoderOffsetBackRight,
+        Constants.Drivetrain.BACK_RIGHT_D_IS_REVERSED
+  );
+
+  public SwerveDrive() {
+    // ShuffleboardPIDTuner.addSlider("CancoderOffsetDegFL", -360, 360, 0.0);
+    // ShuffleboardPIDTuner.addSlider("CancoderOffsetDegFR", -360, 360, 0.0);
+    // ShuffleboardPIDTuner.addSlider("CancoderOffsetDegBL", -360, 360, 0.0);
+    // ShuffleboardPIDTuner.addSlider("CancoderOffsetDegBR", -360, 360, 0.0);
+  }
+
+  @Override
+  public void periodic() {
+    // Constants.Drivetrain.kCANCoderOffsetFrontLeft = ShuffleboardPIDTuner.get("CancoderOffsetDegFL");
+    // Constants.Drivetrain.kCANCoderOffsetFrontRight = ShuffleboardPIDTuner.get("CancoderOffsetDegFR");
+    // Constants.Drivetrain.kCANCoderOffsetBackLeft = ShuffleboardPIDTuner.get("CancoderOffsetDegBL");
+    // Constants.Drivetrain.kCANCoderOffsetBackRight = ShuffleboardPIDTuner.get("CancoderOffsetDegBR");
+  }
 
 
-    // Init gyro
-    private final ADIS16470_IMU gyro = new ADIS16470_IMU();
-    
+  /**
+   * @return Heading in degrees (0, 360)
+   */
+  public double getHeading() {
+    // double angle = gyro.getAngle() % 360.0;
+    // if (angle < 0) {
+    //     angle += 360;
+    // }
+    // return angle;
+    return 0;
+  }
+  
+  public void zeroGyro() {
+    gyro.reset();
+  }
 
-    public SwerveDrive() {
-        // Init gyro with delay
-        new Thread(() -> {
-            try {
-                Thread.sleep(Constants.kGyroInitDelayMS);
-               gyro.reset();
-            }
-            catch (Exception e) {
+  public void calibrateGyro() {
+    gyro.calibrate();
+  }
 
-            }
-        }
-        ).start();
+  public void resetModulesToAbsolute() {
+    frontLeft.zeroTurnMotorABS();
+    Timer.delay(0.2);
+    frontRight.zeroTurnMotorABS();
+    Timer.delay(0.2);
+    backLeft.zeroTurnMotorABS();
+    Timer.delay(0.2);
+    backRight.zeroTurnMotorABS();
+  }
 
-    }
+  public void setModuleStates(SwerveModuleState[] desiredStates) {
+    frontLeft.setState(desiredStates[0]);
+    SmartDashboard.putNumber("DriveSpdFL", desiredStates[0].speedMetersPerSecond);
 
-
-
-
-    public void zeroTurnABS() {
-        frontLeft.resetTurnABS();
-    }
-
-    public double getTurnResetTicks() {
-        return frontLeft.getTurnResetTicks();
-    }
-
-    // Set module speeds/angles
-    public void setModuleSpeeds(double xSpeed, double ySpeed, double tSpeed) {
-        ChassisSpeeds chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, tSpeed, new Rotation2d(gyro.getAngle()));
-
-        // Calculate module states per module
-        SwerveModuleState[] moduleStates = Constants.Drivetrain.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
-
-        // Normalize speeds
-        SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.Drivetrain.kMaxSpeed);
-        
-        frontLeft.setDesiredState(moduleStates[0]);
-    }
-
-
-    public void resetTurnABS() {
-        frontLeft.resetTurnABS();
-    }
-
-
-
-    public void putDebugInfo() {
-        SmartDashboard.putNumber("FrontLeftAngleABS", Math.toDegrees(frontLeft.getAbsEncoderRad()));
-        SmartDashboard.putNumber("FrontLeftAngleTalonEncoder", frontLeft.getTurnPositionRad());
-        
-        SmartDashboard.putNumber("FrontLeftResetTicks", frontLeft.getTurnResetTicks());
-
-    }
-
-
-    @Override
-    public void periodic() {
-        // zeroTurnABS();
-        putDebugInfo();
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
+    frontRight.setState(desiredStates[1]);
+    backLeft.setState(desiredStates[2]);
+    backRight.setState(desiredStates[3]);
+  }
 
 }
+
+
+
+
+
+
+
+
+
+
+

@@ -49,17 +49,17 @@ public class Constants {
         public static final double kDriveMotorGearRatio = 6.75;
         public static final double kTurningMotorGearRatio = 21.35;
         public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics (
-            new Translation2d(kModuleOffsetMeters / 2, kModuleOffsetMeters / 2),
-            new Translation2d(-kModuleOffsetMeters / 2, kModuleOffsetMeters / 2), 
             new Translation2d(kModuleOffsetMeters / 2, -kModuleOffsetMeters / 2),
-            new Translation2d(-kModuleOffsetMeters / 2, -kModuleOffsetMeters / 2)
+            new Translation2d(-kModuleOffsetMeters / 2, -kModuleOffsetMeters / 2), 
+            new Translation2d(kModuleOffsetMeters / 2, kModuleOffsetMeters / 2),
+            new Translation2d(-kModuleOffsetMeters / 2, kModuleOffsetMeters / 2)
         );
 
         
         // PID
-        public static final double kPTurnMotor = 0.6; //0.6
+        public static final double kPTurnMotor = 0.0125; //0.6
         public static final double kITurnMotor = 0.0000;
-        public static final double kDTurnMotor = 0.0015; 
+        public static final double kDTurnMotor = 0.0003; // 0.0015 
 
         public static final double kPHeading = 0.0053; //0.6
         public static final double kIHeading = 0.0000;
@@ -74,8 +74,8 @@ public class Constants {
         public static double kMaxSpeed = 0.2; //0.2 
         public static double kMaxAccel = 1; 
         
-        public static double kMaxTurnSpeed = 3; 
-        public static double kMaxTurnAccel = 2; 
+        public static double kMaxTurnSpeed = 0.4; 
+        public static double kMaxTurnAccel = 1; 
 
 
         // Misc
@@ -89,20 +89,20 @@ public class Constants {
 
         // public static boolean CAN_DIRECTION_SWITCH = false;
 
-        // public static final boolean BACK_RIGHT_D_IS_REVERSED = false;
-        // public static final boolean FRONT_RIGHT_D_IS_REVERSED = false;
-        // public static final boolean BACK_LEFT_D_IS_REVERSED = false;
-        // public static final boolean FRONT_LEFT_D_IS_REVERSED = false;
+        public static final boolean FRONT_LEFT_D_IS_REVERSED = false;
+        public static final boolean FRONT_RIGHT_D_IS_REVERSED = false;
+        public static final boolean BACK_LEFT_D_IS_REVERSED = true;
+        public static final boolean BACK_RIGHT_D_IS_REVERSED = true;
 
         // public static final boolean BACK_RIGHT_T_IS_REVERSED = false;
         // public static final boolean FRONT_RIGHT_T_IS_REVERSED = false;
         // public static final boolean BACK_LEFT_T_IS_REVERSED = false;
         // public static final boolean FRONT_LEFT_T_IS_REVERSED = false; 
 
-        public static final double BACK_RIGHT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(0.0);
-        public static final double FRONT_RIGHT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(0.0);
-        public static final double BACK_LEFT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(0.0);
-        public static final double FRONT_LEFT_ABS_ENCODER_OFFSET_RAD =  Math.toRadians(0.0);
+        public static double kCANCoderOffsetFrontLeft = -53.7;
+        public static double kCANCoderOffsetFrontRight = -331.4;
+        public static double kCANCoderOffsetBackLeft = 131.1;
+        public static double kCANCoderOffsetBackRight = 234.1;
 
         // public static final double FRONT_RIGHT_ABS_ENCODER_OFFSET_RAD =  Math.toRadians(303.2);
         // public static final double BACK_RIGHT_ABS_ENCODER_OFFSET_RAD = Math.toRadians(305.5);

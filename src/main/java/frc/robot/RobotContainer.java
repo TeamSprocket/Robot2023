@@ -1,48 +1,45 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
 package frc.robot;
 
-import edu.wpi.first.wpilibj.PowerDistribution;
-import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-// import frc.robot.commands.ZeroTurn;
-import frc.robot.commands.persistent.SwerveDriveCmd;
-import frc.robot.commands.ZeroTurnABS;
+import frc.robot.commands.DriveTeleop;
+import frc.robot.commands.ZeroWheelsTEST;
 import frc.robot.subsystems.SwerveDrive;
 
-public final class RobotContainer {
-	//Controllers
-	private final CommandXboxController driver = new CommandXboxController(0);
-	
-	//Smartdashboard
-	//Subsystems
-	private final SwerveDrive swerveDrive = new SwerveDrive();
-	private final PowerDistribution pdh = new PowerDistribution();
-	
-	public RobotContainer() {}	
+public class RobotContainer {
 
-	public void configureButtonBindings() {
-		// --------------------=Driver=--------------------
-		swerveDrive.setDefaultCommand(new SwerveDriveCmd(
+  private final CommandXboxController driver = new CommandXboxController(0);
+  SwerveDrive swerveDrive = new SwerveDrive();
+
+  public RobotContainer() {
+    configureBindings();
+  }
+
+  
+  public void configureBindings() {
+    // --------------------=Driver=--------------------
+		swerveDrive.setDefaultCommand(new DriveTeleop(
 			swerveDrive, 
-			// X
-			() -> -driver.getLeftY(), 
-			// Y
 			() -> driver.getLeftX(), 
-			// T
+			() -> -driver.getLeftY(), 
 			() -> -driver.getRightX()));
-			// driver.x().onTrue(new ZeroTurn(swerveDrive));
-			driver.x().onTrue(new ZeroTurnABS(swerveDrive));
-	}
+    driver.x().onTrue(new ZeroWheelsTEST(swerveDrive));
+  }
+  
+  public void resetModulesToAbsolute() {
+    swerveDrive.resetModulesToAbsolute();
+  }
 
-	public SwerveDrive getSwerveDrive() {
-		return swerveDrive;
-	}
+  public SwerveDrive getSwerveDrive() {
+    return swerveDrive;
+  }
 
-	public void clearStickyFaults() {
-		pdh.clearStickyFaults();
-		// swerveDrive.clearStickyFaults();
-	}
-	
+  public Command getAutonomousCommand() {
+    return Commands.print("No autonomous command configured");
+  }
 }
-
-
-

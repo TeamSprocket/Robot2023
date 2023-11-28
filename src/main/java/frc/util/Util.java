@@ -15,7 +15,7 @@ public final class Util {
   /**
    * Return 0 if the value is within -range..range. Otherwise return the value.
    */
-  public static double deadband(double range, double value) {
+  public static double deadband(double value, double range) {
     if(value < range && value > -range)
       return 0;
     else
