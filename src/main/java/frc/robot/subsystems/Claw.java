@@ -16,6 +16,7 @@ public class Claw extends SubsystemBase{
     private final WPI_TalonFX claw = new WPI_TalonFX(RobotMap.Claw.CLAW);
     double idleSpeed = 0;
     double activeSpeed = 0;
+    // yay!
 
     
     public Claw() {
