@@ -21,7 +21,7 @@ import frc.robot.commands.persistent.RollClaw;
 import frc.robot.subsystems.SwerveDrive;
 
 public class AutonHighOneCubeLeft extends SequentialCommandGroup {
-  public AutonHighOneCubeLeft(SwerveDrive swerveDrive, Elevator elevator, Arm arm, Wrist wrist, Claw claw) {
+  public AutonHighOneCubeLeft(SwerveDrive swerveDrive, Elevator elevator, Arm arm, Wrist wrist, Intake claw) {
     addCommands(
       new SequentialCommandGroup(
         // Score

@@ -10,7 +10,7 @@ import frc.robot.commands.macro.timed.*;
 import frc.robot.subsystems.*;
 
 public class AutonHighCubeBalance extends SequentialCommandGroup {
-  public AutonHighCubeBalance(SwerveDrive swerveDrive, Elevator elevator, Arm arm, Wrist wrist, Claw claw) {
+  public AutonHighCubeBalance(SwerveDrive swerveDrive, Elevator elevator, Arm arm, Wrist wrist, Intake claw) {
     addCommands( new SequentialCommandGroup(
       // Scoring high cube
       new ParallelCommandGroup(

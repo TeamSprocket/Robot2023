@@ -121,6 +121,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         robotContainer.initRumbleTimer();
+        RobotContainer.intake.intakeIdle();
 
         // robotContainer.outputAutonLog();
         // robotContainer.outputAutonLog();

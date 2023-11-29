@@ -21,7 +21,7 @@ import frc.robot.commands.persistent.RollClaw;
 import frc.robot.subsystems.SwerveDrive;
 
 public class AutonTwoCube extends SequentialCommandGroup {
-  public AutonTwoCube(SwerveDrive swerveDrive, Elevator elevator, Arm arm, Wrist wrist, Claw claw) {
+  public AutonTwoCube(SwerveDrive swerveDrive, Elevator elevator, Arm arm, Wrist wrist, Intake claw) {
     // public AutonConeBalance(SwerveDrive swerveDrive, Elevator elevator, Arm arm, Wrist wrist) {
     
     addCommands(

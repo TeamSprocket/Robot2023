@@ -15,7 +15,7 @@ import frc.robot.commands.macro.timed.SetHighTimedCube;
 import frc.robot.commands.macro.timed.SetHomeTimed;
 import frc.robot.commands.macro.timed.SetLowCubeTimed;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Claw;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.SwerveDrive;
 import frc.robot.subsystems.SwerveModule;
@@ -33,9 +33,9 @@ public class ParseAuton extends CommandBase {
   Elevator elevator;
   Arm arm;
   Wrist wrist;
-  Claw claw;
+  Intake claw;
 
-  public ParseAuton(SwerveDrive swerveDrive, Elevator elevator, Arm arm, Wrist wrist, Claw claw) {
+  public ParseAuton(SwerveDrive swerveDrive, Elevator elevator, Arm arm, Wrist wrist, Intake claw) {
     this.swerveDrive = swerveDrive;
     cur = 0;
     timer = new Timer();

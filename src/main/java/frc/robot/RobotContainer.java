@@ -33,13 +33,15 @@ import frc.robot.commands.persistent.Elevate;
 import frc.robot.commands.persistent.MoveArmJoystick;
 import frc.robot.commands.persistent.MoveWristManual;
 import frc.robot.commands.persistent.RollClaw;
+import frc.robot.commands.persistent.RollCone;
+import frc.robot.commands.persistent.RollCube;
 import frc.robot.commands.persistent.SwerveDriveCmd;
 // import frc.robot.commands.auton.AutonBalance;
 import frc.robot.commands.auton.*;
 // import frc.robot.commands.persistent.VibrateControllerTimed;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Claw;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.SwerveDrive;
 import frc.robot.subsystems.Wrist;
 import frc.robot.subsystems.SwerveDrive.Direction;
@@ -67,7 +69,7 @@ public final class RobotContainer {
 	private final Elevator elevator = new Elevator();
 	private final Arm arm = new Arm();
 	private final Wrist wrist = new Wrist();
-	private final Claw claw = new Claw();
+	public final static Intake intake = new Intake();
 	private final PowerDistribution pdh = new PowerDistribution();
 
 	SendableChooser<Command> autonChooser = new SendableChooser<>();
@@ -99,12 +101,15 @@ public final class RobotContainer {
 
 	Command autonDoNothing = new AutonDoNothing();
 	// Command autonBloopBalance = new AutonBloopBalance(swerveDrive, elevator, arm, wrist, claw);
-	Command autonHighCubeBalance = new AutonHighCubeBalance(swerveDrive, elevator, arm, wrist, claw);
-	// Command autonHighCubeNoTaxiLeft = new AutonHighOneCubeNoTaxiLeft(swerveDrive, elevator, arm, wrist, claw);
-	// Command autonHighCubeNoTaxiRight = new AutonHighOneCubeNoTaxiRight(swerveDrive, elevator, arm, wrist, claw);
-	Command autonHighOneCubeLeft = new AutonHighOneCubeLeft(swerveDrive, elevator, arm, wrist, claw);
-	Command autonHighOneCubeRight = new AutonHighOneCubeRight(swerveDrive, elevator, arm, wrist, claw);
-	Command autonLowCube = new AutonLowCube(swerveDrive, elevator, arm, wrist, claw);
+	Command autonHighCubeBalance = new AutonHighCubeBalance(swerveDrive, elevator, arm, wrist, intake);
+	// Command autonHighCubeNoTaxiLeft = new AutonHighOneCubeNoTaxiLeft(swerveDrive, elevator, arm, wrist, intake);
+	// Command autonHighCubeNoTaxiRight = new AutonHighOneCubeNoTaxiRight(swerveDrive, elevator, arm, wrist, intake);
+	Command autonHighOneCubeLeft = new AutonHighOneCubeLeft(swerveDrive, elevator, arm, wrist, intake);
+	Command autonHighOneCubeRight = new AutonHighOneCubeRight(swerveDrive, elevator, arm, wrist, intake);
+	Command autonLowCube = new AutonLowCube(swerveDrive, elevator, arm, wrist, intake);
+	
+	public RollCone intakeConeCmd = new RollCone(intake);
+  	public RollCube intakeCubeCmd = new RollCube(intake);
 	// Command autonHighTwoCubeRight = new AutonTwoCubeRight(swerveDrive, elevator, arm, wrist, claw);
 	
 	// Command autonHighCubeLeft = new ();
@@ -148,7 +153,7 @@ public final class RobotContainer {
 			() -> driver.getLeftX(), 
 			// T
 			() -> -driver.getRightX()));
-		claw.setDefaultCommand(new RollClaw(claw, driver));
+		intake.setDefaultCommand(new RollClaw(intake, driver));
 		new JoystickButton(driver, RobotMap.Controller.RB).whenPressed(() -> swerveDrive.zeroHeading());
 		new JoystickButton(driver, RobotMap.Controller.LB).whenPressed(() -> swerveDrive.togglePrecise());
 		new JoystickButton(driver, RobotMap.Controller.Y).whenPressed(() -> swerveDrive.updateHeading(Direction.FRONT));
@@ -174,6 +179,9 @@ public final class RobotContainer {
 		new JoystickButton(operator, RobotMap.Controller.LOGO_RIGHT).whenHeld(new SetMidCube(elevator, arm, wrist));
 		new JoystickButton(operator, RobotMap.Controller.LEFT_STICK_BUTTON).whenHeld(new SetLowConeStanding(elevator, arm, wrist));
 		new JoystickButton(operator, RobotMap.Controller.RIGHT_STICK_BUTTON).whenHeld(new SetDeport(elevator, arm, wrist));
+
+		new JoystickButton(operator, RobotMap.Controller.LOGO_LEFT).whileTrue(intakeConeCmd); // TODO: change port numbers
+    	new JoystickButton(operator, RobotMap.Controller.LOGO_RIGHT).whileTrue(intakeCubeCmd);
 	}
 	
 
@@ -233,7 +241,7 @@ public final class RobotContainer {
 		elevator.clearStickyFaults();
 		arm.clearStickyFaults();
 		wrist.clearStickyFaults();
-		claw.clearStickyFaults();
+		intake.clearStickyFaults();
 		// swerveDrive.clearStickyFaults();
 	}
 
