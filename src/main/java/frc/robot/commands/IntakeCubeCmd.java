@@ -2,19 +2,19 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.persistent;
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.IntakeSubsystem;
 
-public class RollCone extends CommandBase {
-  /** Creates a new RollCone. */
-  Intake intakesubsystem;
-  
-  public RollCone(Intake intakesubsystem) {
+public class IntakeCubeCmd extends CommandBase {
+  /** Creates a new IntakeCubeCmd. */
+  IntakeSubsystem intakeSubsystem;
+
+  public IntakeCubeCmd(IntakeSubsystem intakeSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.intakesubsystem = intakesubsystem;
-    addRequirements(intakesubsystem);
+    this.intakeSubsystem = intakeSubsystem;
+    addRequirements(intakeSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -24,13 +24,13 @@ public class RollCone extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intakesubsystem.intakeCone();
+    intakeSubsystem.intakeCube();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intakesubsystem.stopIntake();
+    intakeSubsystem.stopIntake();
   }
 
   // Returns true when the command should end.
