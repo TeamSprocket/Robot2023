@@ -13,6 +13,8 @@ import frc.robot.Constants;
 import frc.robot.subsystems.SwerveDrive;
 import frc.util.Util;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class DriveTeleop extends CommandBase {
   private final SwerveDrive swerveDrive;
   private final Supplier<Double> xSupplier, ySupplier, tSupplier;
@@ -20,7 +22,7 @@ public class DriveTeleop extends CommandBase {
 
   public DriveTeleop(SwerveDrive swerveDrive, Supplier<Double> xSupplier, Supplier<Double> ySupplier, Supplier<Double> tSupplier) {
     this.swerveDrive = swerveDrive;
-    this.xSupplier = ySupplier; // PURPOSEFULLY SWITCHED
+    this.xSupplier = ySupplier; // PURPOSEFULLY SWITCHED //CHECKKKKKKKK
     this.ySupplier = xSupplier; // PURPOSEFULLY SWITCHED
     this.tSupplier = tSupplier;
     this.xSlewLimit = new SlewRateLimiter(Constants.Drivetrain.kMaxAccel);
@@ -50,6 +52,9 @@ public class DriveTeleop extends CommandBase {
     SwerveModuleState[] moduleStates = Constants.Drivetrain.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
     SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.Drivetrain.kMaxSpeed);
     swerveDrive.setModuleStates(moduleStates);
+
+    //SmartDashboard.putarr("kinemtatic module states", moduleStates);
+    
   
   }
   

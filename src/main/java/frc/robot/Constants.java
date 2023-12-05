@@ -49,10 +49,10 @@ public class Constants {
         public static final double kDriveMotorGearRatio = 6.75;
         public static final double kTurningMotorGearRatio = 21.35;
         public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics (
-            new Translation2d(kModuleOffsetMeters / 2, -kModuleOffsetMeters / 2),
-            new Translation2d(-kModuleOffsetMeters / 2, -kModuleOffsetMeters / 2), 
-            new Translation2d(kModuleOffsetMeters / 2, kModuleOffsetMeters / 2),
-            new Translation2d(-kModuleOffsetMeters / 2, kModuleOffsetMeters / 2)
+            new Translation2d(kModuleOffsetMeters / 2, kModuleOffsetMeters / 2), //+, - | 
+            new Translation2d(-kModuleOffsetMeters / 2, kModuleOffsetMeters / 2), //-, - | 
+            new Translation2d(kModuleOffsetMeters / 2, -kModuleOffsetMeters / 2), //+, + | 
+            new Translation2d(-kModuleOffsetMeters / 2, -kModuleOffsetMeters / 2) //-, + | 
         );
 
         

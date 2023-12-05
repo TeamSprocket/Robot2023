@@ -44,7 +44,7 @@ public class SwerveModule extends SubsystemBase {
     
     cancoder.configFactoryDefault();
     CANCoderConfiguration cancoderConfig = new CANCoderConfiguration();
-    cancoderConfig.absoluteSensorRange = AbsoluteSensorRange.Unsigned_0_to_360;
+    cancoderConfig.absoluteSensorRange = AbsoluteSensorRange.Unsigned_0_to_360; //og, Signed_PlusMinus180
     cancoder.configAllSettings(cancoderConfig);
   }
 
@@ -55,6 +55,12 @@ public class SwerveModule extends SubsystemBase {
     SmartDashboard.putNumber("TurnPosDeg", getTurnPosition());
     SmartDashboard.putNumber("ABSDeg", getCANCoderDegrees());
     SmartDashboard.putNumber("TurnTicks", turnMotor.getSelectedSensorPosition());
+    SmartDashboard.putNumber("initialDeg", Conversions.falconToDegrees(turnMotor.getSelectedSensorPosition(), Constants.Drivetrain.kTurningMotorGearRatio));
+    double deg = Conversions.falconToDegrees(turnMotor.getSelectedSensorPosition(), Constants.Drivetrain.kTurningMotorGearRatio);
+    deg -= (deg >  180) ? 360 : 0;
+    SmartDashboard.putNumber("Degree", deg);
+    
+
 
     // this.cancoderOffsetDeg = (ShuffleboardPIDTuner.get("CancoderOffsetDegCancoderOffsetDegTEMP"));
   }
@@ -64,9 +70,10 @@ public class SwerveModule extends SubsystemBase {
    */
   public double getTurnPosition() {
     double deg = Conversions.falconToDegrees(turnMotor.getSelectedSensorPosition(), Constants.Drivetrain.kTurningMotorGearRatio);
-    deg -= (deg > 180) ? 360 : 0;
-    deg %= 180;
+    deg -= (deg >  180) ? 360 : 0; // deg += (deg <  -180) ? 360 : 0 ???
+    //deg %= 180;
     return deg;
+    //SmartDashboard.putNumber("Degree", deg);
   }
 
   public double getCANCoderDegrees() {
@@ -82,25 +89,37 @@ public class SwerveModule extends SubsystemBase {
   }
 
   public void setState(SwerveModuleState moduleState) {
-    SwerveModuleState state = SwerveModuleState.optimize(moduleState, new Rotation2d(Math.toRadians(getTurnPosition())));
+    SwerveModuleState state = SwerveModuleState.optimize(moduleState, new Rotation2d(Math.toRadians(getTurnPosition()))); //check values, might be jank
     // SwerveModuleState state = moduleState;
 
     double fullTargetAngle = state.angle.getDegrees();
-    if (fullTargetAngle < 0) {
-      fullTargetAngle += (Math.PI * 2.0);
+    SmartDashboard.putNumber("fullTargetAngleOptimized", fullTargetAngle);
+    
+    if (fullTargetAngle < 0) { //useless
+      fullTargetAngle += (Math.PI);
     }
-
+    /*
+    if (fullTargetAngle > 180) {
+      fullTargetAngle -= (360);
+    }
+    */
     driveMotor.set(ControlMode.PercentOutput, state.speedMetersPerSecond);
 
     // double turnOutput = turnPIDController.calculate(getTurnPosition(), fullTargetAngle);
     // turnMotor.set(ControlMode.PercentOutput, turnOutput);
     double degs = state.angle.getDegrees();
+    /*
+    if (degs > 180) {
+      degs -= (360);
+    }
+    */
     turnMotor.set(ControlMode.Position, Conversions.degreesToFalcon(degs, Constants.Drivetrain.kTurningMotorGearRatio));
   
+
     SmartDashboard.putNumber("Turn Target", state.angle.getDegrees());
+    SmartDashboard.putNumber("deg Turn Target", degs);
+    
   }
 
-
-
-
+  
 }
