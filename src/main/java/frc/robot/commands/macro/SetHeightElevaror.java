@@ -5,17 +5,25 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.ElevatorReWrite;
 
-public class SetHighRewrite extends CommandBase {
+public class SetHeightElevaror extends CommandBase {
   
   ElevatorReWrite elevator;
+  private String direction;  
 
-  public SetHighRewrite(ElevatorReWrite elevator) {
+  public SetHeightElevaror(ElevatorReWrite elevator, String direction) {
     this.elevator = elevator;
+    this.direction = direction;
   }
 
   @Override
   public void initialize() {
-    elevator.setHeight(Constants.Elevator.kHeightSetpoint);
+    if (direction.equals("up")) {
+    elevator.setHeight(elevator.getHeight() +  Constants.Elevator.kHeightSetpointInterval);
+  }
+  else {
+    elevator.setHeight(elevator.getHeight() -  Constants.Elevator.kHeightSetpointInterval);
+  }
+
   }
 
   @Override

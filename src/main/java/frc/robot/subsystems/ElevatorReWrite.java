@@ -51,7 +51,7 @@ public class ElevatorReWrite extends SubsystemBase {
         elevatorPID.setSetpoint(target);
     }
 
-    private double getHeight() {
+    public double getHeight() {
         return elevatorLeftEncoder.getPosition() * 2 * Math.PI * Constants.Elevator.kSprocketRadius / Constants.Elevator.kElevatorGearRatio / Constants.Elevator.kElevatorMultiplier;
     }
 
