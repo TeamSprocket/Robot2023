@@ -39,6 +39,7 @@ public class Constants {
 
         public static final double kHeightSetpoint = 4;
         public static final double kHeightSetpointLow = -7;
+        public static final double kHeightSetpointInterval = 2;
     }
 
     public static final class Arm{

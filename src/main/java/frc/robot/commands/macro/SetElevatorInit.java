@@ -5,11 +5,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.ElevatorReWrite;
 
-public class SetLowRewrite extends CommandBase {
+public class SetElevatorInit extends CommandBase {
   
   ElevatorReWrite elevator;
 
-  public SetLowRewrite(ElevatorReWrite elevator) {
+  public SetElevatorInit(ElevatorReWrite elevator) {
     this.elevator = elevator;
   }
 

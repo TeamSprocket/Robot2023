@@ -23,7 +23,7 @@ import frc.robot.commands.macro.SetHighRewrite;
 import frc.robot.commands.macro.SetHome;
 	import frc.robot.commands.macro.SetLowConeTilted;
 	import frc.robot.commands.macro.SetLowCube;
-import frc.robot.commands.macro.SetLowRewrite;
+import frc.robot.commands.macro.SetElevatorInit;
 import frc.robot.commands.macro.SetMid;
 import frc.robot.commands.macro.SetMidCube;
 import frc.robot.commands.macro.timed.PIDTurnTimed;
@@ -138,8 +138,10 @@ public Command getAutonomousCommand() {
 			// new JoystickButton(operator, 9).whenHeld(new SetLowConeStanding(elevator, arm, wrist));
 			// new JoystickButton(operator, 10).whenHeld(new SetDeport(elevator, arm, wrist));
 
-			new JoystickButton(operator, 4).onTrue(new SetHighRewrite(elevator));
-			new JoystickButton(operator, 3).onTrue(new SetLowRewrite(elevator));
+			new SetElevatorInit(elevator);
+			
+			//new JoystickButton(operator, 4).onTrue(new SetHighRewrite(elevator));
+			//new JoystickButton(operator, 3).onTrue(new Setelevatorheight(elevator));
 		}
 
 		public CvSink getCameraFeed() {
