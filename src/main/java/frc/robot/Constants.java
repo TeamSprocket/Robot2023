@@ -15,7 +15,6 @@ public class Constants {
         //check sprocket radius in inches
         public static double kSprocketRadius = 2.938;
         public static double kElevatorGearRatio = 9;
-
         public static double kP = 0.175;
         public static double kI = 0;
         public static double kD = 0.00675;
@@ -142,12 +141,3 @@ public class Constants {
 
 
 }
-
-
-
-
-
-
-
-
-

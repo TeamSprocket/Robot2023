@@ -15,62 +15,57 @@ import frc.robot.RobotMap;
 import frc.robot.Constants;
 
 public class Wrist extends SubsystemBase {
+  /** Creates a new ExampleSubsystem. */
 
-    private final CANSparkMax wrist = new CANSparkMax(RobotMap.Wrist.WRIST, MotorType.kBrushless);
+  private final CANSparkMax wrist = new CANSparkMax(RobotMap.Wrist.WRIST, MotorType.kBrushless);
     
-    private PIDController wristPIDController = new PIDController(Constants.Wrist.P, Constants.Wrist.I, Constants.Wrist.D);
-    
-    private RelativeEncoder wristEncoder = wrist.getEncoder();
-    
-    public Wrist() {
-        wrist.restoreFactoryDefaults();
+  private PIDController wristPIDController = new PIDController(Constants.Wrist.P, Constants.Wrist.I, Constants.Wrist.D);
+  
+  private RelativeEncoder wristEncoder = wrist.getEncoder();
+
+  public Wrist() {
+    wrist.restoreFactoryDefaults();
 
         wrist.setInverted(false);
 
         wrist.setSmartCurrentLimit(999);
         resetWristEncoder();
+  }
 
-    }
+  public double getEncoderValues() {
+    return (wristEncoder.get() * kEncoderTick2Meter);
+  }
 
-    public double getWristPosition(){
-        return wristEncoder.getPosition();
-    }
+  public double getWristAngle(){
+    double angle = wristEncoder.getPosition() * Constants.Wrist.angleConversionFactor;
+    return angle;
+  }
 
-    public double getWristAngle(){
-        double angle = wristEncoder.getPosition() * Constants.Wrist.angleConversionFactor;
-        return angle;
-    }
+  public void resetWristEncoder(){
+    wrist.getEncoder().setPosition(0.1);
+  }
 
-    public void resetWristEncoder(){
-        wrist.getEncoder().setPosition(0.1);
-    }
+  public void setWrist(double position) {
+    wrist.set(position);
+  }
 
-    public void moveWrist(double output) {
-        wrist.set(output); 
-    }
+  public void stopMovement() {
+    wrist.stopMotor();
+  }
 
-    public void setWristAngle(double currentAngle, double setpoint){
-        double output = wristPIDController.calculate(currentAngle, setpoint);
-        if (output < -0.275){
-            output = -0.275;
-        } else if (output > 0.275) {
-            output = 0.275;
-        }
-        wrist.set(output);
-    }
+  public boolean exampleCondition() {
+    // Query some boolean state, such as a digital sensor.
+    return false;
+  }
 
-    public void stop() {
-        wrist.stopMotor();
-    }
+  public void setMotor(double speed) {
+    wristMotor.set(speed);
+  }
 
-    public void clearStickyFaults() {
-        wrist.clearFaults();
-    }
-
-    @Override
-    public void periodic(){
-        SmartDashboard.putNumber("[Wrist] Position", wristEncoder.getPosition()); 
-        SmartDashboard.putNumber("[Wrist] current", wrist.getOutputCurrent()); 
-
-    }
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Elevator encoder value", getEncoderValues());
+    SmartDashboard.putNumber("Wrist current value", wrist.getOutputCurrent()); 
+  }
 }
