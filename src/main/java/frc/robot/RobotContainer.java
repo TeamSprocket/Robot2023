@@ -19,10 +19,12 @@ import frc.robot.commands.macro.LimelightAlign;
 	import frc.robot.commands.macro.SetDeport;
 	import frc.robot.commands.macro.SetHigh;
 import frc.robot.commands.macro.SetHighCube;
+import frc.robot.commands.macro.SetHighRewrite;
 import frc.robot.commands.macro.SetHome;
 	import frc.robot.commands.macro.SetLowConeTilted;
 	import frc.robot.commands.macro.SetLowCube;
-	import frc.robot.commands.macro.SetMid;
+import frc.robot.commands.macro.SetLowRewrite;
+import frc.robot.commands.macro.SetMid;
 import frc.robot.commands.macro.SetMidCube;
 import frc.robot.commands.macro.timed.PIDTurnTimed;
 import frc.robot.commands.macro.SetHumanPlayer;
@@ -36,7 +38,8 @@ import frc.robot.commands.macro.SetHumanPlayer;
 import frc.robot.commands.auton.*;
 // import frc.robot.commands.persistent.VibrateControllerTimed;
 import frc.robot.subsystems.Elevator;
-	import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.ElevatorReWrite;
+import frc.robot.subsystems.Arm;
 	import frc.robot.subsystems.Claw;
 	import frc.robot.subsystems.SwerveDrive;
 	import frc.robot.subsystems.Wrist;
@@ -61,7 +64,8 @@ import frc.robot.subsystems.Elevator;
 		//Smartdashboard
 		//Subsystems
 		private final SwerveDrive swerveDrive = new SwerveDrive();
-		private final Elevator elevator = new Elevator();
+		private final ElevatorReWrite elevator = new ElevatorReWrite();
+		// private final Elevator elevator = new Elevator();
 		private final Arm arm = new Arm();
 		private final Wrist wrist = new Wrist();
 		private final Claw claw = new Claw();
@@ -120,19 +124,22 @@ public Command getAutonomousCommand() {
 
 
 			// --------------------=Operator=-------------------- ,
-			elevator.setDefaultCommand(new Elevate(elevator, operator));
-			arm.setDefaultCommand(new MoveArmJoystick(arm, operator));
-			wrist.setDefaultCommand(new MoveWristManual(wrist, operator));
-			new JoystickButton(operator, 1).whenHeld(new SetMid(elevator, arm, wrist));
-			new JoystickButton(operator, 2).whenHeld(new SetHighCube(elevator, arm, wrist));
-			new JoystickButton(operator, 3).whenHeld(new SetHome(elevator, arm, wrist));
-			new JoystickButton(operator, 4).whenHeld(new SetHigh(elevator, arm, wrist));
-			new JoystickButton(operator, 5).whenHeld(new SetLowCube(elevator, arm, wrist));
-			new JoystickButton(operator, 6).whenHeld(new SetLowConeTilted(elevator, arm, wrist));
-			new JoystickButton(operator, 7).whenHeld(new ResetEncoders(elevator, arm, wrist));
-			new JoystickButton(operator, 8).whenHeld(new SetMidCube(elevator, arm, wrist));
-			new JoystickButton(operator, 9).whenHeld(new SetLowConeStanding(elevator, arm, wrist));
-			new JoystickButton(operator, 10).whenHeld(new SetDeport(elevator, arm, wrist));
+			// elevator.setDefaultCommand(new Elevate(elevator, operator));
+			// arm.setDefaultCommand(new MoveArmJoystick(arm, operator));
+			// wrist.setDefaultCommand(new MoveWristManual(wrist, operator));
+			// new JoystickButton(operator, 1).whenHeld(new SetMid(elevator, arm, wrist));
+			// new JoystickButton(operator, 2).whenHeld(new SetHighCube(elevator, arm, wrist));
+			// new JoystickButton(operator, 3).whenHeld(new SetHome(elevator, arm, wrist));
+			// new JoystickButton(operator, 4).whenHeld(new SetHigh(elevator, arm, wrist));
+			// new JoystickButton(operator, 5).whenHeld(new SetLowCube(elevator, arm, wrist));
+			// new JoystickButton(operator, 6).whenHeld(new SetLowConeTilted(elevator, arm, wrist));
+			// new JoystickButton(operator, 7).whenHeld(new ResetEncoders(elevator, arm, wrist));
+			// new JoystickButton(operator, 8).whenHeld(new SetMidCube(elevator, arm, wrist));
+			// new JoystickButton(operator, 9).whenHeld(new SetLowConeStanding(elevator, arm, wrist));
+			// new JoystickButton(operator, 10).whenHeld(new SetDeport(elevator, arm, wrist));
+
+			new JoystickButton(operator, 4).onTrue(new SetHighRewrite(elevator));
+			new JoystickButton(operator, 3).onTrue(new SetLowRewrite(elevator));
 		}
 
 		public CvSink getCameraFeed() {

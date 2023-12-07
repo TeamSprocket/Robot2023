@@ -16,14 +16,18 @@ public class Constants {
         //check sprocket radius in inches
         public static double kSprocketRadius = 2.938;
         public static double kElevatorGearRatio = 9;
+        public static final double kElevatorMultiplier = 4.05;
 
         //height between base & starting config
         public static double offset = 33.638;
 
-        public static double kP = 0.175;
+        // public static double kP = 0.175;
+        // public static double kI = 0;
+        // public static double kD = 0.00675;
+        // public static double FF = 0;
+        public static double kP = 0.15;
         public static double kI = 0;
-        public static double kD = 0.00675;
-        public static double FF = 0;
+        public static double kD = 0.0;
         
         //Max/min heights in inches;
         public static double MAX_HEIGHT = -13.12711;
@@ -32,6 +36,9 @@ public class Constants {
 
         public static int CURRENT_STALL_LIMIT = 30;
         public static int CURRENT_FREE_LIMIT = 30;
+
+        public static final double kHeightSetpoint = 4;
+        public static final double kHeightSetpointLow = -7;
     }
 
     public static final class Arm{

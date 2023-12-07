@@ -7,6 +7,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
@@ -31,8 +32,9 @@ public class ElevatorReWrite extends SubsystemBase {
         elevatorRightEnder.setPosition(0);
 
         // set motor follow
-        elevatorLeft.setInverted(true);
-        elevatorRight.follow(elevatorLeft);
+        elevatorLeft.setInverted(false);
+        elevatorRight.setInverted(true);
+        elevatorRight.follow(elevatorLeft, true);
 
         // eletrical
         elevatorLeft.enableVoltageCompensation(8);
@@ -50,15 +52,19 @@ public class ElevatorReWrite extends SubsystemBase {
     }
 
     private double getHeight() {
-        
-        return elevatorLeftEncoder.getPosition() * Math.PI * 2 /Constants.Elevator.kElevatorGearRatio;
+        return elevatorLeftEncoder.getPosition() * 2 * Math.PI * Constants.Elevator.kSprocketRadius / Constants.Elevator.kElevatorGearRatio / Constants.Elevator.kElevatorMultiplier;
     }
 
     @Override
     public void periodic() {
+        clearStickyFaults();
         double calc = elevatorPID.calculate(getHeight());
         elevatorLeft.set(calc);
-        System.out.println(calc);
+
+        SmartDashboard.putNumber("Elevator Height", getHeight());
+        SmartDashboard.putNumber("Elevator Target Height", elevatorPID.getSetpoint());
+        SmartDashboard.putNumber("rotation", elevatorLeftEncoder.getPosition());
+        //System.out.println(calc);s
 
     }
 
