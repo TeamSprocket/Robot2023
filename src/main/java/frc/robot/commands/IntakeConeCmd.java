@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.IntakeSubsystem;
 
 public class IntakeConeCmd extends CommandBase {
@@ -30,6 +31,16 @@ public class IntakeConeCmd extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    
+    if (intakeSubsystem.containCone == false) {
+			if (intakeSubsystem.getCurrent() > Constants.IntakeConst.currentThreshold) {
+				intakeSubsystem.containCone = true;
+			}
+		}
+		else {
+			intakeSubsystem.containCone = false;
+		}
+    
     intakeSubsystem.stopIntake();
   }
 

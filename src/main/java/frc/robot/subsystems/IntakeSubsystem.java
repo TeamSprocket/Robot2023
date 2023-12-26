@@ -9,14 +9,14 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
 
 public class IntakeSubsystem extends SubsystemBase {
-  /** Creates a new Intake. */
+
+/** Creates a new Intake. */
   private final WPI_TalonFX motor = new WPI_TalonFX(Constants.IntakeConst.motorPort);
 
-  private boolean containCone = false;
-  private boolean containCube = false;
+  public boolean containCone = false;
+  public boolean containCube = false;
 
   private int direction = 1;
   
@@ -39,20 +39,20 @@ public class IntakeSubsystem extends SubsystemBase {
       direction = 1;
       motor.set(Constants.IntakeConst.intakeconeSpeed);
 
-      if (getCurrent() > Constants.IntakeConst.currentThreshold) {
+      // if (getCurrent() > Constants.IntakeConst.currentThreshold) {
 
-        if (RobotContainer.controller.getRightBumperReleased()) {
-          containCone = true;
-        }
-      }
+      //   if (RobotContainer.controller.getRightBumperReleased()) {
+      //     containCone = true;
+      //   }
+      // }
     }
     else {
       direction = -1;
       motor.set(Constants.IntakeConst.outtakeconeSpeed);
 
-      if (RobotContainer.controller.getRightBumperReleased()) {
-        containCone = false;
-      }
+      // if (RobotContainer.controller.getRightBumperReleased()) {
+      //   containCone = false;
+      // }
     }
   }
 
@@ -62,20 +62,20 @@ public class IntakeSubsystem extends SubsystemBase {
       direction = -1;
       motor.set(Constants.IntakeConst.intakecubeSpeed);
 
-      if (getCurrent() > Constants.IntakeConst.currentThreshold) {
+      // if (getCurrent() > Constants.IntakeConst.currentThreshold) {
 
-        if (RobotContainer.controller.getLeftBumperReleased()) {
-          containCube = true;
-        }
-      }
+      //   if (RobotContainer.controller.getLeftBumperReleased()) {
+      //     containCube = true;
+      //   }
+      // }
     }
     else {
       direction = 1;
       motor.set(Constants.IntakeConst.outtakecubeSpeed);
 
-      if (RobotContainer.controller.getLeftBumperReleased()) {
-        containCube = false;
-      }
+      // if (RobotContainer.controller.getLeftBumperReleased()) {
+      //   containCube = false;
+      // }
     }
   }
 
