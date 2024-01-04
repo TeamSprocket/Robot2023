@@ -90,7 +90,7 @@ public class SwerveDrive extends SubsystemBase {
   }
 
   public void setModuleStates(SwerveModuleState[] desiredStates) {
-    frontLeft.setState(desiredStates[0]);
+    frontLeft.setState(desiredStates[0]);//currently setting 
     SmartDashboard.putNumber("DriveSpdFL", desiredStates[0].speedMetersPerSecond);
 
     frontRight.setState(desiredStates[1]);
