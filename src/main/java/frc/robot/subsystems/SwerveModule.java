@@ -44,7 +44,7 @@ public class SwerveModule extends SubsystemBase {
     
     cancoder.configFactoryDefault();
     CANCoderConfiguration cancoderConfig = new CANCoderConfiguration();
-    cancoderConfig.absoluteSensorRange = AbsoluteSensorRange.Unsigned_0_to_360; //og, Signed_PlusMinus180
+    cancoderConfig.absoluteSensorRange = AbsoluteSensorRange.Unsigned_0_to_360; //Signed_PlusMinus180?
     cancoder.configAllSettings(cancoderConfig);
   }
 
@@ -89,14 +89,15 @@ public class SwerveModule extends SubsystemBase {
   }
 
   public void setState(SwerveModuleState moduleState) {
+    SmartDashboard.putNumber("unOptimized Angle", getTurnPosition());
     SwerveModuleState state = SwerveModuleState.optimize(moduleState, new Rotation2d(Math.toRadians(getTurnPosition()))); //check values, might be jank
     // SwerveModuleState state = moduleState;
 
     double fullTargetAngle = state.angle.getDegrees();
-    SmartDashboard.putNumber("fullTargetAngleOptimized", fullTargetAngle);
+    SmartDashboard.putNumber("Optimized Angle", fullTargetAngle);
     
     if (fullTargetAngle < 0) { //useless
-      fullTargetAngle += (Math.PI);
+      fullTargetAngle += (Math.PI * 2);
     }
     /*
     if (fullTargetAngle > 180) {
@@ -107,17 +108,16 @@ public class SwerveModule extends SubsystemBase {
 
     // double turnOutput = turnPIDController.calculate(getTurnPosition(), fullTargetAngle);
     // turnMotor.set(ControlMode.PercentOutput, turnOutput);
-    double degs = state.angle.getDegrees();
+    double degs = state.angle.getDegrees(); //change, reoptimize? thats what fullTargetAngle did
     /*
     if (degs > 180) {
       degs -= (360);
     }
     */
-    turnMotor.set(ControlMode.Position, Conversions.degreesToFalcon(degs, Constants.Drivetrain.kTurningMotorGearRatio));
-  
 
-    SmartDashboard.putNumber("Turn Target", state.angle.getDegrees());
-    SmartDashboard.putNumber("deg Turn Target", degs);
+    //try removing optimize command
+    turnMotor.set(ControlMode.Position, Conversions.degreesToFalcon(degs, Constants.Drivetrain.kTurningMotorGearRatio));
+
     
   }
 

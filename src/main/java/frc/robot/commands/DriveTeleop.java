@@ -22,7 +22,7 @@ public class DriveTeleop extends CommandBase {
 
   public DriveTeleop(SwerveDrive swerveDrive, Supplier<Double> xSupplier, Supplier<Double> ySupplier, Supplier<Double> tSupplier) {
     this.swerveDrive = swerveDrive;
-    this.xSupplier = ySupplier; // PURPOSEFULLY SWITCHED //CHECKKKKKKKK
+    this.xSupplier = ySupplier; // PURPOSEFULLY SWITCHED 
     this.ySupplier = xSupplier; // PURPOSEFULLY SWITCHED
     this.tSupplier = tSupplier;
     this.xSlewLimit = new SlewRateLimiter(Constants.Drivetrain.kMaxAccel);
@@ -53,7 +53,7 @@ public class DriveTeleop extends CommandBase {
     SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.Drivetrain.kMaxSpeed);
     swerveDrive.setModuleStates(moduleStates);
 
-    //SmartDashboard.putarr("kinemtatic module states", moduleStates);
+    SmartDashboard.putNumber("heading", swerveDrive.getHeading());
     
   
   }
