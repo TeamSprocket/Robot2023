@@ -70,9 +70,9 @@ public class SwerveModule extends SubsystemBase {
    */
   public double getTurnPosition() {
     double deg = Conversions.falconToDegrees(turnMotor.getSelectedSensorPosition(), Constants.Drivetrain.kTurningMotorGearRatio);
-     deg %= (360);
-      if (deg < 0) {
-        deg += (360); 
+     deg %= 360;
+      if (deg > 180) {
+        deg -= (360); 
       }
     //deg %= 180;
     return deg;
@@ -93,34 +93,35 @@ public class SwerveModule extends SubsystemBase {
 
   public void setState(SwerveModuleState moduleState) {
     SmartDashboard.putNumber("unOptimized Angle", getTurnPosition());
-    SwerveModuleState state = SwerveModuleState.optimize(moduleState, new Rotation2d(Math.toRadians(getTurnPosition()))); //check values, might be jank
-    // SwerveModuleState state = moduleState;
+    // SwerveModuleState state = SwerveModuleState.optimize(moduleState, new Rotation2d(Math.toRadians(getTurnPosition()))); //check values, might be jank
+    SwerveModuleState state = moduleState;
 
-    double fullTargetAngle = state.angle.getRadians();
+    // double fullTargetAngle = state.angle.getRadians();
     
-    if (fullTargetAngle < 0) { //useless
-      fullTargetAngle += (Math.PI * 2.0);
-    }
-    SmartDashboard.putNumber("Optimized Angle", fullTargetAngle);
+    // fullTargetAngle *= (180/Math.PI);
 
-    /*
-    if (fullTargetAngle > 180) {
-      fullTargetAngle -= (360);
-    }
-    */
+    // if (fullTargetAngle > 180) {
+      // fullTargetAngle -= (360);
+    // }
+
+    // SmartDashboard.putNumber("Optimized Angle Deg", fullTargetAngle);
+
+    
+    
+    
     driveMotor.set(ControlMode.PercentOutput, state.speedMetersPerSecond);
 
     // double turnOutput = turnPIDController.calculate(getTurnPosition(), fullTargetAngle);
     // turnMotor.set(ControlMode.PercentOutput, turnOutput);
-    double degs = state.angle.getDegrees(); //change, reoptimize? thats what fullTargetAngle did
+    // double degs = state.angle.getDegrees(); //change, reoptimize? thats what fullTargetAngle did
     /*
     if (degs > 180) {
       degs -= (360);
     }
     */
-
+    
     //try removing optimize command
-    turnMotor.set(ControlMode.Position, Conversions.degreesToFalcon(degs, Constants.Drivetrain.kTurningMotorGearRatio));
+    turnMotor.set(ControlMode.Position, Conversions.degreesToFalcon(state.angle.getDegrees(), Constants.Drivetrain.kTurningMotorGearRatio));
 
     
   }
