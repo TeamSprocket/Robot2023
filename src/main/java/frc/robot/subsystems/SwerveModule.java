@@ -93,8 +93,8 @@ public class SwerveModule extends SubsystemBase {
 
   public void setState(SwerveModuleState moduleState) {
     SmartDashboard.putNumber("unOptimized Angle", getTurnPosition());
-    // SwerveModuleState state = SwerveModuleState.optimize(moduleState, new Rotation2d(Math.toRadians(getTurnPosition()))); //check values, might be jank
-    SwerveModuleState state = moduleState;
+    SwerveModuleState state = SwerveModuleState.optimize(moduleState, new Rotation2d(Math.toRadians(getTurnPosition()))); //check values, might be jank
+    // SwerveModuleState state = moduleState;
 
     // double fullTargetAngle = state.angle.getRadians();
     
