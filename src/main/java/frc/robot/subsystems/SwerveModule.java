@@ -52,9 +52,9 @@ public class SwerveModule extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("ResetTicks", Conversions.degreesToFalcon(cancoder.getAbsolutePosition(), Constants.Drivetrain.kTurningMotorGearRatio));
-    SmartDashboard.putNumber("TurnPosDeg", getTurnPosition());
+    SmartDashboard.putNumber("TurnPosDeg2", getTurnPosition());
     SmartDashboard.putNumber("ABSDeg", getCANCoderDegrees());
-    SmartDashboard.putNumber("TurnTicks", turnMotor.getSelectedSensorPosition());
+    SmartDashboard.putNumber("TurnTicks1", turnMotor.getSelectedSensorPosition());
     SmartDashboard.putNumber("initialDeg", Conversions.falconToDegrees(turnMotor.getSelectedSensorPosition(), Constants.Drivetrain.kTurningMotorGearRatio));
     double deg = Conversions.falconToDegrees(turnMotor.getSelectedSensorPosition(), Constants.Drivetrain.kTurningMotorGearRatio);
     deg -= (deg >  180) ? 360 : 0;
@@ -70,7 +70,10 @@ public class SwerveModule extends SubsystemBase {
    */
   public double getTurnPosition() {
     double deg = Conversions.falconToDegrees(turnMotor.getSelectedSensorPosition(), Constants.Drivetrain.kTurningMotorGearRatio);
-    deg -= (deg >  180) ? 360 : 0; // deg += (deg <  -180) ? 360 : 0 ???
+     deg %= (360);
+      if (deg < 0) {
+        deg += (360); 
+      }
     //deg %= 180;
     return deg;
     //SmartDashboard.putNumber("Degree", deg);
@@ -93,12 +96,13 @@ public class SwerveModule extends SubsystemBase {
     SwerveModuleState state = SwerveModuleState.optimize(moduleState, new Rotation2d(Math.toRadians(getTurnPosition()))); //check values, might be jank
     // SwerveModuleState state = moduleState;
 
-    double fullTargetAngle = state.angle.getDegrees();
-    SmartDashboard.putNumber("Optimized Angle", fullTargetAngle);
+    double fullTargetAngle = state.angle.getRadians();
     
     if (fullTargetAngle < 0) { //useless
-      fullTargetAngle += (Math.PI * 2);
+      fullTargetAngle += (Math.PI * 2.0);
     }
+    SmartDashboard.putNumber("Optimized Angle", fullTargetAngle);
+
     /*
     if (fullTargetAngle > 180) {
       fullTargetAngle -= (360);
