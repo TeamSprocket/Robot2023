@@ -18,9 +18,9 @@ import frc.robot.subsystems.SwerveModule.*;
 
 public class SwerveDrive extends SubsystemBase {
 
-  double targetHeading;
+  double targetHeadingDeg;
   double xSpeed, ySpeed, tSpeed;
-  PIDController headingController = new PIDController(Constants.Drivetrain.kPHeading, Constants.Drivetrain.kIHeading, Constants.Drivetrain.kDHeading);
+  PIDController headingController;
 
   public static enum Directions {
     FORWARD,
@@ -63,29 +63,23 @@ public class SwerveDrive extends SubsystemBase {
 
 
   public SwerveDrive() {
-    headingController.enableContinuousInput(0, 360);
-    // ShuffleboardPIDTuner.addSlider("CancoderOffsetDegFL", -360, 360, 0.0);
-    // ShuffleboardPIDTuner.addSlider("CancoderOffsetDegFR", -360, 360, 0.0);
-    // ShuffleboardPIDTuner.addSlider("CancoderOffsetDegBL", -360, 360, 0.0);
-    // ShuffleboardPIDTuner.addSlider("CancoderOffsetDegBR", -360, 360, 0.0);
+    this.headingController = new PIDController(Constants.Drivetrain.kPHeading, Constants.Drivetrain.kIHeading, Constants.Drivetrain.kDHeading);
+    this.headingController.enableContinuousInput(0, 360);
   }
 
   @Override
   public void periodic() {
-    if (Constants.isEnabled){
-      double targetHeading = Math.toRadians(getHeading());
-      ChassisSpeeds chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(ySpeed, xSpeed, tSpeed, new Rotation2d(targetHeading));   
-      SwerveModuleState[] moduleStates = Constants.Drivetrain.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
-      SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.Drivetrain.kMaxSpeed);
-      setModuleStates(moduleStates);
-    }
+    ChassisSpeeds chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(ySpeed, xSpeed, tSpeed, new Rotation2d(getHeading()));   
+    SwerveModuleState[] moduleStates = Constants.Drivetrain.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
+    SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.Drivetrain.kMaxSpeed);
+    setModuleStates(moduleStates);
   }
 
-  public void setModuleSpeeds(double xSpeed, double ySpeed, double tSpeed) {
-    this.targetHeading += tSpeed * Constants.Drivetrain.kMaxTurnSpeed;
-    this.targetHeading = (targetHeading % 360.0);
-    this.targetHeading = (targetHeading < 0) ? targetHeading + 360.0 : targetHeading;
-    headingController.setSetpoint(targetHeading);
+  public void updateChassisSpeeds(double xSpeed, double ySpeed, double tSpeed) {
+    targetHeadingDeg += tSpeed;
+    targetHeadingDeg %= 360.0;
+    targetHeadingDeg = (targetHeadingDeg < 0) ? targetHeadingDeg + 360.0 : targetHeadingDeg;
+    headingController.setSetpoint(targetHeadingDeg);
     double tSpeedPID = headingController.calculate(getHeading());
 
     this.xSpeed = xSpeed;
@@ -101,30 +95,29 @@ public class SwerveDrive extends SubsystemBase {
   public void setHeading(Directions direction){
     switch (direction) {
       case FORWARD:
-        targetHeading = 0;
+        targetHeadingDeg = 0;
 
       case BACK:
-        targetHeading = 180;
+        targetHeadingDeg = 180;
 
       case LEFT:
-        targetHeading = 90;
+        targetHeadingDeg = 90;
 
       case RIGHT:
-        targetHeading = 270;
+        targetHeadingDeg = 270;
     }
-    }
+  }
   
+  /*
+   * @return Heading in radians from 0 to 2PI
+  */
   public double getHeading() { 
-    targetHeading = gyro.getAngle() + 180.0;
-    
-    targetHeading %= 360.0;
-    if (targetHeading < 0) {
-      targetHeading += 360;
-    }
+    targetHeadingDeg = gyro.getAngle() + 180.0;
+    targetHeadingDeg %= 360.0;
+    targetHeadingDeg = (targetHeadingDeg < 0) ? (targetHeadingDeg + 360) : targetHeadingDeg;
+    targetHeadingDeg = Math.toRadians(targetHeadingDeg);
 
-    targetHeading *= (Math.PI / 180.0);
-
-    return targetHeading;
+    return targetHeadingDeg;
   }
   
 
@@ -133,11 +126,9 @@ public class SwerveDrive extends SubsystemBase {
     gyro.calibrate();
     gyro.reset();
   }
-
   public void zeroGyro() {
     gyro.reset();
   }
-
   public void calibrateGyro() {
     gyro.calibrate();
   }

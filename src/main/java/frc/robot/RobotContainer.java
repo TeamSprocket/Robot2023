@@ -25,17 +25,20 @@ public class RobotContainer {
   
   public void configureBindings() {
     // --------------------=Driver=--------------------
-		swerveDrive.setDefaultCommand(new DriveTeleop(
-			swerveDrive, 
-			() -> driver.getLeftX(), 
-			() -> -driver.getLeftY(), 
-			() -> -driver.getRightX()));
     driver.x().onTrue(new ZeroWheelsTEST(swerveDrive));
 
     driver.button(RobotMap.Controller.Y).onTrue(Commands.runOnce(() -> swerveDrive.setHeading(Directions.FORWARD), swerveDrive));
     driver.button(RobotMap.Controller.X).onTrue(Commands.runOnce(() -> swerveDrive.setHeading(Directions.LEFT), swerveDrive));
     driver.button(RobotMap.Controller.B).onTrue(Commands.runOnce(() -> swerveDrive.setHeading(Directions.RIGHT), swerveDrive));
     driver.button(RobotMap.Controller.A).onTrue(Commands.runOnce(() -> swerveDrive.setHeading(Directions.BACK), swerveDrive));
+  }
+
+  public Command getDriveTeleop() {
+    return new DriveTeleop(
+			swerveDrive, 
+			() -> driver.getLeftX(), 
+			() -> driver.getLeftY(), 
+			() -> driver.getRightX());
   }
   
   public void resetModulesToAbsolute() {

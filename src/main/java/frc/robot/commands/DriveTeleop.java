@@ -22,8 +22,8 @@ public class DriveTeleop extends CommandBase {
 
   public DriveTeleop(SwerveDrive swerveDrive, Supplier<Double> xSupplier, Supplier<Double> ySupplier, Supplier<Double> tSupplier) {
     this.swerveDrive = swerveDrive;
-    this.xSupplier = ySupplier; // PURPOSEFULLY SWITCHED 
-    this.ySupplier = xSupplier; // PURPOSEFULLY SWITCHED
+    this.xSupplier = xSupplier; // PURPOSEFULLY SWITCHED 
+    this.ySupplier = ySupplier; // PURPOSEFULLY SWITCHED
     this.tSupplier = tSupplier;
     this.xSlewLimit = new SlewRateLimiter(Constants.Drivetrain.kMaxAccel);
     this.ySlewLimit = new SlewRateLimiter(Constants.Drivetrain.kMaxAccel);
@@ -41,18 +41,16 @@ public class DriveTeleop extends CommandBase {
     double xSpeed = Util.deadband(xSupplier.get(), 0.1);
     // double xSpeed = 0;
     double ySpeed = Util.deadband(ySupplier.get(), 0.1);
-    ySpeed *= -1;
+    // ySpeed *= -1;
     // double tSpeed = 0;
     double tSpeed = Util.deadband(tSupplier.get(), 0.1);
-    tSpeed *= -1;
+    // tSpeed *= -1;
     
     xSpeed = xSlewLimit.calculate(xSpeed) * Constants.Drivetrain.kMaxSpeed;
     ySpeed = ySlewLimit.calculate(ySpeed) * Constants.Drivetrain.kMaxSpeed;
     tSpeed = tSlewLimit.calculate(tSpeed) * Constants.Drivetrain.kMaxTurnSpeed;
 
-    if (Constants.isEnabled) {
-      swerveDrive.setModuleSpeeds(xSpeed, ySpeed, tSpeed);
-    }
+    swerveDrive.updateChassisSpeeds(xSpeed, ySpeed, tSpeed);
   }
   
 
