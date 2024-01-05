@@ -33,7 +33,7 @@ public class Wrist extends SubsystemBase {
   }
 
   public double getEncoderValues() {
-    return (wristEncoder.get() * kEncoderTick2Meter);
+    return wristEncoder.getPosition();
   }
 
   public double getWristAngle(){
@@ -59,7 +59,7 @@ public class Wrist extends SubsystemBase {
   }
 
   public void setMotor(double speed) {
-    wristMotor.set(speed);
+    wrist.set(speed);
   }
 
   @Override
