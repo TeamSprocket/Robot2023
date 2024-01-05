@@ -17,13 +17,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /** Add your docs here. */
 public class ShuffleboardPIDTuner extends SubsystemBase{
-    private static ShuffleboardTab tab = Shuffleboard.getTab("PIDTuner");
+    private static ShuffleboardTab tab = Shuffleboard.getTab("PIDTuner2");
     private static ArrayList<GenericEntry> values = new ArrayList<GenericEntry>();
     private static ArrayList<String> tags = new ArrayList<String>();
     private static ArrayList<Double> defaultVals = new ArrayList<Double>();
 
     public static void addSlider(String widgetName, double min, double max, double defaultValue) {
-        values.add(tab.add(widgetName, defaultValue)
+        values.add(
+        tab.add(widgetName, defaultValue)
             .withWidget(BuiltInWidgets.kNumberSlider)
             .withProperties(Map.of("min", min, "max", max))
             .getEntry());

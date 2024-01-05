@@ -11,6 +11,14 @@ import frc.robot.RobotMap;
 import frc.util.ShuffleboardPIDTuner;
 
 public class SwerveDrive extends SubsystemBase {
+
+  public static enum Directions {
+    FORWARD,
+    LEFT, 
+    RIGHT,
+    BACK
+  } 
+
   
   private final ADIS16470_IMU gyro = new ADIS16470_IMU();
   
@@ -43,6 +51,7 @@ public class SwerveDrive extends SubsystemBase {
         Constants.Drivetrain.BACK_RIGHT_D_IS_REVERSED
   );
 
+
   public SwerveDrive() {
     // ShuffleboardPIDTuner.addSlider("CancoderOffsetDegFL", -360, 360, 0.0);
     // ShuffleboardPIDTuner.addSlider("CancoderOffsetDegFR", -360, 360, 0.0);
@@ -63,14 +72,25 @@ public class SwerveDrive extends SubsystemBase {
    * @return Heading in degrees (0, 360) //-180 to 180?
    */
   public double getHeading() { // ? why 0
-    // double angle = gyro.getAngle() % 360.0;
-    // if (angle < 0) {
-    //     angle += 360;
-    // }
-    // return angle;
-    return 0;
+    double angle = gyro.getAngle() + 180.0;
+    
+    angle %= 360.0;
+    if (angle < 0) {
+        angle += 360;
+    }
+
+    angle *= (Math.PI / 180.0);
+
+    return angle;
   }
   
+
+  public void initGyro() {
+    gyro.reset();
+    gyro.calibrate();
+    gyro.reset();
+  }
+
   public void zeroGyro() {
     gyro.reset();
   }
@@ -81,17 +101,20 @@ public class SwerveDrive extends SubsystemBase {
 
   public void resetModulesToAbsolute() {
     frontLeft.zeroTurnMotorABS();
-    Timer.delay(0.2);
+    Timer.delay(0.1);
     frontRight.zeroTurnMotorABS();
-    Timer.delay(0.2);
+    Timer.delay(0.1);
     backLeft.zeroTurnMotorABS();
-    Timer.delay(0.2);
+    Timer.delay(0.1);
     backRight.zeroTurnMotorABS();
   }
 
   public void setModuleStates(SwerveModuleState[] desiredStates) {
+    
+
+
     frontLeft.setState(desiredStates[0]);//currently setting 
-    SmartDashboard.putNumber("DriveSpdFL", desiredStates[0].speedMetersPerSecond);
+    SmartDashboard.putNumber("FL Wheel Degrees eric is gay and likes men", desiredStates[0].angle.getDegrees());
 
     frontRight.setState(desiredStates[1]);
     backLeft.setState(desiredStates[2]);

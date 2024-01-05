@@ -57,9 +57,9 @@ public class Constants {
 
         
         // PID
-        public static final double kPTurnMotor = 0.0125; //0.6
+        public static final double kPTurnMotor = 0.0125; //0.0125
         public static final double kITurnMotor = 0.0000;
-        public static final double kDTurnMotor = 0.0003; // 0.0015 
+        public static final double kDTurnMotor = 0.0003; //0.0003
 
         public static final double kPHeading = 0.0053; //0.6
         public static final double kIHeading = 0.0000;
@@ -71,11 +71,11 @@ public class Constants {
 
 
         // Speed/Accel 
-        public static double kMaxSpeed = 0.2; //0.2 
-        public static double kMaxAccel = 1; 
+        public static double kMaxSpeed = 0.8; //0.2 
+        public static double kMaxAccel = 0.5; 
         
-        public static double kMaxTurnSpeed = 0.4; 
-        public static double kMaxTurnAccel = 1; 
+        public static double kMaxTurnSpeed = 1; 
+        public static double kMaxTurnAccel = 10; 
 
 
         // Misc

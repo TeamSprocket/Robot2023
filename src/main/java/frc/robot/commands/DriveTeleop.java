@@ -38,11 +38,13 @@ public class DriveTeleop extends CommandBase {
   
   @Override
   public void execute() {
-    double xSpeed = Util.deadband(xSupplier.get(), 0.2);
+    double xSpeed = Util.deadband(xSupplier.get(), 0.1);
     // double xSpeed = 0;
-    double ySpeed = Util.deadband(ySupplier.get(), 0.2);
+    double ySpeed = Util.deadband(ySupplier.get(), 0.1);
+    ySpeed *= -1;
     // double tSpeed = 0;
-    double tSpeed = Util.deadband(tSupplier.get(), 0.2);
+    double tSpeed = Util.deadband(tSupplier.get(), 0.1);
+    tSpeed *= -1;
     
     xSpeed = xSlewLimit.calculate(xSpeed) * Constants.Drivetrain.kMaxSpeed;
     ySpeed = ySlewLimit.calculate(ySpeed) * Constants.Drivetrain.kMaxSpeed;

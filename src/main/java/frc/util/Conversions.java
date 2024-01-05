@@ -39,6 +39,17 @@ public class Conversions {
     }
 
     /**
+     * @param degrees Degrees of rotation of Mechanism
+     * @param gearRatio Gear Ratio between Falcon and Mechanism
+     * @return Falcon Position Counts
+     */
+    public static double degreesToFalconDebug(double degrees, double gearRatio) {
+        return degrees / 360 * gearRatio * 2048.0;
+    }
+
+
+
+    /**
      * @param velocityCounts Falcon Velocity Counts
      * @param gearRatio Gear Ratio between Falcon and Mechanism (set to 1 for Falcon RPM)
      * @return RPM of Mechanism

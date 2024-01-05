@@ -14,6 +14,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -30,13 +31,14 @@ public class SwerveModule extends SubsystemBase {
 
   private int rots = 0;
 
+
   public SwerveModule(int driveMotorID, int turnMotorID, int cancoderID, Supplier<Double> cancoderOffsetDeg, boolean driveIsReversed) {
     this.driveMotor = new WPI_TalonFX(driveMotorID);
     this.turnMotor = new WPI_TalonFX(turnMotorID);
     this.cancoder = new CANCoder(cancoderID);
     this.cancoderOffsetDeg = cancoderOffsetDeg; 
     
-    this.driveMotor.setInverted(driveIsReversed);
+    this.driveMotor.setInverted(driveIsReversed); 
 
     turnPIDController = new PIDController(Constants.Drivetrain.kPTurnMotor, Constants.Drivetrain.kITurnMotor, Constants.Drivetrain.kDTurnMotor);
     turnPIDController.enableContinuousInput(-180, 180);
@@ -92,7 +94,7 @@ public class SwerveModule extends SubsystemBase {
   }
 
   public void setState(SwerveModuleState moduleState) {
-    SmartDashboard.putNumber("unOptimized Angle", getTurnPosition());
+    // SmartDashboard.putNumber("unOptimized Angle", getTurnPosition());
     SwerveModuleState state = SwerveModuleState.optimize(moduleState, new Rotation2d(Math.toRadians(getTurnPosition()))); //check values, might be jank
     // SwerveModuleState state = moduleState;
 
@@ -121,9 +123,14 @@ public class SwerveModule extends SubsystemBase {
     */
     
     //try removing optimize command
-    turnMotor.set(ControlMode.Position, Conversions.degreesToFalcon(state.angle.getDegrees(), Constants.Drivetrain.kTurningMotorGearRatio));
+
+    // SmartDashboard.putNumber("Falcon ticks", Conversions.degreesToFalconDebug(state.angle.getDegrees(), Constants.Drivetrain.kTurningMotorGearRatio));
+    // turnMotor.set(ControlMode.Position, Conversions.degreesToFalconDebug(state.angle.getDegrees(), Constants.Drivetrain.kTurningMotorGearRatio));
+    turnMotor.set(ControlMode.PercentOutput, turnPIDController.calculate(getTurnPosition(), state.angle.getDegrees()));
+    
 
     
+
   }
 
   
