@@ -18,10 +18,10 @@ public class SetHeightElevaror extends CommandBase {
   @Override
   public void initialize() {
     if (direction.equals("up")) {
-    elevator.setHeight(elevator.getHeight() +  Constants.Elevator.kHeightSetpointInterval);
+    this.elevator.setHeight(this.elevator.getHeight() +  Constants.Elevator.kHeightSetpointInterval);
   }
   else {
-    elevator.setHeight(elevator.getHeight() -  Constants.Elevator.kHeightSetpointInterval);
+    this.elevator.setHeight(this.elevator.getHeight() -  Constants.Elevator.kHeightSetpointInterval);
   }
 
   }

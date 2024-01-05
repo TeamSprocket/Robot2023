@@ -138,7 +138,7 @@ public Command getAutonomousCommand() {
 			// new JoystickButton(operator, 9).whenHeld(new SetLowConeStanding(elevator, arm, wrist));
 			// new JoystickButton(operator, 10).whenHeld(new SetDeport(elevator, arm, wrist));
 
-			new SetElevatorInit(elevator);
+			//new SetElevatorInit(elevator);
 			new JoystickButton(operator, 4).onTrue(new SetHeightElevaror(elevator, "up"));
 			new JoystickButton(operator, 3).onTrue(new SetHeightElevaror(elevator, "down"));
 			//new JoystickButton(operator, 4).onTrue(new SetHighRewrite(elevator));
