@@ -4,12 +4,14 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.DriveTeleop;
 import frc.robot.commands.ZeroWheelsTEST;
 import frc.robot.subsystems.SwerveDrive;
+import frc.robot.subsystems.SwerveDrive.Directions;
 
 public class RobotContainer {
 
@@ -29,6 +31,11 @@ public class RobotContainer {
 			() -> -driver.getLeftY(), 
 			() -> -driver.getRightX()));
     driver.x().onTrue(new ZeroWheelsTEST(swerveDrive));
+
+    driver.button(RobotMap.Controller.Y).onTrue(Commands.runOnce(() -> swerveDrive.setHeading(Directions.FORWARD), swerveDrive));
+    driver.button(RobotMap.Controller.X).onTrue(Commands.runOnce(() -> swerveDrive.setHeading(Directions.LEFT), swerveDrive));
+    driver.button(RobotMap.Controller.B).onTrue(Commands.runOnce(() -> swerveDrive.setHeading(Directions.RIGHT), swerveDrive));
+    driver.button(RobotMap.Controller.A).onTrue(Commands.runOnce(() -> swerveDrive.setHeading(Directions.BACK), swerveDrive));
   }
   
   public void resetModulesToAbsolute() {

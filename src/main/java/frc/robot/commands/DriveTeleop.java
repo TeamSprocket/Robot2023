@@ -50,14 +50,9 @@ public class DriveTeleop extends CommandBase {
     ySpeed = ySlewLimit.calculate(ySpeed) * Constants.Drivetrain.kMaxSpeed;
     tSpeed = tSlewLimit.calculate(tSpeed) * Constants.Drivetrain.kMaxTurnSpeed;
 
-    ChassisSpeeds chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, tSpeed, new Rotation2d(swerveDrive.getHeading()));
-    SwerveModuleState[] moduleStates = Constants.Drivetrain.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
-    SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.Drivetrain.kMaxSpeed);
-    swerveDrive.setModuleStates(moduleStates);
-
-    SmartDashboard.putNumber("heading", swerveDrive.getHeading());
-    
-  
+    if (Constants.isEnabled) {
+      swerveDrive.setModuleSpeeds(xSpeed, ySpeed, tSpeed);
+    }
   }
   
 

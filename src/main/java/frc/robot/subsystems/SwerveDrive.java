@@ -1,6 +1,10 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.Timer;
@@ -10,7 +14,13 @@ import frc.robot.Constants;
 import frc.robot.RobotMap;
 import frc.util.ShuffleboardPIDTuner;
 
+import frc.robot.subsystems.SwerveModule.*;
+
 public class SwerveDrive extends SubsystemBase {
+
+  double targetHeading;
+  double xSpeed, ySpeed, tSpeed;
+  PIDController headingController = new PIDController(Constants.Drivetrain.kPHeading, Constants.Drivetrain.kIHeading, Constants.Drivetrain.kDHeading);
 
   public static enum Directions {
     FORWARD,
@@ -53,6 +63,7 @@ public class SwerveDrive extends SubsystemBase {
 
 
   public SwerveDrive() {
+    headingController.enableContinuousInput(0, 360);
     // ShuffleboardPIDTuner.addSlider("CancoderOffsetDegFL", -360, 360, 0.0);
     // ShuffleboardPIDTuner.addSlider("CancoderOffsetDegFR", -360, 360, 0.0);
     // ShuffleboardPIDTuner.addSlider("CancoderOffsetDegBL", -360, 360, 0.0);
@@ -61,27 +72,59 @@ public class SwerveDrive extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // Constants.Drivetrain.kCANCoderOffsetFrontLeft = ShuffleboardPIDTuner.get("CancoderOffsetDegFL");
-    // Constants.Drivetrain.kCANCoderOffsetFrontRight = ShuffleboardPIDTuner.get("CancoderOffsetDegFR");
-    // Constants.Drivetrain.kCANCoderOffsetBackLeft = ShuffleboardPIDTuner.get("CancoderOffsetDegBL");
-    // Constants.Drivetrain.kCANCoderOffsetBackRight = ShuffleboardPIDTuner.get("CancoderOffsetDegBR");
+    if (Constants.isEnabled){
+      double targetHeading = Math.toRadians(getHeading());
+      ChassisSpeeds chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(ySpeed, xSpeed, tSpeed, new Rotation2d(targetHeading));   
+      SwerveModuleState[] moduleStates = Constants.Drivetrain.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
+      SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.Drivetrain.kMaxSpeed);
+      setModuleStates(moduleStates);
+    }
   }
+
+  public void setModuleSpeeds(double xSpeed, double ySpeed, double tSpeed) {
+    this.targetHeading += tSpeed * Constants.Drivetrain.kMaxTurnSpeed;
+    this.targetHeading = (targetHeading % 360.0);
+    this.targetHeading = (targetHeading < 0) ? targetHeading + 360.0 : targetHeading;
+    headingController.setSetpoint(targetHeading);
+    double tSpeedPID = headingController.calculate(getHeading());
+
+    this.xSpeed = xSpeed;
+    this.ySpeed = ySpeed;
+    this.tSpeed = tSpeedPID;
+}
 
 
   /**
-   * @return Heading in degrees (0, 360) //-180 to 180?
+   * @return Heading in degrees (0, 360)
    */
-  public double getHeading() { // ? why 0
-    double angle = gyro.getAngle() + 180.0;
+
+  public void setHeading(Directions direction){
+    switch (direction) {
+      case FORWARD:
+        targetHeading = 0;
+
+      case BACK:
+        targetHeading = 180;
+
+      case LEFT:
+        targetHeading = 90;
+
+      case RIGHT:
+        targetHeading = 270;
+    }
+    }
+  
+  public double getHeading() { 
+    targetHeading = gyro.getAngle() + 180.0;
     
-    angle %= 360.0;
-    if (angle < 0) {
-        angle += 360;
+    targetHeading %= 360.0;
+    if (targetHeading < 0) {
+      targetHeading += 360;
     }
 
-    angle *= (Math.PI / 180.0);
+    targetHeading *= (Math.PI / 180.0);
 
-    return angle;
+    return targetHeading;
   }
   
 
@@ -110,12 +153,7 @@ public class SwerveDrive extends SubsystemBase {
   }
 
   public void setModuleStates(SwerveModuleState[] desiredStates) {
-    
-
-
     frontLeft.setState(desiredStates[0]);//currently setting 
-    SmartDashboard.putNumber("FL Wheel Degrees eric is gay and likes men", desiredStates[0].angle.getDegrees());
-
     frontRight.setState(desiredStates[1]);
     backLeft.setState(desiredStates[2]);
     backRight.setState(desiredStates[3]);

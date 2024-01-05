@@ -76,9 +76,7 @@ public class SwerveModule extends SubsystemBase {
       if (deg > 180) {
         deg -= (360); 
       }
-    //deg %= 180;
     return deg;
-    //SmartDashboard.putNumber("Degree", deg);
   }
 
   public double getCANCoderDegrees() {
@@ -94,43 +92,9 @@ public class SwerveModule extends SubsystemBase {
   }
 
   public void setState(SwerveModuleState moduleState) {
-    // SmartDashboard.putNumber("unOptimized Angle", getTurnPosition());
-    SwerveModuleState state = SwerveModuleState.optimize(moduleState, new Rotation2d(Math.toRadians(getTurnPosition()))); //check values, might be jank
-    // SwerveModuleState state = moduleState;
-
-    // double fullTargetAngle = state.angle.getRadians();
-    
-    // fullTargetAngle *= (180/Math.PI);
-
-    // if (fullTargetAngle > 180) {
-      // fullTargetAngle -= (360);
-    // }
-
-    // SmartDashboard.putNumber("Optimized Angle Deg", fullTargetAngle);
-
-    
-    
-    
+    SwerveModuleState state = SwerveModuleState.optimize(moduleState, new Rotation2d(Math.toRadians(getTurnPosition())));
     driveMotor.set(ControlMode.PercentOutput, state.speedMetersPerSecond);
-
-    // double turnOutput = turnPIDController.calculate(getTurnPosition(), fullTargetAngle);
-    // turnMotor.set(ControlMode.PercentOutput, turnOutput);
-    // double degs = state.angle.getDegrees(); //change, reoptimize? thats what fullTargetAngle did
-    /*
-    if (degs > 180) {
-      degs -= (360);
-    }
-    */
-    
-    //try removing optimize command
-
-    // SmartDashboard.putNumber("Falcon ticks", Conversions.degreesToFalconDebug(state.angle.getDegrees(), Constants.Drivetrain.kTurningMotorGearRatio));
-    // turnMotor.set(ControlMode.Position, Conversions.degreesToFalconDebug(state.angle.getDegrees(), Constants.Drivetrain.kTurningMotorGearRatio));
     turnMotor.set(ControlMode.PercentOutput, turnPIDController.calculate(getTurnPosition(), state.angle.getDegrees()));
-    
-
-    
-
   }
 
   
