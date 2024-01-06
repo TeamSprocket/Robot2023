@@ -6,39 +6,14 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 
 public class Constants {
+    public static enum RobotState {
+        TELEOP,
+        AUTON,
+        DISABLED
+    }
+
     // Global
-    public static boolean isEnabled = false;
-    public static final double kSetHomeTimeTolerance = 2.0; // TODO: amount of time to set home before confirm stowed (sec)
-    public static final int kGyroInitDelayMS = 1000;
-
-    public static final class Elevator {
-        //check sprocket radius in inches
-        public static double kSprocketRadius = 2.938;
-        public static double kElevatorGearRatio = 9;
-
-        public static double kP = 0.175;
-        public static double kI = 0;
-        public static double kD = 0.00675;
-    }
-
-    public static final class Arm{
-        public static double kArmGearRatio = 31.5;
-        public static double angleConversionFactor = 360.0 / kArmGearRatio;
-
-        public static double kP = 0.05;
-        public static double kI = 0;
-        public static double kD = 0.0003;
-
-    }
-
-    public static final class Wrist {
-        public static double kWristGearRatio = 2.75;
-        public static double angleConversionFactor = 360.0 / (kWristGearRatio * 10);
-        
-        public static double P = 0.019; //0175
-        public static double I = 0;
-        public static double D = 0.0007;
-    }
+    public static RobotState robotState = RobotState.DISABLED;
 
     public static final class Claw {}
 
@@ -61,9 +36,9 @@ public class Constants {
         public static final double kITurnMotor = 0.0000;
         public static final double kDTurnMotor = 0.0003; //0.0003
 
-        public static final double kPHeading = 0.0053; //0.6
+        public static final double kPHeading = 1.5978; //0.6
         public static final double kIHeading = 0.0000;
-        public static final double kDHeading = 0.000352; 
+        public static final double kDHeading = 0.12136; 
 
         public static final double kLimelightAlignP = 0.0075;
         public static final double kLimelightAlignI = 0.0;
@@ -72,10 +47,10 @@ public class Constants {
 
         // Speed/Accel 
         public static double kMaxSpeed = 0.8; //0.2 
-        public static double kMaxAccel = 0.5; 
+        public static double kMaxAccel = 0.7; 
         
-        public static double kMaxTurnSpeed = 1; 
-        public static double kMaxTurnAccel = 10; 
+        public static double kMaxTurnSpeed = 0.08; 
+        public static double kMaxTurnAccel = 10; // Instant manual turning
 
 
         // Misc

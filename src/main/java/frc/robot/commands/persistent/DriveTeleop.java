@@ -1,5 +1,5 @@
 
-package frc.robot.commands;
+package frc.robot.commands.persistent;
 
 import java.util.function.Supplier;
 
@@ -22,8 +22,8 @@ public class DriveTeleop extends CommandBase {
 
   public DriveTeleop(SwerveDrive swerveDrive, Supplier<Double> xSupplier, Supplier<Double> ySupplier, Supplier<Double> tSupplier) {
     this.swerveDrive = swerveDrive;
-    this.xSupplier = ySupplier; // PURPOSEFULLY SWITCHED 
-    this.ySupplier = xSupplier; // PURPOSEFULLY SWITCHED
+    this.xSupplier = xSupplier; // PURPOSEFULLY SWITCHED 
+    this.ySupplier = ySupplier; // PURPOSEFULLY SWITCHED
     this.tSupplier = tSupplier;
     this.xSlewLimit = new SlewRateLimiter(Constants.Drivetrain.kMaxAccel);
     this.ySlewLimit = new SlewRateLimiter(Constants.Drivetrain.kMaxAccel);
@@ -44,18 +44,20 @@ public class DriveTeleop extends CommandBase {
     ySpeed *= -1;
     // double tSpeed = 0;
     double tSpeed = Util.deadband(tSupplier.get(), 0.1);
-    tSpeed *= -1;
+    // tSpeed *= -1;
     
     xSpeed = xSlewLimit.calculate(xSpeed) * Constants.Drivetrain.kMaxSpeed;
     ySpeed = ySlewLimit.calculate(ySpeed) * Constants.Drivetrain.kMaxSpeed;
     tSpeed = tSlewLimit.calculate(tSpeed) * Constants.Drivetrain.kMaxTurnSpeed;
 
-    ChassisSpeeds chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, tSpeed, new Rotation2d(swerveDrive.getHeading()));
-    SwerveModuleState[] moduleStates = Constants.Drivetrain.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
-    SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.Drivetrain.kMaxSpeed);
-    swerveDrive.setModuleStates(moduleStates);
+    swerveDrive.updateChassisSpeeds(xSpeed, ySpeed, tSpeed);
 
-    SmartDashboard.putNumber("heading", swerveDrive.getHeading());
+    // ChassisSpeeds chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, tSpeed, new Rotation2d(swerveDrive.getHeading()));
+    // SwerveModuleState[] moduleStates = Constants.Drivetrain.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
+    // SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.Drivetrain.kMaxSpeed);
+    // swerveDrive.setModuleStates(moduleStates);
+
+    // SmartDashboard.putNumber("heading", swerveDrive.getHeading());
     
   
   }

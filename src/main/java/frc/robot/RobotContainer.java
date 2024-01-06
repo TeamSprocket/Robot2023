@@ -7,9 +7,13 @@ package frc.robot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.commands.DriveTeleop;
-import frc.robot.commands.ZeroWheelsTEST;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.instant.SwitchTargetHeadingDirection;
+import frc.robot.commands.instant.ZeroGyro;
+import frc.robot.commands.macro.ZeroWheelsTEST;
+import frc.robot.commands.persistent.DriveTeleop;
 import frc.robot.subsystems.SwerveDrive;
+import frc.robot.subsystems.SwerveDrive.Directions;
 
 public class RobotContainer {
 
@@ -25,10 +29,15 @@ public class RobotContainer {
     // --------------------=Driver=--------------------
 		swerveDrive.setDefaultCommand(new DriveTeleop(
 			swerveDrive, 
-			() -> driver.getLeftX(), 
-			() -> -driver.getLeftY(), 
-			() -> -driver.getRightX()));
-    driver.x().onTrue(new ZeroWheelsTEST(swerveDrive));
+			() -> -driver.getLeftX(), 
+			() -> driver.getLeftY(), 
+			() -> driver.getRightX()));
+    // driver.x().onTrue(new ZeroWheelsTEST(swerveDrive));
+    driver.rightBumper().onTrue(new ZeroGyro(swerveDrive));
+    driver.button(RobotMap.Controller.Y).onTrue(new SwitchTargetHeadingDirection(swerveDrive, Directions.FORWARD));
+    driver.button(RobotMap.Controller.X).onTrue(new SwitchTargetHeadingDirection(swerveDrive, Directions.LEFT));
+    driver.button(RobotMap.Controller.B).onTrue(new SwitchTargetHeadingDirection(swerveDrive, Directions.RIGHT));
+    driver.button(RobotMap.Controller.A).onTrue(new SwitchTargetHeadingDirection(swerveDrive, Directions.BACK));
   }
   
   public void resetModulesToAbsolute() {
