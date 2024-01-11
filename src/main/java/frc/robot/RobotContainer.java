@@ -46,6 +46,7 @@ import frc.robot.subsystems.SwerveDrive;
 import frc.robot.subsystems.Wrist;
 import frc.robot.subsystems.SwerveDrive.Direction;
 import frc.robot.subsystems.LEDStrip;
+import frc.robot.subsystems.Limelight;
 /**
  * This class is where the bulk of the robot should be declared. Since
  * Command-based is a "declarative" paradigm, very little robot logic should
@@ -71,6 +72,7 @@ public final class RobotContainer {
 	private final Wrist wrist = new Wrist();
 	private final Claw claw = new Claw();
 	private final PowerDistribution pdh = new PowerDistribution();
+	private final Limelight limelight = new Limelight(swerveDrive);
 
 	SendableChooser<Command> autonChooser = new SendableChooser<>();
 	
@@ -167,7 +169,8 @@ public final class RobotContainer {
 		elevator.setDefaultCommand(new Elevate(elevator, operator));
 		arm.setDefaultCommand(new MoveArmJoystick(arm, operator));
 		wrist.setDefaultCommand(new MoveWristManual(wrist, operator));
-		new JoystickButton(operator, RobotMap.Controller.A).whenHeld(new SetMid(elevator, arm, wrist));
+		// new JoystickButton(operator, RobotMap.Controller.A).whenHeld(new SetMid(elevator, arm, wrist));
+		new JoystickButton(operator, RobotMap.Controller.A).onTrue(new LimelightAlign(limelight));
 		new JoystickButton(operator, RobotMap.Controller.B).whenHeld(new SetHighCube(elevator, arm, wrist));
 		new JoystickButton(operator, RobotMap.Controller.X).whenHeld(new SetHome(elevator, arm, wrist));
 		new JoystickButton(operator, RobotMap.Controller.Y).whenHeld(new SetHigh(elevator, arm, wrist));
