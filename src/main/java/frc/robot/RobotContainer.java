@@ -4,8 +4,6 @@
 
 package frc.robot;
 
-import org.apache.commons.lang3.ObjectUtils.Null;
-
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
