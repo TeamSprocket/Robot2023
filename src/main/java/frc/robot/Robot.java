@@ -62,7 +62,7 @@ public class Robot extends TimedRobot {
         robotContainer.outputPitch();
         
         // SmartDashboard.put robotContainer.getCameraFeed();
-        Limelight.getPose();
+        Limelight.pos();
     }
 
     /**

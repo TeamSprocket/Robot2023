@@ -1,17 +1,17 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.networktables.DoubleArraySubscriber;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.math.geometry.Rotation2d;
-import frc.robot.Constants;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.networktables.DoubleArraySubscriber;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class Limelight extends SubsystemBase {
 
@@ -66,10 +66,27 @@ public class Limelight extends SubsystemBase {
         }
     }
 
-    public static void getPose() {
+    public static void pos() {
         DoubleArraySubscriber x = NetworkTableInstance.getDefault().getTable("limelight").getDoubleArrayTopic("botpose_wpiblue").subscribe(new double[] {});
         double[] pose = x.get();
-        SmartDashboard.putNumber("Limelight", pose[0]);
+        SmartDashboard.putNumber("Limelight x value?", pose[0]);
+    }
+
+    public Pose2d getPose() {
+        DoubleArraySubscriber x = table.getDoubleArrayTopic("botpose").subscribe(new double[] {});
+        DriverStation.Alliance color = DriverStation.getAlliance();
+        
+        if (color == DriverStation.Alliance.Blue) {
+
+            x = table.getDoubleArrayTopic("botpose_wpiblue").subscribe(new double[] {});
+        } else if (color == DriverStation.Alliance.Red) {
+
+            x = table.getDoubleArrayTopic("botpose_wpired").subscribe(new double[] {});
+        }
+        
+        double[] pose = x.get();
+        Pose2d y = new Pose2d(pose[0], pose[1], new Rotation2d(swerveDrive.getHeading()));
+        return y;
     }
 
     public void stop() {
