@@ -2,13 +2,11 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.networktables.DoubleArraySubscriber;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -18,11 +16,6 @@ import edu.wpi.first.wpilibj.DriverStation;
 public class Limelight extends SubsystemBase {
 
     private NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-
-    private NetworkTableEntry tx = table.getEntry("tx");
-    private NetworkTableEntry ty = table.getEntry("ty");
-    private double x = tx.getDouble(0.0);
-    private double y = ty.getDouble(0.0);
 
     SwerveDrive swerveDrive;
     PIDController pidController;
@@ -46,8 +39,8 @@ public class Limelight extends SubsystemBase {
 
             double headingRad = Math.toRadians(swerveDrive.getHeading());
             chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(0, output, 0, new Rotation2d(headingRad));
-        } else {
-
+        } 
+        else {
             chassisSpeeds = new ChassisSpeeds(0, output, 0);
         }
 
@@ -73,16 +66,13 @@ public class Limelight extends SubsystemBase {
         }
     }
 
-    public void stop() {
-        swerveDrive.stopModules();
+    public static void getPose() {
+        DoubleArraySubscriber x = NetworkTableInstance.getDefault().getTable("limelight").getDoubleArrayTopic("botpose_wpiblue").subscribe(new double[] {});
+        double[] pose = x.get();
+        SmartDashboard.putNumber("Limelight", pose[0]);
     }
 
-    public Pose2d getPos() {
-
-        Translation2d tPos = new Translation2d(x, y);
-        Rotation2d rPos = new Rotation2d(x, y);
-        Pose2d pPos = new Pose2d(tPos, rPos);
-
-        return pPos;
+    public void stop() {
+        swerveDrive.stopModules();
     }
 }

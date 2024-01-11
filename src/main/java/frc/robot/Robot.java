@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.persistent.SwerveDriveCmd;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.SwerveDrive;
 
 
@@ -61,6 +62,7 @@ public class Robot extends TimedRobot {
         robotContainer.outputPitch();
         
         // SmartDashboard.put robotContainer.getCameraFeed();
+        Limelight.getPose();
     }
 
     /**
