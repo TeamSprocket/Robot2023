@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants.RobotState;
-import frc.robot.commands.macro.FollowPath;
+// import frc.robot.commands.macro.FollowPath;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -44,8 +44,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     Constants.robotState = RobotState.AUTON;
-    // m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-    m_autonomousCommand = new FollowPath();
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     Timer.delay(0.5);
     m_robotContainer.getSwerveDrive().initGyro();

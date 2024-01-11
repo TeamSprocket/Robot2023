@@ -100,6 +100,11 @@ public class SwerveModule extends SubsystemBase {
     
   }
 
+  public SwerveModuleState getModuleState() {
+    double moduleSpdMPS = Conversions.falconToMPS(driveMotor.getSelectedSensorVelocity(), (Constants.Drivetrain.kWheelDiameterMeters * Math.PI), Constants.Drivetrain.kDriveMotorGearRatio);
+    return new SwerveModuleState(moduleSpdMPS, new Rotation2d(Math.toRadians(getTurnPosition())));
+  }
+
 
   public double getCANCoderDegrees() {
     double offsetDeg = cancoder.getAbsolutePosition() - cancoderOffsetDeg.get();

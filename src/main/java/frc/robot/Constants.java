@@ -1,5 +1,9 @@
 package frc.robot;
 
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.ReplanningConfig;
+
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -40,12 +44,22 @@ public class Constants {
         public static final double kIHeading = 0.0000;
         public static final double kDHeading = 0.12136; 
 
+        public static final double kPTranslationPP = 0.0; 
+        public static final double kITranslationPP = 0.0;
+        public static final double kDTranslationPP = 0.0; 
+
+        public static final double kPRotationPP = 0.0; 
+        public static final double kIRotationPP = 0.0;
+        public static final double kDRotationPP = 0.0;
+
         public static final double kLimelightAlignP = 0.0075;
         public static final double kLimelightAlignI = 0.0;
         public static final double kLimelightAlignD = 0.00015;
 
 
         // Speed/Accel 
+        public static final double kMaxDriveModuleSpeedMPS = 4.0;
+
         public static double kMaxSpeed = 0.8; //0.2 
         public static double kMaxAccel = 0.7; 
         
@@ -54,6 +68,14 @@ public class Constants {
 
 
         // Misc
+        public static final HolonomicPathFollowerConfig kPathFollowerConfig = new HolonomicPathFollowerConfig(
+            new PIDConstants(kPTranslationPP, kITranslationPP, kDTranslationPP), 
+            new PIDConstants(kPRotationPP, kIRotationPP, kDRotationPP),
+            kMaxDriveModuleSpeedMPS, 
+            kModuleOffsetMeters, 
+            new ReplanningConfig()
+        );
+
         public static final boolean kIsFieldOriented = true;
 
         public static boolean isPrecise = false;

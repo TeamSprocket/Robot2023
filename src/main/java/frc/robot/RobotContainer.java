@@ -4,6 +4,13 @@
 
 package frc.robot;
 
+import org.apache.commons.lang3.ObjectUtils.Null;
+
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -18,10 +25,30 @@ import frc.robot.subsystems.SwerveDrive.Directions;
 public class RobotContainer {
 
   private final CommandXboxController driver = new CommandXboxController(0);
+
   SwerveDrive swerveDrive = new SwerveDrive();
+
+  public SendableChooser<Command> autonChooser = new SendableChooser<Command>();
+
 
   public RobotContainer() {
     configureBindings();
+    initAutons();
+  }
+
+  public void initAutons() {
+
+    Command figureEightTestAuton = new PathPlannerAuto("FigEightTestAuton");
+    Command turn90and1MTestAuton = new PathPlannerAuto("Turn 90 and 1M Test Auton");
+
+    autonChooser.addOption("Figure Eight Test", figureEightTestAuton);
+    autonChooser.addOption("Turn 90 and 1M Test", turn90and1MTestAuton);
+    autonChooser = AutoBuilder.buildAutoChooser();
+    SmartDashboard.putData("Auton Chooser", autonChooser);
+  }
+
+  public Command getAutonomousCommand() {
+    return autonChooser.getSelected();
   }
 
   
@@ -48,7 +75,4 @@ public class RobotContainer {
     return swerveDrive;
   }
 
-  public Command getAutonomousCommand() {
-    return Commands.print("No autonomous command configured");
-  }
 }
