@@ -19,6 +19,7 @@ public class Limelight extends SubsystemBase {
 
     SwerveDrive swerveDrive;
     PIDController pidController;
+    double pose[];
 
     public Limelight(SwerveDrive swerveDrive) {
 
@@ -30,8 +31,11 @@ public class Limelight extends SubsystemBase {
 
     public void setSpeeds() {
 
-        double tXOffset = table.getEntry("tx").getDouble(0.0);
+        double tXOffset = table.getEntry("tx").getDouble(0.0); // why is this tx? ISN'T THAT IN DEGREES BRO WHAT
         double output = -1 * pidController.calculate(tXOffset);
+
+        double tYOffset = table.getEntry("ty").getDouble(0.0);
+        // TODO: try to get distance offset!!
 
         ChassisSpeeds chassisSpeeds;
 
@@ -46,6 +50,11 @@ public class Limelight extends SubsystemBase {
 
         SwerveModuleState[] moduleStates = Constants.Drivetrain.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
         swerveDrive.setModuleStates(moduleStates);
+        // will only make adjustments for turn?
+    }
+
+    public void getPipeline() {
+        table.getEntry("getpipe");
     }
 
     public void setAprilTagPipeline() {
@@ -84,8 +93,8 @@ public class Limelight extends SubsystemBase {
             x = table.getDoubleArrayTopic("botpose_wpired").subscribe(new double[] {});
         }
         
-        double[] pose = x.get();
-        Pose2d y = new Pose2d(pose[0], pose[1], new Rotation2d(swerveDrive.getHeading()));
+        pose = x.get();
+        Pose2d y = new Pose2d(pose[0], pose[1], new Rotation2d(swerveDrive.getHeading())); // TODO: check pose values
         return y;
     }
 
