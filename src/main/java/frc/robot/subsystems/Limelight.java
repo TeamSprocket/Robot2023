@@ -79,6 +79,7 @@ public class Limelight extends SubsystemBase {
         DoubleArraySubscriber x = NetworkTableInstance.getDefault().getTable("limelight").getDoubleArrayTopic("botpose_wpiblue").subscribe(new double[] {});
         double[] pose = x.get();
         SmartDashboard.putNumber("Limelight x value?", pose[0]);
+        SmartDashboard.putNumber("Limelight y value", pose[1]);
     }
 
     public Pose2d getPose() {

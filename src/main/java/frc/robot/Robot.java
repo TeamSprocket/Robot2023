@@ -62,7 +62,6 @@ public class Robot extends TimedRobot {
         robotContainer.outputPitch();
         
         // SmartDashboard.put robotContainer.getCameraFeed();
-        Limelight.pos();
     }
 
     /**
@@ -123,6 +122,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         robotContainer.initRumbleTimer();
+        Limelight.pos();
 
         // robotContainer.outputAutonLog();
         // robotContainer.outputAutonLog();
